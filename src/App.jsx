@@ -1,30 +1,41 @@
-import { createBrowserRouter, RouterProvider, } from 'react-router-dom';
-import Home from "./features/home/Home";
-import About from "./features/about/About";
-import Users from "./features/users/Users";
-import Login from "./features/login/Login";
-import DefaultLayout from './layouts/DefaultLayout';
-import AppLayout from './layouts/AppLayout';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import DefaultLayout from "./layouts/DefaultLayout";
+import AppLayout from "./layouts/AppLayout";
+import Home from "./features/home";
+import Login from "./features/login";
+import Connect from "./features/connect";
+import Faqs from "./features/faqs";
+import Hub from "./features/hub";
+import Marketing from "./features/marketing";
+import Products from "./features/products";
+import Roles from "./features/roles";
+import Shelves from "./features/shelves";
+import Terms from "./features/terms";
 // Router Configuration
 const router = createBrowserRouter([
- {
-  path: '/',
-  element: <AppLayout />,
-  children: [
-   { path: '/', element: <Home /> },
-   { path: 'about', element: <About /> },
-   { path: 'users', element: <Users /> },
-  ],
- },
- {
-  path: '/',
-  element: <DefaultLayout />,
-  children: [
-   { path: '/login', element: <Login /> },
-
-  ],
- },
+  // private routes📌
+  {
+    path: "/",
+    element: <AppLayout />,
+    children: [
+      { path: "/", element: <Home /> },
+      { path: "connect", element: <Connect /> },
+      { path: "faqs", element: <Faqs /> },
+      { path: "hub", element: <Hub /> },
+      { path: "marketing", element: <Marketing /> },
+      { path: "products", element: <Products /> },
+      { path: "roles", element: <Roles /> },
+      { path: "shelves", element: <Shelves /> },
+      { path: "terms", element: <Terms /> },
+    ],
+  },
+  // public routes📌
+  {
+    path: "/",
+    element: <DefaultLayout />,
+    children: [{ path: "/login", element: <Login /> }],
+  },
 ]);
 export default function App() {
- return <RouterProvider router={router} />
+  return <RouterProvider router={router} />;
 }
