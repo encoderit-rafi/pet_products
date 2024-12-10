@@ -2,6 +2,7 @@ import React from "react";
 import FullLogo from "../../assets/icons/FullLogo";
 import MailIcon from "../../assets/icons/MailIcon";
 import PasswordIcon from "../../assets/icons/PasswordIcon";
+import ButtonGradient from "@/components/ButtonGradient";
 
 export default function Login() {
   return (
@@ -47,9 +48,8 @@ export default function Login() {
             </div>
           </div>
         </div>
-        <button className="w-full py-2 rounded-lg bg-gradient-to-r from-lime-600 from-60% to-lime-500 text-lg capitalize">
-          login
-        </button>
+
+        <ButtonGradient>login</ButtonGradient>
       </div>
     </div>
   );

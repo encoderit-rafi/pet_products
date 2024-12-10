@@ -8,11 +8,11 @@ const routes = [
   // { path: "/connect", name: "connect", icon: <BoxIcon /> },
   // { path: "/hub", name: "hub", icon: <BoxIcon /> },
   { path: "/products", name: "products", icon: <BoxIcon /> },
-  // { path: "/marketing", name: "marketing", icon: <BoxIcon /> },
+  { path: "/marketing", name: "marketing", icon: <BoxIcon /> },
   // { path: "/shelves", name: "shelves", icon: <BoxIcon /> },
-  // { path: "/faqs", name: "faqs", icon: <BoxIcon /> },
-  // { path: "/roles", name: "roles", icon: <BoxIcon /> },
-  // { path: "/terms", name: "terms", icon: <BoxIcon /> },
+  { path: "/faqs", name: "FAQs", icon: <BoxIcon /> },
+  { path: "/roles", name: "roles", icon: <BoxIcon /> },
+  { path: "/terms", name: "terms", icon: <BoxIcon /> },
 ];
 export default function AppLayout() {
   const [darkMode, setDarkMode] = useState(true);
