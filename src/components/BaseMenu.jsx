@@ -1,13 +1,14 @@
 import React from 'react'
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import BoxIcon from "@/assets/icons/BoxIcon";
+import DownIcon from '@/assets/icons/DownIcon';
 
 export default function BaseMenu({ text, data, value, setValue }) {
  return (
   <Menu>
    <MenuButton className="inline-flex capitalize items-center gap-2 bg-custom_bg_two border rounded-full py-1.5 px-4 text-sm/6 text-white shadow-inner focus:outline-none data-[hover]:bg-gray-700 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white">
     {value?.name || text}
-    <BoxIcon className="size-4 fill-white/60" />
+    <DownIcon className="size-4 fill-white/60" />
    </MenuButton>
 
    <MenuItems
