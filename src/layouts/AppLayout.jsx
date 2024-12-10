@@ -4,15 +4,22 @@ import BellIcon from "@/assets/icons/BellIcon";
 import ToggleButton from "@/components/ToggleButton";
 import { useState } from "react";
 import BoxIcon from "@/assets/icons/BoxIcon";
+import ProductsIcon from "@/assets/icons/ProductsIcon";
+import MarketingIcon from "@/assets/icons/MarketingIcon";
+import FaqsIcon from "@/assets/icons/FaqsIcon";
+import RolesIcon from "@/assets/icons/RolesIcon";
+import TermsIcon from "@/assets/icons/TermsIcon";
+import LogoutIcon from "@/assets/icons/LogoutIcon";
+import ShelvesIcon from "@/assets/icons/ShelvesIcon";
+import HubIcon from "@/assets/icons/HubIcon";
 const routes = [
-  // { path: "/connect", name: "connect", icon: <BoxIcon /> },
-  // { path: "/hub", name: "hub", icon: <BoxIcon /> },
-  { path: "/products", name: "products", icon: <BoxIcon /> },
-  { path: "/marketing", name: "marketing", icon: <BoxIcon /> },
-  // { path: "/shelves", name: "shelves", icon: <BoxIcon /> },
-  { path: "/faqs", name: "FAQs", icon: <BoxIcon /> },
-  { path: "/roles", name: "roles", icon: <BoxIcon /> },
-  { path: "/terms", name: "terms", icon: <BoxIcon /> },
+  { path: "/hub", name: "hub", icon: <HubIcon /> },
+  { path: "/products", name: "products", icon: <ProductsIcon /> },
+  { path: "/marketing", name: "marketing", icon: <MarketingIcon /> },
+  { path: "/shelves", name: "shelves", icon: <ShelvesIcon /> },
+  { path: "/faqs", name: "FAQs", icon: <FaqsIcon /> },
+  { path: "/roles", name: "roles", icon: <RolesIcon /> },
+  { path: "/terms", name: "terms", icon: <TermsIcon /> },
 ];
 export default function AppLayout() {
   const [darkMode, setDarkMode] = useState(true);
@@ -70,7 +77,7 @@ export default function AppLayout() {
           <button className="text-red-500 transition-all duration-500 hover:text-red-600">
             <div className="flex flex-col items-center gap-2 text-center capitalize">
               <div className="size-7">
-                <BoxIcon />
+                <LogoutIcon />
               </div>
               <p>log out</p>
             </div>

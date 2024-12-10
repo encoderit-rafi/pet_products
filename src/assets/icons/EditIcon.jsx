@@ -1,9 +1,28 @@
-import React from 'react'
+import React from "react";
 
 export default function EditIcon({ className }) {
- return (
-  <svg
-   className={className}
-   xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" /></svg>
- )
+  return (
+    <svg
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 11.079 11.079"
+    >
+      <g
+        id="Edit_Edit_Pencil_02"
+        data-name="Edit / Edit_Pencil_02"
+        transform="translate(0.75 0.752)"
+      >
+        <path
+          id="Vector"
+          d="M4,11.533v2.458H6.458l6.678-6.679h0a1.524,1.524,0,0,0,.41-.5.615.615,0,0,0,0-.38,1.527,1.527,0,0,0-.411-.505L12.067,4.853a1.521,1.521,0,0,0-.5-.409.615.615,0,0,0-.38,0,1.523,1.523,0,0,0-.5.41h0Z"
+          transform="translate(-4 -4.414)"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.5"
+        />
+      </g>
+    </svg>
+  );
 }

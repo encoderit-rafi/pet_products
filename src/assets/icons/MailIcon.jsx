@@ -3,14 +3,45 @@ import React from "react";
 export default function MailIcon({ className }) {
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
       className={className}
-      viewBox="0 0 48 48"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 23.994 21.927"
     >
-      <path
-        fill="currentColor"
-        d="M43 15.584a5.001 5.001 0 1 0-6.607-6.53a5 5 0 0 0-.368 2.446A5.004 5.004 0 0 0 43 15.584M10.25 9h23.52a7.5 7.5 0 0 0-.254 2.5H10.25a2.75 2.75 0 0 0-2.75 2.75v1.249L24 24.573l13.066-7.186c.954.588 2.05.97 3.223 1.08l-15.687 8.628a1.25 1.25 0 0 1-1.077.061l-.127-.06L7.5 18.35v15.4a2.75 2.75 0 0 0 2.75 2.75h27.5a2.75 2.75 0 0 0 2.75-2.75V18.484a7.6 7.6 0 0 0 2.5-.254v15.52c0 2.9-2.35 5.25-5.25 5.25h-27.5A5.25 5.25 0 0 1 5 33.75v-19.5C5 11.35 7.35 9 10.25 9"
-      />
+      <g id="mail-notification-svgrepo-com" transform="translate(0.75 0.75)">
+        <path
+          id="Path_48995"
+          data-name="Path 48995"
+          d="M12.548,3.39H5.085A4.095,4.095,0,0,0,.99,7.485V17.722a4.095,4.095,0,0,0,4.095,4.095H17.369a4.095,4.095,0,0,0,4.095-4.095V12.306"
+          transform="translate(-0.99 -1.39)"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.5"
+        />
+        <path
+          id="Path_48996"
+          data-name="Path 48996"
+          d="M15.947,11.655a7.411,7.411,0,0,1-4.719,1.925c-3.286,0-6.562-2.733-9.439-8.19"
+          transform="translate(-0.971 -1.342)"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.5"
+        />
+        <path
+          id="Path_48997"
+          data-name="Path 48997"
+          d="M18.034,7.438A3.024,3.024,0,1,0,15.01,4.414,3.024,3.024,0,0,0,18.034,7.438Z"
+          transform="translate(1.437 -1.39)"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.5"
+        />
+      </g>
     </svg>
   );
 }
