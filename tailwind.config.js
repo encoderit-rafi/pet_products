@@ -12,6 +12,7 @@ export default {
         custom_bg_four: "var(--custom_bg_four)",
         custom_bg_five: "var(--custom_bg_five)",
         custom_bg_six: "var(--custom_bg_six)",
+        custom_bg_seven: "var(--custom_bg_seven)",
 
         custom_text_one: "var(--custom_text_one)",
         custom_text_two: "var(--custom_text_two)",
