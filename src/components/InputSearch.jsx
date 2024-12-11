@@ -3,15 +3,15 @@ import React from "react";
 
 export default function InputSearch({ placeholder = "search" }) {
   return (
-    <div className="relative ">
+    <div className="relative text-xs font-extralight text-custom_text_two">
       <input
         type="email"
         name=""
         id=""
         placeholder={placeholder}
-        className="w-full py-3 pl-10 text-white bg-transparent border-b-2 placeholder:capitalize peer focus:bg-transparent focus:border-b-white border-b-gray-400 focus:outline-none"
+        className="w-full py-2 pl-5 bg-transparent border-b placeholder:capitalize focus:bg-transparent border-b-custom_line_two focus:outline-none"
       />
-      <div className="absolute text-gray-400 -translate-y-1/2 top-1/2 size-6 peer-focus:text-white">
+      <div className="absolute -translate-y-1/2 top-1/2 size-4">
         <SearchIcon className="size-full" />
       </div>
     </div>

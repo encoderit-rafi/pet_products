@@ -12,14 +12,26 @@ import TermsIcon from "@/assets/icons/TermsIcon";
 import LogoutIcon from "@/assets/icons/LogoutIcon";
 import ShelvesIcon from "@/assets/icons/ShelvesIcon";
 import HubIcon from "@/assets/icons/HubIcon";
+import FullLogoLight from "@/assets/icons/FullLogoLight";
+import NotificationButton from "@/components/NotificationButton";
+import ProfileCard from "@/components/ProfileCard";
+import ConnectIcon from "@/assets/icons/ConnectIcon";
 const routes = [
-  { path: "/hub", name: "hub", icon: <HubIcon /> },
-  { path: "/products", name: "products", icon: <ProductsIcon /> },
-  { path: "/marketing", name: "marketing", icon: <MarketingIcon /> },
-  { path: "/shelves", name: "shelves", icon: <ShelvesIcon /> },
-  { path: "/faqs", name: "FAQs", icon: <FaqsIcon /> },
-  { path: "/roles", name: "roles", icon: <RolesIcon /> },
-  { path: "/terms", name: "terms", icon: <TermsIcon /> },
+  { path: "/hub", name: "hub", icon: <HubIcon className="w-5" /> },
+  {
+    path: "/products",
+    name: "products",
+    icon: <ProductsIcon className="w-4" />,
+  },
+  {
+    path: "/marketing",
+    name: "marketing",
+    icon: <MarketingIcon className="w-5" />,
+  },
+  { path: "/shelves", name: "shelves", icon: <ShelvesIcon className="w-4" /> },
+  { path: "/faqs", name: "FAQs", icon: <FaqsIcon className="w-2" /> },
+  { path: "/roles", name: "roles", icon: <RolesIcon className="w-4" /> },
+  { path: "/terms", name: "terms", icon: <TermsIcon className="w-4" /> },
 ];
 export default function AppLayout() {
   const [darkMode, setDarkMode] = useState(true);
@@ -27,63 +39,55 @@ export default function AppLayout() {
     <div
       className={`${
         darkMode ? "dark" : "light"
-      } flex flex-col px-4 py-3 space-y-3 overflow-hidden text-white bg-custom_bg_one h-svh`}
+      } font-poppins flex flex-col pt-5 pr-5 pb-9 gap-6 overflow-hidden text-white bg-custom_bg_one h-svh`}
     >
-      <header className="flex items-center justify-between text-white">
-        <FullLogo className="w-40" />
-        <div className="flex items-center gap-2">
+      <header className="flex items-center justify-between pl-5 text-white">
+        {darkMode ? (
+          <FullLogo className="h-[38px]" />
+        ) : (
+          <FullLogoLight className="h-[38px]" />
+        )}
+        <div className="flex items-center gap-4">
           <ToggleButton darkMode={darkMode} setDarkMode={setDarkMode} />
-          <div className="relative p-3 size-14 bg-custom_bg_two rounded-xl">
-            <BellIcon className="size-full" />
-            <div className="absolute top-0 right-0 flex items-center justify-center text-white translate-x-2 -translate-y-2 border-4 rounded-full border-custom_bg_one bg-lime-500 size-8">
-              3
-            </div>
-          </div>
-          <div className="flex gap-2">
-            <div className="p-1 size-14 bg-custom_bg_two rounded-2xl">
-              <img
-                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt=""
-                className="rounded-2xl"
-              />
-            </div>
-            <div className="flex flex-col justify-center capitalize">
-              <p className="text-sm font-medium">m. khalid saied</p>
-              <p className="text-xs text-gray-400">show profile</p>
-            </div>
-          </div>
+          <NotificationButton />
+          <ProfileCard />
         </div>
       </header>
-      <div className="flex flex-1 gap-4">
+      <div className="flex flex-1 gap-3">
         <aside className="flex flex-col justify-between flex-1 max-w-24">
           <nav>
-            <ul className="">
-              {routes.map((route) => (
-                <li
-                  key={route.name}
-                  className="py-4 transition-all duration-700 rounded-xl hover:bg-custom_bg_two"
+            <ul className="space-y-6">
+              <li className="">
+                <NavLink
+                  to="/"
+                  className="flex flex-col items-center gap-2 text-xs text-center capitalize text-custom_text_six before:absolute before:content('') before:w-[2px] before:bg-custom_orange before:top-0 before:left-0 before:bottom-0 before:h-full before:opacity-0 group-hover:before:opacity-100 before:transition-all before:duration-300"
                 >
+                  <ConnectIcon className="w-10" />
+                  <span className="font-[100]">connect</span>
+                </NavLink>
+              </li>
+              {routes.map((route) => (
+                <li key={route.name} className="relative group">
                   <NavLink
                     to={route.path}
-                    className="flex flex-col items-center gap-1 text-center capitalize"
+                    className="flex flex-col items-center gap-2 text-xs text-center capitalize text-custom_text_six before:absolute before:content('') before:w-[2px] before:bg-custom_orange before:top-0 before:left-0 before:bottom-0 before:h-full before:opacity-0 group-hover:before:opacity-100 before:transition-all before:duration-300"
                   >
-                    <div className="size-7">{route.icon}</div>
-                    <p>{route.name}</p>
+                    {route.icon}
+                    <span className="font-[100]">{route.name}</span>
                   </NavLink>
                 </li>
               ))}
             </ul>
           </nav>
-          <button className="text-red-500 transition-all duration-500 hover:text-red-600">
+          <button className="text-xs font-light transition-all duration-500 text-custom_text_six hover:text-red-600">
             <div className="flex flex-col items-center gap-2 text-center capitalize">
-              <div className="size-7">
-                <LogoutIcon />
-              </div>
+              <LogoutIcon className="w-4" />
+
               <p>log out</p>
             </div>
           </button>
         </aside>
-        <main className="flex-1 bg-custom_bg_two rounded-xl !py-4 px-8 overflow-hidden">
+        <main className="flex-1 bg-custom_bg_two rounded-xl !pt-7 !p-8 overflow-hidden">
           <Outlet />
         </main>
       </div>

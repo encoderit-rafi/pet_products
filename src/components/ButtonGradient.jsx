@@ -1,8 +1,14 @@
+import cn from "@/lib/utils/cn";
 import React from "react";
 
-export default function ButtonGradient({ children }) {
+export default function ButtonGradient({ children, className }) {
   return (
-    <button className="w-full p-1.5 px-3 font-medium rounded-lg whitespace-nowrap bg-gradient-to-r from-lime-600 from-60% to-lime-500 text-lg capitalize">
+    <button
+      className={cn(
+        "w-full  py-3 font-medium rounded-xl whitespace-nowrap bg-gradient-to-r from-[#00B451]  to-[#74B222] text-lg capitalize",
+        className
+      )}
+    >
       {children}
     </button>
   );

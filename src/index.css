@@ -6,10 +6,38 @@
     .dark {
       --custom_bg_one: #21272b;
       --custom_bg_two: #313639;
+      --custom_bg_three: #ffffff;
+      --custom_bg_four: #74b222;
+      --custom_bg_five: #515a62;
+      --custom_bg_six: #f3f6f6;
+
+      --custom_text_one: #eeeeee;
+      --custom_text_two: #ffffff;
+      --custom_text_three: #21272b;
+      --custom_text_four: #ffffff;
+      --custom_text_five: #aaabaa;
+      --custom_text_six: #c0c0c0;
+
+      --custom_line_one: #919191;
+      --custom_line_two: #636363;
     }
     .light {
       --custom_bg_one: #f8f8f8;
       --custom_bg_two: #ffffff;
+      --custom_bg_three: #313639;
+      --custom_bg_four: #fcae18;
+      --custom_bg_five: #ffffff;
+      --custom_bg_six: #f3f6f6;
+
+      --custom_text_one: #aaabaa;
+      --custom_text_two: #000000;
+      --custom_text_three: #ffffff;
+      --custom_text_four: #4c4c4c;
+      --custom_text_five: #7a8e80;
+      --custom_text_six: #000000;
+
+      --custom_line_one: #c0c0c0;
+      --custom_line_two: #e6e6e6;
     }
   }
 }
@@ -28,5 +56,13 @@
   }
   ::-webkit-scrollbar-thumb:hover {
     background-color: #555;
+  }
+  *,
+  ::before,
+  ::after {
+    box-sizing: border-box;
+    border-width: 0;
+    border-style: solid;
+    /* border-color: none; */
   }
 }

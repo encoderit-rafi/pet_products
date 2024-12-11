@@ -8,6 +8,7 @@ import PlaceholderImage from "@/components/PlaceholderImage";
 import EditIcon from "@/assets/icons/EditIcon";
 import DeleteIcon from "@/assets/icons/DeleteIcon";
 import InputSearch from "@/components/InputSearch";
+import Title from "@/assets/icons/Title";
 
 const query = {
   headers: [
@@ -17,7 +18,7 @@ const query = {
       cellValue: (row) => {
         return (
           <div className="flex items-center gap-3">
-            <div className="size-8">
+            <div className="size-5">
               <PlaceholderImage />
             </div>
             <span>{row.name}</span>
@@ -142,9 +143,11 @@ export default function Products() {
   return (
     <div className="flex flex-col h-full gap-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold capitalize">dashboard</h2>
-        <div className="flex items-center gap-4">
-          <InputSearch />
+        <Title>dashboard</Title>
+        <div className="flex items-center gap-3">
+          <div className="w-[111px]">
+            <InputSearch />
+          </div>
           <BaseMenu
             text="select department"
             data={departments}

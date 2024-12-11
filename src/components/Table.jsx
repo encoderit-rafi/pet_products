@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Table({ query }) {
   return (
-    <div className={"relative h-full max-h-[500px] overflow-y-auto "}>
+    <div className={"relative h-full max-h-[500px] overflow-y-auto text-xs"}>
       {query.isLoading && (
         <div className="w-full h-1 overflow-hidden bg-gray-200 rounded-full">
           <div className="h-4 rounded-lg bg-custom_primary animate-loading"></div>
@@ -23,11 +23,11 @@ export default function Table({ query }) {
           </tr>
         </thead>
 
-        <tbody className="divide-y divide-gray-700">
+        <tbody className="">
           {query?.data?.map((row) => (
             <tr
               key={`${row.id}-${Math.random()}`}
-              className="text-custom_text_two hover:text-custom_primary"
+              className="text-custom_text_two "
             >
               {query?.headers.map((header) => (
                 <td

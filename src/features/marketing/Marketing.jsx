@@ -7,6 +7,7 @@ import EditIcon from "@/assets/icons/EditIcon";
 import DeleteIcon from "@/assets/icons/DeleteIcon";
 import ButtonWithIcon from "@/components/ButtonWithIcon";
 import ButtonGradient from "@/components/ButtonGradient";
+import Title from "@/assets/icons/Title";
 
 const query = {
   headers: [
@@ -16,9 +17,9 @@ const query = {
       cellValue: (row) => {
         return (
           <div className="flex items-center gap-3">
-            <div className="size-8">
+            {/* <div className="size-5">
               <PlaceholderImage />
-            </div>
+            </div> */}
             <span>{row.name}</span>
           </div>
         );
@@ -66,15 +67,18 @@ export default function Marketing() {
   return (
     <div className="flex flex-col h-full gap-4">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="size-10">
+        <div className="flex items-center gap-6">
+          <div className="size-9">
             <BackButton />
           </div>
-          <h2 className="text-xl font-semibold capitalize">tasks</h2>
+
+          <Title>tasks</Title>
         </div>
         <div className="flex items-center gap-4">
           <ButtonWithIcon />
-          <ButtonGradient>save settings</ButtonGradient>
+          <ButtonGradient className="px-4 text-xs font-medium">
+            save settings
+          </ButtonGradient>
         </div>
       </div>
       <BorderBox>
