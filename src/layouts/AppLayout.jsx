@@ -79,13 +79,16 @@ export default function AppLayout() {
               ))}
             </ul>
           </nav>
-          <button className="text-xs font-light transition-all duration-500 text-custom_text_six hover:text-red-600">
+          <NavLink
+            to="/login"
+            className="text-xs font-light transition-all duration-500 text-custom_text_six hover:text-red-600"
+          >
             <div className="flex flex-col items-center gap-2 text-center capitalize">
               <LogoutIcon className="w-4" />
 
               <p>log out</p>
             </div>
-          </button>
+          </NavLink>
         </aside>
         <main className="flex-1 bg-custom_bg_two rounded-xl !pt-7 !p-8 overflow-hidden">
           <Outlet />
