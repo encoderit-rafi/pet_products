@@ -1,27 +1,26 @@
+import Title from "@/assets/icons/Title";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 
 export default function Terms() {
   return (
-    <div className="flex flex-col h-full gap-4">
+    <div className="flex flex-col h-full gap-4 text-custom_bg_three">
       <TabGroup>
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold capitalize">
-            Terms and Conditions
-          </h2>
+          <Title>Terms and Conditions</Title>
           <div className="flex items-center gap-4">
             <TabList className="">
-              <Tab className="border-b-2 border-b-slate-400 data-[selected]:border-b-white data-[selected]:text-white p-3 focus:outline-none">
+              <Tab className="border-b-2 text-xs border-b-slate-400 data-[selected]:border-b-custom_bg_three data-[selected]:text-custom_bg_three p-3 focus:outline-none">
                 Terms and Conditions
               </Tab>
-              <Tab className="border-b-2 border-b-slate-400 data-[selected]:border-b-white data-[selected]:text-white p-3 focus:outline-none">
+              {/* <Tab className="border-b-2 border-b-slate-400 data-[selected]:border-b-white data-[selected]:text-white p-3 focus:outline-none">
                 Privacy Policy
-              </Tab>
+              </Tab> */}
             </TabList>
           </div>
         </div>
         <TabPanels>
           <TabPanel>
-            <div className="mt-2 space-y-5 text-lg leading-relaxed text-justify text-gray-300">
+            <div className="mt-2 max-h-[600px] overflow-y-auto text-base font-light  space-y-5 leading-relaxed text-justify ">
               <p>
                 Sed ut perspiciatis unde omnis iste natus error sit voluptatem
                 accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
@@ -75,7 +74,7 @@ export default function Terms() {
               </p>
             </div>
           </TabPanel>
-          <TabPanel>Content 2</TabPanel>
+          {/* <TabPanel>Content 2</TabPanel> */}
         </TabPanels>
       </TabGroup>
     </div>
