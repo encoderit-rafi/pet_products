@@ -32,7 +32,7 @@ export default function Faqs() {
               Question about app goes here
               <DownIcon className="w-2 transition-all duration-200 group-data-[open]:rotate-180" />
             </DisclosureButton>
-            <DisclosurePanel className="mt-3 text-base font-normal">
+            <DisclosurePanel className="mt-3 text-base font-normal text-custom_text_two">
               Sed ut perspiciatis unde omnis iste natus error sit voluptatem
               accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
               quae ab illor explicabo. Nemo enim ipsam voluptatem quia voluptas
