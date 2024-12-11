@@ -11,6 +11,7 @@
       --custom_bg_five: #515a62;
       --custom_bg_six: #f3f6f6;
       --custom_bg_seven: #4d4d4d;
+      --custom_bg_eight: rgba(255, 255, 255, 9%);
 
       --custom_text_one: #eeeeee;
       --custom_text_two: #ffffff;
@@ -31,6 +32,7 @@
       --custom_bg_five: #ffffff;
       --custom_bg_six: #f3f6f6;
       --custom_bg_seven: #4d4d4d;
+      --custom_bg_eight: rgb(255, 255, 255);
 
       --custom_text_one: #aaabaa;
       --custom_text_two: #000000;
