@@ -68,7 +68,7 @@ export default function Marketing() {
     <div className="flex flex-col h-full gap-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-6">
-          <div className="size-9">
+          <div className="size-10">
             <BackButton />
           </div>
 
