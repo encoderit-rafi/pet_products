@@ -20,6 +20,7 @@
 
       --custom_line_one: #919191;
       --custom_line_two: #636363;
+      --custom_line_three: #313639;
     }
     .light {
       --custom_bg_one: #f8f8f8;
@@ -38,6 +39,7 @@
 
       --custom_line_one: #c0c0c0;
       --custom_line_two: #e6e6e6;
+      --custom_line_three: #e6e6e6;
     }
   }
 }

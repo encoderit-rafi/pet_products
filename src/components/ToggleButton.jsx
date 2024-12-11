@@ -12,7 +12,7 @@ const ToggleButton = ({ darkMode, setDarkMode }) => {
   return (
     <button
       onClick={toggleTheme}
-      className="relative justify-center w-20 h-12 gap-4 p-2 transition-colors duration-300 border outline-none bg-custom_bg_two rounded-xl border-custom_line_two"
+      className="relative justify-center w-20 h-12 gap-4 p-2 transition-colors duration-300 border outline-none bg-custom_bg_two rounded-xl border-custom_line_three"
     >
       <div
         className={`relative rounded-md bg-custom_bg_three text-custom_text_three w-9 h-full shadow-md transform transition-transform duration-300 ${

@@ -22,6 +22,7 @@ export default {
 
         custom_line_one: "var(--custom_line_one)",
         custom_line_two: "var(--custom_line_two)",
+        custom_line_three: "var(--custom_line_three)",
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
