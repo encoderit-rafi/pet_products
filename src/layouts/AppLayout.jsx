@@ -1,9 +1,13 @@
-import { NavLink, Outlet } from "react-router-dom";
-import FullLogo from "@/assets/icons/FullLogo";
-import BellIcon from "@/assets/icons/BellIcon";
-import ToggleButton from "@/components/ToggleButton";
 import { useState } from "react";
-import BoxIcon from "@/assets/icons/BoxIcon";
+import { NavLink, Outlet } from "react-router-dom";
+//* components📦
+import ToggleButton from "@/components/ToggleButton";
+import ProfileCard from "@/components/ProfileCard";
+import NotificationButton from "@/components/NotificationButton";
+import Dialog from "@/components/Dialog";
+
+//* icons😎
+import FullLogo from "@/assets/icons/FullLogo";
 import ProductsIcon from "@/assets/icons/ProductsIcon";
 import MarketingIcon from "@/assets/icons/MarketingIcon";
 import FaqsIcon from "@/assets/icons/FaqsIcon";
@@ -13,9 +17,9 @@ import LogoutIcon from "@/assets/icons/LogoutIcon";
 import ShelvesIcon from "@/assets/icons/ShelvesIcon";
 import HubIcon from "@/assets/icons/HubIcon";
 import FullLogoLight from "@/assets/icons/FullLogoLight";
-import NotificationButton from "@/components/NotificationButton";
-import ProfileCard from "@/components/ProfileCard";
 import ConnectIcon from "@/assets/icons/ConnectIcon";
+
+//* data📂
 const routes = [
   { path: "/hub", name: "hub", icon: <HubIcon className="w-5" /> },
   {
@@ -35,6 +39,8 @@ const routes = [
 ];
 export default function AppLayout() {
   const [darkMode, setDarkMode] = useState(true);
+  const [isOpenConfirmLogoutDialog, setIsOpenConfirmLogoutDialog] =
+    useState(false);
   return (
     <div
       className={`${
@@ -79,8 +85,8 @@ export default function AppLayout() {
               ))}
             </ul>
           </nav>
-          <NavLink
-            to="/login"
+          <button
+            onClick={() => setIsOpenConfirmLogoutDialog(true)}
             className="text-xs font-light transition-all duration-500 text-custom_text_six hover:text-red-600"
           >
             <div className="flex flex-col items-center gap-2 text-center capitalize">
@@ -88,12 +94,25 @@ export default function AppLayout() {
 
               <p>log out</p>
             </div>
-          </NavLink>
+          </button>
         </aside>
         <main className="flex-1 bg-custom_bg_two rounded-xl !pt-7 !p-8 overflow-hidden">
           <Outlet />
         </main>
       </div>
+      <Dialog
+        title="log out"
+        isOpen={isOpenConfirmLogoutDialog}
+        className="w-[600px] h-[600px]"
+      >
+        {/* logout */}
+        <button
+          className="bg-red-500"
+          onClick={() => setIsOpenConfirmLogoutDialog(false)}
+        >
+          close
+        </button>
+      </Dialog>
     </div>
   );
 }

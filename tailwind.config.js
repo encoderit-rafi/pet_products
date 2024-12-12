@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+import tailwindcssAnimated from "tailwindcss-animated";
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -14,6 +15,7 @@ export default {
         custom_bg_six: "var(--custom_bg_six)",
         custom_bg_seven: "var(--custom_bg_seven)",
         custom_bg_eight: "var(--custom_bg_eight)",
+        custom_bg_nine: "var(--custom_bg_nine)",
 
         custom_text_one: "var(--custom_text_one)",
         custom_text_two: "var(--custom_text_two)",
@@ -31,5 +33,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [tailwindcssAnimated],
 };
