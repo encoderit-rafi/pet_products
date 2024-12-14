@@ -43,9 +43,8 @@ export default function AppLayout() {
     useState(false);
   return (
     <div
-      className={`${
-        darkMode ? "dark" : "light"
-      } font-poppins flex flex-col pt-5 pr-5 pb-9 gap-6 overflow-hidden text-white bg-custom_bg_one h-svh`}
+      className={`${darkMode ? "dark" : "light"
+        } font-poppins flex flex-col pt-5 pr-5 pb-9 gap-6 overflow-hidden text-white bg-custom_bg_one h-svh`}
     >
       <header className="flex items-center justify-between pl-5 text-white">
         {darkMode ? (
