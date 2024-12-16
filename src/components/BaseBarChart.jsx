@@ -77,7 +77,7 @@ const CustomTick = ({ x, y, payload }) => {
                                 x={0}
                                 y={iconSize + 20} // Position text below the image
                                 textAnchor="middle"
-                                fill="#f0f0f0"
+                                fill="#636363"
                                 fontSize={12}
                         >
                                 {payload.value}

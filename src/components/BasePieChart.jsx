@@ -14,6 +14,7 @@ export default function BasePieChart() {
   <ResponsiveContainer width="100%" height="100%">
    <PieChart width={400} height={400}>
 
+    {/* Dashed Circle */}
     <Pie
      data={DashedData}
      dataKey="value"

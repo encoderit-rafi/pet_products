@@ -290,7 +290,7 @@ export default function Home() {
             <div className="h-72 relative">
 
               <BasePieChart />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2  -translate-y-1/2 text-center text-white" >
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2  -translate-y-1/2 text-center text-custom_text_four" >
                 <h5 className="text-xl font-semibold">SR 50,000
                 </h5>
                 <span className="text-xs text-gray-500"> Total Volume</span>
