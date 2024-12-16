@@ -2,7 +2,7 @@ import EditIcon from "@/assets/icons/EditIcon";
 import DeleteIcon from "@/assets/icons/DeleteIcon";
 import ButtonWithIcon from "@/components/ButtonWithIcon";
 import BorderBox from "@/components/BorderBox";
-import Title from "@/assets/icons/Title";
+import Title from "@/components/Title";
 
 export default function Roles() {
   return (

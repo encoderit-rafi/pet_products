@@ -7,7 +7,7 @@ import EditIcon from "@/assets/icons/EditIcon";
 import DeleteIcon from "@/assets/icons/DeleteIcon";
 import ButtonWithIcon from "@/components/ButtonWithIcon";
 import ButtonGradient from "@/components/ButtonGradient";
-import Title from "@/assets/icons/Title";
+import Title from "@/components/Title";
 
 const query = {
   headers: [

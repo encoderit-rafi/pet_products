@@ -8,7 +8,7 @@ import PlaceholderImage from "@/components/PlaceholderImage";
 import EditIcon from "@/assets/icons/EditIcon";
 import DeleteIcon from "@/assets/icons/DeleteIcon";
 import InputSearch from "@/components/InputSearch";
-import Title from "@/assets/icons/Title";
+import Title from "@/components/Title";
 
 const query = {
   headers: [

@@ -78,3 +78,22 @@
   fill: transparent !important;
 }
 
+.react-datepicker{
+  @apply w-64 origin-top-right   !bg-[#21272b]  text-sm/6  transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 space-y-2;
+}
+.react-datepicker__header {
+  @apply  !bg-[#21272b];
+}
+.react-datepicker{
+  @apply rounded-xl mt-2 p-1;
+}
+.react-datepicker__current-month,.react-datepicker__day-name,
+.react-datepicker__day{
+  @apply !text-white;
+}
+.react-datepicker__day--selected{
+  @apply !bg-[#f0f0f0] !text-[#21272b];
+}
+.react-datepicker__day:hover{
+  @apply !text-[#21272b];
+}

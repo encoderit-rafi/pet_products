@@ -15,7 +15,7 @@ import {
 } from "@headlessui/react";
 import BoxIcon from "@/assets/icons/BoxIcon";
 import DownIcon from "@/assets/icons/DownIcon";
-import Title from "@/assets/icons/Title";
+import Title from "@/components/Title";
 export default function Faqs() {
   return (
     <div className="flex flex-col h-full gap-4">

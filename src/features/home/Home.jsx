@@ -1,18 +1,213 @@
-import Title from "@/assets/icons/Title";
+
 import BorderBox from "@/components/BorderBox";
-import Chart from "@/components/Chart";
+import BaseBarChart from "@/components/BaseBarChart";
 import InputSearch from "@/components/InputSearch";
-
-import { PieChart, Pie, Sector, ResponsiveContainer, Cell } from 'recharts';
-
-const data = [
-  { name: "Progress", value: 75, color: "#55a630" }, // Progress color
-  { name: "Remaining", value: 25, color: "#b3b3b3" }, // Track color
+import BasePieChart from "@/components/BasePieChart";
+import SubTitle from "@/components/SubTitle";
+import ExportButton from "@/components/ExportButton";
+import Title from "@/components/Title";
+import BaseDatePicker from "@/components/BaseDatePicker";
+import BaseMenu from "@/components/BaseMenu";
+import { useState } from "react";
+import Table from "@/components/Table";
+import PlaceholderImage from "@/components/PlaceholderImage";
+const demoData = [
+  {
+    id: 1,
+    name: "Product A",
+    sku: "SKU001",
+    brand: "BrandX",
+    category: "Home Appliances",
+    total_units_sold: 499,
+    total_sales_value: 28800,
+    criteria_category: "High Demand",
+  },
+  {
+    id: 2,
+    name: "Product B",
+    sku: "SKU002",
+    brand: "BrandY",
+    category: "Sports",
+    total_units_sold: 430,
+    total_sales_value: 36454,
+    criteria_category: "Moderate Demand",
+  },
+  {
+    id: 3,
+    name: "Product C",
+    sku: "SKU003",
+    brand: "BrandX",
+    category: "Sports",
+    total_units_sold: 242,
+    total_sales_value: 14181,
+    criteria_category: "High Demand",
+  },
+  {
+    id: 4,
+    name: "Product D",
+    sku: "SKU004",
+    brand: "BrandB",
+    category: "Sports",
+    total_units_sold: 490,
+    total_sales_value: 37496,
+    criteria_category: "Low Demand",
+  },
+  {
+    id: 5,
+    name: "Product E",
+    sku: "SKU005",
+    brand: "BrandX",
+    category: "Clothing",
+    total_units_sold: 69,
+    total_sales_value: 10489,
+    criteria_category: "Moderate Demand",
+  },
+  {
+    id: 6,
+    name: "Product F",
+    sku: "SKU006",
+    brand: "BrandX",
+    category: "Sports",
+    total_units_sold: 461,
+    total_sales_value: 26846,
+    criteria_category: "High Demand",
+  },
 ];
-
-const DashedData = [
-  { name: "DashedCircle", value: 100, color: "#6e6e6e" },
+const monthsData = [
+  { id: 1, name: '1 month', value: 1 },
+  { id: 2, name: '2 months', value: 2 },
+  { id: 3, name: '3 months', value: 3 },
+  { id: 4, name: '4 months', value: 4 },
+  { id: 5, name: '5 months', value: 5 },
+  { id: 6, name: '6 months', value: 6 },
+  { id: 7, name: '7 months', value: 7 },
+  { id: 8, name: '8 months', value: 8 },
+  { id: 9, name: '9 months', value: 9 },
+  { id: 10, name: '10 months', value: 10 },
+  { id: 11, name: '11 months', value: 11 },
+  { id: 12, name: '12 months', value: 12 },
 ];
+const brands = [
+  {
+    id: 1,
+    name: "brand 1",
+    value: "brand_1",
+  },
+  {
+    id: 2,
+    name: "brand 2",
+    value: "brand_2",
+  },
+  {
+    id: 3,
+    name: "brand 3",
+    value: "brand_3",
+  },
+];
+const query = {
+  headers: [
+    {
+      name: "name",
+      value: "name",
+      cellValue: (row) => {
+        return (
+          row.name
+        );
+      },
+    },
+    {
+      name: "purchases",
+      value: "sku",
+      cellValue: (row) => {
+        return row?.sku;
+      },
+    },
+    {
+      name: "city",
+      value: "brand",
+      cellValue: (row) => {
+        return row?.brand;
+      },
+    },
+
+  ],
+  isLoading: false,
+  data: demoData,
+};
+const query1 = {
+  headers: [
+    {
+      name: "name",
+      value: "name",
+      cellValue: (row) => {
+        return (
+          <div className="flex items-center gap-3">
+            <div className="size-5">
+              <PlaceholderImage />
+            </div>
+            <span>{row.name}</span>
+          </div>
+        );
+      },
+    },
+    {
+      name: "sku",
+      value: "sku",
+      cellValue: (row) => {
+        return row?.sku;
+      },
+    },
+    {
+      name: "brand",
+      value: "brand",
+      cellValue: (row) => {
+        return row?.brand;
+      },
+    },
+    {
+      name: "category",
+      value: "category",
+      cellValue: (row) => {
+        return row?.category;
+      },
+    },
+    {
+      name: "total units sold",
+      value: "total_units_sold",
+      cellValue: (row) => {
+        return row?.total_units_sold;
+      },
+    },
+    {
+      name: "total units sold",
+      value: "total_units_sold",
+      cellValue: (row) => {
+        return row?.total_units_sold;
+      },
+    },
+    {
+      name: "criteria category",
+      value: "criteria_category",
+      cellValue: (row) => {
+        return row?.criteria_category;
+      },
+    },
+    // {
+    //   name: <p className="text-right">actions</p>,
+    //   value: "actions",
+    //   cellValue: (row) => {
+    //     return (
+    //       <div className="flex flex-row-reverse gap-3 text-yellow-400">
+    //         <DeleteIcon className={"size-5"} />
+    //         <EditIcon className={"size-5"} />
+    //       </div>
+    //     );
+    //   },
+    // },
+  ],
+  isLoading: false,
+  data: demoData,
+};
 
 // const renderActiveShape = (props) => {
 //   const RADIAN = Math.PI / 180;
@@ -45,68 +240,224 @@ const DashedData = [
 //   );
 // };
 export default function Home() {
+  const [months, setMonths] = useState(null)
+  const [brand, setBrand] = useState(null);
+
   return (
     <div className="">
       <div className="grid grid-cols-12 gap-6">
-        <div className="col-span-9">
+        {/* heading 1*/}
+        <div className="col-span-8">
           <Title>
             Total Sales
           </Title>
         </div>
-        <div className="col-span-3">
+        <div className="col-span-4">
           <InputSearch placeholder="search dashboard" />
 
         </div>
-        <div className="col-span-9 h-72">
+        {/* charts 1*/}
+        <div className="col-span-8">
           <BorderBox>
-            <Chart />
-          </BorderBox>
-        </div>
-        <div className="col-span-3">
-          <BorderBox>
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart width={400} height={400}>
-
-                <Pie
-                  data={[{ name: "DashedCircle", value: 100 }]}
-                  dataKey="value"
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={60}
-                  stroke="#6e6e6e"
-                  fill="none"
-                  strokeDasharray="3 3" // Dashed pattern
-                  isAnimationActive={false}
+            <div className="flex items-center justify-between mb-3">
+              <SubTitle>
+                Brands Chart
+              </SubTitle>
+              <div className="flex items-center gap-3">
+                <BaseMenu text="select month" data={monthsData} value={months}
+                  setValue={setMonths}
                 />
+                <ExportButton />
+              </div>
+            </div>
+            <div className="h-72">
 
-                {/* Progress Circle */}
-                <Pie
-                  data={data}
-                  dataKey="value"
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={70}
-                  outerRadius={85}
-                  cornerRadius={10} // Rounded corners
-                  startAngle={90} // Rotate to match design
-                  endAngle={-270}
-                  paddingAngle={2}
-                >
-                  {data.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} stroke="none" />
-                  ))}
-                </Pie>
-              </PieChart>
-            </ResponsiveContainer>
+              <BaseBarChart />
+            </div>
+          </BorderBox>
+        </div>
+        <div className="col-span-4">
+          <BorderBox>
+            <div className="flex items-center justify-between">
+              <SubTitle>
+                Best Seller Brand
+              </SubTitle>
+              <div className="flex items-center gap-3 ">
+                <BaseDatePicker />
 
+              </div>
+            </div>
+            <div className="h-72 relative">
 
+              <BasePieChart />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2  -translate-y-1/2 text-center text-white" >
+                <h5 className="text-xl font-semibold">SR 50,000
+                </h5>
+                <span className="text-xs text-gray-500"> Total Volume</span>
+              </div>
+            </div>
           </BorderBox>
 
         </div>
+        {/* charts 2*/}
+        <div className="col-span-8">
+          <BorderBox>
+            <div className="flex items-center justify-between mb-3">
+              <SubTitle>
+                Sales vs Cities
+              </SubTitle>
+              <div className="flex items-center gap-3">
+                <BaseMenu
+                  text="select brand"
+                  data={brands}
+                  value={brand}
+                  setValue={(item) => setBrand(item)}
+                />
+                <BaseMenu text="select month" data={monthsData} value={months}
+                  setValue={setMonths}
+                />
+                <ExportButton />
+              </div>
+            </div>
+            <div className="h-72">
 
+              <BaseBarChart />
+            </div>
+          </BorderBox>
+        </div>
+        <div className="col-span-4">
+          <BorderBox>
+            <div className="flex items-center justify-between">
+              <SubTitle>
+                Top Clients
+              </SubTitle>
+              <div className="flex items-center gap-3">
+                <BaseDatePicker />
+
+              </div>
+            </div>
+            <div className="h-72">
+
+              <Table query={query} />
+
+            </div>
+          </BorderBox>
+
+        </div>
+        {/* heading 2*/}
+        <div className="col-span-12">
+          <Title>
+            Inventory
+          </Title>
+        </div>
+        {/* charts 3*/}
+        <div className="col-span-8">
+          <BorderBox>
+            <div className="flex items-center justify-between mb-3">
+              <SubTitle>
+                Brands Inventory
+              </SubTitle>
+              <div className="flex items-center gap-3">
+
+                <BaseMenu text="select month" data={monthsData} value={months}
+                  setValue={setMonths}
+                />
+                <ExportButton />
+              </div>
+            </div>
+            <div className="h-72">
+
+              <BaseBarChart />
+            </div>
+          </BorderBox>
+        </div>
+        <div className="col-span-4">
+          <BorderBox>
+            <div className="flex items-center justify-between">
+              <SubTitle>
+                Lowest Stock
+              </SubTitle>
+              <div className="flex items-center gap-3">
+                <BaseDatePicker />
+
+              </div>
+            </div>
+            <div className="h-72">
+              <Table query={query} />
+            </div>
+          </BorderBox>
+        </div>
+        <div className="col-span-12">
+          <BorderBox>
+            <div className="flex items-center justify-between">
+              <SubTitle>
+                Total Inventory
+              </SubTitle>
+              <div className="flex items-center gap-3">
+                <BaseMenu text="select month" data={monthsData} value={months}
+                  setValue={setMonths}
+                />
+                <ExportButton />
+
+              </div>
+            </div>
+            <div className="h-72">
+              <Table query={query1} />
+            </div>
+          </BorderBox>
+        </div>
+        {/* heading 3*/}
+        <div className="col-span-12">
+          <Title>
+            Marketing
+          </Title>
+        </div>
+        {/* charts 4*/}
+        <div className="col-span-8">
+          <BorderBox>
+            <div className="flex items-center justify-between mb-3">
+              <SubTitle>
+                Brand Marketing
+              </SubTitle>
+              <div className="flex items-center gap-3">
+                <BaseMenu
+                  text="select brand"
+                  data={brands}
+                  value={brand}
+                  setValue={(item) => setBrand(item)}
+                />
+                <BaseMenu text="select month" data={monthsData} value={months}
+                  setValue={setMonths}
+                />
+                <ExportButton />
+              </div>
+            </div>
+            <div className="h-72">
+
+              <BaseBarChart />
+            </div>
+          </BorderBox>
+        </div>
+        <div className="col-span-4">
+          <BorderBox>
+            <div className="flex items-center justify-between">
+              <SubTitle>
+                Highest Expenses
+              </SubTitle>
+              <div className="flex items-center gap-3">
+                <BaseDatePicker />
+
+              </div>
+            </div>
+            <div className="h-72">
+
+              <Table query={query} />
+
+            </div>
+          </BorderBox>
+
+        </div>
       </div>
-      {/* <Chart /> */}
 
     </div>
   );

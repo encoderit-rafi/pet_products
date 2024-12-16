@@ -87,7 +87,7 @@ const CustomTick = ({ x, y, payload }) => {
 };
 
 
-export default function Chart() {
+export default function BaseBarChart() {
         return (
                 <ResponsiveContainer width="100%" height="100%"
                 >

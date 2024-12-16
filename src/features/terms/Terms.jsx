@@ -1,4 +1,4 @@
-import Title from "@/assets/icons/Title";
+import Title from "@/components/Title";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 
 export default function Terms() {
