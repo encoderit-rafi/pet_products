@@ -114,6 +114,7 @@ const query = {
           row.name
         );
       },
+
     },
     {
       name: "purchases",
@@ -121,6 +122,7 @@ const query = {
       cellValue: (row) => {
         return row?.sku;
       },
+
     },
     {
       name: "city",
@@ -128,6 +130,7 @@ const query = {
       cellValue: (row) => {
         return row?.brand;
       },
+
     },
 
   ],
@@ -149,6 +152,7 @@ const query1 = {
           </div>
         );
       },
+
     },
     {
       name: "sku",
@@ -156,6 +160,7 @@ const query1 = {
       cellValue: (row) => {
         return row?.sku;
       },
+
     },
     {
       name: "brand",
@@ -163,6 +168,7 @@ const query1 = {
       cellValue: (row) => {
         return row?.brand;
       },
+
     },
     {
       name: "category",
@@ -170,6 +176,7 @@ const query1 = {
       cellValue: (row) => {
         return row?.category;
       },
+
     },
     {
       name: "total units sold",
@@ -177,6 +184,7 @@ const query1 = {
       cellValue: (row) => {
         return row?.total_units_sold;
       },
+
     },
     {
       name: "total units sold",

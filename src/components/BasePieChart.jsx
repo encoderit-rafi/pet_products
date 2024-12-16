@@ -20,11 +20,11 @@ export default function BasePieChart() {
      dataKey="value"
      cx="50%"
      cy="50%"
-     innerRadius={60}
-     outerRadius={60}
+     innerRadius={65}
+     outerRadius={65}
      stroke="#6e6e6e"
      fill="none"
-     strokeDasharray="3 3" // Dashed pattern
+     strokeDasharray="5 5" // Dashed pattern
      isAnimationActive={false}
     />
 

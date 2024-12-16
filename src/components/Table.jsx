@@ -1,3 +1,4 @@
+import cn from "@/lib/utils/cn";
 import React from "react";
 
 export default function Table({ query }) {
@@ -14,8 +15,8 @@ export default function Table({ query }) {
             {query.headers.map((header) => (
               <th
                 key={`header-${header.value}-${Math.random()}`}
-                className={`bg-custom_bg_two whitespace-nowrap px-4 py-2 text-left  font-medium capitalize tracking-wider text-gray-400 hover:cursor-default
-                `}
+                className={cn(`bg-custom_bg_two whitespace-nowrap first:px-0 last:px-0 px-4 py-2 text-left  font-medium capitalize tracking-wider text-gray-400 hover:cursor-default
+                `, header?.className?.th)}
               >
                 {header.name}
               </th>
@@ -32,7 +33,7 @@ export default function Table({ query }) {
               {query?.headers.map((header) => (
                 <td
                   key={`${header.value}-${Math.random()}`}
-                  className={`whitespace-nowrap px-4 py-3  font-normal capitalize hover:cursor-default`}
+                  className={`whitespace-nowrap first:px-0 last:px-0 px-4 py-3  font-normal capitalize hover:cursor-default`}
                 >
                   {header.cellValue(row)}
                 </td>

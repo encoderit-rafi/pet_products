@@ -9,6 +9,13 @@ import EditIcon from "@/assets/icons/EditIcon";
 import DeleteIcon from "@/assets/icons/DeleteIcon";
 import InputSearch from "@/components/InputSearch";
 import Title from "@/components/Title";
+import Drawer from "@/components/Drawer";
+import BaseButton from "@/components/BaseButton";
+import LinkedinIcon from "@/assets/icons/LinkedinIcon";
+import FacebookIcon from "@/assets/icons/FacebookIcon";
+import WhatsappIcon from "@/assets/icons/WhatsappIcon";
+import PhoneIcon from "@/assets/icons/PhoneIcon";
+import MessageIcon from "@/assets/icons/MessageIcon";
 
 const query = {
   headers: [
@@ -140,10 +147,11 @@ export default function Products() {
   const [department, setDepartment] = useState(null);
   const [brand, setBrand] = useState(null);
   const [category, setCategory] = useState(null);
+  const [isOpenDrawer, setIsOpenDrawer] = useState(false);
   return (
     <div className="flex flex-col h-full gap-4">
       <div className="flex items-center justify-between">
-        <Title>dashboard</Title>
+        <Title onClick={() => setIsOpenDrawer(true)}>dashboard</Title>
         <div className="flex items-center gap-3">
           <div className="w-[111px]">
             <InputSearch />
@@ -172,6 +180,110 @@ export default function Products() {
       <BorderBox>
         <Table query={query} />
       </BorderBox>
+      <Drawer isOpen={isOpenDrawer} className="max-w-96 flex flex-col">
+        <Title>Application Support</Title>
+        <div className="flex-1 overflow-y-auto mt-5 space-y-3">
+          <BorderBox className="px-3 py-4 h-fit">
+            <div className="flex items-center gap-4">
+              <img
+                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt=""
+                className="rounded-lg h-16"
+              />
+
+              <div className="flex flex-col justify-between flex-1 capitalize h-16">
+                <p className="text-sm font-medium text-custom_text_four">
+                  m. khalid saied
+                </p>
+                <p className="text-xs text-gray-400">role here</p>
+                <div className="flex items-center gap-3 text-yellow-500">
+                  <LinkedinIcon className="size-4" />
+                  <FacebookIcon className="size-4" />
+                  <WhatsappIcon className="size-4" />
+                  <MessageIcon className="size-4" />
+                  <PhoneIcon className="size-4" />
+
+                </div>
+              </div>
+            </div>
+          </BorderBox>
+          <BorderBox className="px-3 py-4 h-fit">
+            <div className="flex items-center gap-4">
+              <img
+                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt=""
+                className="rounded-lg h-16"
+              />
+
+              <div className="flex flex-col justify-between flex-1 capitalize h-16">
+                <p className="text-sm font-medium text-custom_text_four">
+                  m. khalid saied
+                </p>
+                <p className="text-xs text-gray-400">role here</p>
+                <div className="flex items-center gap-3 text-yellow-500">
+                  <LinkedinIcon className="size-4" />
+                  <FacebookIcon className="size-4" />
+                  <WhatsappIcon className="size-4" />
+                  <MessageIcon className="size-4" />
+                  <PhoneIcon className="size-4" />
+
+                </div>
+              </div>
+            </div>
+          </BorderBox>
+          <BorderBox className="px-3 py-4 h-fit">
+            <div className="flex items-center gap-4">
+              <img
+                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt=""
+                className="rounded-lg h-16"
+              />
+
+              <div className="flex flex-col justify-between flex-1 capitalize h-16">
+                <p className="text-sm font-medium text-custom_text_four">
+                  m. khalid saied
+                </p>
+                <p className="text-xs text-gray-400">role here</p>
+                <div className="flex items-center gap-3 text-yellow-500">
+                  <LinkedinIcon className="size-4" />
+                  <FacebookIcon className="size-4" />
+                  <WhatsappIcon className="size-4" />
+                  <MessageIcon className="size-4" />
+                  <PhoneIcon className="size-4" />
+
+                </div>
+              </div>
+            </div>
+          </BorderBox>
+          <BorderBox className="px-3 py-4 h-fit">
+            <div className="flex items-center gap-4">
+              <img
+                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt=""
+                className="rounded-lg h-16"
+              />
+
+              <div className="flex flex-col justify-between flex-1 capitalize h-16">
+                <p className="text-sm font-medium text-custom_text_four">
+                  m. khalid saied
+                </p>
+                <p className="text-xs text-gray-400">role here</p>
+                <div className="flex items-center gap-3 text-yellow-500">
+                  <LinkedinIcon className="size-4" />
+                  <FacebookIcon className="size-4" />
+                  <WhatsappIcon className="size-4" />
+                  <MessageIcon className="size-4" />
+                  <PhoneIcon className="size-4" />
+
+                </div>
+              </div>
+            </div>
+          </BorderBox>
+
+        </div>
+        <BaseButton onClick={() => setIsOpenDrawer(false)} className="mt-10">
+          done</BaseButton>
+      </Drawer>
     </div>
   );
 }

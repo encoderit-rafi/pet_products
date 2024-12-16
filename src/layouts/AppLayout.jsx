@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 //* components📦
 import ToggleButton from "@/components/ToggleButton";
 import ProfileCard from "@/components/ProfileCard";
@@ -11,6 +11,7 @@ import FullLogo from "@/assets/icons/FullLogo";
 import LogoutIcon from "@/assets/icons/LogoutIcon";
 import FullLogoLight from "@/assets/icons/FullLogoLight";
 import Sidebar from "@/components/Sidebar";
+import BaseButton from "@/components/BaseButton";
 
 
 export default function AppLayout() {
@@ -57,15 +58,25 @@ export default function AppLayout() {
       <Dialog
         title="log out"
         isOpen={isOpenConfirmLogoutDialog}
-        className="w-[600px] h-[600px]"
+        className=""
       >
-        {/* logout */}
-        <button
-          className="bg-red-500"
-          onClick={() => setIsOpenConfirmLogoutDialog(false)}
-        >
-          close
-        </button>
+        <div className="mt-5">
+          <h5 className="text-center font-extralight"> Are you sure you want to logout from your account?</h5>
+          <div className="flex items-center gap-4 mt-4">
+
+            <BaseButton
+              onClick={() => setIsOpenConfirmLogoutDialog(false)}
+            >close</BaseButton>
+            <BaseButton
+              varient="gradient"
+            >
+              <NavLink to='/login'>
+
+                confirm
+              </NavLink>
+            </BaseButton>
+          </div>
+        </div>
       </Dialog>
     </div>
   );
