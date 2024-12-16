@@ -1,127 +1,113 @@
-import React, { useState } from "react";
-import {
-  BarChart,
-  Bar,
-  Rectangle,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Line,
-  Area,
-} from "recharts";
+import Title from "@/assets/icons/Title";
+import BorderBox from "@/components/BorderBox";
+import Chart from "@/components/Chart";
+import InputSearch from "@/components/InputSearch";
+
+import { PieChart, Pie, Sector, ResponsiveContainer, Cell } from 'recharts';
 
 const data = [
-  { name: "Page A", uv: 4000, pv: 2400, amt: 2400 },
-  { name: "Page B", uv: 3000, pv: 1398, amt: 2210 },
-  { name: "Page C", uv: 2000, pv: 9800, amt: 2290 },
-  { name: "Page D", uv: 2780, pv: 3908, amt: 2000 },
-  { name: "Page E", uv: 1890, pv: 4800, amt: 2181 },
-  { name: "Page F", uv: 2390, pv: 3800, amt: 2500 },
-  { name: "Page G", uv: 3490, pv: 4300, amt: 2100 },
+  { name: "Progress", value: 75, color: "#55a630" }, // Progress color
+  { name: "Remaining", value: 25, color: "#b3b3b3" }, // Track color
 ];
 
-const GlowingRectangle = (props) => {
-  const { fill, x, y, width, height, radius } = props;
-  return (
-    <Rectangle
-      x={x}
-      y={y}
-      width={width}
-      height={height}
-      radius={radius}
-      fill={fill}
+const DashedData = [
+  { name: "DashedCircle", value: 100, color: "#6e6e6e" },
+];
 
-      style={{ filter: "url(#glow)" }}
-    />
-  );
-};
-const CustomTooltip = ({ active, payload, label }) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="bg-custom_bg_three text-custom_text_three py-2 px-6 rounded-md drop-shadow-[0_0_15px_rgba(255,255,255,1)]">{
-        label
-      }</div>
-    )
-  }
-}
+// const renderActiveShape = (props) => {
+//   const RADIAN = Math.PI / 180;
+//   const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;
+//   const sin = Math.sin(-RADIAN * midAngle);
+//   const cos = Math.cos(-RADIAN * midAngle);
+//   const sx = cx + (outerRadius + 10) * cos;
+//   const sy = cy + (outerRadius + 10) * sin;
+//   const mx = cx + (outerRadius + 30) * cos;
+//   const my = cy + (outerRadius + 30) * sin;
+//   const ex = mx + (cos >= 0 ? 1 : -1) * 22;
+//   const ey = my;
+//   const textAnchor = cos >= 0 ? 'start' : 'end';
+
+//   return (
+//     <g>
+
+//       <Sector
+//         cx={cx}
+//         cy={cy}
+//         innerRadius={innerRadius}
+//         outerRadius={outerRadius}
+//         startAngle={startAngle}
+//         endAngle={endAngle}
+//         fill={fill}
+//       />
+
+
+//     </g>
+//   );
+// };
 export default function Home() {
-
   return (
-    <div className="h-full">
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart
-          width={500}
-          height={300}
-          data={data}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <defs>
-            {/* SVG Filter for Glow Effect */}
-            {/* <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="15" result="coloredBlur" /> 
-              <feColorMatrix
-                in="coloredBlur"
-                type="matrix"
-                values="1 0 0 0 0
-            0 1 0 0 0
-            0 0 1 0 0
-            0 0 0 0.5 0" /> 
-              <feMerge>
-                <feMergeNode in="coloredBlur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter> */}
-            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="10" result="coloredBlur" /> {/* Spread */}
-              <feColorMatrix
-                in="coloredBlur"
-                type="matrix"
-                values="1 0 0 0 0
-            0 1 0 0 0
-            0 0 1 0 0
-            0 0 0 0.5 0" /> {/* Opacity reduced to 20% */}
-              <feMerge>
-                <feMergeNode in="coloredBlur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
+    <div className="">
+      <div className="grid grid-cols-12 gap-6">
+        <div className="col-span-9">
+          <Title>
+            Total Sales
+          </Title>
+        </div>
+        <div className="col-span-3">
+          <InputSearch placeholder="search dashboard" />
 
-            <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#F6682B" stopOpacity={1} />
-              <stop offset="50%" stopColor="#F6682B" stopOpacity={0.2} />
-              <stop offset="100%" stopColor="#F6682B" stopOpacity={0.04} />
-            </linearGradient>
-          </defs>
+        </div>
+        <div className="col-span-9 h-72">
+          <BorderBox>
+            <Chart />
+          </BorderBox>
+        </div>
+        <div className="col-span-3">
+          <BorderBox>
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart width={400} height={400}>
 
-          <CartesianGrid
-            strokeDasharray="4 8"
-            horizontal
-            vertical={false}
-            stroke="#4d4d4d"
-          />
-          <XAxis dataKey="name" axisLine={false} tickLine={false} />
-          <YAxis axisLine={false} tickLine={false} />
-          <Tooltip content={<CustomTooltip />} />
-          {/* <Line type="monotone" dataKey="name" stroke="#8884d8" /> */}
-          <Bar
-            dataKey="pv"
-            fill="url(#colorGradient)"
-            radius={[10, 10, 10, 10]}
-            barSize={50}
+                <Pie
+                  data={[{ name: "DashedCircle", value: 100 }]}
+                  dataKey="value"
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={60}
+                  outerRadius={60}
+                  stroke="#6e6e6e"
+                  fill="none"
+                  strokeDasharray="3 3" // Dashed pattern
+                  isAnimationActive={false}
+                />
 
-            activeBar={<GlowingRectangle fill="#F6682B" />}
-            style={{ background: "transparent" }}
+                {/* Progress Circle */}
+                <Pie
+                  data={data}
+                  dataKey="value"
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={70}
+                  outerRadius={85}
+                  cornerRadius={10} // Rounded corners
+                  startAngle={90} // Rotate to match design
+                  endAngle={-270}
+                  paddingAngle={2}
+                >
+                  {data.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} stroke="none" />
+                  ))}
+                </Pie>
+              </PieChart>
+            </ResponsiveContainer>
 
-          />
-        </BarChart>
-      </ResponsiveContainer>
+
+          </BorderBox>
+
+        </div>
+
+      </div>
+      {/* <Chart /> */}
+
     </div>
   );
 }

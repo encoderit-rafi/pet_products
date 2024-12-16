@@ -5,7 +5,7 @@ export default function BorderBox({ children, className }) {
   return (
     <div
       className={cn(
-        "py-4 border !border-custom_line_two rounded-xl px-7",
+        "py-4 border !border-custom_line_two rounded-xl px-7 h-full",
         className
       )}
     >

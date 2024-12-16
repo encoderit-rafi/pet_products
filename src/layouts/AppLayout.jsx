@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 //* components📦
 import ToggleButton from "@/components/ToggleButton";
 import ProfileCard from "@/components/ProfileCard";
@@ -8,35 +8,11 @@ import Dialog from "@/components/Dialog";
 
 //* icons😎
 import FullLogo from "@/assets/icons/FullLogo";
-import ProductsIcon from "@/assets/icons/ProductsIcon";
-import MarketingIcon from "@/assets/icons/MarketingIcon";
-import FaqsIcon from "@/assets/icons/FaqsIcon";
-import RolesIcon from "@/assets/icons/RolesIcon";
-import TermsIcon from "@/assets/icons/TermsIcon";
 import LogoutIcon from "@/assets/icons/LogoutIcon";
-import ShelvesIcon from "@/assets/icons/ShelvesIcon";
-import HubIcon from "@/assets/icons/HubIcon";
 import FullLogoLight from "@/assets/icons/FullLogoLight";
-import ConnectIcon from "@/assets/icons/ConnectIcon";
+import Sidebar from "@/components/Sidebar";
 
-//* data📂
-const routes = [
-  { path: "/hub", name: "hub", icon: <HubIcon className="w-5" /> },
-  {
-    path: "/products",
-    name: "products",
-    icon: <ProductsIcon className="w-4" />,
-  },
-  {
-    path: "/marketing",
-    name: "marketing",
-    icon: <MarketingIcon className="w-5" />,
-  },
-  { path: "/shelves", name: "shelves", icon: <ShelvesIcon className="w-4" /> },
-  { path: "/faqs", name: "FAQs", icon: <FaqsIcon className="w-2" /> },
-  { path: "/roles", name: "roles", icon: <RolesIcon className="w-4" /> },
-  { path: "/terms", name: "terms", icon: <TermsIcon className="w-4" /> },
-];
+
 export default function AppLayout() {
   const [darkMode, setDarkMode] = useState(true);
   const [isOpenConfirmLogoutDialog, setIsOpenConfirmLogoutDialog] =
@@ -44,7 +20,7 @@ export default function AppLayout() {
   return (
     <div
       className={`${darkMode ? "dark" : "light"
-        } font-poppins flex flex-col pt-5 pr-5 pb-9 gap-6 overflow-hidden text-white bg-custom_bg_one h-svh`}
+        } font-poppins flex flex-col pt-5 pr-5 pb-9 space-y-6 overflow-hidden text-white bg-custom_bg_one h-svh`}
     >
       <header className="flex items-center justify-between pl-5 text-white">
         {darkMode ? (
@@ -58,32 +34,9 @@ export default function AppLayout() {
           <ProfileCard />
         </div>
       </header>
-      <div className="flex flex-1 gap-3">
-        <aside className="flex flex-col justify-between flex-1 max-w-24">
-          <nav>
-            <ul className="space-y-6">
-              <li className="">
-                <NavLink
-                  to="/"
-                  className="flex flex-col items-center gap-2 text-xs text-center capitalize text-custom_text_six before:absolute before:content('') before:w-[2px] before:bg-custom_orange before:top-0 before:left-0 before:bottom-0 before:h-full before:opacity-0 group-hover:before:opacity-100 before:transition-all before:duration-300"
-                >
-                  <ConnectIcon className="w-10" />
-                  <span className="font-[100]">connect</span>
-                </NavLink>
-              </li>
-              {routes.map((route) => (
-                <li key={route.name} className="relative group">
-                  <NavLink
-                    to={route.path}
-                    className="flex flex-col items-center gap-2 text-xs text-center capitalize text-custom_text_six before:absolute before:content('') before:w-[2px] before:bg-custom_orange before:top-0 before:left-0 before:bottom-0 before:h-full before:opacity-0 group-hover:before:opacity-100 before:transition-all before:duration-300"
-                  >
-                    {route.icon}
-                    <span className="font-[100]">{route.name}</span>
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          </nav>
+      <div className="flex flex-1 gap-3 overflow-hidden">
+        <aside className="flex flex-col justify-between flex-1 max-w-24 ">
+          <Sidebar />
           <button
             onClick={() => setIsOpenConfirmLogoutDialog(true)}
             className="text-xs font-light transition-all duration-500 text-custom_text_six hover:text-red-600"
@@ -95,10 +48,12 @@ export default function AppLayout() {
             </div>
           </button>
         </aside>
-        <main className="flex-1 bg-custom_bg_two rounded-xl !pt-7 !p-8 overflow-hidden">
+
+        <main className="flex-1 bg-custom_bg_two rounded-xl !pt-7 !p-8 overflow-auto">
           <Outlet />
         </main>
       </div>
+
       <Dialog
         title="log out"
         isOpen={isOpenConfirmLogoutDialog}
