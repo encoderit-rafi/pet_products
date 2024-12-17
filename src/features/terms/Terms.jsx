@@ -12,9 +12,11 @@ export default function Terms() {
               <Tab className="border-b-2 text-xs border-b-slate-400 data-[selected]:border-b-custom_bg_three data-[selected]:text-custom_bg_three p-3 focus:outline-none">
                 Terms and Conditions
               </Tab>
-              {/* <Tab className="border-b-2 border-b-slate-400 data-[selected]:border-b-white data-[selected]:text-white p-3 focus:outline-none">
+              <Tab className="border-b-2 text-xs border-b-slate-400 data-[selected]:border-b-custom_bg_three data-[selected]:text-custom_bg_three p-3 focus:outline-none">
                 Privacy Policy
-              </Tab> */}
+
+              </Tab>
+
             </TabList>
           </div>
         </div>

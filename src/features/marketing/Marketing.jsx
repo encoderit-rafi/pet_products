@@ -8,6 +8,11 @@ import DeleteIcon from "@/assets/icons/DeleteIcon";
 import ButtonWithIcon from "@/components/ButtonWithIcon";
 import ButtonGradient from "@/components/ButtonGradient";
 import Title from "@/components/Title";
+import BaseButton from "@/components/BaseButton";
+import { useState } from "react";
+import Dialog from "@/components/Dialog";
+import InputText from "@/components/InputText";
+import InputTextArea from "@/components/InputTextArea";
 
 const query = {
   headers: [
@@ -64,6 +69,7 @@ const query = {
 };
 
 export default function Marketing() {
+  const [isOpenAddNewTask, setIsOpenAddNewTask] = useState(false)
   return (
     <div className="flex flex-col h-full gap-4">
       <div className="flex items-center justify-between">
@@ -75,15 +81,31 @@ export default function Marketing() {
           <Title>tasks</Title>
         </div>
         <div className="flex items-center gap-4">
-          <ButtonWithIcon />
-          <ButtonGradient className="px-4 text-xs font-medium">
+          {/* <ButtonWithIcon /> */}
+          <BaseButton varient="orange" icon="plus" className="px-4 text-xs font-medium" onClick={() => setIsOpenAddNewTask(true)}>
+            add new
+          </BaseButton>
+          <BaseButton varient="gradient" className="px-4 text-xs font-medium">
             save settings
-          </ButtonGradient>
+          </BaseButton>
         </div>
       </div>
       <BorderBox>
         <Table query={query} />
       </BorderBox>
+      <Dialog isOpen={isOpenAddNewTask} title="add new task" className="max-w-lg">
+        <div className="flex flex-col  space-y-4">
+          <InputText id="task_name" label="task name" palceholder="enter value" />
+          <InputText id="cost" label="cost" palceholder="enter value" />
+          <InputTextArea id="description" label="Description" placeholder="enter value" />
+          <div className="flex items-center gap-4">
+            <BaseButton
+              onClick={() => setIsOpenAddNewTask(false)}
+            >cancel</BaseButton>
+            <BaseButton varient="gradient">confirm</BaseButton>
+          </div>
+        </div>
+      </Dialog>
     </div>
   );
 }
