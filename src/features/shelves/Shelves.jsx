@@ -53,8 +53,6 @@ const query = {
         return row?.total_units_sold;
       },
     },
-
-
   ],
   isLoading: false,
   data: demoData,
@@ -62,17 +60,17 @@ const query = {
 const tabs = [
   {
     id: 0,
-    name: 'Stands'
+    name: "Stands",
   },
   {
     id: 1,
-    name: 'Stand Type'
+    name: "Stand Type",
   },
   {
     id: 2,
-    name: 'POS Material'
+    name: "POS Material",
   },
-]
+];
 const brands = [
   {
     id: 1,
@@ -95,148 +93,214 @@ export default function Shelves() {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [isOpenAddNewStand, setIsOpenAddNewStand] = useState(false);
   const [isOpenAddNewStandType, setIsOpenAddNewStandType] = useState(false);
-  const [isOpenAddNewPOSMaterials, setIsOpenAddNewPOSMaterials] = useState(false);
+  const [isOpenAddNewPOSMaterials, setIsOpenAddNewPOSMaterials] =
+    useState(false);
   useEffect(() => {
-    console.log(activeTabIndex)
-  }, [activeTabIndex])
+    console.log(activeTabIndex);
+  }, [activeTabIndex]);
   function handelOpenModal() {
     switch (activeTabIndex) {
       case 0:
-        setIsOpenAddNewStand(true)
+        setIsOpenAddNewStand(true);
         return;
       case 1:
-        setIsOpenAddNewStandType(true)
+        setIsOpenAddNewStandType(true);
         return;
       case 2:
-        setIsOpenAddNewPOSMaterials(true)
+        setIsOpenAddNewPOSMaterials(true);
         return;
       default:
         return;
     }
   }
-  return <div className="flex flex-col h-full gap-4 text-custom_bg_three">
-    <TabGroup
-      selectedIndex={activeTabIndex}
-      onChange={setActiveTabIndex} >
-      <div className="flex items-center justify-between">
-        <Title>Shelves</Title>
-        <div className="flex flex-1 items-center gap-4">
-          <TabList className="ml-auto" >
-            {
-              tabs.map(tab =>
-                <Tab key={tab.id} className="border-b-2 text-xs border-b-slate-400 data-[selected]:border-b-custom_bg_three data-[selected]:text-custom_bg_three p-3 focus:outline-none">
+  return (
+    <div className="flex flex-col h-full gap-4 text-custom_bg_three">
+      <TabGroup selectedIndex={activeTabIndex} onChange={setActiveTabIndex}>
+        <div className="flex items-center justify-between">
+          <Title>Shelves</Title>
+          <div className="flex items-center flex-1 gap-4">
+            <TabList className="ml-auto">
+              {tabs.map((tab) => (
+                <Tab
+                  key={tab.id}
+                  className="border-b-2 text-xs border-b-slate-400 data-[selected]:border-b-custom_bg_three data-[selected]:text-custom_bg_three p-3 focus:outline-none"
+                >
                   {tab.name}
                 </Tab>
-              )
-            }
-          </TabList>
-          <BaseButton varient="orange" icon="plus"
-            className="max-w-24 text-xs"
-            onClick={handelOpenModal}
-          >add new</BaseButton>
+              ))}
+            </TabList>
+            <BaseButton
+              varient="orange"
+              icon="plus"
+              className="text-xs max-w-24"
+              onClick={handelOpenModal}
+            >
+              add new
+            </BaseButton>
+          </div>
         </div>
-      </div>
-      <TabPanels>
-        <TabPanel>
-          <BorderBox className="mt-4">
-            <Table query={query} />
-          </BorderBox>
-        </TabPanel>
-      </TabPanels>
-    </TabGroup>
-    <Dialog isOpen={isOpenAddNewStand} title="add new stand" className="max-w-lg ">
-      <div className="flex flex-col  space-y-4">
-        <ImagePicker />
-        <div className="max-h-72 overflow-auto">
-
-          <div className="space-y-2">
-            <Label id="brand" label="brand" palceholder="brand" />
-            <BaseSelectDropdown />
-          </div>
-          <div className="space-y-2">
-            <Label id="Stand Type" label="Stand Type" palceholder="Stand Type" />
-            <BaseSelectDropdown />
-          </div>
-          <div className="space-y-2">
-            <Label id="Stand Type" label="Stand Type" palceholder="Stand Type" />
-            <BaseSelectDropdown />
-          </div>
-          <div className="space-y-2">
-            <Label id="Store" label="Store" palceholder="Store" />
-            <BaseSelectDropdown />
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="space-y-2 flex-1">
-              <Label id="Location" label="Location" palceholder="Location" />
+        <TabPanels>
+          <TabPanel>
+            <BorderBox className="mt-4">
+              <Table query={query} />
+            </BorderBox>
+          </TabPanel>
+        </TabPanels>
+      </TabGroup>
+      <Dialog
+        isOpen={isOpenAddNewStand}
+        title="add new stand"
+        className="max-w-lg "
+      >
+        <div className="flex flex-col space-y-4">
+          <ImagePicker />
+          <div className="overflow-auto max-h-72">
+            <div className="space-y-2">
+              <Label id="brand" label="brand" palceholder="brand" />
               <BaseSelectDropdown />
             </div>
-            <div className="flex-1">
-
-              <InputText id="Cost" label="Cost" palceholder="Cost" className="py-3 rounded-lg" />
+            <div className="space-y-2">
+              <Label
+                id="Stand Type"
+                label="Stand Type"
+                palceholder="Stand Type"
+              />
+              <BaseSelectDropdown />
             </div>
-
+            <div className="space-y-2">
+              <Label
+                id="Stand Type"
+                label="Stand Type"
+                palceholder="Stand Type"
+              />
+              <BaseSelectDropdown />
+            </div>
+            <div className="space-y-2">
+              <Label id="Store" label="Store" palceholder="Store" />
+              <BaseSelectDropdown />
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="flex-1 space-y-2">
+                <Label id="Location" label="Location" palceholder="Location" />
+                <BaseSelectDropdown />
+              </div>
+              <div className="flex-1">
+                <InputText
+                  id="Cost"
+                  label="Cost"
+                  palceholder="Cost"
+                  className="py-3 rounded-lg"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            <BaseButton onClick={() => setIsOpenAddNewStand(false)}>
+              cancel
+            </BaseButton>
+            <BaseButton varient="gradient">confirm</BaseButton>
           </div>
         </div>
-        <div className="flex items-center gap-4">
-          <BaseButton
-            onClick={() => setIsOpenAddNewStand(false)}
-          >cancel</BaseButton>
-          <BaseButton varient="gradient">confirm</BaseButton>
-        </div>
-      </div>
-    </Dialog >
-    <Dialog isOpen={isOpenAddNewStandType} title="Add New Stand Type" className="max-w-3xl">
-      <div className="flex flex-col  space-y-4">
-        <ImagePicker />
-        <div className="max-h-72 grid grid-cols-2 overflow-auto gap-4">
-          <InputText id="Type Name" label="Type Name" palceholder="Enter Value" className="py-3 rounded-lg" />
-          <InputText id="First Shelf" label="First Shelf" palceholder="Number of Products" className="py-3 rounded-lg" />
-          <div className="space-y-2">
-            <Label id="brand" label="brand" palceholder="brand" />
-            <BaseSelectDropdown />
+      </Dialog>
+      <Dialog
+        isOpen={isOpenAddNewStandType}
+        title="Add New Stand Type"
+        className="max-w-3xl"
+      >
+        <div className="flex flex-col space-y-4">
+          <ImagePicker />
+          <div className="grid grid-cols-2 gap-4 overflow-auto max-h-72">
+            <InputText
+              id="Type Name"
+              label="Type Name"
+              palceholder="Enter Value"
+              className="py-3 rounded-lg"
+            />
+            <InputText
+              id="First Shelf"
+              label="First Shelf"
+              palceholder="Number of Products"
+              className="py-3 rounded-lg"
+            />
+            <div className="space-y-2">
+              <Label id="brand" label="brand" palceholder="brand" />
+              <BaseSelectDropdown />
+            </div>
+            <InputText
+              id="First Shelf"
+              label="First Shelf"
+              palceholder="Number of Products"
+              className="py-3 rounded-lg"
+            />
+            <div className="space-y-2">
+              <Label
+                id="Materials list"
+                label="Materials list"
+                palceholder="Materials list"
+              />
+              <BaseSelectDropdown />
+            </div>
+            <InputText
+              id="First Shelf"
+              label="First Shelf"
+              palceholder="Number of Products"
+              className="py-3 rounded-lg"
+            />
+            <InputText
+              id="Cost"
+              label="Cost"
+              palceholder="Cost"
+              className="py-3 rounded-lg"
+            />
+            <InputText
+              id="First Shelf"
+              label="First Shelf"
+              palceholder="Number of Products"
+              className="py-3 rounded-lg"
+            />
           </div>
-          <InputText id="First Shelf" label="First Shelf" palceholder="Number of Products" className="py-3 rounded-lg" />
-          {/* <div className="space-y-2">
-            <Label id="Stand Type" label="Stand Type" palceholder="Stand Type" />
-            <BaseSelectDropdown />
-          </div> */}
-          <div className="space-y-2">
-            <Label id="Materials list" label="Materials list" palceholder="Materials list" />
-            <BaseSelectDropdown />
+          <div className="flex items-center gap-4">
+            <BaseButton onClick={() => setIsOpenAddNewStandType(false)}>
+              cancel
+            </BaseButton>
+            <BaseButton varient="gradient">confirm</BaseButton>
           </div>
-          <InputText id="First Shelf" label="First Shelf" palceholder="Number of Products" className="py-3 rounded-lg" />
-          <InputText id="Cost" label="Cost" palceholder="Cost" className="py-3 rounded-lg" />
-          <InputText id="First Shelf" label="First Shelf" palceholder="Number of Products" className="py-3 rounded-lg" />
-
         </div>
-        <div className="flex items-center gap-4">
-          <BaseButton
-            onClick={() => setIsOpenAddNewStandType(false)}
-          >cancel</BaseButton>
-          <BaseButton varient="gradient">confirm</BaseButton>
-        </div>
-      </div>
-    </Dialog >
-    <Dialog isOpen={isOpenAddNewPOSMaterials} title="Create POS Materials" className="max-w-lg">
-      <div className="flex flex-col  space-y-4">
-        <ImagePicker />
-        <div className="max-h-72 overflow-auto space-y-2">
-          <InputText id="Name" label="Name" palceholder="Name" className="py-3 rounded-lg" />
+      </Dialog>
+      <Dialog
+        isOpen={isOpenAddNewPOSMaterials}
+        title="Create POS Materials"
+        className="max-w-lg"
+      >
+        <div className="flex flex-col space-y-4">
+          <ImagePicker />
+          <div className="space-y-2 overflow-auto max-h-72">
+            <InputText
+              id="Name"
+              label="Name"
+              palceholder="Name"
+              className="py-3 rounded-lg"
+            />
 
-          <div className="space-y-2">
-            <Label id="brand" label="brand" palceholder="brand" />
-            <BaseSelectDropdown />
+            <div className="space-y-2">
+              <Label id="brand" label="brand" palceholder="brand" />
+              <BaseSelectDropdown />
+            </div>
+            <InputText
+              id="Cost"
+              label="Cost"
+              palceholder="Cost"
+              className="py-3 rounded-lg"
+            />
           </div>
-          <InputText id="Cost" label="Cost" palceholder="Cost" className="py-3 rounded-lg" />
-
+          <div className="flex items-center gap-4">
+            <BaseButton onClick={() => setIsOpenAddNewPOSMaterials(false)}>
+              cancel
+            </BaseButton>
+            <BaseButton varient="gradient">confirm</BaseButton>
+          </div>
         </div>
-        <div className="flex items-center gap-4">
-          <BaseButton
-            onClick={() => setIsOpenAddNewPOSMaterials(false)}
-          >cancel</BaseButton>
-          <BaseButton varient="gradient">confirm</BaseButton>
-        </div>
-      </div>
-    </Dialog >
-  </div >
+      </Dialog>
+    </div>
+  );
 }

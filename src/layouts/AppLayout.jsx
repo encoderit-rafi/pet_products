@@ -7,12 +7,11 @@ import NotificationButton from "@/components/NotificationButton";
 import Dialog from "@/components/Dialog";
 
 //* icons😎
-import FullLogo from "@/assets/icons/FullLogo";
+import FullLogo from "@/assets/icons/logo/FullLogo";
 import LogoutIcon from "@/assets/icons/LogoutIcon";
-import FullLogoLight from "@/assets/icons/FullLogoLight";
+import FullLogoLight from "@/assets/icons/logo/FullLogoLight";
 import Sidebar from "@/components/Sidebar";
 import BaseButton from "@/components/BaseButton";
-
 
 export default function AppLayout() {
   const [darkMode, setDarkMode] = useState(true);
@@ -20,8 +19,9 @@ export default function AppLayout() {
     useState(false);
   return (
     <div
-      className={`${darkMode ? "dark" : "light"
-        } font-poppins flex flex-col pt-5 pr-5 pb-9 space-y-6 overflow-hidden text-white bg-custom_bg_one h-svh`}
+      className={`${
+        darkMode ? "dark" : "light"
+      } font-poppins flex flex-col pt-5 pr-5 pb-9 space-y-6 overflow-hidden text-white bg-custom_bg_one h-svh`}
     >
       <header className="flex items-center justify-between pl-5 text-white">
         {darkMode ? (
@@ -58,22 +58,19 @@ export default function AppLayout() {
       <Dialog
         title="log out"
         isOpen={isOpenConfirmLogoutDialog}
-        className=""
+        className="max-w-80"
       >
         <div className="mt-5">
-          <h5 className="text-center font-extralight"> Are you sure you want to logout from your account?</h5>
+          <h5 className="text-center font-extralight">
+            {" "}
+            Are you sure you want to logout from your account?
+          </h5>
           <div className="flex items-center gap-4 mt-4">
-
-            <BaseButton
-              onClick={() => setIsOpenConfirmLogoutDialog(false)}
-            >close</BaseButton>
-            <BaseButton
-              varient="gradient"
-            >
-              <NavLink to='/login'>
-
-                confirm
-              </NavLink>
+            <BaseButton onClick={() => setIsOpenConfirmLogoutDialog(false)}>
+              close
+            </BaseButton>
+            <BaseButton varient="gradient">
+              <NavLink to="/login">confirm</NavLink>
             </BaseButton>
           </div>
         </div>
