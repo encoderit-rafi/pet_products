@@ -1,4 +1,6 @@
 import BoxIcon from '@/assets/icons/BoxIcon'
+import CheckIcon from '@/assets/icons/CheckIcon'
+import DownIcon from '@/assets/icons/DownIcon'
 import cn from '@/lib/utils/cn'
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react'
 // import { CheckIcon, ChevronDownIcon } from '@heroicons/react/20/solid'
@@ -17,17 +19,20 @@ export default function BaseSelectDropdown() {
  const [selected, setSelected] = useState(people[1])
 
  return (
-  <div className="mx-auto w-full pt-20">
+  <div className="mx-auto w-full">
    <Listbox value={selected} onChange={setSelected} >
     <ListboxButton
      className={cn(
-      'relative block w-full rounded-lg bg-white/5 py-1.5 pr-8 pl-3 text-left text-sm/6 text-white',
+      'relative block w-full rounded-lg bg-white/5 py-3 pr-8 border border-custom_line_one pl-3 text-left text-sm/6 text-white',
       'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25'
      )}
     >
-     {selected.name}
-     <BoxIcon
-      className="group pointer-events-none absolute top-2.5 right-2.5 size-4 fill-white/60"
+     <span>
+
+      {selected.name}
+     </span>
+     <DownIcon
+      className="group pointer-events-none absolute top-1/2  -translate-y-1/2 right-4 size-4 fill-white/60"
       aria-hidden="true"
      />
     </ListboxButton>
@@ -35,7 +40,7 @@ export default function BaseSelectDropdown() {
      anchor="bottom"
      transition
      className={cn(
-      'w-[var(--button-width)] z-[60] rounded-xl border border-white/5 !bg-custom_bg_two p-1 [--anchor-gap:var(--spacing-1)] focus:outline-none',
+      'w-[var(--button-width)] z-[60] mt-1 rounded-xl border border-white/5 !bg-[#21272b] p-1 [--anchor-gap:var(--spacing-1)] focus:outline-none',
       'transition duration-100 ease-in data-[leave]:data-[closed]:opacity-0'
      )}
     >
@@ -45,7 +50,7 @@ export default function BaseSelectDropdown() {
        value={person}
        className="group flex cursor-default items-center gap-2 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-white/10"
       >
-       <BoxIcon className="invisible size-4 fill-white group-data-[selected]:visible" />
+       <CheckIcon className="invisible size-4 text-white group-data-[selected]:visible" />
        <div className="text-sm/6 text-white">{person.name}</div>
       </ListboxOption>
      ))}
