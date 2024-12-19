@@ -11,6 +11,7 @@ import BaseMenu from "@/components/BaseMenu";
 import BaseSelectDropdown from "@/components/BaseSelectDropdown";
 import Label from "@/components/Label";
 import InputText from "@/components/InputText";
+import MultiSelectListbox from "@/components/MultiSelectListbox";
 const query = {
   headers: [
     {
@@ -210,6 +211,7 @@ export default function Shelves() {
         <div className="flex flex-col space-y-4">
           <ImagePicker />
           <div className="grid grid-cols-2 gap-4 overflow-auto max-h-72">
+            <MultiSelectListbox />
             <InputText
               id="Type Name"
               label="Type Name"

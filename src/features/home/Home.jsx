@@ -1,4 +1,3 @@
-
 import BorderBox from "@/components/BorderBox";
 import BaseBarChart from "@/components/BaseBarChart";
 import InputSearch from "@/components/InputSearch";
@@ -74,18 +73,18 @@ const demoData = [
   },
 ];
 const monthsData = [
-  { id: 1, name: '1 month', value: 1 },
-  { id: 2, name: '2 months', value: 2 },
-  { id: 3, name: '3 months', value: 3 },
-  { id: 4, name: '4 months', value: 4 },
-  { id: 5, name: '5 months', value: 5 },
-  { id: 6, name: '6 months', value: 6 },
-  { id: 7, name: '7 months', value: 7 },
-  { id: 8, name: '8 months', value: 8 },
-  { id: 9, name: '9 months', value: 9 },
-  { id: 10, name: '10 months', value: 10 },
-  { id: 11, name: '11 months', value: 11 },
-  { id: 12, name: '12 months', value: 12 },
+  { id: 1, name: "1 month", value: 1 },
+  { id: 2, name: "2 months", value: 2 },
+  { id: 3, name: "3 months", value: 3 },
+  { id: 4, name: "4 months", value: 4 },
+  { id: 5, name: "5 months", value: 5 },
+  { id: 6, name: "6 months", value: 6 },
+  { id: 7, name: "7 months", value: 7 },
+  { id: 8, name: "8 months", value: 8 },
+  { id: 9, name: "9 months", value: 9 },
+  { id: 10, name: "10 months", value: 10 },
+  { id: 11, name: "11 months", value: 11 },
+  { id: 12, name: "12 months", value: 12 },
 ];
 const brands = [
   {
@@ -110,11 +109,8 @@ const query = {
       name: "name",
       value: "name",
       cellValue: (row) => {
-        return (
-          row.name
-        );
+        return row.name;
       },
-
     },
     {
       name: "purchases",
@@ -122,7 +118,6 @@ const query = {
       cellValue: (row) => {
         return row?.sku;
       },
-
     },
     {
       name: "city",
@@ -130,9 +125,7 @@ const query = {
       cellValue: (row) => {
         return row?.brand;
       },
-
     },
-
   ],
   isLoading: false,
   data: demoData,
@@ -152,7 +145,6 @@ const query1 = {
           </div>
         );
       },
-
     },
     {
       name: "sku",
@@ -160,7 +152,6 @@ const query1 = {
       cellValue: (row) => {
         return row?.sku;
       },
-
     },
     {
       name: "brand",
@@ -168,7 +159,6 @@ const query1 = {
       cellValue: (row) => {
         return row?.brand;
       },
-
     },
     {
       name: "category",
@@ -176,7 +166,6 @@ const query1 = {
       cellValue: (row) => {
         return row?.category;
       },
-
     },
     {
       name: "total units sold",
@@ -184,7 +173,6 @@ const query1 = {
       cellValue: (row) => {
         return row?.total_units_sold;
       },
-
     },
     {
       name: "total units sold",
@@ -243,12 +231,11 @@ const query1 = {
 //         fill={fill}
 //       />
 
-
 //     </g>
 //   );
 // };
 export default function Home() {
-  const [months, setMonths] = useState(null)
+  const [months, setMonths] = useState(null);
   const [brand, setBrand] = useState(null);
 
   return (
@@ -256,30 +243,27 @@ export default function Home() {
       <div className="grid grid-cols-12 gap-6">
         {/* heading 1*/}
         <div className="col-span-8">
-          <Title>
-            Total Sales
-          </Title>
+          <Title>Total Sales</Title>
         </div>
         <div className="col-span-4">
           <InputSearch placeholder="search dashboard" />
-
         </div>
         {/* charts 1*/}
         <div className="col-span-8">
           <BorderBox>
             <div className="flex items-center justify-between mb-3">
-              <SubTitle>
-                Brands Chart
-              </SubTitle>
+              <SubTitle>Brands Chart</SubTitle>
               <div className="flex items-center gap-3">
-                <BaseMenu text="select month" data={monthsData} value={months}
+                <BaseMenu
+                  text="select month"
+                  data={monthsData}
+                  value={months}
                   setValue={setMonths}
                 />
                 <ExportButton />
               </div>
             </div>
             <div className="h-72">
-
               <BaseBarChart />
             </div>
           </BorderBox>
@@ -287,33 +271,25 @@ export default function Home() {
         <div className="col-span-4">
           <BorderBox>
             <div className="flex items-center justify-between">
-              <SubTitle>
-                Best Seller Brand
-              </SubTitle>
+              <SubTitle>Best Seller Brand</SubTitle>
               <div className="flex items-center gap-3 ">
                 <BaseDatePicker />
-
               </div>
             </div>
-            <div className="h-72 relative">
-
+            <div className="relative h-72">
               <BasePieChart />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2  -translate-y-1/2 text-center text-custom_text_four" >
-                <h5 className="text-xl font-semibold">SR 50,000
-                </h5>
+              <div className="absolute text-center -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 text-custom_text_four">
+                <h5 className="text-xl font-semibold">SR 50,000</h5>
                 <span className="text-xs text-gray-500"> Total Volume</span>
               </div>
             </div>
           </BorderBox>
-
         </div>
         {/* charts 2*/}
         <div className="col-span-8">
           <BorderBox>
             <div className="flex items-center justify-between mb-3">
-              <SubTitle>
-                Sales vs Cities
-              </SubTitle>
+              <SubTitle>Sales vs Cities</SubTitle>
               <div className="flex items-center gap-3">
                 <BaseMenu
                   text="select brand"
@@ -321,14 +297,16 @@ export default function Home() {
                   value={brand}
                   setValue={(item) => setBrand(item)}
                 />
-                <BaseMenu text="select month" data={monthsData} value={months}
+                <BaseMenu
+                  text="select month"
+                  data={monthsData}
+                  value={months}
                   setValue={setMonths}
                 />
                 <ExportButton />
               </div>
             </div>
             <div className="h-72">
-
               <BaseBarChart />
             </div>
           </BorderBox>
@@ -336,45 +314,36 @@ export default function Home() {
         <div className="col-span-4">
           <BorderBox>
             <div className="flex items-center justify-between">
-              <SubTitle>
-                Top Clients
-              </SubTitle>
+              <SubTitle>Top Clients</SubTitle>
               <div className="flex items-center gap-3">
                 <BaseDatePicker />
-
               </div>
             </div>
             <div className="h-72">
-
               <Table query={query} />
-
             </div>
           </BorderBox>
-
         </div>
         {/* heading 2*/}
         <div className="col-span-12">
-          <Title>
-            Inventory
-          </Title>
+          <Title>Inventory</Title>
         </div>
         {/* charts 3*/}
         <div className="col-span-8">
           <BorderBox>
             <div className="flex items-center justify-between mb-3">
-              <SubTitle>
-                Brands Inventory
-              </SubTitle>
+              <SubTitle>Brands Inventory</SubTitle>
               <div className="flex items-center gap-3">
-
-                <BaseMenu text="select month" data={monthsData} value={months}
+                <BaseMenu
+                  text="select month"
+                  data={monthsData}
+                  value={months}
                   setValue={setMonths}
                 />
                 <ExportButton />
               </div>
             </div>
             <div className="h-72">
-
               <BaseBarChart />
             </div>
           </BorderBox>
@@ -382,12 +351,9 @@ export default function Home() {
         <div className="col-span-4">
           <BorderBox>
             <div className="flex items-center justify-between">
-              <SubTitle>
-                Lowest Stock
-              </SubTitle>
+              <SubTitle>Lowest Stock</SubTitle>
               <div className="flex items-center gap-3">
                 <BaseDatePicker />
-
               </div>
             </div>
             <div className="h-72">
@@ -398,15 +364,15 @@ export default function Home() {
         <div className="col-span-12">
           <BorderBox>
             <div className="flex items-center justify-between">
-              <SubTitle>
-                Total Inventory
-              </SubTitle>
+              <SubTitle>Total Inventory</SubTitle>
               <div className="flex items-center gap-3">
-                <BaseMenu text="select month" data={monthsData} value={months}
+                <BaseMenu
+                  text="select month"
+                  data={monthsData}
+                  value={months}
                   setValue={setMonths}
                 />
                 <ExportButton />
-
               </div>
             </div>
             <div className="h-72">
@@ -416,17 +382,13 @@ export default function Home() {
         </div>
         {/* heading 3*/}
         <div className="col-span-12">
-          <Title>
-            Marketing
-          </Title>
+          <Title>Marketing</Title>
         </div>
         {/* charts 4*/}
         <div className="col-span-8">
           <BorderBox>
             <div className="flex items-center justify-between mb-3">
-              <SubTitle>
-                Brand Marketing
-              </SubTitle>
+              <SubTitle>Brand Marketing</SubTitle>
               <div className="flex items-center gap-3">
                 <BaseMenu
                   text="select brand"
@@ -434,14 +396,16 @@ export default function Home() {
                   value={brand}
                   setValue={(item) => setBrand(item)}
                 />
-                <BaseMenu text="select month" data={monthsData} value={months}
+                <BaseMenu
+                  text="select month"
+                  data={monthsData}
+                  value={months}
                   setValue={setMonths}
                 />
                 <ExportButton />
               </div>
             </div>
             <div className="h-72">
-
               <BaseBarChart />
             </div>
           </BorderBox>
@@ -449,24 +413,17 @@ export default function Home() {
         <div className="col-span-4">
           <BorderBox>
             <div className="flex items-center justify-between">
-              <SubTitle>
-                Highest Expenses
-              </SubTitle>
+              <SubTitle>Highest Expenses</SubTitle>
               <div className="flex items-center gap-3">
                 <BaseDatePicker />
-
               </div>
             </div>
             <div className="h-72">
-
               <Table query={query} />
-
             </div>
           </BorderBox>
-
         </div>
       </div>
-
     </div>
   );
 }
