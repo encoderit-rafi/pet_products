@@ -12,6 +12,7 @@ import BaseSelectDropdown from "@/components/BaseSelectDropdown";
 import Label from "@/components/Label";
 import InputText from "@/components/InputText";
 import MultiSelectListbox from "@/components/MultiSelectListbox";
+import CustomPhoneInput from "@/components/CustomPhoneInput";
 const query = {
   headers: [
     {
@@ -212,6 +213,7 @@ export default function Shelves() {
           <ImagePicker />
           <div className="grid grid-cols-2 gap-4 overflow-auto max-h-72">
             <MultiSelectListbox />
+            <CustomPhoneInput />
             <InputText
               id="Type Name"
               label="Type Name"

@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
+import "react-phone-input-2/lib/style.css"; // Import default styles to build upon
 import "react-datepicker/dist/react-datepicker.css";
 import "@fontsource/poppins";
 import "@fontsource/poppins/100.css"; // Thin

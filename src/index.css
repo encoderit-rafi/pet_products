@@ -162,3 +162,51 @@
 .react-datepicker__day:hover {
   @apply !text-[#21272b];
 }
+/* .react-tel-input .flag-dropdown {
+  position: relative;
+} */
+.react-tel-input .selected-flag:hover,
+.react-tel-input .selected-flag:focus {
+  background-color: transparent;
+}
+.arrow {
+  display: none;
+}
+.react-tel-input .flag-dropdown.open .selected-flag {
+  background: transparent;
+}
+.flag {
+  position: relative;
+}
+.country-list {
+  background-color: rgb(51, 51, 51);
+  color: rgb(255, 255, 255);
+  margin-top: 280px;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.react-tel-input .country-list {
+  background-color: var(--custom_bg_one);
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.react-tel-input .country-list .country:hover,
+.react-tel-input .country-list .country.highlight {
+  background-color: var(--custom_bg_two);
+  border-radius: 6px;
+}
+.react-tel-input .flag-dropdown .selected-flag .flag::before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  right: -60%;
+  transform: translateX(60%) translateY(-50%);
+  width: 12px; /* Set the width of the icon */
+  height: 6px; /* Set the height of the icon */
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10.092 5.546"><path id="DDL" d="M17.177,11.5l-4.339,4.339L8.5,11.5" transform="translate(-7.793 -10.793)" fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1"/></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
