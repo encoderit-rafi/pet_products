@@ -14,9 +14,13 @@ import "@fontsource/poppins/600.css"; // Semi Bold
 import "@fontsource/poppins/700.css"; // Bold
 import "@fontsource/poppins/800.css"; // Extra Bold
 import "@fontsource/poppins/900.css"; // Black
+import { ThemeProvider } from "./context/ThemeProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
+    <ThemeProvider>
+
+      <App />
+    </ThemeProvider>
   </StrictMode>
 );

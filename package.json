@@ -13,6 +13,7 @@
     "@fluid-tailwind/tailwind-merge": "^0.0.3",
     "@fontsource/poppins": "^5.1.0",
     "@headlessui/react": "^2.2.0",
+    "@react-google-maps/api": "^2.20.3",
     "axios": "^1.7.9",
     "clsx": "^2.1.1",
     "react": "^18.3.1",

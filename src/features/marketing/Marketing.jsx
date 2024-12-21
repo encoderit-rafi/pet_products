@@ -1,19 +1,15 @@
 import demoData from "@/lib/data/demo";
 import Table from "@/components/Table";
 import BorderBox from "@/components/BorderBox";
-import PlaceholderImage from "@/components/PlaceholderImage";
 import BackButton from "@/components/BackButton";
 import EditIcon from "@/assets/icons/EditIcon";
 import DeleteIcon from "@/assets/icons/DeleteIcon";
-import ButtonWithIcon from "@/components/ButtonWithIcon";
-import ButtonGradient from "@/components/ButtonGradient";
 import Title from "@/components/Title";
 import BaseButton from "@/components/BaseButton";
 import { useState } from "react";
 import Dialog from "@/components/Dialog";
 import InputText from "@/components/InputText";
 import InputTextArea from "@/components/InputTextArea";
-
 const query = {
   headers: [
     {
@@ -70,6 +66,7 @@ const query = {
 
 export default function Marketing() {
   const [isOpenAddNewTask, setIsOpenAddNewTask] = useState(false)
+
   return (
     <div className="flex flex-col h-full gap-4">
       <div className="flex items-center justify-between">

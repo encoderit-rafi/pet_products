@@ -20,7 +20,7 @@ export default function FullLogoLight({ className }) {
           font-family="SegoeUI-Bold, Segoe UI"
           font-weight="700"
         >
-          <tspan x="0" y="0">
+          <tspan x="0" y="0" className="font-poppins">
             PET PRODUCTS
           </tspan>
         </text>

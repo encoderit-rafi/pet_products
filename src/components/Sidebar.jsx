@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 //* icons😎
 import ProductsIcon from "@/assets/icons/ProductsIcon";
 import MarketingIcon from "@/assets/icons/MarketingIcon";
@@ -28,6 +28,8 @@ const routes = [
   { path: "/terms", name: "terms", icon: <TermsIcon className="w-4" /> },
 ];
 export default function Sidebar() {
+  const location = useLocation()
+  console.log({ location })
   return (
     <nav className="pb-6 overflow-y-auto">
       <ul className="space-y-6">
@@ -45,7 +47,7 @@ export default function Sidebar() {
           <li key={route.name} className="relative group">
             <NavLink
               to={route.path}
-              className="flex flex-col items-center gap-2 text-xs text-center capitalize text-custom_text_six before:absolute before:content('') before:w-[2px] before:bg-custom_orange before:top-0 before:left-0 before:bottom-0 before:h-full before:opacity-0 group-hover:before:opacity-100 before:transition-all before:duration-300"
+              className={`flex flex-col items-center gap-2 text-xs text-center capitalize text-custom_text_six before:absolute before:content('') before:w-[2px] before:bg-custom_orange before:top-0 before:left-0 before:bottom-0 before:h-full before:opacity-0 group-hover:before:opacity-100 before:transition-all before:duration-300 ${location.pathname == route.path && 'before:opacity-100'}`}
             >
               {route.icon}
               <span className="font-[100]">{route.name}</span>

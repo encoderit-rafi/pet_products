@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 //* components📦
-import ToggleButton from "@/components/ToggleButton";
+import ButtonToggleTheme from "@/components/ButtonToggleTheme";
 import ProfileCard from "@/components/ProfileCard";
 import NotificationButton from "@/components/NotificationButton";
 import Dialog from "@/components/Dialog";
@@ -12,25 +12,26 @@ import LogoutIcon from "@/assets/icons/LogoutIcon";
 import FullLogoLight from "@/assets/icons/logo/FullLogoLight";
 import Sidebar from "@/components/Sidebar";
 import BaseButton from "@/components/BaseButton";
+import { useTheme } from "@/context/ThemeProvider";
 
 export default function AppLayout() {
-  const [darkMode, setDarkMode] = useState(true);
+  const { theme } = useTheme()
+  // const [darkMode, setDarkMode] = useState(true);
   const [isOpenConfirmLogoutDialog, setIsOpenConfirmLogoutDialog] =
     useState(false);
   return (
     <div
-      className={`${
-        darkMode ? "dark" : "light"
-      } font-poppins flex flex-col pt-5 pr-5 pb-9 space-y-6 overflow-hidden text-white bg-custom_bg_one h-svh`}
+      className={`${theme == 'dark' ? "dark" : "light"
+        } font-poppins flex flex-col pt-5 pr-5 pb-9 space-y-6 overflow-hidden text-white bg-custom_bg_one h-svh`}
     >
       <header className="flex items-center justify-between pl-5 text-white">
-        {darkMode ? (
-          <FullLogo className="h-[38px]" />
+        {theme == 'dark' ? (
+          <FullLogo className="h-[38px] w-[168px]" />
         ) : (
-          <FullLogoLight className="h-[38px]" />
+          <FullLogoLight className="h-[38px] w-[168px]" />
         )}
         <div className="flex items-center gap-4">
-          <ToggleButton darkMode={darkMode} setDarkMode={setDarkMode} />
+          <ButtonToggleTheme />
           <NotificationButton />
           <ProfileCard />
         </div>
