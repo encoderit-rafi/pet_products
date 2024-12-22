@@ -1,8 +1,8 @@
 import EditIcon from "@/assets/icons/EditIcon";
 import DeleteIcon from "@/assets/icons/DeleteIcon";
-import ButtonWithIcon from "@/components/ButtonWithIcon";
-import BorderBox from "@/components/BorderBox";
-import Title from "@/components/Title";
+import ButtonWithIcon from "@/components/buttons/ButtonWithIcon";
+import BorderBox from "@/components/box/BorderBox";
+import Title from "@/components/texts/Title";
 
 export default function Roles() {
   return (

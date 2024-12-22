@@ -1,15 +1,15 @@
-import BorderBox from "@/components/BorderBox";
-import BaseBarChart from "@/components/BaseBarChart";
-import InputSearch from "@/components/InputSearch";
-import BasePieChart from "@/components/BasePieChart";
-import SubTitle from "@/components/SubTitle";
-import ExportButton from "@/components/ExportButton";
-import Title from "@/components/Title";
-import BaseDatePicker from "@/components/BaseDatePicker";
-import BaseMenu from "@/components/BaseMenu";
+import BorderBox from "@/components/box/BorderBox";
+import BaseBarChart from "@/components/charts/BaseBarChart";
+import InputSearch from "@/components/inputs/InputSearch";
+import BasePieChart from "@/components/charts/BasePieChart";
+import SubTitle from "@/components/texts/SubTitle";
+import ExportButton from "@/components/buttons/ExportButton";
+import Title from "@/components/texts/Title";
+import BaseDatePicker from "@/components/file_pickers/BaseDatePicker";
+import BaseMenu from "@/components/menus/BaseMenu";
 import { useState } from "react";
-import Table from "@/components/Table";
-import PlaceholderImage from "@/components/PlaceholderImage";
+import Table from "@/components/tables/Table";
+import PlaceholderImage from "@/components/placeholders/PlaceholderImage";
 const demoData = [
   {
     id: 1,

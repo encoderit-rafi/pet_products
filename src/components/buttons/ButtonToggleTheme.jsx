@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
-import MoonIcon from "../assets/icons/MoonIcon";
-import SunIcon from "../assets/icons/SunIcon";
+import MoonIcon from "@/assets/icons/MoonIcon";
+import SunIcon from "@/assets/icons/SunIcon";
 import { useTheme } from "@/context/ThemeProvider";
 
 const ButtonToggleTheme = () => {

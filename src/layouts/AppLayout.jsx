@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 //* components📦
-import ButtonToggleTheme from "@/components/ButtonToggleTheme";
-import ProfileCard from "@/components/ProfileCard";
-import NotificationButton from "@/components/NotificationButton";
-import Dialog from "@/components/Dialog";
+import ButtonToggleTheme from "@/components/buttons/ButtonToggleTheme";
+import ProfileCard from "@/components/cards/ProfileCard";
+import NotificationButton from "@/components/buttons/NotificationButton";
+import Dialog from "@/components/popups/Dialog";
 
 //* icons😎
 import FullLogo from "@/assets/icons/logo/FullLogo";
 import LogoutIcon from "@/assets/icons/LogoutIcon";
 import FullLogoLight from "@/assets/icons/logo/FullLogoLight";
-import Sidebar from "@/components/Sidebar";
-import BaseButton from "@/components/BaseButton";
+import Sidebar from "@/components/navigators/Sidebar";
+import BaseButton from "@/components/buttons/BaseButton";
 import { useTheme } from "@/context/ThemeProvider";
 
 export default function AppLayout() {

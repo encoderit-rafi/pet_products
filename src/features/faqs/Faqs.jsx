@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import demoData from "@/lib/data/demo";
-import Table from "@/components/Table";
-import BaseMenu from "@/components/BaseMenu";
-import ExportButton from "@/components/ExportButton";
-import BorderBox from "@/components/BorderBox";
-import PlaceholderImage from "@/components/PlaceholderImage";
+import Table from "@/components/tables/Table";
+import BaseMenu from "@/components/menus/BaseMenu";
+import ExportButton from "@/components/buttons/ExportButton";
+import BorderBox from "@/components/box/BorderBox";
+import PlaceholderImage from "@/components/placeholders/PlaceholderImage";
 import EditIcon from "@/assets/icons/EditIcon";
 import DeleteIcon from "@/assets/icons/DeleteIcon";
-import InputSearch from "@/components/InputSearch";
+import InputSearch from "@/components/inputs/InputSearch";
 import {
   Disclosure,
   DisclosureButton,
@@ -15,7 +15,7 @@ import {
 } from "@headlessui/react";
 import BoxIcon from "@/assets/icons/BoxIcon";
 import DownIcon from "@/assets/icons/DownIcon";
-import Title from "@/components/Title";
+import Title from "@/components/texts/Title";
 export default function Faqs() {
   return (
     <div className="flex flex-col h-full gap-4">

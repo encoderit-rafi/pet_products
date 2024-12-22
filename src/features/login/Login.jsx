@@ -2,7 +2,7 @@ import React from "react";
 import FullLogo from "../../assets/icons/logo/FullLogo";
 import MailIcon from "../../assets/icons/MailIcon";
 import PasswordIcon from "../../assets/icons/PasswordIcon";
-import ButtonGradient from "@/components/ButtonGradient";
+import ButtonGradient from "@/components/buttons/ButtonGradient";
 
 export default function Login() {
   return (

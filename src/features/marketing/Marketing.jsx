@@ -1,15 +1,15 @@
 import demoData from "@/lib/data/demo";
-import Table from "@/components/Table";
-import BorderBox from "@/components/BorderBox";
-import BackButton from "@/components/BackButton";
+import Table from "@/components/tables/Table";
+import BorderBox from "@/components/box/BorderBox";
+import BackButton from "@/components/buttons/BackButton";
 import EditIcon from "@/assets/icons/EditIcon";
 import DeleteIcon from "@/assets/icons/DeleteIcon";
-import Title from "@/components/Title";
-import BaseButton from "@/components/BaseButton";
+import Title from "@/components/texts/Title";
+import BaseButton from "@/components/buttons/BaseButton";
 import { useState } from "react";
-import Dialog from "@/components/Dialog";
-import InputText from "@/components/InputText";
-import InputTextArea from "@/components/InputTextArea";
+import Dialog from "@/components/popups/Dialog";
+import InputText from "@/components/inputs/InputText";
+import InputTextArea from "@/components/inputs/InputTextArea";
 const query = {
   headers: [
     {
