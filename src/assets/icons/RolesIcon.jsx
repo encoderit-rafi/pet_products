@@ -13,9 +13,9 @@ export default function RolesIcon({ className }) {
         transform="translate(-2.4 -4.4)"
         fill="none"
         stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.2"
       />
     </svg>
   );

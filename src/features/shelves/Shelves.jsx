@@ -132,7 +132,7 @@ export default function Shelves() {
               ))}
             </TabList>
             <BaseButton
-              varient="orange"
+              variant="orange"
               icon="plus"
               className="text-xs max-w-24"
               onClick={handelOpenModal}
@@ -200,7 +200,7 @@ export default function Shelves() {
             <BaseButton onClick={() => setIsOpenAddNewStand(false)}>
               cancel
             </BaseButton>
-            <BaseButton varient="gradient">confirm</BaseButton>
+            <BaseButton variant="gradient">confirm</BaseButton>
           </div>
         </div>
       </Dialog>
@@ -267,7 +267,7 @@ export default function Shelves() {
             <BaseButton onClick={() => setIsOpenAddNewStandType(false)}>
               cancel
             </BaseButton>
-            <BaseButton varient="gradient">confirm</BaseButton>
+            <BaseButton variant="gradient">confirm</BaseButton>
           </div>
         </div>
       </Dialog>
@@ -301,7 +301,7 @@ export default function Shelves() {
             <BaseButton onClick={() => setIsOpenAddNewPOSMaterials(false)}>
               cancel
             </BaseButton>
-            <BaseButton varient="gradient">confirm</BaseButton>
+            <BaseButton variant="gradient">confirm</BaseButton>
           </div>
         </div>
       </Dialog>

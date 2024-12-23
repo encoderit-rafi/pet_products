@@ -26,7 +26,7 @@ export default function ShelvesIcon({ className }) {
           transform="translate(-2.61 -0.278)"
           fill="none"
           stroke="currentColor"
-          stroke-width="1"
+          strokeWidth="1"
         />
       </g>
     </svg>

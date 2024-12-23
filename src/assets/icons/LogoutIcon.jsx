@@ -18,8 +18,8 @@ export default function LogoutIcon({ className }) {
           d="M12,20A8,8,0,0,1,12,4"
           fill="none"
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-width="1.5"
+          strokeLinecap="round"
+          strokeWidth="1.5"
         />
         <path
           id="Path_49672"
@@ -27,9 +27,9 @@ export default function LogoutIcon({ className }) {
           d="M10,12H20m0,0L17,9m3,3-3,3"
           fill="none"
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
         />
       </g>
     </svg>

@@ -13,10 +13,10 @@ export default function DownIcon({ className }) {
         transform="translate(-7.793 -10.793)"
         fill="none"
         stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-miterlimit="10"
-        stroke-width="1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeMiterlimit="10"
+        strokeWidth="1"
       />
     </svg>
   );

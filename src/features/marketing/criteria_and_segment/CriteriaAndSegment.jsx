@@ -15,6 +15,9 @@ import { NavLink } from "react-router-dom";
 import BaseMenu from "@/components/menus/BaseMenu";
 import ExportButton from "@/components/buttons/ExportButton";
 import SubTitle from "@/components/texts/SubTitle";
+import Label from "@/components/texts/Label";
+import BaseSelectDropdown from "@/components/dropdowns/BaseSelectDropdown";
+import MultiSelectListbox from "@/components/dropdowns/MultiSelectListbox";
 const query = {
   headers: [
     {
@@ -123,16 +126,14 @@ export default function CriteriaAndSegment() {
   const [department, setDepartment] = useState(null);
   const [brand, setBrand] = useState(null);
   const [category, setCategory] = useState(null);
-  const [isOpenAddNewTask, setIsOpenAddNewTask] = useState(false)
+  const [isOpenAddNewCriteria, setIsOpenAddNewCriteria] = useState(false);
+  const [isOpenAddNewSegment, setIsOpenAddNewSegment] = useState(false);
 
   return (
     <div className="flex flex-col h-full gap-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-6">
-          <NavLink
-            to="/marketing"
-          >
-
+          <NavLink to="/marketing">
             <div className="size-10">
               <BackButton />
             </div>
@@ -142,16 +143,15 @@ export default function CriteriaAndSegment() {
         </div>
         <div className="flex items-center gap-4">
           {/* <ButtonWithIcon /> */}
-          {/* <BaseButton varient="orange" icon="plus" className="px-4 text-xs font-medium" onClick={() => setIsOpenAddNewTask(true)}>
+          {/* <BaseButton variant="orange" icon="plus" className="px-4 text-xs font-medium" onClick={() => setIsOpenAddNewCriteria(true)}>
             add new
           </BaseButton> */}
-          <BaseButton varient="gradient" className="px-4 text-xs font-medium">
+          <BaseButton variant="gradient" className="px-4 text-xs font-medium">
             save settings
           </BaseButton>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
-
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 ">
         <BorderBox>
           <div className="flex items-center justify-between mb-4">
             <SubTitle>Criteria</SubTitle>
@@ -174,7 +174,11 @@ export default function CriteriaAndSegment() {
                 value={category}
                 setValue={(item) => setCategory(item)}
               />
-              <BaseButton varient="orange" className="bg-custom_orange border font-normal w-fit border-custom_orange text-[11px] text-white capitalize py-1.5 px-3 rounded-full" onClick={() => setIsOpenAddNewTask(true)}>
+              <BaseButton
+                variant="orange"
+                className="bg-custom_orange border font-normal w-fit border-custom_orange text-[11px] text-white capitalize py-1.5 px-3 rounded-full"
+                onClick={() => setIsOpenAddNewCriteria(true)}
+              >
                 add new
               </BaseButton>
               <ExportButton />
@@ -205,22 +209,107 @@ export default function CriteriaAndSegment() {
                 value={category}
                 setValue={(item) => setCategory(item)}
               />
+              <BaseButton
+                variant="orange"
+                className="bg-custom_orange border font-normal w-fit border-custom_orange text-[11px] text-white capitalize py-1.5 px-3 rounded-full"
+                onClick={() => setIsOpenAddNewCriteria(true)}
+              >
+                add new
+              </BaseButton>
               <ExportButton />
             </div>
           </div>
           <Table query={query} />
         </BorderBox>
       </div>
-      <Dialog isOpen={isOpenAddNewTask} title="add new task" className="max-w-lg">
-        <div className="flex flex-col  space-y-4">
-          <InputText id="task_name" label="task name" palceholder="enter value" />
-          <InputText id="cost" label="cost" palceholder="enter value" />
-          <InputTextArea id="description" label="Description" placeholder="enter value" />
+      <Dialog
+        isOpen={isOpenAddNewCriteria}
+        title="Add New Segment"
+        className="max-w-lg"
+      >
+        <div className="flex flex-col space-y-4">
+          <div className="space-y-2">
+            <Label id="brand" label="brand" palceholder="brand" />
+            <BaseSelectDropdown />
+          </div>
+          <div className="space-y-2">
+            <Label id="Category" label="Category" palceholder="Category" />
+            <MultiSelectListbox />
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="flex-1 space-y-2">
+              <Label id="ABC" label="ABC" palceholder="ABC" />
+              <BaseSelectDropdown />
+            </div>
+            <div className="flex-1 space-y-2">
+              <Label id="Color Tag" label="Color Tag" palceholder="Color Tag" />
+              <BaseSelectDropdown />
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="flex-1 space-y-2">
+              <Label
+                id="Volume Min"
+                label="Volume Min"
+                palceholder="Volume Min"
+              />
+              <InputText />
+            </div>
+            <div className="flex-1 space-y-2">
+              <Label
+                id="Volume Max"
+                label="Volume Max"
+                palceholder="Volume Max"
+              />
+              <InputText />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Label id="Category" label="Category" palceholder="Category" />
+            <MultiSelectListbox />
+          </div>
           <div className="flex items-center gap-4">
-            <BaseButton
-              onClick={() => setIsOpenAddNewTask(false)}
-            >cancel</BaseButton>
-            <BaseButton varient="gradient">confirm</BaseButton>
+            <BaseButton onClick={() => setIsOpenAddNewCriteria(false)}>
+              cancel
+            </BaseButton>
+            <BaseButton variant="gradient">confirm</BaseButton>
+          </div>
+        </div>
+      </Dialog>
+      <Dialog
+        isOpen={isOpenAddNewSegment}
+        title="Add New Criteria"
+        className="max-w-lg"
+      >
+        <div className="flex flex-col space-y-4">
+          <div className="space-y-2">
+            <Label id="brand" label="brand" palceholder="brand" />
+            <BaseSelectDropdown />
+          </div>
+          <div className="space-y-2">
+            <Label id="Category" label="Category" palceholder="Category" />
+            <MultiSelectListbox />
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="flex-1 space-y-2">
+              <Label id="A Percent" label="A Percent" palceholder="A Percent" />
+              <BaseSelectDropdown />
+            </div>
+            <div className="flex-1 space-y-2">
+              <Label id="B Percent" label="B Percent" palceholder="B Percent" />
+              <BaseSelectDropdown />
+            </div>
+            <div className="flex-1 space-y-2">
+              <Label id="C Percent" label="C Percent" palceholder="C Percent" />
+              <BaseSelectDropdown />
+            </div>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <BaseButton onClick={() => setIsOpenAddNewSegment(false)}>
+              cancel
+            </BaseButton>
+            <BaseButton variant="gradient">confirm</BaseButton>
           </div>
         </div>
       </Dialog>

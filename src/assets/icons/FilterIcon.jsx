@@ -19,7 +19,7 @@ export default function FilterIcon({ className }) {
           transform="translate(0 -0.284)"
           fill="none"
           stroke="currentColor"
-          stroke-width="1"
+          strokeWidth="1"
         />
         <path
           id="Path_50079"
@@ -27,7 +27,7 @@ export default function FilterIcon({ className }) {
           d="M19.983,5.531c0-1.193,0-1.79-.395-2.16S18.557,3,17.285,3H4.7C3.426,3,2.79,3,2.4,3.371S2,4.338,2,5.531"
           fill="none"
           stroke="currentColor"
-          stroke-width="1"
+          strokeWidth="1"
         />
       </g>
     </svg>

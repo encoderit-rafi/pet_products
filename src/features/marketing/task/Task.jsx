@@ -11,25 +11,6 @@ import Dialog from "@/components/popups/Dialog";
 import InputText from "@/components/inputs/InputText";
 import InputTextArea from "@/components/inputs/InputTextArea";
 import { NavLink } from "react-router-dom";
-import FilterIcon from "@/assets/icons/FilterIcon";
-import BaseMenu from "@/components/menus/BaseMenu";
-const brands = [
-  {
-    id: 1,
-    name: "brand 1",
-    value: "brand_1",
-  },
-  {
-    id: 2,
-    name: "brand 2",
-    value: "brand_2",
-  },
-  {
-    id: 3,
-    name: "brand 3",
-    value: "brand_3",
-  },
-];
 const query = {
   headers: [
     {
@@ -84,37 +65,34 @@ const query = {
   data: demoData,
 };
 
-export default function Marketing() {
+export default function Task() {
   const [isOpenAddNewTask, setIsOpenAddNewTask] = useState(false);
-  const [brand, setBrand] = useState(null);
 
   return (
     <div className="flex flex-col h-full gap-4">
       <div className="flex items-center justify-between">
-        {/* <div className="flex items-center gap-6">
-          <div className="size-10">
-            <BackButton />
-          </div>
+        <div className="flex items-center gap-6">
+          <NavLink to="/marketing">
+            <div className="size-10">
+              <BackButton />
+            </div>
+          </NavLink>
 
-        </div> */}
-        <Title>Marketing</Title>
+          <Title>tasks</Title>
+        </div>
         <div className="flex items-center gap-4">
-          <NavLink to="/marketing/task">
-            <BaseButton className="px-4 text-xs font-normal">tasks</BaseButton>
-          </NavLink>
-          <NavLink to="/marketing/criteria_and_segment">
-            <BaseButton variant="orange" className="px-4 text-xs font-normal">
-              Criteria and Segment
-            </BaseButton>
-          </NavLink>
-          <BaseMenu
-            text="sort by"
-            data={brands}
-            value={brand}
-            setValue={(item) => setBrand(item)}
-            className="border-t-transparent border-b-transparent rounded-none pt-0 pb-0 px-4 text-xs border-l-gray-500 border-r-gray-500"
-          />
-          <FilterIcon className="size-4 text-white" />
+          {/* <ButtonWithIcon /> */}
+          <BaseButton
+            variant="orange"
+            icon="plus"
+            className="px-4 text-xs font-medium"
+            onClick={() => setIsOpenAddNewTask(true)}
+          >
+            add new
+          </BaseButton>
+          <BaseButton variant="gradient" className="px-4 text-xs font-medium">
+            save settings
+          </BaseButton>
         </div>
       </div>
       <BorderBox>

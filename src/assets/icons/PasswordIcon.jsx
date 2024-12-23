@@ -19,7 +19,7 @@ export default function PasswordIcon({ className }) {
           transform="translate(-2 -2)"
           fill="none"
           stroke="currentColor"
-          stroke-width="1.5"
+          strokeWidth="1.5"
         />
         <path
           id="Path_48999"
@@ -28,8 +28,8 @@ export default function PasswordIcon({ className }) {
           transform="translate(-2 -2)"
           fill="none"
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-width="1.5"
+          strokeLinecap="round"
+          strokeWidth="1.5"
         />
         <path
           id="Path_49000"
@@ -38,9 +38,9 @@ export default function PasswordIcon({ className }) {
           transform="translate(-2 -2)"
           fill="none"
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
         />
       </g>
     </svg>

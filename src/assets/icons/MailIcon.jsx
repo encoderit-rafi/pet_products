@@ -15,9 +15,9 @@ export default function MailIcon({ className }) {
           transform="translate(-0.99 -1.39)"
           fill="none"
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
         />
         <path
           id="Path_48996"
@@ -26,9 +26,9 @@ export default function MailIcon({ className }) {
           transform="translate(-0.971 -1.342)"
           fill="none"
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
         />
         <path
           id="Path_48997"
@@ -37,9 +37,9 @@ export default function MailIcon({ className }) {
           transform="translate(1.437 -1.39)"
           fill="none"
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
         />
       </g>
     </svg>

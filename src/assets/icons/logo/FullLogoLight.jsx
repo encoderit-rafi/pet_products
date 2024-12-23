@@ -16,11 +16,11 @@ export default function FullLogoLight({ className }) {
           id="PET_PRODUCTS"
           data-name="PET PRODUCTS"
           transform="translate(79.5 62.058)"
-          font-size="15"
-          font-family="SegoeUI-Bold, Segoe UI"
-          font-weight="700"
+          fontSize="15"
+          fontFamily="SegoeUI-Bold, Segoe UI"
+          fontWeight="700"
         >
-          <tspan x="0" y="0" className="font-poppins">
+          <tspan x="0" y="0" className="font-roboto">
             PET PRODUCTS
           </tspan>
         </text>
@@ -28,11 +28,11 @@ export default function FullLogoLight({ className }) {
           id="منتجات_الحيوانات"
           data-name="منتجات الحيوانات"
           transform="translate(79.5 80.058)"
-          font-size="15"
-          font-family="SegoeUI-Bold, Segoe UI"
-          font-weight="700"
+          fontSize="15"
+          fontFamily="SegoeUI-Bold, Segoe UI"
+          fontWeight="700"
         >
-          <tspan x="0" y="0">
+          <tspan x="0" y="0" className="font-eiMessiri">
             منتجات الحيوانات
           </tspan>
         </text>

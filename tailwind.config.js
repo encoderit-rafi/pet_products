@@ -27,6 +27,8 @@ export default {
         custom_bg_eight: "var(--custom_bg_eight)",
         custom_bg_nine: "var(--custom_bg_nine)",
         custom_bg_ten: "var(--custom_bg_ten)",
+        custom_bg_eleven: "var(--custom_bg_eleven)",
+        custom_bg_twelve: "var(--custom_bg_twelve)",
 
         custom_text_one: "var(--custom_text_one)",
         custom_text_two: "var(--custom_text_two)",
@@ -42,6 +44,8 @@ export default {
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
+        roboto: ["Roboto", "serif"],
+        eiMessiri: ["El Messiri", "serif"],
       },
       // screens: {
       //   xs: "20rem",

@@ -1,4 +1,5 @@
 import CheckIcon from "@/assets/icons/CheckIcon";
+import CloseIcon from "@/assets/icons/CloseIcon";
 import DownIcon from "@/assets/icons/DownIcon";
 import cn from "@/lib/utils/cn";
 import {
@@ -20,9 +21,11 @@ const MultiSelectListbox = () => {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleOption = (id) => {
+  const toggleOption = (data) => {
     setSelectedOptions((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+      prev.includes((item) => item.id == data.id)
+        ? prev.filter((item) => item.id !== data.id)
+        : [...prev, data]
     );
   };
 
@@ -73,7 +76,7 @@ const MultiSelectListbox = () => {
                 className={`group flex cursor-pointer items-center gap-2 rounded-lg py-1.5 px-3 select-none hover:bg-white/10 ${
                   selectedOptions.includes(option.id) && "bg-white/10"
                 }`}
-                onClick={() => toggleOption(option.id)}
+                onClick={() => toggleOption(option)}
               >
                 <div className="size-4">
                   {selectedOptions.includes(option.id) && (
@@ -81,16 +84,6 @@ const MultiSelectListbox = () => {
                   )}
                 </div>
                 <div className="text-white text-sm/6">{option.name}</div>
-                {/* {
-                  <li
-                    className={`cursor-pointer select-none py-2 px-4 ${
-                      selectedOptions.includes(option.id) ? "font-bold" : ""
-                    }`}
-                    onClick={() => toggleOption(option.id)}
-                  >
-                    {option.name}
-                  </li>
-                } */}
               </ListboxOption>
             ))}
           </ListboxOptions>
@@ -99,6 +92,25 @@ const MultiSelectListbox = () => {
 
       {/* Close on outside click */}
       {isOpen && <div className="fixed inset-0 z-0" onClick={closeListbox} />}
+      {selectedOptions.length > 0 && (
+        <div className="flex items-center w-full gap-3 mt-3 overflow-x-auto">
+          {selectedOptions.map((option) => (
+            <div className="flex items-center gap-8 px-3 py-4 rounded-xl text-custom_text_two bg-custom_bg_eleven">
+              <span>{option.name}</span>
+              <div
+                className="size-3 text-custom_text_two"
+                onClick={() =>
+                  setSelectedOptions((prev) =>
+                    prev.filter((item) => item.id != option.id)
+                  )
+                }
+              >
+                <CloseIcon />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

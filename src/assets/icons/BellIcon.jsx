@@ -13,9 +13,9 @@ export default function BellIcon({ className }) {
         transform="translate(-2.886 -2.5)"
         fill="none"
         stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1"
       />
     </svg>
   );

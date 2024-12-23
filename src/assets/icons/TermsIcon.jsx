@@ -19,7 +19,7 @@ export default function TermsIcon({ className }) {
           transform="translate(0)"
           fill="none"
           stroke="currentColor"
-          stroke-width="1"
+          strokeWidth="1"
         />
         <path
           id="Path_50082"
@@ -28,9 +28,9 @@ export default function TermsIcon({ className }) {
           transform="translate(-1.354 -1.666)"
           fill="none"
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
       </g>
     </svg>

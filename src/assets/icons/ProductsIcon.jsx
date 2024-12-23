@@ -15,7 +15,7 @@ export default function ProductsIcon({ className }) {
           transform="translate(-0.844 -0.366)"
           fill="currentColor"
           stroke="currentColor"
-          stroke-width="0.2"
+          strokeWidth="0.2"
         />
       </g>
     </svg>

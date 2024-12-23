@@ -77,6 +77,8 @@
       --custom_bg_eight: rgba(255, 255, 255, 9%);
       --custom_bg_nine: #4d4d4d;
       --custom_bg_ten: #6d6d6d;
+      --custom_bg_eleven: #74b222;
+      --custom_bg_twelve: #0d192ccb;
 
       --custom_text_one: #eeeeee;
       --custom_text_two: #ffffff;
@@ -102,6 +104,8 @@
       --custom_bg_eight: rgb(255, 255, 255);
       --custom_bg_nine: #ffffff;
       --custom_bg_ten: #f1f1f1;
+      --custom_bg_eleven: #e7f1d7;
+      --custom_bg_twelve: #fffffffa;
 
       --custom_text_one: #aaabaa;
       --custom_text_two: #000000;
@@ -158,7 +162,7 @@
   @apply !bg-[#21272b];
 }
 .react-datepicker {
-  @apply rounded-xl mt-2 p-1;
+  @apply p-1 mt-2 rounded-xl;
 }
 .react-datepicker__current-month,
 .react-datepicker__day-name,
@@ -215,7 +219,7 @@
   transform: translateX(60%) translateY(-50%);
   width: 12px; /* Set the width of the icon */
   height: 6px; /* Set the height of the icon */
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10.092 5.546"><path id="DDL" d="M17.177,11.5l-4.339,4.339L8.5,11.5" transform="translate(-7.793 -10.793)" fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1"/></svg>');
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10.092 5.546"><path id="DDL" d="M17.177,11.5l-4.339,4.339L8.5,11.5" transform="translate(-7.793 -10.793)" fill="none" stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1"/></svg>');
   background-size: contain;
   background-repeat: no-repeat;
 }

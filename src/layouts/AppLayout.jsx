@@ -13,23 +13,21 @@ import FullLogoLight from "@/assets/icons/logo/FullLogoLight";
 import Sidebar from "@/components/navigators/Sidebar";
 import BaseButton from "@/components/buttons/BaseButton";
 import { useTheme } from "@/context/ThemeProvider";
+import ToggleLogo from "@/components/ui/ToggleLogo";
 
 export default function AppLayout() {
-  const { theme } = useTheme()
+  const { theme } = useTheme();
   // const [darkMode, setDarkMode] = useState(true);
   const [isOpenConfirmLogoutDialog, setIsOpenConfirmLogoutDialog] =
     useState(false);
   return (
     <div
-      className={`${theme == 'dark' ? "dark" : "light"
-        } font-poppins flex flex-col pt-5 pr-5 pb-9 space-y-6 overflow-hidden text-white bg-custom_bg_one h-svh`}
+      className={`${
+        theme == "dark" ? "dark" : "light"
+      } font-poppins flex flex-col pt-5 pr-5 pb-9 space-y-6 overflow-hidden text-white bg-custom_bg_one h-svh`}
     >
       <header className="flex items-center justify-between pl-5 text-white">
-        {theme == 'dark' ? (
-          <FullLogo className="h-[38px] w-[168px]" />
-        ) : (
-          <FullLogoLight className="h-[38px] w-[168px]" />
-        )}
+        <ToggleLogo />
         <div className="flex items-center gap-4">
           <ButtonToggleTheme />
           <NotificationButton />
@@ -70,7 +68,7 @@ export default function AppLayout() {
             <BaseButton onClick={() => setIsOpenConfirmLogoutDialog(false)}>
               close
             </BaseButton>
-            <BaseButton varient="gradient">
+            <BaseButton variant="gradient">
               <NavLink to="/login">confirm</NavLink>
             </BaseButton>
           </div>

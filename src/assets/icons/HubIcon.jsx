@@ -15,9 +15,9 @@ export default function HubIcon({ className }) {
           transform="translate(0.101 0.101)"
           fill="none"
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.2"
         />
         <path
           id="Path_49003"
@@ -25,9 +25,9 @@ export default function HubIcon({ className }) {
           d="M12.16,3.5C5.538,3.5,3.5,5.538,3.5,12.16s2.038,8.66,8.66,8.66,8.66-2.038,8.66-8.66S18.783,3.5,12.16,3.5Z"
           fill="none"
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.2"
         />
       </g>
     </svg>
