@@ -7,7 +7,7 @@ export default function BaseMenu({ text, data, value, setValue, className }) {
   return (
     <Menu>
       <MenuButton className={cn("inline-flex text-[11px] text-custom_text_two font-extralight capitalize items-center justify-between gap-2 bg-custom_bg_two border rounded-full py-1.5 px-3 shadow-inner focus:outline-none  data-[focus]:outline-1 data-[focus]:outline-white", className)}>
-        {value?.name || text}
+        {value?.name ?? text}
         <DownIcon className="w-2 text-custom_text_one" />
       </MenuButton>
 

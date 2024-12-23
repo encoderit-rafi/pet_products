@@ -6,7 +6,7 @@ import Login from "./features/login";
 import Connect from "./features/connect";
 import Faqs from "./features/faqs";
 import Hub from "./features/hub";
-import Marketing from "./features/marketing";
+import Marketing, { CriteriaAndSegment, Task } from "./features/marketing";
 import Products from "./features/products";
 import Roles from "./features/roles";
 import Shelves from "./features/shelves";
@@ -23,6 +23,8 @@ const router = createBrowserRouter([
       { path: "connect", element: <Connect /> },
       { path: "faqs", element: <Faqs /> },
       { path: "marketing", element: <Marketing /> },
+      { path: "marketing/task", element: <Task /> },
+      { path: "marketing/criteria_and_segment", element: <CriteriaAndSegment /> },
       { path: "products", element: <Products /> },
       { path: "roles", element: <Roles /> },
       { path: "shelves", element: <Shelves /> },

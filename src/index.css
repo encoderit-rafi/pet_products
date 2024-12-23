@@ -138,6 +138,15 @@
     background-color: #555;
   }
 }
+/* Example CSS for dropdown in portal */
+/* .menu-items {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 8px;
+  z-index: 60;
+} */
+
 .recharts-rectangle.recharts-tooltip-cursor {
   fill: transparent !important;
 }
