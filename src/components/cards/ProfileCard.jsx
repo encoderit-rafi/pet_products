@@ -11,10 +11,12 @@ export default function ProfileCard() {
         />
       </div>
       <div className="flex flex-col justify-center capitalize">
-        <p className="text-sm font-medium text-custom_text_four">
+        <p className="text-sm font-normal text-custom_text_four">
           m. khalid saied
         </p>
-        <p className="text-[10px] text-gray-400 font-light">show profile</p>
+        <p className="text-xs text-custom_text_five font-extralight">
+          show profile
+        </p>
       </div>
     </div>
   );

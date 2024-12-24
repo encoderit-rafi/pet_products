@@ -37,10 +37,13 @@ export default {
         custom_text_five: "var(--custom_text_five)",
         custom_text_six: "var(--custom_text_six)",
         custom_text_seven: "var(--custom_text_seven)",
+        custom_text_eight: "var(--custom_text_eight)",
 
         custom_line_one: "var(--custom_line_one)",
         custom_line_two: "var(--custom_line_two)",
         custom_line_three: "var(--custom_line_three)",
+        custom_line_four: "var(--custom_line_four)",
+        custom_line_five: "var(--custom_line_five)",
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],

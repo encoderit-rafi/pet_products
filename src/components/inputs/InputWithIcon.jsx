@@ -18,15 +18,12 @@ export default function InputWithIcon({
         type={type}
         placeholder={palceholder}
         className={cn(
-          "w-full py-5 bg-transparent border-b px-14 peer placeholder:text-center placeholder:capitalize focus:bg-transparent focus:border-b-custom_text_two border-b-custom_line_one focus:outline-none",
+          "w-full py-8 bg-transparent border-b px-12 peer placeholder:text-center placeholder:text-custom_text_two placeholder:capitalize focus:bg-transparent focus:border-b-custom_text_two border-b-custom_line_one focus:outline-none",
           className
         )}
         {...props}
       />
-      <div className="absolute -translate-y-1/2 top-1/2 size-6 ">
-        {/* <MailIcon className="size-full" /> */}
-        {icon}
-      </div>
+      {icon}
     </div>
   );
 }

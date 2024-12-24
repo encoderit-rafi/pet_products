@@ -10,6 +10,8 @@ import BaseMenu from "@/components/menus/BaseMenu";
 import { useState } from "react";
 import Table from "@/components/tables/Table";
 import PlaceholderImage from "@/components/placeholders/PlaceholderImage";
+import InputWithIcon from "@/components/inputs/InputWithIcon";
+import SearchIcon from "@/assets/icons/SearchIcon";
 const demoData = [
   {
     id: 1,
@@ -205,35 +207,6 @@ const query1 = {
   data: demoData,
 };
 
-// const renderActiveShape = (props) => {
-//   const RADIAN = Math.PI / 180;
-//   const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;
-//   const sin = Math.sin(-RADIAN * midAngle);
-//   const cos = Math.cos(-RADIAN * midAngle);
-//   const sx = cx + (outerRadius + 10) * cos;
-//   const sy = cy + (outerRadius + 10) * sin;
-//   const mx = cx + (outerRadius + 30) * cos;
-//   const my = cy + (outerRadius + 30) * sin;
-//   const ex = mx + (cos >= 0 ? 1 : -1) * 22;
-//   const ey = my;
-//   const textAnchor = cos >= 0 ? 'start' : 'end';
-
-//   return (
-//     <g>
-
-//       <Sector
-//         cx={cx}
-//         cy={cy}
-//         innerRadius={innerRadius}
-//         outerRadius={outerRadius}
-//         startAngle={startAngle}
-//         endAngle={endAngle}
-//         fill={fill}
-//       />
-
-//     </g>
-//   );
-// };
 export default function Hub() {
   const [months, setMonths] = useState(null);
   const [brand, setBrand] = useState(null);
@@ -242,11 +215,11 @@ export default function Hub() {
     <div className="">
       <div className="grid grid-cols-12 gap-6">
         {/* heading 1*/}
-        <div className="col-span-8">
+        <div className="content-center col-span-8">
           <Title>Total Sales</Title>
         </div>
         <div className="col-span-4">
-          <InputSearch placeholder="search dashboard" />
+          <InputSearch />
         </div>
         {/* charts 1*/}
         <div className="col-span-8">

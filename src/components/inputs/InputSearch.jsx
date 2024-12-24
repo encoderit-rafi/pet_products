@@ -1,19 +1,19 @@
 import SearchIcon from "@/assets/icons/SearchIcon";
 import React from "react";
+import InputWithIcon from "./InputWithIcon";
 
-export default function InputSearch({ placeholder = "search" }) {
+export default function InputSearch() {
   return (
-    <div className="relative text-xs font-extralight text-custom_text_two">
-      <input
-        type="email"
-        name=""
-        id=""
-        placeholder={placeholder}
-        className="w-full py-2 pl-5 bg-transparent border-b placeholder:capitalize focus:bg-transparent border-b-custom_line_two focus:outline-none"
-      />
-      <div className="absolute -translate-y-1/2 top-1/2 size-4">
-        <SearchIcon className="size-full" />
-      </div>
-    </div>
+    <InputWithIcon
+      id=""
+      type="text"
+      placeholder="search dashboard"
+      className="py-3 pl-6 text-xs placeholder:text-custom_text_eight placeholder:text-left border-b-custom_line_five"
+      icon={
+        <div className="absolute -translate-y-1/2 top-1/2 size-4">
+          <SearchIcon className="size-full" />
+        </div>
+      }
+    />
   );
 }

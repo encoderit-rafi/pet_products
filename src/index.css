@@ -78,7 +78,7 @@
       --custom_bg_nine: #4d4d4d;
       --custom_bg_ten: #6d6d6d;
       --custom_bg_eleven: #74b222;
-      --custom_bg_twelve: #0d192ccb;
+      --custom_bg_twelve: #0d192cd8;
 
       --custom_text_one: #eeeeee;
       --custom_text_two: #ffffff;
@@ -87,10 +87,13 @@
       --custom_text_five: #aaabaa;
       --custom_text_six: #c0c0c0;
       --custom_text_seven: #b6b6b6;
+      --custom_text_eight: #ffffff;
 
       --custom_line_one: #919191;
       --custom_line_two: #636363;
       --custom_line_three: #313639;
+      --custom_line_four: #919191;
+      --custom_line_five: #767676;
     }
 
     .light {
@@ -114,10 +117,13 @@
       --custom_text_five: #7a8e80;
       --custom_text_six: #000000;
       --custom_text_seven: #696969;
+      --custom_text_eight: #c0c0c0;
 
       --custom_line_one: #c0c0c0;
       --custom_line_two: #e6e6e6;
       --custom_line_three: #e6e6e6;
+      --custom_line_four: #000000;
+      --custom_line_five: #e6e6e6;
     }
   }
 }
