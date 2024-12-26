@@ -9,15 +9,15 @@ const Dialog = ({ title, isOpen, children, className }) => {
     >
       <div
         className={cn(
-          "w-full h-fit capitalize shadow-sm bg-custom_bg_nine rounded-2xl p-7",
+          "w-full h-fit m-3 text-custom_text_two  shadow-sm bg-custom_bg_nine rounded-2xl py-6 px-8",
           {
-            "animate-jump-in": isOpen,
+            "animate-jump": isOpen,
             "animate-jump-out": !isOpen,
           },
           className
         )}
       >
-        <h2 className="text-base font-medium text-center text-custom_text_two">
+        <h2 className="text-base font-semibold text-center capitalize ">
           {title}
         </h2>
         {children}

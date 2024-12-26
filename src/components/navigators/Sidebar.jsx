@@ -41,25 +41,42 @@ import LogoutIcon from "@/assets/icons/LogoutIcon";
 import Dialog from "../popups/Dialog";
 import BaseButton from "../buttons/BaseButton";
 import { useState } from "react";
+import { useTheme } from "@/context/ThemeProvider";
 const data = [
   {
     id: 1,
-    name: "brand 1",
-    value: "brand_1",
+    name: "Marketing",
+    value: "marketing",
   },
   {
     id: 2,
-    name: "brand 2",
-    value: "brand_2",
+    name: "Sales",
+    value: "sales",
   },
   {
     id: 3,
-    name: "brand 3",
-    value: "brand_3",
+    name: "Finance",
+    value: "finance",
+  },
+  {
+    id: 4,
+    name: "Supply Chain",
+    value: "supply_chain",
+  },
+  {
+    id: 5,
+    name: "Support",
+    value: "support",
+  },
+  {
+    id: 6,
+    name: "Plan a Visit",
+    value: "plan_a_visit",
   },
 ];
 export default function Sidebar() {
   const location = useLocation();
+  const { isDark } = useTheme();
   const [isOpenConfirmLogoutDialog, setIsOpenConfirmLogoutDialog] =
     useState(false);
   console.log({ location });
@@ -81,13 +98,25 @@ export default function Sidebar() {
 
                 <MenuItems
                   transition
-                  anchor="left end"
-                  className=" w-52 z-[60] rounded-xl bg-[#555]  p-2 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 grid grid-cols-2 gap-2 "
+                  anchor="left"
+                  className={cn(
+                    " w-full !max-w-80 z-[60] rounded-2xl bg-custom_bg_nine   p-4 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 grid grid-cols-2 gap-3 shadow-lg",
+                    {
+                      "bg-[#4D4D4D]": isDark,
+                      "bg-[#ffffff]": !isDark,
+                    }
+                  )}
                 >
                   {data.map((item) => (
                     <MenuItem key={item.id}>
                       <button
-                        className={`group text-center text-xs capitalize w-full items-center gap-2 rounded-lg py-2 px-3 bg-[#21272b] data-[focus]:bg-white/10`}
+                        className={cn(
+                          `group text-center text-xs font-extralight capitalize w-full items-center gap-2 rounded-xl py-3 px-7`,
+                          {
+                            "bg-[#393939] text-[#ffffff]": isDark,
+                            "bg-[#f8f8f8] text-[#000000]": !isDark,
+                          }
+                        )}
                       >
                         {item?.name}
                       </button>
@@ -110,7 +139,7 @@ export default function Sidebar() {
                   }
                 )}
               >
-                <span className="text-custom_line_four">{route.icon}</span>
+                <span className="">{route.icon}</span>
                 <span className="">{route.name}</span>
               </NavLink>
             </li>
@@ -130,18 +159,21 @@ export default function Sidebar() {
       <Dialog
         title="log out"
         isOpen={isOpenConfirmLogoutDialog}
-        className="max-w-80"
+        className="max-w-96"
       >
-        <div className="mt-5">
-          <h5 className="text-center font-extralight">
+        <div className="mt-4">
+          <h5 className="mx-auto text-sm tracking-wide text-center max-w-72 font-extralight">
             {" "}
             Are you sure you want to logout from your account?
           </h5>
-          <div className="flex items-center gap-4 mt-4">
-            <BaseButton onClick={() => setIsOpenConfirmLogoutDialog(false)}>
+          <div className="flex items-center gap-4 mt-5">
+            <BaseButton
+              className="text-sm font-medium"
+              onClick={() => setIsOpenConfirmLogoutDialog(false)}
+            >
               close
             </BaseButton>
-            <BaseButton variant="gradient">
+            <BaseButton variant="gradient" className="text-sm font-medium">
               <NavLink to="/login">confirm</NavLink>
             </BaseButton>
           </div>

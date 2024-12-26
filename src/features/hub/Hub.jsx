@@ -219,7 +219,7 @@ export default function Hub() {
           <Title>Total Sales</Title>
         </div>
         <div className="col-span-4">
-          <InputSearch />
+          <InputSearch placeholder="search dashboard" />
         </div>
         {/* charts 1*/}
         <div className="col-span-8">

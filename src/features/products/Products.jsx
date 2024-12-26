@@ -80,9 +80,9 @@ const query = {
       value: "actions",
       cellValue: (row) => {
         return (
-          <div className="flex flex-row-reverse gap-3 text-yellow-400">
-            <DeleteIcon className={"size-5"} />
-            <EditIcon className={"size-5"} />
+          <div className="flex flex-row-reverse gap-3 text-custom_yellow">
+            <DeleteIcon className={"h-4"} />
+            <EditIcon className={"h-4"} />
           </div>
         );
       },
@@ -154,7 +154,7 @@ export default function Products() {
         <Title onClick={() => setIsOpenDrawer(true)}>dashboard</Title>
         <div className="flex items-center gap-3">
           <div className="w-[111px]">
-            <InputSearch />
+            <InputSearch className="pr-1 py-1.5" />
           </div>
           <BaseMenu
             text="select department"
@@ -180,18 +180,18 @@ export default function Products() {
       <BorderBox>
         <Table query={query} />
       </BorderBox>
-      <Drawer isOpen={isOpenDrawer} className="max-w-96 flex flex-col">
+      <Drawer isOpen={isOpenDrawer} className="flex flex-col max-w-96">
         <Title>Application Support</Title>
-        <div className="flex-1 overflow-y-auto mt-5 space-y-3">
+        <div className="flex-1 mt-5 space-y-3 overflow-y-auto">
           <BorderBox className="px-3 py-4 h-fit">
             <div className="flex items-center gap-4">
               <img
                 src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt=""
-                className="rounded-lg h-16"
+                className="h-16 rounded-lg"
               />
 
-              <div className="flex flex-col justify-between flex-1 capitalize h-16">
+              <div className="flex flex-col justify-between flex-1 h-16 capitalize">
                 <p className="text-sm font-medium text-custom_text_four">
                   m. khalid saied
                 </p>
@@ -202,7 +202,6 @@ export default function Products() {
                   <WhatsappIcon className="size-4" />
                   <MessageIcon className="size-4" />
                   <PhoneIcon className="size-4" />
-
                 </div>
               </div>
             </div>
@@ -212,10 +211,10 @@ export default function Products() {
               <img
                 src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt=""
-                className="rounded-lg h-16"
+                className="h-16 rounded-lg"
               />
 
-              <div className="flex flex-col justify-between flex-1 capitalize h-16">
+              <div className="flex flex-col justify-between flex-1 h-16 capitalize">
                 <p className="text-sm font-medium text-custom_text_four">
                   m. khalid saied
                 </p>
@@ -226,7 +225,6 @@ export default function Products() {
                   <WhatsappIcon className="size-4" />
                   <MessageIcon className="size-4" />
                   <PhoneIcon className="size-4" />
-
                 </div>
               </div>
             </div>
@@ -236,10 +234,10 @@ export default function Products() {
               <img
                 src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt=""
-                className="rounded-lg h-16"
+                className="h-16 rounded-lg"
               />
 
-              <div className="flex flex-col justify-between flex-1 capitalize h-16">
+              <div className="flex flex-col justify-between flex-1 h-16 capitalize">
                 <p className="text-sm font-medium text-custom_text_four">
                   m. khalid saied
                 </p>
@@ -250,7 +248,6 @@ export default function Products() {
                   <WhatsappIcon className="size-4" />
                   <MessageIcon className="size-4" />
                   <PhoneIcon className="size-4" />
-
                 </div>
               </div>
             </div>
@@ -260,10 +257,10 @@ export default function Products() {
               <img
                 src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt=""
-                className="rounded-lg h-16"
+                className="h-16 rounded-lg"
               />
 
-              <div className="flex flex-col justify-between flex-1 capitalize h-16">
+              <div className="flex flex-col justify-between flex-1 h-16 capitalize">
                 <p className="text-sm font-medium text-custom_text_four">
                   m. khalid saied
                 </p>
@@ -274,15 +271,14 @@ export default function Products() {
                   <WhatsappIcon className="size-4" />
                   <MessageIcon className="size-4" />
                   <PhoneIcon className="size-4" />
-
                 </div>
               </div>
             </div>
           </BorderBox>
-
         </div>
         <BaseButton onClick={() => setIsOpenDrawer(false)} className="mt-10">
-          done</BaseButton>
+          done
+        </BaseButton>
       </Drawer>
     </div>
   );
