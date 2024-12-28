@@ -8,7 +8,7 @@ import EditIcon from "@/assets/icons/EditIcon";
 import DeleteIcon from "@/assets/icons/DeleteIcon";
 import Title from "@/components/texts/Title";
 import BaseButton from "@/components/buttons/BaseButton";
-import Dialog from "@/components/popups/Dialog";
+import Dialog from "@/components/dialogs/Dialog";
 import InputText from "@/components/inputs/InputText";
 import InputTextArea from "@/components/inputs/InputTextArea";
 import { NavLink } from "react-router-dom";

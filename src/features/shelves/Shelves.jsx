@@ -6,7 +6,7 @@ import Table from "@/components/tables/Table";
 import BaseButton from "@/components/buttons/BaseButton";
 import ImagePicker from "@/components/file_pickers/ImagePicker";
 import { useEffect, useState } from "react";
-import Dialog from "@/components/popups/Dialog";
+import Dialog from "@/components/dialogs/Dialog";
 import BaseMenu from "@/components/menus/BaseMenu";
 import BaseSelectDropdown from "@/components/dropdowns/BaseSelectDropdown";
 import Label from "@/components/texts/Label";

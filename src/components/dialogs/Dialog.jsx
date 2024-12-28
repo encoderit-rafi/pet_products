@@ -3,9 +3,8 @@ import cn from "@/lib/utils/cn";
 const Dialog = ({ title, isOpen, children, className }) => {
   return (
     <div
-      className={`fixed !m-0 inset-0 z-50 flex items-center justify-center transition-all duration-200 ${
-        isOpen ? "visible bg-black/10 backdrop-blur-sm" : "invisible"
-      }`}
+      className={`fixed !m-0 inset-0 z-50 flex items-center justify-center transition-all duration-200 ${isOpen ? "visible bg-black/10 backdrop-blur-sm" : "invisible"
+        }`}
     >
       <div
         className={cn(

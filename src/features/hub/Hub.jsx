@@ -222,7 +222,7 @@ export default function Hub() {
           <InputSearch placeholder="search dashboard" />
         </div>
         {/* charts 1*/}
-        <div className="col-span-8">
+        <div className="col-span-12 lg:col-span-8">
           <BorderBox>
             <div className="flex items-center justify-between mb-3">
               <SubTitle>Brands Chart</SubTitle>
@@ -241,7 +241,7 @@ export default function Hub() {
             </div>
           </BorderBox>
         </div>
-        <div className="col-span-4">
+        <div className="col-span-12 lg:col-span-4">
           <BorderBox>
             <div className="flex items-center justify-between">
               <SubTitle>Best Seller Brand</SubTitle>
@@ -259,7 +259,7 @@ export default function Hub() {
           </BorderBox>
         </div>
         {/* charts 2*/}
-        <div className="col-span-8">
+        <div className="col-span-12 lg:col-span-8">
           <BorderBox>
             <div className="flex items-center justify-between mb-3">
               <SubTitle>Sales vs Cities</SubTitle>
@@ -284,7 +284,7 @@ export default function Hub() {
             </div>
           </BorderBox>
         </div>
-        <div className="col-span-4">
+        <div className="col-span-12 lg:col-span-4">
           <BorderBox>
             <div className="flex items-center justify-between">
               <SubTitle>Top Clients</SubTitle>
@@ -302,7 +302,7 @@ export default function Hub() {
           <Title>Inventory</Title>
         </div>
         {/* charts 3*/}
-        <div className="col-span-8">
+        <div className="col-span-12 lg:col-span-8">
           <BorderBox>
             <div className="flex items-center justify-between mb-3">
               <SubTitle>Brands Inventory</SubTitle>
@@ -321,7 +321,7 @@ export default function Hub() {
             </div>
           </BorderBox>
         </div>
-        <div className="col-span-4">
+        <div className="col-span-12 lg:col-span-4">
           <BorderBox>
             <div className="flex items-center justify-between">
               <SubTitle>Lowest Stock</SubTitle>
@@ -358,7 +358,7 @@ export default function Hub() {
           <Title>Marketing</Title>
         </div>
         {/* charts 4*/}
-        <div className="col-span-8">
+        <div className="col-span-12 lg:col-span-8">
           <BorderBox>
             <div className="flex items-center justify-between mb-3">
               <SubTitle>Brand Marketing</SubTitle>
@@ -383,7 +383,7 @@ export default function Hub() {
             </div>
           </BorderBox>
         </div>
-        <div className="col-span-4">
+        <div className="col-span-12 lg:col-span-4">
           <BorderBox>
             <div className="flex items-center justify-between">
               <SubTitle>Highest Expenses</SubTitle>

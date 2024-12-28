@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Children } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 //* icons😎
 import ProductsIcon from "@/assets/icons/ProductsIcon";
@@ -38,10 +38,11 @@ const routes = [
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import cn from "@/lib/utils/cn";
 import LogoutIcon from "@/assets/icons/LogoutIcon";
-import Dialog from "../popups/Dialog";
+import Dialog from "../dialogs/Dialog";
 import BaseButton from "../buttons/BaseButton";
 import { useState } from "react";
 import { useTheme } from "@/context/ThemeProvider";
+import Logout from "../buttons/ButtonLogout";
 const data = [
   {
     id: 1,
@@ -74,14 +75,14 @@ const data = [
     value: "plan_a_visit",
   },
 ];
-export default function Sidebar() {
+export default function Sidebar({ className, children }) {
   const location = useLocation();
   const { isDark } = useTheme();
-  const [isOpenConfirmLogoutDialog, setIsOpenConfirmLogoutDialog] =
-    useState(false);
-  console.log({ location });
+  // const [isOpenConfirmLogoutDialog, setIsOpenConfirmLogoutDialog] =
+  //   useState(false);
+  // console.log({ location,children });
   return (
-    <aside className="flex flex-col justify-between flex-1 max-w-24">
+    <aside className={cn("flex flex-col justify-between flex-1", className)}>
       <nav className="pb-6 overflow-y-auto">
         <ul className="space-y-6">
           <li className="">
@@ -146,7 +147,9 @@ export default function Sidebar() {
           ))}
         </ul>
       </nav>
-      <button
+      {children}
+      {/* <Logout /> */}
+      {/* <button
         onClick={() => setIsOpenConfirmLogoutDialog(true)}
         className="text-xs font-light transition-all duration-500 text-custom_text_six hover:text-red-500"
       >
@@ -178,7 +181,7 @@ export default function Sidebar() {
             </BaseButton>
           </div>
         </div>
-      </Dialog>
+      </Dialog> */}
     </aside>
   );
 }

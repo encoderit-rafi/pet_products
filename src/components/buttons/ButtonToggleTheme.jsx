@@ -30,25 +30,6 @@ const ButtonToggleTheme = () => {
           className={`absolute size-4 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ${darkMode ? "opacity-0" : "opacity-100"
             }`}
         />
-        {/* ${
-          darkMode ? "translate-x-10" : "translate-x-0"
-        } 
-          ${
-            darkMode ? "opacity-100" : "opacity-0"
-          }
-         */}
-        {/* <div className="relative text-custom_bg_one">
-          <MoonIcon
-            className={`size-3 transition-all duration-300 ${
-              darkMode ? "opacity-100" : "opacity-0"
-            }`}
-          />
-          <SunIcon
-            className={`size-3 transition-all duration-300 ${
-              darkMode ? "opacity-0" : "opacity-100"
-            }`}
-          />
-        </div> */}
       </div>
     </button>
   );
