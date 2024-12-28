@@ -11,6 +11,7 @@ import Products from "./features/products";
 import Roles from "./features/roles";
 import Shelves from "./features/shelves";
 import Terms from "./features/terms";
+import NotFound from "./features/not_found";
 // Router Configuration
 const router = createBrowserRouter([
   // private routes📌
@@ -32,11 +33,13 @@ const router = createBrowserRouter([
     ],
   },
   // public routes📌
-  {
-    path: "/",
-    element: <DefaultLayout />,
-    children: [{ path: "/login", element: <Login /> }],
-  },
+  // {
+  //   path: "/login",
+  //   element: <DefaultLayout />,
+  //   children: [{ path: "/", element: <Login /> }],
+  // },
+  { path: "*", element: <NotFound /> }
+
 ]);
 export default function App() {
   return <RouterProvider router={router} />;
