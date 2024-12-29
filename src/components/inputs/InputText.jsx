@@ -1,4 +1,5 @@
 import cn from "@/lib/utils/cn";
+import Label from "../texts/Label";
 
 export default function InputText({
   id,
@@ -10,13 +11,13 @@ export default function InputText({
   return (
     <div className="flex flex-col w-full space-y-2">
       {hideLabel && (
-        <label
-          htmlFor={id}
-          className="text-sm font-medium text-white"
-          aria-label={palceholder}
-        >
-          {label}
-        </label>
+        <Label
+
+          id={id}
+          palceholder={palceholder}
+          label={label}
+        />
+
       )}
       <input
         id={id}
@@ -25,7 +26,7 @@ export default function InputText({
         placeholder={palceholder}
         aria-required="true"
         className={cn(
-          "border bg-white/5 text-white border-custom_line_one rounded-md px-3 py-2 outline-none placeholder:capitalize placeholder:text-custom_line_one focus:border-custom_line_one",
+          "border bg-transparent text-white border-custom_line_one rounded-md px-3 py-2 outline-none placeholder:capitalize placeholder:text-custom_line_one focus:border-custom_line_one",
           className
         )}
       />

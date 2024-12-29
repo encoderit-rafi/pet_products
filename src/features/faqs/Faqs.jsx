@@ -19,20 +19,20 @@ import Title from "@/components/texts/Title";
 export default function Faqs() {
   return (
     <div className="flex flex-col h-full gap-4">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row lg:items-center justify-between">
         <Title>Frequently Asked Questions</Title>
-        <div className="flex items-center gap-4">
-          <InputSearch placeholder="search questions" />
-        </div>
+        {/* <div className="flex items-center gap-4 bg-red-300">
+        </div> */}
+        <InputSearch placeholder="search questions" />
       </div>
       <div className="flex-1">
         <div className="h-full max-h-[600px] overflow-y-auto space-y-3 ">
           <Disclosure>
-            <DisclosureButton className="flex items-center justify-between w-full px-5 py-3 text-sm font-medium bg-custom_bg_seven rounded-xl group">
+            <DisclosureButton className="flex items-center justify-between w-full px-5 py-3 text-xs lg:text-sm font-medium bg-custom_bg_seven rounded-xl group">
               Question about app goes here
               <DownIcon className="w-2 transition-all duration-200 group-data-[open]:rotate-180" />
             </DisclosureButton>
-            <DisclosurePanel className="mt-3 text-base font-normal text-custom_text_two">
+            <DisclosurePanel className="mt-3 text-sm lg:text-base font-extralight text-custom_text_two">
               Sed ut perspiciatis unde omnis iste natus error sit voluptatem
               accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
               quae ab illor explicabo. Nemo enim ipsam voluptatem quia voluptas

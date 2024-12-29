@@ -90,31 +90,39 @@ export default function Marketing() {
 
   return (
     <div className="flex flex-col h-full gap-4">
-      <div className="flex items-center justify-between">
-        {/* <div className="flex items-center gap-6">
-          <div className="size-10">
-            <BackButton />
+      <div className="flex flex-col gap-4">
+        <div className="flex items-center justify-between">
+          <Title>Marketing</Title>
+          <div className="flex items-center gap-4">
+            <div className="hidden lg:flex items-center gap-4">
+              <NavLink to="/marketing/task">
+                <BaseButton className="px-4 text-xs font-normal">tasks</BaseButton>
+              </NavLink>
+              <NavLink to="/marketing/criteria_and_segment">
+                <BaseButton variant="orange" className="px-4 text-xs font-normal">
+                  Criteria and Segment
+                </BaseButton>
+              </NavLink>
+            </div>
+            <BaseMenu
+              text="sort by"
+              data={brands}
+              value={brand}
+              setValue={(item) => setBrand(item)}
+              className="border-t-transparent border-b-transparent rounded-none pt-0 pb-0 px-4 text-xs border-l-gray-500 border-r-gray-500"
+            />
+            <FilterIcon className="size-4 text-white" />
           </div>
-
-        </div> */}
-        <Title>Marketing</Title>
-        <div className="flex items-center gap-4">
-          <NavLink to="/marketing/task">
+        </div>
+        <div className="lg:hidden flex items-center gap-4">
+          <NavLink to="/marketing/task" className="flex-1">
             <BaseButton className="px-4 text-xs font-normal">tasks</BaseButton>
           </NavLink>
-          <NavLink to="/marketing/criteria_and_segment">
-            <BaseButton variant="orange" className="px-4 text-xs font-normal">
+          <NavLink to="/marketing/criteria_and_segment" className="flex-1">
+            <BaseButton variant="orange" className="px-4 text-xs font-normalc">
               Criteria and Segment
             </BaseButton>
           </NavLink>
-          <BaseMenu
-            text="sort by"
-            data={brands}
-            value={brand}
-            setValue={(item) => setBrand(item)}
-            className="border-t-transparent border-b-transparent rounded-none pt-0 pb-0 px-4 text-xs border-l-gray-500 border-r-gray-500"
-          />
-          <FilterIcon className="size-4 text-white" />
         </div>
       </div>
       <BorderBox>

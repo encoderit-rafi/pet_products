@@ -1,9 +1,9 @@
 import PlusIcon from "@/assets/icons/PlusIcon";
 import React from "react";
 
-export default function ButtonWithIcon({ icon, text }) {
+export default function ButtonWithIcon({ icon, text, ...props }) {
   return (
-    <button className="flex items-center gap-1 justify-center py-3  px-4 text-xs whitespace-nowrap !text-white capitalize bg-orange-600 text-custom_bg_two rounded-xl size-full ">
+    <button className="flex items-center gap-1 justify-center py-3  px-4 text-xs whitespace-nowrap !text-white capitalize bg-orange-600 text-custom_bg_two rounded-xl size-full " {...props}>
       <span className="size-3">
         <PlusIcon />
       </span>

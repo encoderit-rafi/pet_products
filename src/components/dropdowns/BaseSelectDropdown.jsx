@@ -28,7 +28,7 @@ export default function BaseSelectDropdown() {
       <Listbox value={selected} onChange={setSelected}>
         <ListboxButton
           className={cn(
-            "relative block w-full rounded-lg bg-white/5 py-3 pr-8 border border-custom_line_one pl-3 text-left text-sm/6 text-white",
+            "relative block w-full rounded-lg bg-transparent py-3 pr-8 border border-custom_line_one pl-3 text-left text-sm/6 text-white",
             "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
           )}
         >

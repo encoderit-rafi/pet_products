@@ -132,9 +132,9 @@ export default function CriteriaAndSegment() {
   return (
     <div className="flex flex-col h-full gap-4">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-2 lg:gap-6">
           <NavLink to="/marketing">
-            <div className="size-10">
+            <div className="size-8 lg:size-10">
               <BackButton />
             </div>
           </NavLink>
@@ -142,41 +142,48 @@ export default function CriteriaAndSegment() {
           <Title>Criteria and Segment</Title>
         </div>
         <div className="flex items-center gap-4">
-          {/* <ButtonWithIcon /> */}
-          {/* <BaseButton variant="orange" icon="plus" className="px-4 text-xs font-medium" onClick={() => setIsOpenAddNewCriteria(true)}>
-            add new
-          </BaseButton> */}
+
           <BaseButton variant="gradient" className="px-4 text-xs font-medium">
             save settings
           </BaseButton>
         </div>
       </div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 ">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2 ">
         <BorderBox>
-          <div className="flex items-center justify-between mb-4">
-            <SubTitle>Criteria</SubTitle>
-            <div className="flex items-center gap-3">
-              {/* <BaseMenu
-                text="select department"
-                data={departments}
-                value={department}
-                setValue={(item) => setDepartment(item)}
-              /> */}
-              <BaseMenu
-                text="select brand"
-                data={brands}
-                value={brand}
-                setValue={(item) => setBrand(item)}
-              />
-              <BaseMenu
-                text="select category"
-                data={categories}
-                value={category}
-                setValue={(item) => setCategory(item)}
-              />
+          <div className="flex flex-col gap-4 mb-2">
+            <div className="flex items-center justify-between ">
+              <SubTitle>Criteria</SubTitle>
+              <div className="flex items-center gap-3">
+                <BaseMenu
+                  text="select brand"
+                  data={brands}
+                  value={brand}
+                  setValue={(item) => setBrand(item)}
+                />
+                <BaseMenu
+                  text="select category"
+                  data={categories}
+                  value={category}
+                  setValue={(item) => setCategory(item)}
+                />
+                <div className="hidden lg:flex items-center gap-3">
+
+                  <BaseButton
+                    variant="orange"
+                    className=" text-[11px]  py-1.5 px-3 rounded-full lg:rounded-full"
+                    onClick={() => setIsOpenAddNewCriteria(true)}
+                  >
+                    add new
+                  </BaseButton>
+                  <ExportButton />
+                </div>
+              </div>
+            </div>
+            <div className="flex lg:hidden items-center gap-3">
+
               <BaseButton
                 variant="orange"
-                className="bg-custom_orange border font-normal w-fit border-custom_orange text-[11px] text-white capitalize py-1.5 px-3 rounded-full"
+                className=" text-[11px]  py-1.5 px-3 rounded-full lg:rounded-full"
                 onClick={() => setIsOpenAddNewCriteria(true)}
               >
                 add new
@@ -187,31 +194,41 @@ export default function CriteriaAndSegment() {
           <Table query={query} />
         </BorderBox>
         <BorderBox>
-          <div className="flex items-center justify-between mb-4">
-            <SubTitle>Segment </SubTitle>
-            <div className="flex items-center gap-3">
-              {/* 
-              <BaseMenu
-                text="select department"
-                data={departments}
-                value={department}
-                setValue={(item) => setDepartment(item)}
-              /> */}
-              <BaseMenu
-                text="select brand"
-                data={brands}
-                value={brand}
-                setValue={(item) => setBrand(item)}
-              />
-              <BaseMenu
-                text="select category"
-                data={categories}
-                value={category}
-                setValue={(item) => setCategory(item)}
-              />
+          <div className="flex flex-col gap-4 mb-2">
+            <div className="flex items-center justify-between ">
+              <SubTitle>Segment </SubTitle>
+
+              <div className="flex items-center gap-3">
+                <BaseMenu
+                  text="select brand"
+                  data={brands}
+                  value={brand}
+                  setValue={(item) => setBrand(item)}
+                />
+                <BaseMenu
+                  text="select category"
+                  data={categories}
+                  value={category}
+                  setValue={(item) => setCategory(item)}
+                />
+                <div className="hidden lg:flex items-center gap-3">
+
+                  <BaseButton
+                    variant="orange"
+                    className=" text-[11px]  py-1.5 px-3 rounded-full lg:rounded-full"
+                    onClick={() => setIsOpenAddNewCriteria(true)}
+                  >
+                    add new
+                  </BaseButton>
+                  <ExportButton />
+                </div>
+              </div>
+            </div>
+            <div className="flex lg:hidden items-center gap-3">
+
               <BaseButton
                 variant="orange"
-                className="bg-custom_orange border font-normal w-fit border-custom_orange text-[11px] text-white capitalize py-1.5 px-3 rounded-full"
+                className=" text-[11px]  py-1.5 px-3 rounded-full lg:rounded-full"
                 onClick={() => setIsOpenAddNewCriteria(true)}
               >
                 add new
@@ -221,6 +238,7 @@ export default function CriteriaAndSegment() {
           </div>
           <Table query={query} />
         </BorderBox>
+
       </div>
       <Dialog
         isOpen={isOpenAddNewCriteria}
@@ -246,7 +264,7 @@ export default function CriteriaAndSegment() {
               <BaseSelectDropdown />
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-col lg:flex-row  gap-2">
             <div className="flex-1 space-y-2">
               <Label
                 id="Volume Min"

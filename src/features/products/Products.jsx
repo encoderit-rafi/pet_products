@@ -150,26 +150,54 @@ export default function Products() {
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
   return (
     <div className="flex flex-col h-full gap-4">
-      <div className="flex items-center justify-between">
-        <Title onClick={() => setIsOpenDrawer(true)}>dashboard</Title>
-        <div className="flex items-center gap-3">
-          <div className="w-[111px]">
-            <InputSearch className="pr-1 py-1.5" />
+      <div className="flex flex-col gap-3">
+        <div className="flex items-center justify-between">
+          <Title onClick={() => setIsOpenDrawer(true)}>dashboard</Title>
+          <div className="flex items-center gap-3">
+            <div className="w-[111px]">
+              <InputSearch className="pr-1 py-1.5" />
+            </div>
+            <div className="hidden lg:flex items-center gap-3">
+
+              <BaseMenu
+                text="select department"
+                data={departments}
+                value={department}
+                setValue={(item) => setDepartment(item)}
+              />
+              <BaseMenu
+                text="select brand"
+                data={brands}
+                value={brand}
+                setValue={(item) => setBrand(item)}
+              />
+              <BaseMenu
+                text="select category"
+                data={categories}
+                value={category}
+                setValue={(item) => setCategory(item)}
+              />
+              <ExportButton />
+            </div>
           </div>
-          <BaseMenu
+        </div>
+        <div className="flex lg:hidden items-center gap-3">
+
+          {/* <BaseMenu
             text="select department"
             data={departments}
             value={department}
             setValue={(item) => setDepartment(item)}
           />
+          */}
           <BaseMenu
-            text="select brand"
+            text="brand"
             data={brands}
             value={brand}
             setValue={(item) => setBrand(item)}
           />
           <BaseMenu
-            text="select category"
+            text="category"
             data={categories}
             value={category}
             setValue={(item) => setCategory(item)}

@@ -3,16 +3,16 @@ import { useEffect, useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css"; // Default styles
 
-const CustomPhoneInput = () => {
+const InputPhoneNumber = () => {
   const [number, setNumber] = useState("");
   const [selectedCountry, setSelectedCountry] = useState({});
   useEffect(() => {
     console.log(
-      "✅ ~ file: CustomPhoneInput.jsx:9 ~ CustomPhoneInput ~ selectedCountry:",
+      "✅ ~ file: InputPhoneNumber.jsx:9 ~ InputPhoneNumber ~ selectedCountry:",
       selectedCountry
     );
     console.log(
-      "✅ ~ file: CustomPhoneInput.jsx:8 ~ CustomPhoneInput ~ number:",
+      "✅ ~ file: InputPhoneNumber.jsx:8 ~ InputPhoneNumber ~ number:",
       number
     );
   }, [number]);
@@ -45,6 +45,8 @@ const CustomPhoneInput = () => {
         fontSize: "16px",
         fontFamily: "Poppins",
         fontWeight: "lighter",
+        paddingTop: "10px",
+        paddingBottom: "10px",
         // height: "45px",
       }}
       buttonStyle={{
@@ -60,4 +62,4 @@ const CustomPhoneInput = () => {
   );
 };
 
-export default CustomPhoneInput;
+export default InputPhoneNumber;

@@ -53,9 +53,9 @@ const query = {
       value: "actions",
       cellValue: (row) => {
         return (
-          <div className="flex flex-row-reverse gap-3 text-yellow-400">
-            <DeleteIcon className={"size-5"} />
-            <EditIcon className={"size-5"} />
+          <div className="flex flex-row-reverse gap-3 text-custom_yellow">
+            <DeleteIcon className={"h-4"} />
+            <EditIcon className={"h-4"} />
           </div>
         );
       },
@@ -70,30 +70,46 @@ export default function Task() {
 
   return (
     <div className="flex flex-col h-full gap-4">
+
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-2 lg:gap-6">
           <NavLink to="/marketing">
-            <div className="size-10">
+            <div className="size-8 lg:size-10">
               <BackButton />
             </div>
           </NavLink>
 
           <Title>tasks</Title>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-1 lg:gap-4">
           {/* <ButtonWithIcon /> */}
-          <BaseButton
-            variant="orange"
-            icon="plus"
-            className="px-4 text-xs font-medium"
-            onClick={() => setIsOpenAddNewTask(true)}
-          >
-            add new
-          </BaseButton>
+          <div className="hidden lg:block">
+            <BaseButton
+              variant="orange"
+              icon="plus"
+              className="px-4 text-xs font-medium"
+              onClick={() => setIsOpenAddNewTask(true)}
+            >
+              add new
+            </BaseButton>
+          </div>
+          <div className="lg:hidden block">
+
+            <BaseButton
+              variant="orange"
+              icon="plus"
+              className="px-4 text-xs font-medium"
+              onClick={() => setIsOpenAddNewTask(true)}
+            >
+
+            </BaseButton>
+          </div>
+
           <BaseButton variant="gradient" className="px-4 text-xs font-medium">
             save settings
           </BaseButton>
         </div>
+
       </div>
       <BorderBox>
         <Table query={query} />

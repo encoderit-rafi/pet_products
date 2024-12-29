@@ -10,7 +10,7 @@ export default function BaseMenu({ text, data, value, setValue, className }) {
     <Menu>
       <MenuButton
         className={cn(
-          "inline-flex text-xs border text-custom_text_two font-extralight capitalize items-center justify-between gap-2 bg-custom_bg_two border-custom_line_two rounded-full py-1.5 px-3",
+          "inline-flex whitespace-nowrap  text-xs border text-custom_text_two font-extralight capitalize items-center justify-between gap-2 bg-custom_bg_two border-custom_line_two rounded-full py-1.5 px-3",
           className
         )}
       >
@@ -22,7 +22,7 @@ export default function BaseMenu({ text, data, value, setValue, className }) {
         transition
         anchor="bottom end"
         className={cn(
-          "w-56 z-[60] origin-top-right rounded-lg  mt-2 bg-[#21272b] p-2 text-sm/6  transition duration-200 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 space-y-2",
+          "w-56 z-[60] origin-top-right rounded-lg mt-2 bg-[#21272b] p-2 text-sm/6  transition duration-200 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 space-y-2",
           {
             "bg-[#21272b]": isDark,
             "bg-[#f8f8f8]": !isDark,

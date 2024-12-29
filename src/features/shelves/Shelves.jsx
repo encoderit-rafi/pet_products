@@ -12,7 +12,7 @@ import BaseSelectDropdown from "@/components/dropdowns/BaseSelectDropdown";
 import Label from "@/components/texts/Label";
 import InputText from "@/components/inputs/InputText";
 import MultiSelectListbox from "@/components/dropdowns/MultiSelectListbox";
-import CustomPhoneInput from "@/components/inputs/CustomPhoneInput";
+import CustomPhoneInput from "@/components/inputs/InputPhoneNumber";
 const query = {
   headers: [
     {

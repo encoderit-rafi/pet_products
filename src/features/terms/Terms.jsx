@@ -5,7 +5,7 @@ export default function Terms() {
   return (
     <div className="flex flex-col h-full gap-4 text-custom_bg_three">
       <TabGroup>
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between">
           <Title>Terms and Conditions</Title>
           <div className="flex items-center gap-4">
             <TabList className="">
@@ -22,7 +22,7 @@ export default function Terms() {
         </div>
         <TabPanels>
           <TabPanel>
-            <div className="mt-2 max-h-[600px] overflow-y-auto text-base font-light  space-y-5 leading-relaxed text-justify ">
+            <div className="mt-2  overflow-y-auto text-sm lg:text-base font-extralight  space-y-5 leading-relaxed md:text-justify ">
               <p>
                 Sed ut perspiciatis unde omnis iste natus error sit voluptatem
                 accusantium doloremque laudantium, totam rem aperiam, eaque ipsa

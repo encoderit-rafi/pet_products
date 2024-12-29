@@ -3,15 +3,25 @@ import DeleteIcon from "@/assets/icons/DeleteIcon";
 import ButtonWithIcon from "@/components/buttons/ButtonWithIcon";
 import BorderBox from "@/components/box/BorderBox";
 import Title from "@/components/texts/Title";
+import ImagePicker from "@/components/file_pickers/ImagePicker";
+import Label from "@/components/texts/Label";
+import BaseSelectDropdown from "@/components/dropdowns/BaseSelectDropdown";
+import InputText from "@/components/inputs/InputText";
+import BaseButton from "@/components/buttons/BaseButton";
+import { useState } from "react";
+import Dialog from "@/components/dialogs/Dialog";
+import InputPhoneNumber from "@/components/inputs/InputPhoneNumber";
 
 export default function Roles() {
+  const [isOpenAddNewStand, setIsOpenAddNewStand] = useState(false);
+
   return (
     <div className="flex flex-col h-full gap-4">
       <div className="flex items-center justify-between">
         <Title> Assigned Roles Add New</Title>
 
         <div className="flex items-center gap-4">
-          <ButtonWithIcon />
+          <ButtonWithIcon onClick={() => setIsOpenAddNewStand(true)} />
         </div>
       </div>
       <div className="grid grid-cols-1 gap-6 mt-2 sm:grid-cols-2 md:grid-cols-3">
@@ -141,6 +151,40 @@ export default function Roles() {
           </div>
         </BorderBox>
       </div>
+      <Dialog
+        isOpen={isOpenAddNewStand}
+        title="add new stand"
+        className="max-w-lg "
+      >
+        <div className="flex flex-col space-y-4">
+          <ImagePicker />
+          <div className="overflow-auto max-h-72">
+            <InputText
+              id="email"
+              type="email"
+              label="email"
+              palceholder="email"
+              className="py-3 rounded-lg"
+            />
+
+            <div className="space-y-2">
+              <Label id="phone_number" label="phone_number" palceholder="phone_number" />
+              <InputPhoneNumber />
+            </div>
+            <div className="space-y-2">
+              <Label id="access" label="access" palceholder="access type" />
+              <BaseSelectDropdown />
+            </div>
+
+          </div>
+          <div className="flex items-center gap-4">
+            <BaseButton onClick={() => setIsOpenAddNewStand(false)}>
+              cancel
+            </BaseButton>
+            <BaseButton variant="gradient">confirm</BaseButton>
+          </div>
+        </div>
+      </Dialog>
     </div>
   );
 }

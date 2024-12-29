@@ -8,7 +8,7 @@ const Dialog = ({ title, isOpen, children, className }) => {
     >
       <div
         className={cn(
-          "w-full h-fit m-3 text-custom_text_two  shadow-sm bg-custom_bg_nine rounded-2xl py-6 px-8",
+          "w-full h-fit m-3 text-custom_text_two  shadow-sm bg-custom_bg_nine rounded-2xl py-3 lg:py-6 px-4 lg:px-8",
           {
             "animate-jump": isOpen,
             "animate-jump-out": !isOpen,

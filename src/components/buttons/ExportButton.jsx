@@ -1,9 +1,14 @@
 import React from "react";
+import BaseButton from "./BaseButton";
 
 export default function ExportButton() {
   return (
-    <button className="bg-custom_orange border font-normal border-custom_orange text-[11px] text-white capitalize py-1.5 px-3 rounded-full">
+    <BaseButton
+      variant="orange"
+      className="text-[11px] font-extralight py-1.5 px-3 rounded-full lg:rounded-full"
+      onClick={() => setIsOpenAddNewCriteria(true)}
+    >
       export
-    </button>
+    </BaseButton>
   );
 }
