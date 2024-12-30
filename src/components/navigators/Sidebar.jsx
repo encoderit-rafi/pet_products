@@ -43,6 +43,20 @@ import BaseButton from "../buttons/BaseButton";
 import { useState } from "react";
 import { useTheme } from "@/context/ThemeProvider";
 import Logout from "../buttons/ButtonLogout";
+import Drawer from "./Drawer";
+import Title from "../texts/Title";
+import BorderBox from "../box/BorderBox";
+import LinkedinIcon from "@/assets/icons/LinkedinIcon";
+import FacebookIcon from "@/assets/icons/FacebookIcon";
+import WhatsappIcon from "@/assets/icons/WhatsappIcon";
+import MessageIcon from "@/assets/icons/MessageIcon";
+import PhoneIcon from "@/assets/icons/PhoneIcon";
+import ImageIcon from "@/assets/icons/ImageIcon";
+import CameraIcon from "@/assets/icons/CameraIcon";
+import InputText from "../inputs/InputText";
+import Label from "../texts/Label";
+import InputPhoneNumber from "../inputs/InputPhoneNumber";
+import InputPlace from "../inputs/InputPlace";
 const data = [
   {
     id: 1,
@@ -78,9 +92,13 @@ const data = [
 export default function Sidebar({ className, children }) {
   const location = useLocation();
   const { isDark } = useTheme();
-  // const [isOpenConfirmLogoutDialog, setIsOpenConfirmLogoutDialog] =
-  //   useState(false);
-  // console.log({ location,children });
+  const [isOpenDrawerApplicationSupport, setIsOpenDrawerApplicationSupport] =
+    useState(false);
+  const [
+    isOpenDrawerSingleApplicationSupport,
+    setIsOpenDrawerSingleApplicationSupport,
+  ] = useState(false);
+
   return (
     <aside className={cn("flex flex-col justify-between flex-1", className)}>
       <nav className="pb-6 overflow-y-auto">
@@ -118,6 +136,7 @@ export default function Sidebar({ className, children }) {
                             "bg-[#f8f8f8] text-[#000000]": !isDark,
                           }
                         )}
+                        onClick={() => setIsOpenDrawerApplicationSupport(true)}
                       >
                         {item?.name}
                       </button>
@@ -148,40 +167,119 @@ export default function Sidebar({ className, children }) {
         </ul>
       </nav>
       {children}
-      {/* <Logout /> */}
-      {/* <button
-        onClick={() => setIsOpenConfirmLogoutDialog(true)}
-        className="text-xs font-light transition-all duration-500 text-custom_text_six hover:text-red-500"
+      {/* Application Support Drawer */}
+      <Drawer
+        isOpen={isOpenDrawerApplicationSupport}
+        className="flex flex-col max-w-96"
       >
-        <div className="flex flex-col items-center gap-2 text-center capitalize">
-          <LogoutIcon className="w-4" />
+        <Title>Application Support</Title>
+        <div className="flex-1 mt-5 space-y-3 overflow-y-auto">
+          <BorderBox
+            className="cursor-pointer lg:p-3 h-fit"
+            onClick={() => setIsOpenDrawerSingleApplicationSupport(true)}
+          >
+            <div className="flex items-center gap-4">
+              <img
+                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt=""
+                className="object-cover object-center w-12 h-16 rounded-lg"
+              />
 
-          <p>log out</p>
+              <div className="flex flex-col justify-between flex-1 h-16 capitalize">
+                <p className="text-sm font-medium text-custom_text_four">
+                  m. khalid saied
+                </p>
+                <p className="text-xs text-gray-400">role here</p>
+                <div className="flex items-center gap-3 text-yellow-500">
+                  <LinkedinIcon className="size-4" />
+                  <FacebookIcon className="size-4" />
+                  <WhatsappIcon className="size-4" />
+                  <MessageIcon className="size-4" />
+                  <PhoneIcon className="size-4" />
+                </div>
+              </div>
+            </div>
+          </BorderBox>
         </div>
-      </button>
-      <Dialog
-        title="log out"
-        isOpen={isOpenConfirmLogoutDialog}
-        className="max-w-96"
+        <BaseButton
+          onClick={() => setIsOpenDrawerApplicationSupport(false)}
+          className="mt-10"
+        >
+          done
+        </BaseButton>
+      </Drawer>
+      {/* Single Application Support Drawer */}
+      <Drawer
+        isOpen={isOpenDrawerSingleApplicationSupport}
+        className="flex flex-col max-w-96"
       >
-        <div className="mt-4">
-          <h5 className="mx-auto text-sm tracking-wide text-center max-w-72 font-extralight">
-            {" "}
-            Are you sure you want to logout from your account?
-          </h5>
-          <div className="flex items-center gap-4 mt-5">
-            <BaseButton
-              className="text-sm font-medium"
-              onClick={() => setIsOpenConfirmLogoutDialog(false)}
-            >
-              close
-            </BaseButton>
-            <BaseButton variant="gradient" className="text-sm font-medium">
-              <NavLink to="/login">confirm</NavLink>
-            </BaseButton>
+        <div className="flex-1 mt-5 space-y-3 overflow-y-auto">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center justify-center px-6 py-3 bg-transparent border rounded-full border-custom_line_four siz-10 text-custom_yellow">
+              <ImageIcon className="size-5" />
+            </div>
+            <img
+              src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              alt=""
+              className="object-cover object-center rounded-2xl size-28"
+            />
+            <div className="flex items-center justify-center px-6 py-3 bg-transparent border rounded-full border-custom_line_four siz-10 text-custom_yellow">
+              <CameraIcon className="size-5" />
+            </div>
+          </div>
+
+          <InputText
+            id="email"
+            type="email"
+            label="email"
+            palceholder="email"
+            className="py-3 rounded-lg"
+          />
+          <div className="flex flex-col justify-between lg:flex-row">
+            <div className="w-[49%]">
+              <InputText
+                id="first name"
+                type="first name"
+                label="first name"
+                palceholder="first name"
+                className="py-3 rounded-lg"
+              />
+            </div>
+            <div className="w-[49%]">
+              <InputText
+                id="last name"
+                type="last name"
+                label="last name"
+                palceholder="last name"
+                className="py-3 rounded-lg"
+              />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Label id="phone_number" label="phone number" />
+            <InputPhoneNumber />
+          </div>
+          <div className="space-y-2">
+            <Label id="address" label="address" />
+            <InputPlace />
           </div>
         </div>
-      </Dialog> */}
+        <div className="flex gap-4 mt-10">
+          <BaseButton
+            className="text-xs font-light lg:text-sm"
+            onClick={() => setIsOpenDrawerSingleApplicationSupport(false)}
+          >
+            cancel
+          </BaseButton>
+          <BaseButton
+            variant="gradient"
+            className="text-xs font-light lg:text-sm"
+            onClick={() => setIsOpenDrawerSingleApplicationSupport(false)}
+          >
+            save change
+          </BaseButton>
+        </div>
+      </Drawer>
     </aside>
   );
 }

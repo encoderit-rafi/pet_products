@@ -157,8 +157,7 @@ export default function Products() {
             <div className="w-[111px]">
               <InputSearch className="pr-1 py-1.5" />
             </div>
-            <div className="hidden lg:flex items-center gap-3">
-
+            <div className="items-center hidden gap-3 lg:flex">
               <BaseMenu
                 text="select department"
                 data={departments}
@@ -181,8 +180,7 @@ export default function Products() {
             </div>
           </div>
         </div>
-        <div className="flex lg:hidden items-center gap-3">
-
+        <div className="flex items-center gap-3 lg:hidden">
           {/* <BaseMenu
             text="select department"
             data={departments}
@@ -208,7 +206,7 @@ export default function Products() {
       <BorderBox>
         <Table query={query} />
       </BorderBox>
-      <Drawer isOpen={isOpenDrawer} className="flex flex-col max-w-96">
+      {/* <Drawer isOpen={isOpenDrawer} className="flex flex-col max-w-96">
         <Title>Application Support</Title>
         <div className="flex-1 mt-5 space-y-3 overflow-y-auto">
           <BorderBox className="px-3 py-4 h-fit">
@@ -307,7 +305,7 @@ export default function Products() {
         <BaseButton onClick={() => setIsOpenDrawer(false)} className="mt-10">
           done
         </BaseButton>
-      </Drawer>
+      </Drawer> */}
     </div>
   );
 }
