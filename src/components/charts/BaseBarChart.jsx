@@ -9,6 +9,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { useWindowSize } from "react-use";
+import { useTheme } from "@/context/ThemeProvider";
 
 const data = [
   { name: "Page A", uv: 4000, pv: 2400, amt: 2400 },
@@ -35,9 +36,16 @@ const GlowingRectangle = (props) => {
   );
 };
 const CustomTooltip = ({ active, payload, label }) => {
+  const { isDark } = useTheme();
   if (active && payload && payload.length) {
     return (
-      <div className="bg-custom_bg_three text-custom_text_three py-2 px-6 rounded-md drop-shadow-[0_0_15px_rgba(255,255,255,1)]">
+      <div
+        className={`bg-custom_bg_three text-custom_text_three py-2 px-6 rounded-md ${
+          isDark
+            ? "drop-shadow-[0_0_15px_rgba(255,255,255,1)]"
+            : "drop-shadow-[0_0_15px_rgba(0,0,0,0.5)]"
+        }`}
+      >
         {label}
       </div>
     );
