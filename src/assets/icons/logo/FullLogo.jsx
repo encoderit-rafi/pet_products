@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function FullLogo({ className }) {
+export default function FullLogo({ className, fill }) {
   return (
     <svg
       className={className}
@@ -16,12 +16,9 @@ export default function FullLogo({ className }) {
           id="PET_PRODUCTS"
           data-name="PET PRODUCTS"
           transform="translate(79.5 62.058)"
-          fill="#fff"
-          fontSize="15"
-          fontFamily="SegoeUI-Bold, Segoe UI"
-          fontWeight="700"
+          fill={fill}
         >
-          <tspan x="0" y="0" className="font-roboto">
+          <tspan x="0" y="0" className="font-bold font-roboto text-[15px]">
             PET PRODUCTS
           </tspan>
         </text>
@@ -29,7 +26,7 @@ export default function FullLogo({ className }) {
           id="منتجات_الحيوانات"
           data-name="منتجات الحيوانات"
           transform="translate(79.5 80.058)"
-          fill="#fff"
+          fill={fill}
           fontSize="15"
           fontFamily="SegoeUI-Bold, Segoe UI"
           fontWeight="700"

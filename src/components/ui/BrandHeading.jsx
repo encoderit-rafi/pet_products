@@ -2,11 +2,11 @@ import React from "react";
 
 export default function BrandHeading() {
   return (
-    <div className="mt-[4.688rem] mb-14 space-y-5 text-center animate-fade">
-      <h5 className="text-sm font-light leading-none tracking-[0.2rem] uppercase text-custom_text_one">
+    <div className="space-y-3 text-center lg:space-y-5 animate-fade">
+      <h5 className="text-xs font-normal leading-none tracking-[0.3rem] uppercase text-custom_text_one">
         brand manager
       </h5>
-      <h1 className="text-4xl font-medium capitalize text-custom_text_two">
+      <h1 className="text-3xl font-medium capitalize lg:font-semibold lg:text-4xl text-custom_text_two">
         Manage Your <br />
         Brand Analytics & Reports!
       </h1>

@@ -12,7 +12,7 @@ export default function BaseButton({
   return (
     <button
       className={cn(
-        "w-full  py-3 font-medium rounded-md lg:rounded-xl whitespace-nowrap  text-sm lg:text-lg capitalize",
+        "w-full  py-3 font-normal hover:scale-105 transition-all duration-500 rounded-lg lg:rounded-xl whitespace-nowrap  text-xs lg:text-sm capitalize",
         {
           "bg-custom_bg_one text-custom_text_two": variant == "base",
           "bg-custom_orange text-white": variant == "orange",
@@ -23,7 +23,7 @@ export default function BaseButton({
       )}
       {...props}
     >
-      <div className="flex items-center gap-2 justify-center">
+      <div className="flex items-center justify-center gap-2">
         {icon == "plus" && (
           <span className="size-3">
             <PlusIcon />
