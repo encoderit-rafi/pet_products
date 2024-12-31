@@ -5,7 +5,7 @@ export default function Title({ className, children, ...props }) {
   return (
     <h2
       className={cn(
-        "text-sm lg:text-base font-medium capitalize text-custom_text_two",
+        "text-sm lg:text-base font-semibold capitalize text-custom_text_two",
         className
       )}
       {...props}

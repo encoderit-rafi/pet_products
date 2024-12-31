@@ -41,6 +41,7 @@ export default {
         custom_text_seven: "var(--custom_text_seven)",
         custom_text_eight: "var(--custom_text_eight)",
         custom_text_nine: "var(--custom_text_nine)",
+        custom_text_ten: "var(--custom_text_ten)",
 
         custom_line_one: "var(--custom_line_one)",
         custom_line_two: "var(--custom_line_two)",

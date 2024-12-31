@@ -10,11 +10,11 @@ export default function InputSearch({ className, placeholder = "search" }) {
       type="text"
       placeholder={placeholder}
       className={cn(
-        "py-3 pl-6 text-xs font-extralight placeholder:text-custom_text_eight placeholder:text-left border-b-custom_line_five",
+        "py-2 lg:py-3 pl-5 lg:pl-6 pr-1 text-xs font-extralight placeholder:text-custom_text_eight placeholder:text-left border-b-custom_line_five",
         className
       )}
       icon={
-        <div className="absolute -translate-y-1/2 top-1/2 size-4">
+        <div className="absolute -translate-y-1/2 top-1/2 size-3 lg:size-4">
           <SearchIcon className="size-full" />
         </div>
       }

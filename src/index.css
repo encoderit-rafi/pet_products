@@ -90,6 +90,7 @@
       --custom_text_seven: #b6b6b6;
       --custom_text_eight: #ffffff;
       --custom_text_nine: #b7b9ba;
+      --custom_text_ten: #adadad;
 
       --custom_line_one: #919191;
       --custom_line_two: #636363;
@@ -122,6 +123,7 @@
       --custom_text_seven: #696969;
       --custom_text_eight: #c0c0c0;
       --custom_text_nine: #9f9f9f;
+      --custom_text_ten: #adadad;
 
       --custom_line_one: #c0c0c0;
       --custom_line_two: #e6e6e6;
@@ -152,13 +154,16 @@
     background-color: #555;
   }
 }
-
+.recharts-text,
+text {
+  @apply text-xs fill-custom_text_two;
+}
 .recharts-rectangle.recharts-tooltip-cursor {
   fill: transparent !important;
 }
 
 .react-datepicker {
-  @apply w-64 origin-top-right !font-poppins text-sm/6 !bg-custom_bg_one !rounded-lg !border-none transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 space-y-2;
+  @apply !font-poppins text-sm/6 !bg-custom_bg_one !rounded-lg !border-none transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 space-y-2 absolute z-50 p-1 lg:right-12 right-16;
   /* background-color: var(--custom_bg_one) !important; */
 }
 .react-datepicker__header {
@@ -167,9 +172,7 @@
 .react-datepicker__triangle {
   display: none;
 }
-.react-datepicker {
-  @apply p-1 mr-9 rounded-xl;
-}
+
 .react-datepicker__navigation-icon--previous,
 .react-datepicker__navigation-icon--next {
   margin-top: 0 !important;

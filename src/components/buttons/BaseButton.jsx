@@ -12,7 +12,7 @@ export default function BaseButton({
   return (
     <button
       className={cn(
-        "w-full  py-3 font-normal hover:scale-105 transition-all duration-500 rounded-lg lg:rounded-xl whitespace-nowrap  text-xs lg:text-sm capitalize",
+        "w-full  py-3 font-normal hover:scale-110 transition-all duration-500 rounded-lg lg:rounded-xl whitespace-nowrap  text-xs lg:text-sm capitalize",
         {
           "bg-custom_bg_one text-custom_text_two": variant == "base",
           "bg-custom_orange text-white": variant == "orange",

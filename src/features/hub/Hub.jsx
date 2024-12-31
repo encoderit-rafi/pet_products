@@ -10,8 +10,6 @@ import BaseMenu from "@/components/menus/BaseMenu";
 import { useState } from "react";
 import Table from "@/components/tables/Table";
 import PlaceholderImage from "@/components/placeholders/PlaceholderImage";
-import InputWithIcon from "@/components/inputs/InputWithIcon";
-import SearchIcon from "@/assets/icons/SearchIcon";
 const demoData = [
   {
     id: 1,
@@ -212,14 +210,14 @@ export default function Hub() {
   const [brand, setBrand] = useState(null);
 
   return (
-    <div className="">
+    <div className="p-1 overflow-x-hidden ">
       <div className="grid grid-cols-12 gap-6">
         {/* heading 1*/}
         <div className="content-center col-span-8">
           <Title>Total Sales</Title>
         </div>
         <div className="col-span-4">
-          <InputSearch placeholder="search dashboard" />
+          <InputSearch placeholder="search" />
         </div>
         {/* charts 1*/}
         <div className="col-span-12 lg:col-span-8">
@@ -252,8 +250,12 @@ export default function Hub() {
             <div className="relative h-72">
               <BasePieChart />
               <div className="absolute text-center -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 text-custom_text_four">
-                <h5 className="text-xl font-semibold">SR 50,000</h5>
-                <span className="text-xs text-gray-500"> Total Volume</span>
+                <h5 className="text-xl font-medium text-custom_text_one">
+                  SR 50,000
+                </h5>
+                <span className="text-xs font-light text-custom_text_ten">
+                  Total Volume
+                </span>
               </div>
             </div>
           </BorderBox>
@@ -264,12 +266,14 @@ export default function Hub() {
             <div className="flex items-center justify-between mb-3">
               <SubTitle>Sales vs Cities</SubTitle>
               <div className="flex items-center gap-3">
-                <BaseMenu
-                  text="select brand"
-                  data={brands}
-                  value={brand}
-                  setValue={(item) => setBrand(item)}
-                />
+                <div className="hidden md:block">
+                  <BaseMenu
+                    text="select brand"
+                    data={brands}
+                    value={brand}
+                    setValue={(item) => setBrand(item)}
+                  />
+                </div>
                 <BaseMenu
                   text="select month"
                   data={monthsData}
@@ -363,12 +367,14 @@ export default function Hub() {
             <div className="flex items-center justify-between mb-3">
               <SubTitle>Brand Marketing</SubTitle>
               <div className="flex items-center gap-3">
-                <BaseMenu
-                  text="select brand"
-                  data={brands}
-                  value={brand}
-                  setValue={(item) => setBrand(item)}
-                />
+                <div className="hidden md:block">
+                  <BaseMenu
+                    text="select brand"
+                    data={brands}
+                    value={brand}
+                    setValue={(item) => setBrand(item)}
+                  />
+                </div>
                 <BaseMenu
                   text="select month"
                   data={monthsData}

@@ -10,7 +10,7 @@ export default function BaseMenu({ text, data, value, setValue, className }) {
     <Menu>
       <MenuButton
         className={cn(
-          "inline-flex whitespace-nowrap  text-xs border text-custom_text_two font-extralight capitalize items-center justify-between gap-2 bg-custom_bg_two border-custom_line_two rounded-full py-1.5 px-3",
+          "inline-flex whitespace-nowrap  text-xs border text-custom_text_two font-light capitalize items-center justify-between gap-2 bg-custom_bg_two border-custom_line_two rounded-full py-1.5 px-3",
           className
         )}
       >
