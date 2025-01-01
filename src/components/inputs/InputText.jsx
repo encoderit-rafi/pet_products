@@ -10,15 +10,7 @@ export default function InputText({
 }) {
   return (
     <div className="flex flex-col w-full space-y-2">
-      {hideLabel && (
-        <Label
-
-          id={id}
-          palceholder={palceholder}
-          label={label}
-        />
-
-      )}
+      {hideLabel && <Label id={id} palceholder={palceholder} label={label} />}
       <input
         id={id}
         name={id}

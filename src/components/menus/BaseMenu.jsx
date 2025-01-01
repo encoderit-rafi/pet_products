@@ -22,7 +22,7 @@ export default function BaseMenu({ text, data, value, setValue, className }) {
         transition
         anchor="bottom end"
         className={cn(
-          "w-56 z-[60] origin-top-right rounded-lg mt-2 bg-[#21272b] p-2 text-sm/6  transition duration-200 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 space-y-2",
+          "w-56 z-[60] origin-top-right rounded-lg mt-2 p-2 text-sm/6  transition duration-200 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 space-y-2",
           {
             "bg-[#21272b]": isDark,
             "bg-[#f8f8f8]": !isDark,
@@ -33,7 +33,7 @@ export default function BaseMenu({ text, data, value, setValue, className }) {
           <MenuItem key={item.id}>
             <button
               className={cn(
-                "group text-xs transition-all duration-300 !hover:bg-red-600 hover:pl-5 capitalize flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-[#ffffff] ",
+                "group text-xs transition-all duration-300 !hover:bg-red-600 hover:pl-5 capitalize flex w-full items-center gap-2 rounded-lg py-1.5 px-3  ",
                 {
                   "text-white": isDark,
                   "text-black": !isDark,

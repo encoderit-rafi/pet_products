@@ -30,7 +30,7 @@ const InputPhoneNumber = () => {
       }}
       containerStyle={{
         width: "100%",
-        border: "1px solid var(--custom_line_two)",
+        border: "1px solid var(--custom_line_seven)",
         // backgroundColor: "#333333",
         borderRadius: "8px",
       }}
@@ -40,20 +40,20 @@ const InputPhoneNumber = () => {
         border: "none",
         // borderRadius: "8px",
         backgroundColor: "transparent",
-        color: "#ffffff",
+        color: "var(--custom_text_two)",
         paddingLeft: "64px", // Space for flag and country code
-        fontSize: "16px",
+        fontSize: "14px",
         fontFamily: "Poppins",
-        fontWeight: "lighter",
-        paddingTop: "10px",
-        paddingBottom: "10px",
+        fontWeight: "light",
+        paddingTop: "8px",
+        paddingBottom: "8px",
         // height: "45px",
       }}
       buttonStyle={{
         backgroundColor: "transparent",
         border: "none",
-        borderRight: "1px solid var(--custom_line_two)",
-        padding: "0 10px",
+        borderRight: "1px solid var(--custom_line_seven)",
+        padding: "0 8px",
         display: "flex",
         alignItems: "center",
         gap: "8px", // Space between flag and code

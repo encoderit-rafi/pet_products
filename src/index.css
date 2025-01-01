@@ -91,12 +91,18 @@
       --custom_text_eight: #ffffff;
       --custom_text_nine: #b7b9ba;
       --custom_text_ten: #adadad;
+      --custom_text_eleven: #a9a9a9;
+      --custom_text_twelve: #bbbebf;
 
       --custom_line_one: #919191;
       --custom_line_two: #636363;
       --custom_line_three: #313639;
       --custom_line_four: #919191;
       --custom_line_five: #767676;
+      --custom_line_six: #636669;
+      --custom_line_seven: #a3a3a3;
+      --custom_line_eight: #8e9192;
+      --custom_line_nine: #626568;
     }
 
     .light {
@@ -124,12 +130,18 @@
       --custom_text_eight: #c0c0c0;
       --custom_text_nine: #9f9f9f;
       --custom_text_ten: #adadad;
+      --custom_text_eleven: #a9a9a9;
+      --custom_text_twelve: #bbbebf;
 
       --custom_line_one: #c0c0c0;
       --custom_line_two: #e6e6e6;
       --custom_line_three: #e6e6e6;
       --custom_line_four: #000000;
       --custom_line_five: #e6e6e6;
+      --custom_line_six: #e6e6e6;
+      --custom_line_seven: #e6e6e6;
+      --custom_line_eight: #e6e6e6;
+      --custom_line_nine: #fff;
     }
   }
 }
@@ -157,6 +169,9 @@
 .recharts-text,
 text {
   @apply text-xs fill-custom_text_two;
+}
+.base-input {
+  @apply border bg-transparent text-sm font-light text-custom_text_two border-custom_line_seven rounded-md px-3 py-2 outline-none placeholder:capitalize placeholder:!text-custom_text_two focus:border-custom_line_seven;
 }
 .recharts-rectangle.recharts-tooltip-cursor {
   fill: transparent !important;
@@ -227,6 +242,10 @@ text {
   background-color: var(--custom_bg_two);
   border-radius: 6px;
 }
+.react-tel-input .country-list .country-name {
+  color: var(--custom_text_one);
+}
+
 .react-tel-input .flag-dropdown .selected-flag .flag::before {
   content: "";
   display: inline-block;
@@ -234,9 +253,9 @@ text {
   top: 50%;
   right: -60%;
   transform: translateX(60%) translateY(-50%);
-  width: 12px; /* Set the width of the icon */
-  height: 6px; /* Set the height of the icon */
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10.092 5.546"><path id="DDL" d="M17.177,11.5l-4.339,4.339L8.5,11.5" transform="translate(-7.793 -10.793)" fill="none" stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1"/></svg>');
+  width: 12px;
+  height: 6px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10.092 5.546"><path id="DDL" d="M17.177,11.5l-4.339,4.339L8.5,11.5" transform="translate(-7.793 -10.793)" fill="none" stroke="gray" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1"/></svg>');
   background-size: contain;
   background-repeat: no-repeat;
 }

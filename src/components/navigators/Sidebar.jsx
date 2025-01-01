@@ -98,6 +98,9 @@ export default function Sidebar({ className, children }) {
     isOpenDrawerSingleApplicationSupport,
     setIsOpenDrawerSingleApplicationSupport,
   ] = useState(false);
+  const handleMenuItemClick = () => {
+    setIsOpenDrawerApplicationSupport(true);
+  };
 
   return (
     <aside className={cn("flex flex-col justify-between flex-1", className)}>
@@ -117,9 +120,9 @@ export default function Sidebar({ className, children }) {
 
                 <MenuItems
                   transition
-                  anchor="left"
+                  anchor="right center"
                   className={cn(
-                    " w-full !max-w-80 z-[60] rounded-2xl bg-custom_bg_nine   p-4 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 grid grid-cols-2 gap-3 shadow-lg",
+                    "w-full  lg:!max-w-80 z-[60] rounded-2xl bg-custom_bg_nine p-4 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 grid grid-cols-2 gap-3 shadow-lg",
                     {
                       "bg-[#4D4D4D]": isDark,
                       "bg-[#ffffff]": !isDark,
@@ -136,7 +139,7 @@ export default function Sidebar({ className, children }) {
                             "bg-[#f8f8f8] text-[#000000]": !isDark,
                           }
                         )}
-                        onClick={() => setIsOpenDrawerApplicationSupport(true)}
+                        onClick={handleMenuItemClick}
                       >
                         {item?.name}
                       </button>

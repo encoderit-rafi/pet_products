@@ -42,12 +42,18 @@ export default {
         custom_text_eight: "var(--custom_text_eight)",
         custom_text_nine: "var(--custom_text_nine)",
         custom_text_ten: "var(--custom_text_ten)",
+        custom_text_eleven: "var(--custom_text_eleven)",
+        custom_text_twelve: "var(--custom_text_twelve)",
 
         custom_line_one: "var(--custom_line_one)",
         custom_line_two: "var(--custom_line_two)",
         custom_line_three: "var(--custom_line_three)",
         custom_line_four: "var(--custom_line_four)",
         custom_line_five: "var(--custom_line_five)",
+        custom_line_six: "var(--custom_line_six)",
+        custom_line_seven: "var(--custom_line_seven)",
+        custom_line_eight: "var(--custom_line_eight)",
+        custom_line_nine: "var(--custom_line_nine)",
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],

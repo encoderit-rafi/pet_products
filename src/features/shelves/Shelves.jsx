@@ -13,6 +13,8 @@ import Label from "@/components/texts/Label";
 import InputText from "@/components/inputs/InputText";
 import MultiSelectListbox from "@/components/dropdowns/MultiSelectListbox";
 import CustomPhoneInput from "@/components/inputs/InputPhoneNumber";
+import BaseInput from "@/components/inputs/BaseInput";
+import BaseTabList from "@/components/tabs/BaseTabList";
 const query = {
   headers: [
     {
@@ -121,7 +123,8 @@ export default function Shelves() {
         <div className="flex items-center justify-between">
           <Title>Shelves</Title>
           <div className="flex items-center flex-1 gap-4">
-            <TabList className="ml-auto">
+            <BaseTabList list={tabs} />
+            {/* <TabList className="ml-auto">
               {tabs.map((tab) => (
                 <Tab
                   key={tab.id}
@@ -130,14 +133,14 @@ export default function Shelves() {
                   {tab.name}
                 </Tab>
               ))}
-            </TabList>
+            </TabList> */}
             <BaseButton
               variant="orange"
               icon="plus"
               className="text-xs max-w-24"
               onClick={handelOpenModal}
             >
-              add new
+              <span className="hidden lg:block">add new</span>
             </BaseButton>
           </div>
         </div>
@@ -156,7 +159,7 @@ export default function Shelves() {
       >
         <div className="flex flex-col space-y-4">
           <ImagePicker />
-          <div className="overflow-auto max-h-72">
+          <div className="space-y-4 overflow-auto max-h-32 lg:max-h-72">
             <div className="space-y-2">
               <Label id="brand" label="brand" palceholder="brand" />
               <BaseSelectDropdown />
@@ -181,20 +184,16 @@ export default function Shelves() {
               <Label id="Store" label="Store" palceholder="Store" />
               <BaseSelectDropdown />
             </div>
-            <div className="flex items-center gap-4">
-              <div className="flex-1 space-y-2">
-                <Label id="Location" label="Location" palceholder="Location" />
-                <BaseSelectDropdown />
-              </div>
-              <div className="flex-1">
-                <InputText
-                  id="Cost"
-                  label="Cost"
-                  palceholder="Cost"
-                  className="py-3 rounded-lg"
-                />
-              </div>
+            <div className="space-y-2 ">
+              <Label id="Location" label="Location" palceholder="Location" />
+              <BaseSelectDropdown />
             </div>
+            <BaseInput
+              id="Cost"
+              label="Cost"
+              palceholder="Cost"
+              // className="py-3 rounded-lg"
+            />
           </div>
           <div className="flex items-center gap-4">
             <BaseButton onClick={() => setIsOpenAddNewStand(false)}>

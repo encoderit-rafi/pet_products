@@ -20,21 +20,19 @@ export default function Header() {
   const [isOpenConfirmLogoutDialog, setIsOpenConfirmLogoutDialog] =
     useState(false);
   return (
-    <header className="flex items-center justify-between pl-3 md:pl-5 text-white">
+    <header className="flex items-center justify-between pl-3 text-white md:pl-5">
       <ToggleLogo />
       <div className="flex items-center gap-3 lg:gap-5">
         <div className="hidden lg:block">
-
           <ButtonToggleTheme />
         </div>
         <NotificationButton />
         <div className="hidden lg:block">
-
           <ProfileCard />
         </div>
         <div className=" lg:hidden">
-
           <IconButton
+            className="text-custom_text_two border-custom_line_three size-12 rounded-xl"
             onClick={() => setIsOpen(true)}
           >
             <MenuIcon className="size-5" />
@@ -44,17 +42,16 @@ export default function Header() {
       <Drawer
         isOpen={isOpen}
         onClickOutside={() => setIsOpen(false)}
-        className="w-36">
+        className="w-36"
+      >
         <Sidebar>
-          <ButtonLogout
-            onClick={() => setIsOpenConfirmLogoutDialog(true)}
-
-          />
+          <ButtonLogout onClick={() => setIsOpenConfirmLogoutDialog(true)} />
         </Sidebar>
-
       </Drawer>
-      <DialogLogout isOpenConfirmLogoutDialog={isOpenConfirmLogoutDialog} setIsOpenConfirmLogoutDialog={setIsOpenConfirmLogoutDialog} />
-
+      <DialogLogout
+        isOpenConfirmLogoutDialog={isOpenConfirmLogoutDialog}
+        setIsOpenConfirmLogoutDialog={setIsOpenConfirmLogoutDialog}
+      />
     </header>
   );
 }

@@ -1,28 +1,27 @@
+import BaseTabList from "@/components/tabs/BaseTabList";
 import Title from "@/components/texts/Title";
-import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
+import { TabGroup, TabPanel, TabPanels } from "@headlessui/react";
 
 export default function Terms() {
   return (
     <div className="flex flex-col h-full gap-4 text-custom_bg_three">
       <TabGroup>
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between">
+        <div className="flex flex-col justify-between lg:flex-row lg:items-center">
           <Title>Terms and Conditions</Title>
           <div className="flex items-center gap-4">
-            <TabList className="">
-              <Tab className="border-b-2 text-xs border-b-slate-400 data-[selected]:border-b-custom_bg_three data-[selected]:text-custom_bg_three p-3 focus:outline-none">
-                Terms and Conditions
-              </Tab>
-              <Tab className="border-b-2 text-xs border-b-slate-400 data-[selected]:border-b-custom_bg_three data-[selected]:text-custom_bg_three p-3 focus:outline-none">
-                Privacy Policy
-
-              </Tab>
-
-            </TabList>
+            <BaseTabList
+              list={[
+                {
+                  name: "Terms and Conditions",
+                },
+                { name: "Privacy Policy" },
+              ]}
+            />
           </div>
         </div>
         <TabPanels>
           <TabPanel>
-            <div className="mt-2  overflow-y-auto text-sm lg:text-base font-extralight  space-y-5 leading-relaxed md:text-justify ">
+            <div className="mt-2 space-y-5 overflow-y-auto text-sm leading-relaxed lg:text-base font-extralight md:text-justify ">
               <p>
                 Sed ut perspiciatis unde omnis iste natus error sit voluptatem
                 accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
