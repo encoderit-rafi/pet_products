@@ -33,7 +33,7 @@ export default function Table({ query }) {
           {query?.data?.map((row) => (
             <tr
               key={`${row.id}-${Math.random()}`}
-              className="text-custom_text_two "
+              className="text-custom_text_two border-b border-custom_line_two"
             >
               {query?.headers.map((header) => (
                 <td

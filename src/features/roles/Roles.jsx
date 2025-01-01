@@ -1,6 +1,6 @@
 import EditIcon from "@/assets/icons/EditIcon";
 import DeleteIcon from "@/assets/icons/DeleteIcon";
-import ButtonWithIcon from "@/components/buttons/ButtonWithIcon";
+
 import BorderBox from "@/components/box/BorderBox";
 import Title from "@/components/texts/Title";
 import ImagePicker from "@/components/file_pickers/ImagePicker";
@@ -23,7 +23,15 @@ export default function Roles() {
         <Title> Assigned Roles Add New</Title>
 
         <div className="flex items-center gap-4">
-          <ButtonWithIcon onClick={() => setIsOpenAddNewStand(true)} />
+
+          <BaseButton
+            variant="orange"
+            icon="plus"
+            className="text-xs max-w-fit px-3 lg:px-5"
+            onClick={() => setIsOpenAddNewStand(true)}
+          >
+            <span className="hidden lg:block">add new</span>
+          </BaseButton>
         </div>
       </div>
       <div className="grid grid-cols-1 gap-6 mt-2 sm:grid-cols-2 md:grid-cols-3">

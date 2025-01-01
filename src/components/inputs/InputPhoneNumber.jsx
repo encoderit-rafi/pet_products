@@ -33,6 +33,7 @@ const InputPhoneNumber = () => {
         border: "1px solid var(--custom_line_seven)",
         // backgroundColor: "#333333",
         borderRadius: "8px",
+
       }}
       inputStyle={{
         width: "100%",

@@ -1,6 +1,7 @@
 import CheckIcon from "@/assets/icons/CheckIcon";
 import CloseIcon from "@/assets/icons/CloseIcon";
 import DownIcon from "@/assets/icons/DownIcon";
+import { useTheme } from "@/context/ThemeProvider";
 import cn from "@/lib/utils/cn";
 import {
   Listbox,
@@ -18,6 +19,7 @@ const options = [
 ];
 
 const MultiSelectListbox = () => {
+  const { isDark } = useTheme();
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -37,11 +39,11 @@ const MultiSelectListbox = () => {
         as="div"
         value={selectedOptions}
         open={isOpen}
-        onChange={() => {}}
+        onChange={() => { }}
       >
         <ListboxButton
           className={cn(
-            "relative block w-full rounded-lg bg-white/5 py-3 pr-8 border border-custom_line_one pl-3 text-left text-sm/6 text-white",
+            "relative w-full text-left base-input",
             "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
           )}
           onClick={() => setIsOpen((prev) => !prev)}
@@ -52,7 +54,7 @@ const MultiSelectListbox = () => {
               : "Select options"}
           </span>
           <DownIcon
-            className="absolute -translate-y-1/2 pointer-events-none group top-1/2 right-4 size-4 fill-white/60"
+            className="absolute -translate-y-1/2 pointer-events-none group top-1/2 right-4 size-4 text-custom_line_one"
             aria-hidden="true"
           />
         </ListboxButton>
@@ -66,24 +68,40 @@ const MultiSelectListbox = () => {
         >
           <ListboxOptions
             static
-            className="absolute z-10 w-full p-1 mt-1 space-y-2 text-white list-none rounded-md shadow-lg bg-custom_bg_one ring-1 ring-black ring-opacity-5"
+            anchor="bottom"
+            className={cn(
+              "w-[var(--button-width)] z-[60] mt-1 rounded-lg border border-white/5  p-1 [--anchor-gap:var(--spacing-1)] focus:outline-none",
+              "transition duration-200 ease-in data-[leave]:data-[closed]:opacity-0",
+              {
+                "bg-[#21272b]": isDark,
+                "bg-[#f8f8f8]": !isDark,
+              }
+            )}
           >
             {options.map((option) => (
               <ListboxOption
                 key={option.id}
                 value={option.id}
-                // as={Fragment}
-                className={`group flex cursor-pointer items-center gap-2 rounded-lg py-1.5 px-3 select-none hover:bg-white/10 ${
-                  selectedOptions.includes(option.id) && "bg-white/10"
-                }`}
+                // className={`group flex cursor-pointer items-center gap-2 rounded-lg py-1.5 px-3 select-none hover:bg-white/10 ${selectedOptions.includes(option.id) && "bg-white/10"
+                //   }`}
+                className={cn(
+                  "group text-xs cursor-pointer transition-all duration-300 !hover:bg-red-600 hover:pl-5 capitalize flex w-full items-center gap-2 rounded-lg py-1.5 px-3",
+                  {
+                    "text-white": isDark,
+                    "text-black": !isDark,
+                    "data-[focus]:bg-[#313639]": isDark,
+                    "data-[focus]:bg-[#ffffff]": !isDark,
+                    "bg-[#ffffff] pl-5": !isDark && selectedOptions.includes(select => select.id == option.id),
+                    "bg-[#313639] pl-5": isDark && selectedOptions.includes(select => select.id == option.id),
+                  }
+                )}
                 onClick={() => toggleOption(option)}
               >
-                <div className="size-4">
-                  {selectedOptions.includes(option.id) && (
-                    <CheckIcon className={`size-4 text-white`} />
-                  )}
-                </div>
-                <div className="text-white text-sm/6">{option.name}</div>
+                {selectedOptions.includes(select => select.id == option.id) && (
+                  <CheckIcon className="size-4" />
+                )}
+
+                <span className="text-sm/6">{option.name}</span>
               </ListboxOption>
             ))}
           </ListboxOptions>
@@ -95,7 +113,7 @@ const MultiSelectListbox = () => {
       {selectedOptions.length > 0 && (
         <div className="flex items-center w-full gap-3 mt-3 overflow-x-auto">
           {selectedOptions.map((option) => (
-            <div className="flex items-center gap-8 px-3 py-4 rounded-xl text-custom_text_two bg-custom_bg_eleven">
+            <div className="flex items-center gap-8 px-3 py-4 rounded-xl text-custom_text_two bg-custom_bg_eleven whitespace-nowrap">
               <span>{option.name}</span>
               <div
                 className="size-3 text-custom_text_two"

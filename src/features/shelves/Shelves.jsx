@@ -15,6 +15,7 @@ import MultiSelectListbox from "@/components/dropdowns/MultiSelectListbox";
 import CustomPhoneInput from "@/components/inputs/InputPhoneNumber";
 import BaseInput from "@/components/inputs/BaseInput";
 import BaseTabList from "@/components/tabs/BaseTabList";
+import { useWindowSize } from "react-use";
 const query = {
   headers: [
     {
@@ -93,6 +94,8 @@ const brands = [
   },
 ];
 export default function Shelves() {
+  const { width } = useWindowSize();
+
   const [brand, setBrand] = useState(null);
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [isOpenAddNewStand, setIsOpenAddNewStand] = useState(false);
@@ -120,29 +123,31 @@ export default function Shelves() {
   return (
     <div className="flex flex-col h-full gap-4 text-custom_bg_three">
       <TabGroup selectedIndex={activeTabIndex} onChange={setActiveTabIndex}>
-        <div className="flex items-center justify-between">
-          <Title>Shelves</Title>
-          <div className="flex items-center flex-1 gap-4">
-            <BaseTabList list={tabs} />
-            {/* <TabList className="ml-auto">
-              {tabs.map((tab) => (
-                <Tab
-                  key={tab.id}
-                  className="border-b-2 text-xs border-b-slate-400 data-[selected]:border-b-custom_bg_three data-[selected]:text-custom_bg_three p-3 focus:outline-none"
-                >
-                  {tab.name}
-                </Tab>
-              ))}
-            </TabList> */}
-            <BaseButton
-              variant="orange"
-              icon="plus"
-              className="text-xs max-w-24"
-              onClick={handelOpenModal}
-            >
-              <span className="hidden lg:block">add new</span>
-            </BaseButton>
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center justify-between">
+            <Title>Shelves</Title>
+            <div className="flex flex-row items-center flex-1 gap-4">
+              {
+                width > 1024 &&
+                <BaseTabList list={tabs} className={{ tabList: 'ml-auto' }} />
+              }
+              {/* <BaseTabList list={tabs} className={{ tabList: 'ml-auto' }} /> */}
+
+              <BaseButton
+                variant="orange"
+                icon="plus"
+                className="text-xs max-w-fit px-3 lg:px-5 ml-auto lg:ml-0"
+                onClick={handelOpenModal}
+              >
+                <span className="hidden lg:block">add new</span>
+              </BaseButton>
+            </div>
           </div>
+          {
+            width < 1024 &&
+            <BaseTabList list={tabs} className={{ tabList: 'ml-auto' }} />
+          }
+
         </div>
         <TabPanels>
           <TabPanel>
@@ -192,7 +197,7 @@ export default function Shelves() {
               id="Cost"
               label="Cost"
               palceholder="Cost"
-              // className="py-3 rounded-lg"
+            // className="py-3 rounded-lg"
             />
           </div>
           <div className="flex items-center gap-4">

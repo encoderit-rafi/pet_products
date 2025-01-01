@@ -117,7 +117,6 @@ export default function Sidebar({ className, children }) {
                   <ConnectIcon className="w-10" />
                   <span className="">connect</span>
                 </MenuButton>
-
                 <MenuItems
                   transition
                   anchor="right center"

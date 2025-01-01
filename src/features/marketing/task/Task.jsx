@@ -82,7 +82,7 @@ export default function Task() {
           <Title>tasks</Title>
         </div>
         <div className="flex items-center gap-1 lg:gap-4">
-          {/* <ButtonWithIcon /> */}
+
           <div className="hidden lg:block">
             <BaseButton
               variant="orange"

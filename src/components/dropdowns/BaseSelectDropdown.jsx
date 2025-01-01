@@ -8,10 +8,12 @@ import {
   ListboxButton,
   ListboxOption,
   ListboxOptions,
+  Transition
 } from "@headlessui/react";
 // import { CheckIcon, ChevronDownIcon } from '@heroicons/react/20/solid'
 // import clsx from 'clsx'
-import { useState } from "react";
+import { Fragment, useState } from "react";
+
 
 const people = [
   { id: 1, name: "Tom Cook" },
@@ -23,7 +25,7 @@ const people = [
 
 export default function BaseSelectDropdown() {
   const { isDark } = useTheme();
-
+  const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(people[1]);
 
   return (
@@ -41,40 +43,49 @@ export default function BaseSelectDropdown() {
             aria-hidden="true"
           />
         </ListboxButton>
-        <ListboxOptions
-          anchor="bottom"
-          transition
-          className={cn(
-            "w-[var(--button-width)] z-[60] mt-1 rounded-lg border border-white/5  p-1 [--anchor-gap:var(--spacing-1)] focus:outline-none",
-            "transition duration-200 ease-in data-[leave]:data-[closed]:opacity-0",
-            {
-              "bg-[#21272b]": isDark,
-              "bg-[#f8f8f8]": !isDark,
-            }
-          )}
+        <Transition
+          as={Fragment}
+          show={isOpen}
+          leave="transition ease-in duration-100"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
         >
-          {people.map((person) => (
-            <ListboxOption
-              key={person.name}
-              value={person}
-              // className="group flex cursor-default items-center gap-2 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-white/10"
-              className={cn(
-                "group text-xs cursor-pointer transition-all duration-300 !hover:bg-red-600 hover:pl-5 capitalize flex w-full items-center gap-2 rounded-lg py-1.5 px-3",
-                {
-                  "text-white": isDark,
-                  "text-black": !isDark,
-                  "data-[focus]:bg-[#313639]": isDark,
-                  "data-[focus]:bg-[#ffffff]": !isDark,
-                  "bg-[#ffffff] pl-5": !isDark && person.id == selected?.id,
-                  "bg-[#313639] pl-5": isDark && person.id == selected?.id,
-                }
-              )}
-            >
-              <CheckIcon className="invisible size-4  group-data-[selected]:visible" />
-              <div className="text-sm/6">{person.name}</div>
-            </ListboxOption>
-          ))}
-        </ListboxOptions>
+
+          <ListboxOptions
+            static
+            anchor="bottom"
+            className={cn(
+              "w-[var(--button-width)] z-[60] mt-1 rounded-lg border border-white/5  p-1 [--anchor-gap:var(--spacing-1)] focus:outline-none",
+              "transition duration-200 ease-in data-[leave]:data-[closed]:opacity-0",
+              {
+                "bg-[#21272b]": isDark,
+                "bg-[#f8f8f8]": !isDark,
+              }
+            )}
+          >
+            {people.map((person) => (
+              <ListboxOption
+                key={person.name}
+                value={person}
+                // className="group flex cursor-default items-center gap-2 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-white/10"
+                className={cn(
+                  "group text-xs cursor-pointer transition-all duration-300 !hover:bg-red-600 hover:pl-5 capitalize flex w-full items-center gap-2 rounded-lg py-1.5 px-3",
+                  {
+                    "text-white": isDark,
+                    "text-black": !isDark,
+                    "data-[focus]:bg-[#313639]": isDark,
+                    "data-[focus]:bg-[#ffffff]": !isDark,
+                    "bg-[#ffffff] pl-5": !isDark && person.id == selected?.id,
+                    "bg-[#313639] pl-5": isDark && person.id == selected?.id,
+                  }
+                )}
+              >
+                <CheckIcon className="invisible size-4  group-data-[selected]:visible" />
+                <span className="text-sm/6">{person.name}</span>
+              </ListboxOption>
+            ))}
+          </ListboxOptions>
+        </Transition>
       </Listbox>
     </div>
   );
