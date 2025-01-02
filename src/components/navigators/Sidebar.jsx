@@ -58,6 +58,10 @@ import Label from "../texts/Label";
 import InputPhoneNumber from "../inputs/InputPhoneNumber";
 import InputPlace from "../inputs/InputPlace";
 import ButtonContact from "../buttons/ButtonContact";
+import DrawerApplicationSupport from "../drawers/DrawerApplicationSupport";
+import CardApplicationSupport from "../cards/CardApplicationSupport";
+import BaseInput from "../inputs/BaseInput";
+import DrawerSingleApplicationSupport from "../drawers/DrawerSingleApplicationSupport";
 
 export default function Sidebar({ className, children }) {
   const location = useLocation();
@@ -102,118 +106,20 @@ export default function Sidebar({ className, children }) {
       </nav>
       {children}
       {/* Application Support Drawer */}
-      <Drawer
+      <DrawerApplicationSupport
         isOpen={isOpenDrawerApplicationSupport}
-        className="flex flex-col max-w-96"
+        setIsOpen={() => setIsOpenDrawerApplicationSupport(false)}
       >
-        <Title>Application Support</Title>
-        <div className="flex-1 mt-5 space-y-3 overflow-y-auto">
-          <BorderBox
-            className="cursor-pointer lg:p-3 h-fit"
-            onClick={() => setIsOpenDrawerSingleApplicationSupport(true)}
-          >
-            <div className="flex items-center gap-4">
-              <img
-                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt=""
-                className="object-cover object-center w-12 h-16 rounded-lg"
-              />
+        <CardApplicationSupport
+          onClick={() => setIsOpenDrawerSingleApplicationSupport(true)}
+        />
+      </DrawerApplicationSupport>
 
-              <div className="flex flex-col justify-between flex-1 h-16 capitalize">
-                <p className="text-sm font-medium text-custom_text_four">
-                  m. khalid saied
-                </p>
-                <p className="text-xs text-gray-400">role here</p>
-                <div className="flex items-center gap-3 text-yellow-500">
-                  <LinkedinIcon className="size-4" />
-                  <FacebookIcon className="size-4" />
-                  <WhatsappIcon className="size-4" />
-                  <MessageIcon className="size-4" />
-                  <PhoneIcon className="size-4" />
-                </div>
-              </div>
-            </div>
-          </BorderBox>
-        </div>
-        <BaseButton
-          onClick={() => setIsOpenDrawerApplicationSupport(false)}
-          className="mt-10"
-        >
-          done
-        </BaseButton>
-      </Drawer>
       {/* Single Application Support Drawer */}
-      <Drawer
+      <DrawerSingleApplicationSupport
         isOpen={isOpenDrawerSingleApplicationSupport}
-        className="flex flex-col max-w-96"
-      >
-        <div className="flex-1 mt-5 space-y-3 overflow-y-auto">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center justify-center px-6 py-3 bg-transparent border rounded-full border-custom_line_four siz-10 text-custom_yellow">
-              <ImageIcon className="size-5" />
-            </div>
-            <img
-              src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              alt=""
-              className="object-cover object-center rounded-2xl size-28"
-            />
-            <div className="flex items-center justify-center px-6 py-3 bg-transparent border rounded-full border-custom_line_four siz-10 text-custom_yellow">
-              <CameraIcon className="size-5" />
-            </div>
-          </div>
-
-          <InputText
-            id="email"
-            type="email"
-            label="email"
-            palceholder="email"
-            className="py-3 rounded-lg"
-          />
-          <div className="flex flex-col justify-between lg:flex-row">
-            <div className="w-[49%]">
-              <InputText
-                id="first name"
-                type="first name"
-                label="first name"
-                palceholder="first name"
-                className="py-3 rounded-lg"
-              />
-            </div>
-            <div className="w-[49%]">
-              <InputText
-                id="last name"
-                type="last name"
-                label="last name"
-                palceholder="last name"
-                className="py-3 rounded-lg"
-              />
-            </div>
-          </div>
-          <div className="space-y-2">
-            <Label id="phone_number" label="phone number" />
-            <InputPhoneNumber />
-          </div>
-          <div className="space-y-2">
-            <Label id="address" label="address" />
-            <InputPlace />
-          </div>
-        </div>
-        <div className="flex gap-4 mt-10">
-          <BaseButton
-            className="text-xs font-light lg:text-sm"
-            onClick={() => setIsOpenDrawerSingleApplicationSupport(false)}
-          >
-            cancel
-          </BaseButton>
-          <BaseButton
-            variant="gradient"
-            className="text-xs font-light lg:text-sm"
-            onClick={() => setIsOpenDrawerSingleApplicationSupport(false)}
-          >
-            save change
-          </BaseButton>
-        </div>
-      </Drawer>
+        setIsOpen={() => setIsOpenDrawerSingleApplicationSupport(false)}
+      />
     </aside>
   );
 }
