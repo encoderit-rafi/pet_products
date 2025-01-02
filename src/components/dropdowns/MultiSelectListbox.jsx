@@ -39,7 +39,7 @@ const MultiSelectListbox = () => {
         as="div"
         value={selectedOptions}
         open={isOpen}
-        onChange={() => { }}
+        onChange={() => {}}
       >
         <ListboxButton
           className={cn(
@@ -70,7 +70,7 @@ const MultiSelectListbox = () => {
             static
             anchor="bottom"
             className={cn(
-              "w-[var(--button-width)] z-[60] mt-1 rounded-lg border border-white/5  p-1 [--anchor-gap:var(--spacing-1)] focus:outline-none",
+              "w-[var(--button-width)] z-[60] mt-1 space-y-1 rounded-lg border border-white/5  p-1 [--anchor-gap:var(--spacing-1)] focus:outline-none",
               "transition duration-200 ease-in data-[leave]:data-[closed]:opacity-0",
               {
                 "bg-[#21272b]": isDark,
@@ -91,13 +91,17 @@ const MultiSelectListbox = () => {
                     "text-black": !isDark,
                     "data-[focus]:bg-[#313639]": isDark,
                     "data-[focus]:bg-[#ffffff]": !isDark,
-                    "bg-[#ffffff] pl-5": !isDark && selectedOptions.includes(select => select.id == option.id),
-                    "bg-[#313639] pl-5": isDark && selectedOptions.includes(select => select.id == option.id),
+                    "bg-[#ffffff] pl-5":
+                      !isDark &&
+                      selectedOptions.some((select) => select.id == option.id),
+                    "bg-[#313639] pl-5":
+                      isDark &&
+                      selectedOptions.some((select) => select.id == option.id),
                   }
                 )}
                 onClick={() => toggleOption(option)}
               >
-                {selectedOptions.includes(select => select.id == option.id) && (
+                {selectedOptions.some((select) => select.id == option.id) && (
                   <CheckIcon className="size-4" />
                 )}
 
@@ -113,7 +117,10 @@ const MultiSelectListbox = () => {
       {selectedOptions.length > 0 && (
         <div className="flex items-center w-full gap-3 mt-3 overflow-x-auto">
           {selectedOptions.map((option) => (
-            <div className="flex items-center gap-8 px-3 py-4 rounded-xl text-custom_text_two bg-custom_bg_eleven whitespace-nowrap">
+            <div
+              key={option.id}
+              className="flex items-center gap-5 px-4 py-2 text-sm font-light rounded-xl text-custom_text_two bg-custom_bg_eleven whitespace-nowrap"
+            >
               <span>{option.name}</span>
               <div
                 className="size-3 text-custom_text_two"

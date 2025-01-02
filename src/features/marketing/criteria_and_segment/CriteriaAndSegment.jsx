@@ -18,6 +18,7 @@ import SubTitle from "@/components/texts/SubTitle";
 import Label from "@/components/texts/Label";
 import BaseSelectDropdown from "@/components/dropdowns/BaseSelectDropdown";
 import MultiSelectListbox from "@/components/dropdowns/MultiSelectListbox";
+import BaseInput from "@/components/inputs/BaseInput";
 const query = {
   headers: [
     {
@@ -142,7 +143,6 @@ export default function CriteriaAndSegment() {
           <Title>Criteria and Segment</Title>
         </div>
         <div className="flex items-center gap-4">
-
           <BaseButton variant="gradient" className="px-4 text-xs font-medium">
             save settings
           </BaseButton>
@@ -154,23 +154,22 @@ export default function CriteriaAndSegment() {
             <div className="flex items-center justify-between ">
               <SubTitle>Criteria</SubTitle>
               <div className="flex items-center gap-3">
-                <BaseMenu
+                {/* <BaseMenu
                   text="select brand"
                   data={brands}
                   value={brand}
                   setValue={(item) => setBrand(item)}
-                />
+                /> */}
                 <BaseMenu
                   text="select category"
                   data={categories}
                   value={category}
                   setValue={(item) => setCategory(item)}
                 />
-                <div className="hidden lg:flex items-center gap-3">
-
+                <div className="items-center hidden gap-3 lg:flex">
                   <BaseButton
                     variant="orange"
-                    className=" text-[11px]  py-1.5 px-3 rounded-full lg:rounded-full"
+                    className="lg:text-xs font-extralight py-1.5 px-3 rounded-full lg:rounded-full border border-custom_orange"
                     onClick={() => setIsOpenAddNewCriteria(true)}
                   >
                     add new
@@ -179,8 +178,7 @@ export default function CriteriaAndSegment() {
                 </div>
               </div>
             </div>
-            <div className="flex lg:hidden items-center gap-3">
-
+            <div className="flex items-center gap-3 lg:hidden">
               <BaseButton
                 variant="orange"
                 className=" text-[11px]  py-1.5 px-3 rounded-full lg:rounded-full"
@@ -199,24 +197,23 @@ export default function CriteriaAndSegment() {
               <SubTitle>Segment </SubTitle>
 
               <div className="flex items-center gap-3">
-                <BaseMenu
+                {/* <BaseMenu
                   text="select brand"
                   data={brands}
                   value={brand}
                   setValue={(item) => setBrand(item)}
-                />
+                /> */}
                 <BaseMenu
                   text="select category"
                   data={categories}
                   value={category}
                   setValue={(item) => setCategory(item)}
                 />
-                <div className="hidden lg:flex items-center gap-3">
-
+                <div className="items-center hidden gap-3 lg:flex">
                   <BaseButton
                     variant="orange"
-                    className=" text-[11px]  py-1.5 px-3 rounded-full lg:rounded-full"
-                    onClick={() => setIsOpenAddNewCriteria(true)}
+                    className="lg:text-xs font-extralight py-1.5 px-3 rounded-full lg:rounded-full border border-custom_orange"
+                    onClick={() => setIsOpenAddNewSegment(true)}
                   >
                     add new
                   </BaseButton>
@@ -224,8 +221,7 @@ export default function CriteriaAndSegment() {
                 </div>
               </div>
             </div>
-            <div className="flex lg:hidden items-center gap-3">
-
+            <div className="flex items-center gap-3 lg:hidden">
               <BaseButton
                 variant="orange"
                 className=" text-[11px]  py-1.5 px-3 rounded-full lg:rounded-full"
@@ -238,64 +234,9 @@ export default function CriteriaAndSegment() {
           </div>
           <Table query={query} />
         </BorderBox>
-
       </div>
       <Dialog
         isOpen={isOpenAddNewCriteria}
-        title="Add New Segment"
-        className="max-w-lg"
-      >
-        <div className="flex flex-col space-y-4">
-          <div className="space-y-2">
-            <Label id="brand" label="brand" palceholder="brand" />
-            <BaseSelectDropdown />
-          </div>
-          <div className="space-y-2">
-            <Label id="Category" label="Category" palceholder="Category" />
-            <MultiSelectListbox />
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="flex-1 space-y-2">
-              <Label id="ABC" label="ABC" palceholder="ABC" />
-              <BaseSelectDropdown />
-            </div>
-            <div className="flex-1 space-y-2">
-              <Label id="Color Tag" label="Color Tag" palceholder="Color Tag" />
-              <BaseSelectDropdown />
-            </div>
-          </div>
-          <div className="flex flex-col lg:flex-row  gap-2">
-            <div className="flex-1 space-y-2">
-              <Label
-                id="Volume Min"
-                label="Volume Min"
-                palceholder="Volume Min"
-              />
-              <InputText />
-            </div>
-            <div className="flex-1 space-y-2">
-              <Label
-                id="Volume Max"
-                label="Volume Max"
-                palceholder="Volume Max"
-              />
-              <InputText />
-            </div>
-          </div>
-          <div className="space-y-2">
-            <Label id="Category" label="Category" palceholder="Category" />
-            <MultiSelectListbox />
-          </div>
-          <div className="flex items-center gap-4">
-            <BaseButton onClick={() => setIsOpenAddNewCriteria(false)}>
-              cancel
-            </BaseButton>
-            <BaseButton variant="gradient">confirm</BaseButton>
-          </div>
-        </div>
-      </Dialog>
-      <Dialog
-        isOpen={isOpenAddNewSegment}
         title="Add New Criteria"
         className="max-w-lg"
       >
@@ -308,7 +249,7 @@ export default function CriteriaAndSegment() {
             <Label id="Category" label="Category" palceholder="Category" />
             <MultiSelectListbox />
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-col gap-2 lg:flex-row lg:items-center">
             <div className="flex-1 space-y-2">
               <Label id="A Percent" label="A Percent" palceholder="A Percent" />
               <BaseSelectDropdown />
@@ -323,6 +264,54 @@ export default function CriteriaAndSegment() {
             </div>
           </div>
 
+          <div className="flex items-center gap-4">
+            <BaseButton onClick={() => setIsOpenAddNewCriteria(false)}>
+              cancel
+            </BaseButton>
+            <BaseButton variant="gradient">confirm</BaseButton>
+          </div>
+        </div>
+      </Dialog>
+      <Dialog
+        isOpen={isOpenAddNewSegment}
+        title="Add New Segment"
+        className="max-w-lg"
+      >
+        <div className="flex flex-col space-y-4">
+          <div className="space-y-2">
+            <Label id="brand" label="brand" palceholder="brand" />
+            <BaseSelectDropdown />
+          </div>
+          <div className="space-y-2">
+            <Label id="Category" label="Category" palceholder="Category" />
+            <MultiSelectListbox />
+          </div>
+          <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
+            <div className="space-y-2">
+              <Label id="ABC" label="ABC" palceholder="ABC" />
+              <BaseSelectDropdown />
+            </div>
+            <div className="space-y-2">
+              <Label id="Color Tag" label="Color Tag" palceholder="Color Tag" />
+              <BaseSelectDropdown />
+            </div>
+            <BaseInput
+              id="Volume min"
+              label="Volume min"
+              palceholder="Volume min"
+              type="number"
+            />
+            <BaseInput
+              id="Volume max"
+              label="Volume max"
+              palceholder="Volume max"
+              type="number"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label id="Tasks" label="Tasks" palceholder="Tasks" />
+            <MultiSelectListbox />
+          </div>
           <div className="flex items-center gap-4">
             <BaseButton onClick={() => setIsOpenAddNewSegment(false)}>
               cancel

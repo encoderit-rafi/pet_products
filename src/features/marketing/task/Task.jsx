@@ -11,6 +11,7 @@ import Dialog from "@/components/dialogs/Dialog";
 import InputText from "@/components/inputs/InputText";
 import InputTextArea from "@/components/inputs/InputTextArea";
 import { NavLink } from "react-router-dom";
+import BaseInput from "@/components/inputs/BaseInput";
 const query = {
   headers: [
     {
@@ -70,7 +71,6 @@ export default function Task() {
 
   return (
     <div className="flex flex-col h-full gap-4">
-
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 lg:gap-6">
           <NavLink to="/marketing">
@@ -82,7 +82,6 @@ export default function Task() {
           <Title>tasks</Title>
         </div>
         <div className="flex items-center gap-1 lg:gap-4">
-
           <div className="hidden lg:block">
             <BaseButton
               variant="orange"
@@ -93,23 +92,19 @@ export default function Task() {
               add new
             </BaseButton>
           </div>
-          <div className="lg:hidden block">
-
+          <div className="block lg:hidden">
             <BaseButton
               variant="orange"
               icon="plus"
               className="px-4 text-xs font-medium"
               onClick={() => setIsOpenAddNewTask(true)}
-            >
-
-            </BaseButton>
+            ></BaseButton>
           </div>
 
           <BaseButton variant="gradient" className="px-4 text-xs font-medium">
             save settings
           </BaseButton>
         </div>
-
       </div>
       <BorderBox>
         <Table query={query} />
@@ -119,13 +114,13 @@ export default function Task() {
         title="add new task"
         className="max-w-lg"
       >
-        <div className="flex flex-col  space-y-4">
-          <InputText
+        <div className="flex flex-col mt-4 space-y-4">
+          <BaseInput
             id="task_name"
             label="task name"
             palceholder="enter value"
           />
-          <InputText id="cost" label="cost" palceholder="enter value" />
+          <BaseInput id="cost" label="cost" palceholder="enter value" />
           <InputTextArea
             id="description"
             label="Description"

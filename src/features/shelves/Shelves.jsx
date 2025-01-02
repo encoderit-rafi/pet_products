@@ -127,27 +127,24 @@ export default function Shelves() {
           <div className="flex items-center justify-between">
             <Title>Shelves</Title>
             <div className="flex flex-row items-center flex-1 gap-4">
-              {
-                width > 1024 &&
-                <BaseTabList list={tabs} className={{ tabList: 'ml-auto' }} />
-              }
+              {width > 1024 && (
+                <BaseTabList list={tabs} className={{ tabList: "ml-auto" }} />
+              )}
               {/* <BaseTabList list={tabs} className={{ tabList: 'ml-auto' }} /> */}
 
               <BaseButton
                 variant="orange"
                 icon="plus"
-                className="text-xs max-w-fit px-3 lg:px-5 ml-auto lg:ml-0"
+                className="px-3 ml-auto text-xs max-w-fit lg:px-5 lg:ml-0"
                 onClick={handelOpenModal}
               >
                 <span className="hidden lg:block">add new</span>
               </BaseButton>
             </div>
           </div>
-          {
-            width < 1024 &&
-            <BaseTabList list={tabs} className={{ tabList: 'ml-auto' }} />
-          }
-
+          {width < 1024 && (
+            <BaseTabList list={tabs} className={{ tabList: "mx-auto" }} />
+          )}
         </div>
         <TabPanels>
           <TabPanel>
@@ -197,7 +194,7 @@ export default function Shelves() {
               id="Cost"
               label="Cost"
               palceholder="Cost"
-            // className="py-3 rounded-lg"
+              // className="py-3 rounded-lg"
             />
           </div>
           <div className="flex items-center gap-4">
@@ -213,32 +210,29 @@ export default function Shelves() {
         title="Add New Stand Type"
         className="max-w-3xl"
       >
-        <div className="flex flex-col space-y-4">
+        <div className="flex flex-col mt-4 space-y-4">
           <ImagePicker />
-          <div className="grid grid-cols-2 gap-4 overflow-auto max-h-72">
-            <MultiSelectListbox />
-            <CustomPhoneInput />
-            <InputText
+          <div className="grid items-start grid-cols-1 gap-4 overflow-auto max-h-72">
+            {/* <MultiSelectListbox />
+            <CustomPhoneInput /> */}
+            <BaseInput
               id="Type Name"
               label="Type Name"
               palceholder="Enter Value"
-              className="py-3 rounded-lg"
             />
-            <InputText
+            <BaseInput
               id="First Shelf"
               label="First Shelf"
               palceholder="Number of Products"
-              className="py-3 rounded-lg"
             />
             <div className="space-y-2">
               <Label id="brand" label="brand" palceholder="brand" />
               <BaseSelectDropdown />
             </div>
-            <InputText
+            <BaseInput
               id="First Shelf"
               label="First Shelf"
               palceholder="Number of Products"
-              className="py-3 rounded-lg"
             />
             <div className="space-y-2">
               <Label
@@ -248,23 +242,16 @@ export default function Shelves() {
               />
               <BaseSelectDropdown />
             </div>
-            <InputText
+            <BaseInput
               id="First Shelf"
               label="First Shelf"
               palceholder="Number of Products"
-              className="py-3 rounded-lg"
             />
-            <InputText
-              id="Cost"
-              label="Cost"
-              palceholder="Cost"
-              className="py-3 rounded-lg"
-            />
-            <InputText
+            <BaseInput id="Cost" label="Cost" palceholder="Cost" />
+            <BaseInput
               id="First Shelf"
               label="First Shelf"
               palceholder="Number of Products"
-              className="py-3 rounded-lg"
             />
           </div>
           <div className="flex items-center gap-4">
@@ -280,26 +267,16 @@ export default function Shelves() {
         title="Create POS Materials"
         className="max-w-lg"
       >
-        <div className="flex flex-col space-y-4">
+        <div className="flex flex-col mt-4 space-y-4">
           <ImagePicker />
           <div className="space-y-2 overflow-auto max-h-72">
-            <InputText
-              id="Name"
-              label="Name"
-              palceholder="Name"
-              className="py-3 rounded-lg"
-            />
+            <BaseInput id="Name" label="Name" palceholder="Name" />
 
             <div className="space-y-2">
               <Label id="brand" label="brand" palceholder="brand" />
               <BaseSelectDropdown />
             </div>
-            <InputText
-              id="Cost"
-              label="Cost"
-              palceholder="Cost"
-              className="py-3 rounded-lg"
-            />
+            <BaseInput id="Cost" label="Cost" palceholder="Cost" />
           </div>
           <div className="flex items-center gap-4">
             <BaseButton onClick={() => setIsOpenAddNewPOSMaterials(false)}>

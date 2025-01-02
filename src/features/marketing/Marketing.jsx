@@ -227,9 +227,9 @@ export default function Marketing() {
               data={brands}
               value={brand}
               setValue={(item) => setBrand(item)}
-              className="px-4 pt-0 pb-0 text-xs rounded-none border-t-transparent border-b-transparent border-l-gray-500 border-r-gray-500"
+              className="px-4 pt-0 pb-0 text-xs rounded-none border-t-transparent border-b-transparent border-l-custom_line_one border-r-custom_line_one"
             />
-            <FilterIcon className="text-white size-4" />
+            <FilterIcon className="text-custom_text_two size-4" />
           </div>
         </div>
         <div className="flex items-center gap-4 lg:hidden">
@@ -260,7 +260,7 @@ export default function Marketing() {
               </div>
             ))}
           </div>
-          <div className="flex items-center justify-center gap-2 text-yellow-500">
+          <div className="flex items-center justify-center gap-2 text-custom_yellow">
             <div className="flex items-center justify-center p-2 border rounded-lg bg-custom_bg_eight siz-10 border-custom_line_two">
               <EditIcon className="size-3" />
             </div>
