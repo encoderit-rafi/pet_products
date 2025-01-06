@@ -2,8 +2,10 @@ import React from 'react'
 import Dialog from './Dialog'
 import BaseButton from '../buttons/BaseButton'
 import { NavLink } from 'react-router-dom'
+import { useLogoutQuery } from '@/api/auth/api/queries/useLogoutQuery';
 
 export default function DialogLogout({ isOpenConfirmLogoutDialog, setIsOpenConfirmLogoutDialog }) {
+ const { refetch: logoutUser, isLoading: isLoadingLogOut } = useLogoutQuery();
  return (
   <Dialog
    title="log out"
@@ -22,8 +24,12 @@ export default function DialogLogout({ isOpenConfirmLogoutDialog, setIsOpenConfi
      >
       close
      </BaseButton>
-     <BaseButton variant="gradient" className="text-sm font-medium">
-      <NavLink to="/login">confirm</NavLink>
+     <BaseButton variant="gradient" className="text-sm font-medium"
+      onClick={logoutUser}
+     >
+      {/* <NavLink to="/login"> */}
+      confirm
+      {/* </NavLink> */}
      </BaseButton>
     </div>
    </div>

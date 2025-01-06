@@ -1,18 +1,23 @@
 import { useState } from "react";
 import { useTheme } from "@/context/ThemeProvider";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 //* components📦
 import Header from "@/components/navigators/Header";
 import Sidebar from "@/components/navigators/Sidebar";
 import ButtonLogout from "@/components/buttons/ButtonLogout";
 import DialogLogout from "@/components/dialogs/DialogLogout";
+import { useAuth } from "@/context/AuthProvider";
 
 //* icons😎
 
 export default function AppLayout() {
   const { theme } = useTheme();
+  const { user } = useAuth();
+
   const [isOpenConfirmLogoutDialog, setIsOpenConfirmLogoutDialog] =
     useState(false);
+  if (!user) return <Navigate replace to="/login" />;
+
   return (
     <div
       className={`${theme == "dark" ? "dark" : "light"

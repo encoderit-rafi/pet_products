@@ -5,12 +5,14 @@ import React from "react";
 export default function BaseButton({
   children,
   className,
-  variant = "base",
   icon,
+  variant = "base",
+  type = "button",
   ...props
 }) {
   return (
     <button
+      type={type}
       className={cn(
         "w-full  py-3 font-normal hover:shadow-md transition-all duration-500 rounded-lg lg:rounded-xl whitespace-nowrap  text-xs lg:text-sm capitalize",
         {

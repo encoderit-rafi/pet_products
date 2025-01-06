@@ -8,6 +8,7 @@ export default function InputWithIcon({
   palceholder,
   icon,
   className,
+  register,
   ...props
 }) {
   return (
@@ -22,6 +23,7 @@ export default function InputWithIcon({
           className
         )}
         {...props}
+        {...register}
       />
       {icon}
     </div>

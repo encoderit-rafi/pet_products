@@ -1,8 +1,13 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import DefaultLayout from "./layouts/DefaultLayout";
+import { QueryClientProvider, QueryClient } from "react-query";
+import { Toaster } from "react-hot-toast";
+import { AuthProvider } from "./context/AuthProvider";
+
+// layouts
 import AppLayout from "./layouts/AppLayout";
-import Home from "./features/home";
-import Login from "./features/login";
+
+// pages
+// import Login from "./features/login";
 import Connect from "./features/connect";
 import Faqs from "./features/faqs";
 import Hub from "./features/hub";
@@ -12,6 +17,10 @@ import Roles from "./features/roles";
 import Shelves from "./features/shelves";
 import Terms from "./features/terms";
 import NotFound from "./features/not_found";
+import Login from "./features/auth/login";
+import DefaultLayout from "./layouts/DefaultLayout";
+// import DefaultLayout from "./layouts/DefaultLayout";
+// import Home from "./features/home";
 // Router Configuration
 const router = createBrowserRouter([
   // private routes📌
@@ -44,5 +53,11 @@ const router = createBrowserRouter([
   { path: "*", element: <NotFound /> },
 ]);
 export default function App() {
-  return <RouterProvider router={router} />;
+  const queryClient = new QueryClient();
+  return <QueryClientProvider client={queryClient}>
+    <AuthProvider>
+      <RouterProvider router={router} />;
+      <Toaster />
+    </AuthProvider>
+  </QueryClientProvider>
 }
