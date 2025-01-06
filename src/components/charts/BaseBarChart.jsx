@@ -35,16 +35,16 @@ const GlowingRectangle = (props) => {
     />
   );
 };
-const CustomTooltip = ({ active, payload, label }) => {
+const CustomTooltip = ({ active, payload, label, ...rest }) => {
   const { isDark } = useTheme();
   if (active && payload && payload.length) {
+    console.log({ payload })
     return (
       <div
-        className={`bg-custom_bg_three text-custom_text_three py-2 px-6 rounded-md ${
-          isDark
-            ? "drop-shadow-[0_0_15px_rgba(255,255,255,1)]"
-            : "drop-shadow-[0_0_15px_rgba(0,0,0,0.5)]"
-        }`}
+        className={`bg-custom_bg_three text-custom_text_three py-2 px-6 rounded-md ${isDark
+          ? "drop-shadow-[0_0_15px_rgba(255,255,255,1)]"
+          : "drop-shadow-[0_0_15px_rgba(0,0,0,0.5)]"
+          }`}
       >
         {label}
       </div>
@@ -56,7 +56,7 @@ const CustomTick = ({ x, y, payload }) => {
 
   return (
     <g transform={`translate(${x}, ${y})`}>
-      <foreignObject x={-iconSize / 2} y={0} width={iconSize} height={iconSize}>
+      {/* <foreignObject x={-iconSize / 2} y={0} width={iconSize} height={iconSize}>
         <div
           style={{
             width: `${iconSize}px`,
@@ -77,13 +77,12 @@ const CustomTick = ({ x, y, payload }) => {
               objectFit: "cover",
             }}
           />
-          {/* {payload.value} */}
         </div>
-      </foreignObject>
+      </foreignObject> */}
       {/* Text Label Below the Image */}
       <text
         x={0}
-        y={iconSize + 20} // Position text below the image
+        y={20} // Position text below the image iconSize + 20
         textAnchor="middle"
         fill="#636363"
         fontSize={12}

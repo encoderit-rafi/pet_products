@@ -10,6 +10,7 @@ import BaseMenu from "@/components/menus/BaseMenu";
 import { useState } from "react";
 import Table from "@/components/tables/Table";
 import PlaceholderImage from "@/components/placeholders/PlaceholderImage";
+import { useGetSalesAndCitiesBarChart } from "./api/queries/sales_and_cities/useGetSalesAndCitiesBarChart";
 const demoData = [
   {
     id: 1,
@@ -206,6 +207,8 @@ const query1 = {
 };
 
 export default function Hub() {
+  const { data: dataSalesAndCitiesBarChart } = useGetSalesAndCitiesBarChart()
+  console.log({ dataSalesAndCitiesBarChart })
   const [months, setMonths] = useState(null);
   const [brand, setBrand] = useState(null);
 

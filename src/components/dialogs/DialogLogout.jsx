@@ -2,7 +2,7 @@ import React from 'react'
 import Dialog from './Dialog'
 import BaseButton from '../buttons/BaseButton'
 import { NavLink } from 'react-router-dom'
-import { useLogoutQuery } from '@/api/auth/api/queries/useLogoutQuery';
+import { useLogoutQuery } from '@/api/auth/queries/useLogoutQuery';
 
 export default function DialogLogout({ isOpenConfirmLogoutDialog, setIsOpenConfirmLogoutDialog }) {
  const { refetch: logoutUser, isLoading: isLoadingLogOut } = useLogoutQuery();

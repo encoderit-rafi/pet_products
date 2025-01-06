@@ -14,7 +14,7 @@ import { useLoginMutation } from "./api/mutations/useLoginMutation";
 // import { useAuthUserQuery } from "../api/queries/useAuthUserQuery";
 import MailIcon from "@/assets/icons/MailIcon";
 import PasswordIcon from "@/assets/icons/PasswordIcon";
-import { useAuthUserQuery } from "@/api/auth/api/queries/test";
+import { useAuthUserQuery } from "@/api/auth/queries/useAuthUserQuery";
 const validation_rules = {
   email: {
     required: "Email is required",
