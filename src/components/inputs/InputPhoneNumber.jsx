@@ -7,18 +7,18 @@ const InputPhoneNumber = () => {
   const [number, setNumber] = useState("");
   const [selectedCountry, setSelectedCountry] = useState({});
   useEffect(() => {
-    console.log(
-      "✅ ~ file: InputPhoneNumber.jsx:9 ~ InputPhoneNumber ~ selectedCountry:",
-      selectedCountry
-    );
-    console.log(
-      "✅ ~ file: InputPhoneNumber.jsx:8 ~ InputPhoneNumber ~ number:",
-      number
-    );
+    // console.log(
+    //   "✅ ~ file: InputPhoneNumber.jsx:9 ~ InputPhoneNumber ~ selectedCountry:",
+    //   selectedCountry
+    // );
+    // console.log(
+    //   "✅ ~ file: InputPhoneNumber.jsx:8 ~ InputPhoneNumber ~ number:",
+    //   number
+    // );
   }, [number]);
   return (
     <PhoneInput
-      country={"eg"}
+      country={"sa"}
       countryCodeEditable={false}
       value={number}
       onChange={(value, country) => {
@@ -33,7 +33,6 @@ const InputPhoneNumber = () => {
         border: "1px solid var(--custom_line_seven)",
         // backgroundColor: "#333333",
         borderRadius: "8px",
-
       }}
       inputStyle={{
         width: "100%",

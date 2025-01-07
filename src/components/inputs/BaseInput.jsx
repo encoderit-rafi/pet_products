@@ -7,6 +7,8 @@ export default function BaseInput({
   label,
   className,
   palceholder,
+  register,
+
   type = "text",
   hideLabel = false,
 }) {
@@ -17,9 +19,10 @@ export default function BaseInput({
         id={id}
         name={id}
         type={type}
-        placeholder={palceholder}
         aria-required="true"
-        className={cn("base-input ", className)}
+        placeholder={palceholder}
+        className={cn("base-input", className)}
+        {...register}
       />
     </div>
   );

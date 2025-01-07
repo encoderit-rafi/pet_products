@@ -12,20 +12,25 @@ import {
 } from "@headlessui/react";
 import { Fragment, useState } from "react";
 
-const options = [
-  { id: 1, name: "Option 1" },
-  { id: 2, name: "Option 2" },
-  { id: 3, name: "Option 3" },
-];
+// const options = [
+//   { id: 1, name: "Option 1" },
+//   { id: 2, name: "Option 2" },
+//   { id: 3, name: "Option 3" },
+// ];
 
-const MultiSelectListbox = () => {
+const MultiSelectListbox = ({
+  options,
+  selectedOptions,
+  setSelectedOptions,
+  className,
+}) => {
   const { isDark } = useTheme();
-  const [selectedOptions, setSelectedOptions] = useState([]);
+  // const [selectedOptions, setSelectedOptions] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOption = (data) => {
     setSelectedOptions((prev) =>
-      prev.includes((item) => item.id == data.id)
+      prev.some((item) => item.id == data.id)
         ? prev.filter((item) => item.id !== data.id)
         : [...prev, data]
     );
@@ -44,13 +49,14 @@ const MultiSelectListbox = () => {
         <ListboxButton
           className={cn(
             "relative w-full text-left base-input",
-            "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
+            "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25",
+            className
           )}
           onClick={() => setIsOpen((prev) => !prev)}
         >
           <span>
-            {selectedOptions.length > 0
-              ? `Selected (${selectedOptions.length})`
+            {selectedOptions?.length > 0
+              ? `Selected (${selectedOptions?.length})`
               : "Select options"}
           </span>
           <DownIcon
@@ -78,7 +84,7 @@ const MultiSelectListbox = () => {
               }
             )}
           >
-            {options.map((option) => (
+            {options?.map((option) => (
               <ListboxOption
                 key={option.id}
                 value={option.id}
@@ -114,16 +120,16 @@ const MultiSelectListbox = () => {
 
       {/* Close on outside click */}
       {isOpen && <div className="fixed inset-0 z-0" onClick={closeListbox} />}
-      {selectedOptions.length > 0 && (
-        <div className="flex items-center w-full gap-3 mt-3 overflow-x-auto">
-          {selectedOptions.map((option) => (
+      {selectedOptions?.length > 0 && (
+        <div className="flex items-center w-full gap-3 pb-1 mt-3 overflow-x-auto">
+          {selectedOptions?.map((option) => (
             <div
               key={option.id}
               className="flex items-center gap-5 px-4 py-2 text-sm font-light rounded-xl text-custom_text_two bg-custom_bg_eleven whitespace-nowrap"
             >
               <span>{option.name}</span>
               <div
-                className="size-3 text-custom_text_two"
+                className="cursor-pointer size-3 text-custom_text_two"
                 onClick={() =>
                   setSelectedOptions((prev) =>
                     prev.filter((item) => item.id != option.id)
