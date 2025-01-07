@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css"; // Default styles
 
-const InputPhoneNumber = () => {
-  const [number, setNumber] = useState("");
+const InputPhoneNumber = ({ number, setNumber, isError }) => {
+  // const [number, setNumber] = useState("");
   const [selectedCountry, setSelectedCountry] = useState({});
   useEffect(() => {
     // console.log(
@@ -30,7 +30,7 @@ const InputPhoneNumber = () => {
       }}
       containerStyle={{
         width: "100%",
-        border: "1px solid var(--custom_line_seven)",
+        border: isError ? "1px solid red" : "1px solid var(--custom_line_seven)",
         // backgroundColor: "#333333",
         borderRadius: "8px",
       }}
@@ -52,7 +52,7 @@ const InputPhoneNumber = () => {
       buttonStyle={{
         backgroundColor: "transparent",
         border: "none",
-        borderRight: "1px solid var(--custom_line_seven)",
+        borderRight: isError ? "1px solid red" : "1px solid var(--custom_line_seven)",
         padding: "0 8px",
         display: "flex",
         alignItems: "center",

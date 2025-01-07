@@ -1,16 +1,18 @@
 import UploadFileIcon from "@/assets/icons/UploadFileIcon";
 import React, { useState } from "react";
 
-export default function ImagePicker() {
-  const [images, setImages] = useState([]);
-
-  // Handle file selection
+export default function ImagePicker({ multiple = false, images, setImages }) {
   const handleFileChange = (e) => {
     const selectedFiles = Array.from(e.target.files || []);
-    setImages((prev) => [...prev, ...selectedFiles]);
+
+    // Only update state if there are selected files
+    if (selectedFiles.length > 0) {
+      multiple
+        ? setImages((prev) => [...prev, ...selectedFiles])
+        : setImages([...selectedFiles]);
+    }
   };
 
-  // Handle image removal
   const handleRemoveImage = (index) => {
     setImages((prev) => prev.filter((_, i) => i !== index));
   };
@@ -28,14 +30,12 @@ export default function ImagePicker() {
             <UploadFileIcon />
           </div>
           <p className="font-medium text-custom_text_two">Upload Images</p>
-          <p className="text-xs font-normal text-custom_text_seven">
-            Jpeg, Png
-          </p>
+          <p className="text-xs font-normal text-custom_text_seven">Jpeg, Png</p>
         </div>
         <input
           id="file-upload"
           type="file"
-          multiple
+          multiple={multiple}
           accept="image/jpeg, image/png"
           className="hidden"
           onChange={handleFileChange}
@@ -66,3 +66,4 @@ export default function ImagePicker() {
     </div>
   );
 }
+

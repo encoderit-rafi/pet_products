@@ -32,9 +32,27 @@ export default function Roles() {
     clearErrors,
   } = useForm();
   const { errors } = formState;
-  const [isOpenAddNewStand, setIsOpenAddNewStand] = useState(false);
+  console.log({ errors })
+  const [isOpenAddNewUser, setIsOpenAddNewUser] = useState(false);
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [selectedRoles, setSelectedRoles] = useState([]);
+  const [images, setImages] = useState([]);
+  const [number, setNumber] = useState("");
+
+  useEffect(() => {
+    setValue(
+      "profile_image",
+      images[0]
+    );
+    clearErrors("profile_image");
+  }, [images]);
+  useEffect(() => {
+    setValue(
+      "phone_number",
+      number
+    );
+    clearErrors("phone_number");
+  }, [number]);
   useEffect(() => {
     setValue(
       "brand_id",
@@ -50,6 +68,20 @@ export default function Roles() {
     clearErrors("role_id");
   }, [selectedRoles]);
   function onSubmit(data) {
+    if (data.role_id.length == 0) {
+      setError("phone_number", {
+        type: "manual",
+        message: "Phone number is required",
+      });
+      return;
+    }
+    if (data.profile_image.length == 0) {
+      setError("profile_image", {
+        type: "manual",
+        message: "Select an image",
+      });
+      return;
+    }
     if (data.brand_id.length == 0) {
       setError("brand_id", {
         type: "manual",
@@ -65,15 +97,8 @@ export default function Roles() {
       return;
     }
 
+
     console.log("✅ ~ file: Roles.jsx:30 ~ onSubmit ~ data:", data);
-    // loginUser(data, {
-    //   onSuccess: async (res) => {
-    //     console.log("🟥 ~ onSuccess: ~ res:", res);
-    //     await handelCheckAuthUser();
-    //     // toast.success(res.data.message);
-    //     navigate("/");
-    //   },
-    // });
   }
   return (
     <div className="flex flex-col h-full gap-4">
@@ -85,7 +110,7 @@ export default function Roles() {
             variant="orange"
             icon="plus"
             className="px-3 text-xs max-w-fit lg:px-5"
-            onClick={() => setIsOpenAddNewStand(true)}
+            onClick={() => setIsOpenAddNewUser(true)}
           >
             <span className="hidden lg:block">add new</span>
           </BaseButton>
@@ -121,7 +146,7 @@ export default function Roles() {
         </BorderBox>
       </div>
       <Dialog
-        isOpen={isOpenAddNewStand}
+        isOpen={isOpenAddNewUser}
         title="add new user"
         className="max-w-lg "
       >
@@ -129,16 +154,18 @@ export default function Roles() {
           className="flex flex-col mt-4 space-y-4"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <ImagePicker />
+          <ImagePicker
+            images={images}
+            setImages={setImages}
+          />
           <div className="space-y-4 overflow-auto max-h-32 lg:max-h-72">
             <BaseInput
               id="name"
               type="text"
               label="name"
               palceholder="name"
-              className={`py-3 rounded-lg ${
-                errors?.name ? "!border-red-500" : ""
-              }`}
+              className={`py-3 rounded-lg ${errors?.name ? "!border-red-500" : ""
+                }`}
               register={register("name", validationRules.name)}
             />
             <BaseInput
@@ -146,9 +173,8 @@ export default function Roles() {
               type="email"
               label="email"
               palceholder="email"
-              className={`py-3 rounded-lg ${
-                errors?.email ? "!border-red-500" : ""
-              }`}
+              className={`py-3 rounded-lg ${errors?.email ? "!border-red-500" : ""
+                }`}
               register={register("email", validationRules.email)}
             />
 
@@ -158,7 +184,10 @@ export default function Roles() {
                 label="phone number"
                 palceholder="phone number"
               />
-              <InputPhoneNumber />
+              <InputPhoneNumber
+                number={number} setNumber={setNumber}
+                isError={errors.phone_number}
+              />
             </div>
             <div className="space-y-2">
               <Label id="brands" label="brands" palceholder="brands " />
@@ -183,7 +212,7 @@ export default function Roles() {
             <BaseButton
               onClick={() => {
                 reset();
-                setIsOpenAddNewStand(false);
+                setIsOpenAddNewUser(false);
               }}
             >
               cancel

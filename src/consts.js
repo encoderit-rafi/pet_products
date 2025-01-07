@@ -29,3 +29,29 @@ export const validationRules = {
     },
   },
 };
+export function toFormData(data) {
+  const formData = new FormData();
+
+  for (const [key, value] of Object.entries(data)) {
+    if (Array.isArray(value)) {
+      value.forEach((file, index) => {
+        file.file ? formData.append(`${key}[${index}]`, file.file) : formData.append(`${key}[${index}]`, file)
+      });
+    } else {
+      formData.append(`${key}`, value);
+    }
+  }
+  return formData;
+}
+
+export function omitEmpty(obj) {
+  return Object.fromEntries(
+    Object.entries(obj).filter(
+      ([_, value]) =>
+        value !== null &&
+        value !== undefined &&
+        value !== "" &&
+        !(Array.isArray(value) && value.length === 0)
+    )
+  );
+}
