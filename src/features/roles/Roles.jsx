@@ -8,26 +8,83 @@ import Label from "@/components/texts/Label";
 import BaseSelectDropdown from "@/components/dropdowns/BaseSelectDropdown";
 import InputText from "@/components/inputs/InputText";
 import BaseButton from "@/components/buttons/BaseButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Dialog from "@/components/dialogs/Dialog";
 import InputPhoneNumber from "@/components/inputs/InputPhoneNumber";
 import BaseInput from "@/components/inputs/BaseInput";
 import IconButton from "@/components/buttons/IconButton";
+import { useForm } from "react-hook-form";
+import MultiSelectListbox from "@/components/dropdowns/MultiSelectListbox";
+import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
+import { useGetAllRoles } from "@/api/roles/queries/useGetAllRoles";
+import { validationRules } from "@/consts";
 
 export default function Roles() {
+  const { data: getAllBrands } = useGetAllBrands();
+  const { data: getAllRoles } = useGetAllRoles();
+  const {
+    register,
+    formState,
+    handleSubmit,
+    setValue,
+    setError,
+    reset,
+    clearErrors,
+  } = useForm();
+  const { errors } = formState;
   const [isOpenAddNewStand, setIsOpenAddNewStand] = useState(false);
+  const [selectedBrands, setSelectedBrands] = useState([]);
+  const [selectedRoles, setSelectedRoles] = useState([]);
+  useEffect(() => {
+    setValue(
+      "brand_id",
+      selectedBrands.map((item) => item.id)
+    );
+    clearErrors("brand_id");
+  }, [selectedBrands]);
+  useEffect(() => {
+    setValue(
+      "role_id",
+      selectedRoles.map((item) => item.id)
+    );
+    clearErrors("role_id");
+  }, [selectedRoles]);
+  function onSubmit(data) {
+    if (data.brand_id.length == 0) {
+      setError("brand_id", {
+        type: "manual",
+        message: "Select a brand",
+      });
+      return;
+    }
+    if (data.role_id.length == 0) {
+      setError("role_id", {
+        type: "manual",
+        message: "Select a role",
+      });
+      return;
+    }
 
+    console.log("✅ ~ file: Roles.jsx:30 ~ onSubmit ~ data:", data);
+    // loginUser(data, {
+    //   onSuccess: async (res) => {
+    //     console.log("🟥 ~ onSuccess: ~ res:", res);
+    //     await handelCheckAuthUser();
+    //     // toast.success(res.data.message);
+    //     navigate("/");
+    //   },
+    // });
+  }
   return (
     <div className="flex flex-col h-full gap-4">
       <div className="flex items-center justify-between">
-        <Title> Assigned Roles Add New</Title>
+        <Title> Assigned Roles</Title>
 
         <div className="flex items-center gap-4">
-
           <BaseButton
             variant="orange"
             icon="plus"
-            className="text-xs max-w-fit px-3 lg:px-5"
+            className="px-3 text-xs max-w-fit lg:px-5"
             onClick={() => setIsOpenAddNewStand(true)}
           >
             <span className="hidden lg:block">add new</span>
@@ -65,18 +122,34 @@ export default function Roles() {
       </div>
       <Dialog
         isOpen={isOpenAddNewStand}
-        title="add new stand"
+        title="add new user"
         className="max-w-lg "
       >
-        <div className="flex flex-col mt-4 space-y-4">
+        <form
+          className="flex flex-col mt-4 space-y-4"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <ImagePicker />
           <div className="space-y-4 overflow-auto max-h-32 lg:max-h-72">
+            <BaseInput
+              id="name"
+              type="text"
+              label="name"
+              palceholder="name"
+              className={`py-3 rounded-lg ${
+                errors?.name ? "!border-red-500" : ""
+              }`}
+              register={register("name", validationRules.name)}
+            />
             <BaseInput
               id="email"
               type="email"
               label="email"
               palceholder="email"
-              className="py-3 rounded-lg"
+              className={`py-3 rounded-lg ${
+                errors?.email ? "!border-red-500" : ""
+              }`}
+              register={register("email", validationRules.email)}
             />
 
             <div className="space-y-2">
@@ -88,17 +161,38 @@ export default function Roles() {
               <InputPhoneNumber />
             </div>
             <div className="space-y-2">
-              <Label id="access" label="access" palceholder="access type" />
-              <BaseSelectDropdown />
+              <Label id="brands" label="brands" palceholder="brands " />
+              <MultiSelectListbox
+                options={getAllBrands || []}
+                className={errors?.brand_id && "!border-red-500"}
+                selectedOptions={selectedBrands}
+                setSelectedOptions={setSelectedBrands}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label id="roles" label="roles" palceholder="roles " />
+              <MultiSelectListbox
+                options={getAllRoles || []}
+                className={errors?.role_id && "!border-red-500"}
+                selectedOptions={selectedRoles}
+                setSelectedOptions={setSelectedRoles}
+              />
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <BaseButton onClick={() => setIsOpenAddNewStand(false)}>
+            <BaseButton
+              onClick={() => {
+                reset();
+                setIsOpenAddNewStand(false);
+              }}
+            >
               cancel
             </BaseButton>
-            <BaseButton variant="gradient">confirm</BaseButton>
+            <BaseButton variant="gradient" type="submit">
+              confirm
+            </BaseButton>
           </div>
-        </div>
+        </form>
       </Dialog>
     </div>
   );

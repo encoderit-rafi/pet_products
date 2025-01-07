@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-// import MailIcon from "../../assets/icons/MailIcon";
-// import PasswordIcon from "../../assets/icons/PasswordIcon";
 
 import ToggleLogo from "@/components/ui/ToggleLogo";
 import InputWithIcon from "@/components/inputs/InputWithIcon";
@@ -15,27 +13,27 @@ import { useLoginMutation } from "./api/mutations/useLoginMutation";
 import MailIcon from "@/assets/icons/MailIcon";
 import PasswordIcon from "@/assets/icons/PasswordIcon";
 import { useAuthUserQuery } from "@/api/auth/queries/useAuthUserQuery";
-const validation_rules = {
-  email: {
-    required: "Email is required",
-    pattern: {
-      value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-      message: "Invalid email address",
-    },
-  },
-  password: {
-    required: "Password is required",
-    minLength: {
-      value: 8,
-      message: "Password must be at least 8 characters",
-    },
-    validate: {
-      noSpace: (value) => !/\s/.test(value) || "Password cannot contain spaces",
-    },
-  },
-};
+import { validationRules } from "@/consts";
+// const validation_rules = {
+//   email: {
+//     required: "Email is required",
+//     pattern: {
+//       value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+//       message: "Invalid email address",
+//     },
+//   },
+//   password: {
+//     required: "Password is required",
+//     minLength: {
+//       value: 8,
+//       message: "Password must be at least 8 characters",
+//     },
+//     validate: {
+//       noSpace: (value) => !/\s/.test(value) || "Password cannot contain spaces",
+//     },
+//   },
+// };
 export default function Login() {
-
   const navigate = useNavigate();
   const { user, setToken, setUser } = useAuth();
   const { mutate: loginUser, isLoading } = useLoginMutation();
@@ -43,7 +41,7 @@ export default function Login() {
     useAuthUserQuery();
   const { register, formState, handleSubmit } = useForm();
   const { errors } = formState;
-  console.log({ errors })
+  console.log({ errors });
   const [showPassword, setShowPassword] = useState(false);
   function handlePasswordShow() {
     setShowPassword(!showPassword);
@@ -73,18 +71,15 @@ export default function Login() {
         <div className="mt-[2.688rem] lg:mt-[4.688rem] mb-10 lg:mb-14 ">
           <BrandHeading />
         </div>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-        >
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="w-full px-3 space-y-3 text-sm font-light lg:space-y-2 font-poppins animate-fade lg:px-0">
             <InputWithIcon
               autoFocus
               id="email"
               type="email"
               palceholder="email address"
-              className={errors?.email ? "border-b-red-500" : ''}
-              register={register("email", validation_rules.email)}
-
+              className={errors?.email ? "border-b-red-500" : ""}
+              register={register("email", validationRules.email)}
               icon={
                 <MailIcon className="absolute -translate-y-1/2 top-1/2 size-5" />
               }
@@ -94,9 +89,8 @@ export default function Login() {
                 id="password"
                 type="password"
                 palceholder="password"
-                className={errors?.password ? "border-b-red-500" : ''}
-                register={register("password", validation_rules.password)}
-
+                className={errors?.password ? "border-b-red-500" : ""}
+                register={register("password", validationRules.password)}
                 icon={
                   <PasswordIcon className="absolute -translate-y-1/2 top-1/2 size-5" />
                 }
@@ -107,9 +101,12 @@ export default function Login() {
             </div>
           </div>
           <div className="w-full px-3 mt-20 lg:px-0 lg:mt-24 animate-fade-up">
-            <BaseButton type="submit"
+            <BaseButton
+              type="submit"
               disabled={isLoading}
-              variant="gradient" className="font-medium">
+              variant="gradient"
+              className="font-medium"
+            >
               login
             </BaseButton>
           </div>
