@@ -10,7 +10,8 @@ import BaseMenu from "@/components/menus/BaseMenu";
 import { useState } from "react";
 import Table from "@/components/tables/Table";
 import PlaceholderImage from "@/components/placeholders/PlaceholderImage";
-import { useGetSalesAndCitiesBarChart } from "./api/queries/sales_and_cities/useGetSalesAndCitiesBarChart";
+
+import BarChartSalesVsCities from "./components/BarChartSalesVsCities";
 const demoData = [
   {
     id: 1,
@@ -207,8 +208,8 @@ const query1 = {
 };
 
 export default function Hub() {
-  const { data: dataSalesAndCitiesBarChart } = useGetSalesAndCitiesBarChart()
-  console.log({ dataSalesAndCitiesBarChart })
+  // const { data: dataSalesAndCitiesBarChart,isLoading:isLoadingSalesAndCitiesBarChart,searchParams,setSearchParams } = useGetSalesAndCitiesBarChart()
+
   const [months, setMonths] = useState(null);
   const [brand, setBrand] = useState(null);
 
@@ -237,9 +238,7 @@ export default function Hub() {
                 <ExportButton />
               </div>
             </div>
-            <div className="h-72">
-              <BaseBarChart />
-            </div>
+            <div className="h-72">{/* <BaseBarChart /> */}</div>
           </BorderBox>
         </div>
         <div className="col-span-12 lg:col-span-4">
@@ -265,31 +264,7 @@ export default function Hub() {
         </div>
         {/* charts 2*/}
         <div className="col-span-12 lg:col-span-8">
-          <BorderBox>
-            <div className="flex items-center justify-between mb-3">
-              <SubTitle>Sales vs Cities</SubTitle>
-              <div className="flex items-center gap-3">
-                <div className="hidden md:block">
-                  <BaseMenu
-                    text="select brand"
-                    data={brands}
-                    value={brand}
-                    setValue={(item) => setBrand(item)}
-                  />
-                </div>
-                <BaseMenu
-                  text="select month"
-                  data={monthsData}
-                  value={months}
-                  setValue={setMonths}
-                />
-                <ExportButton />
-              </div>
-            </div>
-            <div className="h-72">
-              <BaseBarChart />
-            </div>
-          </BorderBox>
+          <BarChartSalesVsCities />
         </div>
         <div className="col-span-12 lg:col-span-4">
           <BorderBox>
@@ -323,9 +298,7 @@ export default function Hub() {
                 <ExportButton />
               </div>
             </div>
-            <div className="h-72">
-              <BaseBarChart />
-            </div>
+            <div className="h-72">{/* <BaseBarChart /> */}</div>
           </BorderBox>
         </div>
         <div className="col-span-12 lg:col-span-4">
@@ -387,9 +360,7 @@ export default function Hub() {
                 <ExportButton />
               </div>
             </div>
-            <div className="h-72">
-              <BaseBarChart />
-            </div>
+            <div className="h-72">{/* <BaseBarChart /> */}</div>
           </BorderBox>
         </div>
         <div className="col-span-12 lg:col-span-4">

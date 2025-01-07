@@ -39,8 +39,12 @@ export default function BaseMenu({ text, data, value, setValue, className }) {
                   "text-black": !isDark,
                   "data-[focus]:bg-[#313639]": isDark,
                   "data-[focus]:bg-[#ffffff]": !isDark,
-                  "bg-[#ffffff] pl-5": !isDark && item.value == value?.value,
-                  "bg-[#313639] pl-5": isDark && item.value == value?.value,
+                  "bg-[#ffffff] pl-5":
+                    // (!isDark && item.value == value?.value) ||
+                    !isDark && item.value == value?.id,
+                  "bg-[#313639] pl-5":
+                    // (isDark && item.value == value?.value) ||
+                    isDark && item.value == value?.id,
                 }
               )}
               onClick={() => setValue(item)}

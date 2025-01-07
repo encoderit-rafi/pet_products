@@ -2,23 +2,16 @@ import { Axios } from "@/axios";
 import { useState } from "react";
 import { useQuery } from "react-query";
 
-export const useGetSalesAndCitiesBarChart = () => {
+export const useGetAllBrands = () => {
   const [searchParams, setSearchParams] = useState({
-    range: "this_year",
-    brand_id: "4",
+    sort_by: "asc",
   });
   const { data, isLoading } = useQuery({
-    queryKey: [
-      "get-sales-and-cities-bar-chart",
-      searchParams.range,
-      searchParams.brand_id,
-    ],
+    queryKey: ["get-all-brands", searchParams.sort_by],
     retry: false,
     keepPreviousData: false,
     queryFn: async () => {
-      return (
-        await Axios.get("/distributions/barchart", { params: searchParams })
-      ).data.data;
+      return (await Axios.get("/brands", { params: searchParams })).data.data;
     },
   });
   return {
