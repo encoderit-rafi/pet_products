@@ -35,10 +35,14 @@ export function toFormData(data) {
   for (const [key, value] of Object.entries(data)) {
     if (Array.isArray(value)) {
       value.forEach((file, index) => {
-        file.file ? formData.append(`${key}[${index}]`, file.file) : formData.append(`${key}[${index}]`, file)
+        file.file
+          ? formData.append(`${key}[${index}]`, file.file)
+          : formData.append(`${key}[${index}]`, file);
       });
     } else {
-      formData.append(`${key}`, value);
+      value.file
+        ? formData.append(`${key}`, value.file)
+        : formData.append(`${key}`, value);
     }
   }
   return formData;
