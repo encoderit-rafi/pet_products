@@ -1,20 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Title from "@/components/texts/Title";
 import BaseButton from "@/components/buttons/BaseButton";
 import Dialog from "@/components/dialogs/Dialog";
 import UserForm from "./components/userForm";
 import UserCard from "./components/UserCard";
 import UserCardSkeleton from "./components/UserCardSkeleton";
-import { useGetAllUsers } from "./api/queries/useGetAllUsers";
 import DownIcon from "@/assets/icons/DownIcon";
 import BaseInput from "@/components/inputs/BaseInput";
 import IconButton from "@/components/buttons/IconButton";
 import Label from "@/components/texts/Label";
+import { useGetAllUsers } from "./api/queries/useGetAllUsers";
+// import { useDebounce } from "react-use";
+import { debounce, PAGINATION } from "@/consts";
 
 export default function Roles() {
-  const { data: allUsers, isLoading: isLoadingAllUsers } = useGetAllUsers();
+  const { data: allUsers, refetch: refetchAllUsers, isLoading: isLoadingAllUsers, isFetching: isFetchingAllUsers, states,
+    setStates } = useGetAllUsers({ setToUrl: true, isEnabled: true });
   console.log("✅ ~ file: Roles.jsx:12 ~ Roles ~ allUsers:", allUsers);
+  const [page, setPage] = useState(states.page);
+  const [perPage, setPerPage] = useState(states.per_page);
+  const [tempData, setTempData] = useState(null);
   const [isOpenCreateUser, setIsOpenCreateUser] = useState(false);
+  const [isOpenUpdateUser, setIsOpenUpdateUser] = useState(false);
+  const [isOpenDeleteUser, setIsOpenDeleteUser] = useState(false);
+  useEffect(() => {
+    // debounce(
+    //   setStates({ page: 1, per_page: perPage })
+    // )
+    setStates({ page: 1, per_page: perPage })
+  }, [perPage]);
+  useEffect(() => {
+    // debounce(
+    //   setStates((old) => ({ ...old, page }))
+    // )
+    setStates((old) => ({ ...old, page }))
+  }, [page]);
+  useEffect(() => {
+    refetchAllUsers()
+  }, [page, perPage]);
   return (
     <div className="flex flex-col h-full gap-4">
       <div className="flex items-center justify-between">
@@ -32,13 +55,28 @@ export default function Roles() {
         </div>
       </div>
       <div className="flex-1">
-        <div className="grid grid-cols-1 gap-6 mt-2 sm:grid-cols-2 md:grid-cols-3">
+        {/* <div className="grid grid-cols-1 gap-6 mt-2 sm:grid-cols-2 md:grid-cols-3">
           {!isLoadingAllUsers &&
-            allUsers.map((user) => <UserCard key={user.id} data={user} />)}
+            allUsers.data.map((user) => <UserCard key={user.id} data={user} />)}
 
-          {isLoadingAllUsers &&
-            Array.from({ length: 5 }, (_, i) => <UserCardSkeleton key={i} />)}
+            
+            </div> */}
+        <div className="grid grid-cols-1 gap-6 mt-2 sm:grid-cols-2 md:grid-cols-3">
+          {/* {Array.from({ length: 5 }, (_, i) => <UserCardSkeleton key={i} />)} */}
+          {!isLoadingAllUsers && !isFetchingAllUsers && allUsers?.data?.length > 0
+            ? allUsers.data.map((user) => <UserCard key={user.id} data={user}
+              onClickEdit={(data) => {
+                setTempData(data)
+                setIsOpenUpdateUser(true)
+              }}
+              onClickDelete={(data) => {
+                setTempData(data)
+                setIsOpenDeleteUser(true)
+              }}
+            />)
+            : Array.from({ length: PAGINATION.per_page }, (_, i) => <UserCardSkeleton key={i} />)}
         </div>
+
       </div>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -46,9 +84,10 @@ export default function Roles() {
             hideLabel
             type="number"
             id="per_page"
-            label="per page"
-            // palceholder="per page"
-            className="p-2 size-14 lg:p-2"
+            min={1}
+            className="w-16 h-10 text-center"
+            value={perPage}
+            onChange={(e) => setPerPage(+e.target.value < 1 ? 1 : +e.target.value > allUsers.total ? allUsers.total : +e.target.value)}
           />
           <Label
             id="per_page"
@@ -58,12 +97,21 @@ export default function Roles() {
           />
         </div>
         <div className="flex items-center justify-center gap-2 text-custom_yellow">
-          <IconButton>
-            <DownIcon className="size-4" />
-          </IconButton>
-          <IconButton>
-            <DownIcon className="size-4" />
-          </IconButton>
+          {
+            page > 1 && (
+              <IconButton onClick={() => setPage(val => val - 1)}>
+                <DownIcon className="size-4 rotate-90" />
+              </IconButton>
+            )
+          }
+          {
+            page < allUsers?.last_page && (
+              <IconButton onClick={() => setPage(val => val + 1)}>
+                <DownIcon className="size-4 -rotate-90" />
+              </IconButton>
+            )
+          }
+
         </div>
       </div>
       <Dialog
@@ -72,6 +120,18 @@ export default function Roles() {
         className="max-w-lg "
       >
         <UserForm handelOnClickCancel={() => setIsOpenCreateUser(false)} />
+      </Dialog>
+      <Dialog
+        isOpen={isOpenUpdateUser}
+        title="update user"
+        className="max-w-lg "
+      >
+        <UserForm handelOnClickCancel={() => {
+          setTempData(null)
+          setIsOpenUpdateUser(false)
+        }}
+          data={{ ...tempData, form_type: "update" }}
+        />
       </Dialog>
     </div>
   );

@@ -44,7 +44,7 @@ const MultiSelectListbox = ({
         as="div"
         value={selectedOptions}
         open={isOpen}
-        onChange={() => {}}
+        onChange={() => { }}
       >
         <ListboxButton
           className={cn(

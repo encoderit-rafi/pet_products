@@ -7,6 +7,10 @@ export const ranges = [
   { id: 5, name: "last week", value: "last_week" },
   { id: 6, name: "today", value: "today" },
 ];
+export const PAGINATION = {
+  page: 1,
+  per_page: 20,
+}
 export const validationRules = {
   name: {
     required: "Name is required",
@@ -58,4 +62,11 @@ export function omitEmpty(obj) {
         !(Array.isArray(value) && value.length === 0)
     )
   );
+}
+export function debounce(func, delay = 500) {
+  let timeout;
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), delay);
+  };
 }

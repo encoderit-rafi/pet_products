@@ -11,6 +11,7 @@ export default function BaseInput({
   register,
   type = "text",
   hideLabel = false,
+  ...props
 }) {
   return (
     <InputBox className="flex flex-col w-full">
@@ -22,6 +23,7 @@ export default function BaseInput({
         aria-required="true"
         placeholder={palceholder}
         className={cn("base-input", className)}
+        {...props}
         {...register}
       />
     </InputBox>

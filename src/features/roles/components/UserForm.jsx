@@ -14,7 +14,11 @@ import { validationRules } from "@/consts";
 import { useCreateUserMutation } from "../api/mutations/useCreateUserMutation";
 import BaseButton from "@/components/buttons/BaseButton";
 import InputBox from "@/components/box/InputBox";
-export default function UserForm({ handelOnClickCancel }) {
+import { useGetAllUsers } from "../api/queries/useGetAllUsers";
+import ImagePreview from "@/components/file_pickers/ImagePreview";
+export default function UserForm({ handelOnClickCancel, data = { form_type: 'create' } }) {
+  console.log({ data })
+  const { refetch: refetchAllUsers } = useGetAllUsers({ setToUrl: false, isEnabled: false });
   const {
     register,
     formState,
@@ -36,11 +40,27 @@ export default function UserForm({ handelOnClickCancel }) {
   const { errors } = formState;
   console.log({ errors });
   useEffect(() => {
+    console.log({ images })
+
+  }, [images]);
+  useEffect(() => {
+    if (data.form_type === 'update') {
+      const { name, email, phone_number, profile_image, brands, roles } = data;
+      // setImages([profile_image]);
+      setValue('name', name);
+      setValue('email', email);
+      setNumber(phone_number);
+      // setSelectedBrands(brands);
+      // setSelectedRoles(roles);
+    }
+
+  }, []);
+  useEffect(() => {
     const fieldsToUpdate = [
       { key: "profile_image", value: images },
       { key: "phone_number", value: number },
-      { key: "brand_id", value: selectedBrands.map((item) => item.id) },
-      { key: "role_id", value: selectedRoles.map((item) => item.id) },
+      { key: "brand_ids", value: selectedBrands.map((item) => item.id) },
+      { key: "role_ids", value: selectedRoles.map((item) => item.id) },
     ];
 
     fieldsToUpdate.forEach(({ key, value }) => {
@@ -68,12 +88,12 @@ export default function UserForm({ handelOnClickCancel }) {
         message: "Phone number is required",
       },
       {
-        key: "brand_id",
+        key: "brand_ids",
         condition: (value) => value.length === 0,
         message: "Select a brand",
       },
       {
-        key: "role_id",
+        key: "role_ids",
         condition: (value) => value.length === 0,
         message: "Select a role",
       },
@@ -94,6 +114,7 @@ export default function UserForm({ handelOnClickCancel }) {
       },
       {
         onSuccess: () => {
+          refetchAllUsers();
           resetFields();
           handelOnClickCancel();
         },
@@ -105,7 +126,18 @@ export default function UserForm({ handelOnClickCancel }) {
       className="flex flex-col mt-4 space-y-4"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <ImagePicker images={images} setImages={setImages} />
+      {data.form_type === 'update' && data.image != null &&
+
+        <ImagePreview sre={data.image.url} />
+        // data.image.url
+      }
+      {
+        (data.form_type === 'create' || (data.form_type === 'update' && data.image == null)) &&
+
+        <ImagePicker images={images} setImages={setImages} />
+      }
+
+      {/* <ImagePicker /> */}
       <div className="space-y-4 overflow-auto max-h-32 lg:max-h-72">
         <BaseInput
           id="name"
@@ -120,9 +152,8 @@ export default function UserForm({ handelOnClickCancel }) {
           type="email"
           label="email"
           palceholder="email"
-          className={`py-3 rounded-lg ${
-            errors?.email ? "!border-red-500" : ""
-          }`}
+          className={`py-3 rounded-lg ${errors?.email ? "!border-red-500" : ""
+            }`}
           register={register("email", validationRules.email)}
         />
 
@@ -142,7 +173,7 @@ export default function UserForm({ handelOnClickCancel }) {
           <Label id="brands" label="brands" palceholder="brands " />
           <MultiSelectListbox
             options={getAllBrands || []}
-            className={errors?.brand_id && "!border-red-500"}
+            className={errors?.brand_ids && "!border-red-500"}
             selectedOptions={selectedBrands}
             setSelectedOptions={setSelectedBrands}
           />
@@ -151,7 +182,7 @@ export default function UserForm({ handelOnClickCancel }) {
           <Label id="roles" label="roles" palceholder="roles " />
           <MultiSelectListbox
             options={getAllRoles || []}
-            className={errors?.role_id && "!border-red-500"}
+            className={errors?.role_ids && "!border-red-500"}
             selectedOptions={selectedRoles}
             setSelectedOptions={setSelectedRoles}
           />

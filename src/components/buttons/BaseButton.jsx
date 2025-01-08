@@ -23,8 +23,7 @@ export default function BaseButton({
           "bg-custom_orange text-white": variant == "orange",
           "bg-gradient-to-r from-[#00B451]  to-[#74B222] text-white":
             variant == "gradient",
-          "cursor-not-allowed": isLoading,
-          "cursor-not-allowed": isDisabled,
+          "cursor-not-allowed": isLoading || isDisabled,
         },
         className
       )}

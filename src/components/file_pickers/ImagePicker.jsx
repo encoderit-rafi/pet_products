@@ -1,18 +1,24 @@
 import UploadFileIcon from "@/assets/icons/UploadFileIcon";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import ImagePreview from "./ImagePreview";
 
 export default function ImagePicker({ multiple = false, images, setImages }) {
-  const handleFileChange = (e) => {
-    const selectedFiles = Array.from(e.target.files || []);
+  // const [images, setImages] = useState([]);
 
-    // Only update state if there are selected files
+  const handleFileChange = (e) => {
+    console.log("AF::selectedFiles")
+    const selectedFiles = Array.from(e.target.files); // Convert FileList to an array
     if (selectedFiles.length > 0) {
+      console.log("BF:::selectedFiles")
       multiple
         ? setImages((prev) => [...prev, ...selectedFiles])
-        : setImages([...selectedFiles]);
+        : setImages(selectedFiles);
     }
   };
+  useEffect(() => {
+    console.log({ images })
 
+  }, [images]);
   const handleRemoveImage = (index) => {
     setImages((prev) => prev.filter((_, i) => i !== index));
   };
@@ -20,13 +26,13 @@ export default function ImagePicker({ multiple = false, images, setImages }) {
   return (
     <div className="flex flex-col items-center space-y-4">
       {/* File Picker */}
-      {images.length == 0 && (
+      {/* {images.length} */}
+      {images.length === 0 && (
         <label
           htmlFor="file-upload"
           className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-lg cursor-pointer border-custom_line_one hover:bg-custom_bg_one"
         >
           <div className="flex flex-col items-center">
-            {/* SVG Icon */}
             <div className="p-3 mb-2 rounded-lg text-custom_text_two bg-custom_bg_ten size-10">
               <UploadFileIcon />
             </div>
@@ -50,20 +56,23 @@ export default function ImagePicker({ multiple = false, images, setImages }) {
       {images.length > 0 && (
         <div className="flex items-center w-full gap-2 overflow-x-auto">
           {images.map((file, index) => (
-            <div key={index} className="relative group shrink-0">
-              <img
-                src={URL.createObjectURL(file)}
-                alt="preview"
-                className="object-cover rounded-lg size-32"
-              />
-              {/* Cancel Button */}
-              <button
-                onClick={() => handleRemoveImage(index)}
-                className="absolute text-white bg-red-500 rounded-full opacity-75 top-2 right-2 size-6 hover:opacity-100"
-              >
-                &times;
-              </button>
-            </div>
+            // <div key={index} className="relative group shrink-0 mx-auto">
+            //   <img
+            //     src={URL.createObjectURL(file)} // Works now
+            //     alt="preview"
+            //     className="object-cover rounded-lg size-40"
+            //   />
+            //   <button
+            //     onClick={() => handleRemoveImage(index)}
+            //     className="absolute text-white bg-red-500 rounded-full opacity-75 top-2 right-2 size-6 hover:opacity-100"
+            //   >
+            //     &times;
+            //   </button>
+            // </div>
+            <ImagePreview key={index}
+              src={URL.createObjectURL(file)}
+              onClickClose={() => handleRemoveImage(index)}
+            />
           ))}
         </div>
       )}

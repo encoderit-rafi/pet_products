@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { toFormData } from "@/consts";
 //* [create a new user]
 export const useCreateUserMutation = () => {
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
   return useMutation({
     mutationKey: "create-user",
@@ -13,7 +13,7 @@ export const useCreateUserMutation = () => {
       return await Axios.post(`/users`, body);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries("get-all-users");
+      // queryClient.invalidateQueries("get-all-users");
     },
     onError: (error) => {
       toast.error("user create failed");
