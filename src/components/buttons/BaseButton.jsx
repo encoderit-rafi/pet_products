@@ -1,3 +1,4 @@
+import LoadingIcon from "@/assets/icons/LoadingIcon";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import cn from "@/lib/utils/cn";
 import React from "react";
@@ -8,6 +9,8 @@ export default function BaseButton({
   icon,
   variant = "base",
   type = "button",
+  isLoading = false,
+  isDisabled = false,
   ...props
 }) {
   return (
@@ -20,9 +23,12 @@ export default function BaseButton({
           "bg-custom_orange text-white": variant == "orange",
           "bg-gradient-to-r from-[#00B451]  to-[#74B222] text-white":
             variant == "gradient",
+          "cursor-not-allowed": isLoading,
+          "cursor-not-allowed": isDisabled,
         },
         className
       )}
+      disabled={isDisabled}
       {...props}
     >
       <div className="flex items-center justify-center gap-2">
@@ -31,6 +37,12 @@ export default function BaseButton({
             <PlusIcon />
           </span>
         )}
+        {isLoading && (
+          <span className="size-3">
+            <LoadingIcon />
+          </span>
+        )}
+
         {children}
       </div>
     </button>

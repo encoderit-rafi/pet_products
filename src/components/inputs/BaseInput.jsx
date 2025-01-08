@@ -1,6 +1,7 @@
 import React from "react";
 import Label from "../texts/Label";
 import cn from "@/lib/utils/cn";
+import InputBox from "../box/InputBox";
 
 export default function BaseInput({
   id,
@@ -8,12 +9,11 @@ export default function BaseInput({
   className,
   palceholder,
   register,
-
   type = "text",
   hideLabel = false,
 }) {
   return (
-    <div className="flex flex-col w-full space-y-2">
+    <InputBox className="flex flex-col w-full">
       {!hideLabel && <Label id={id} palceholder={palceholder} label={label} />}
       <input
         id={id}
@@ -24,6 +24,6 @@ export default function BaseInput({
         className={cn("base-input", className)}
         {...register}
       />
-    </div>
+    </InputBox>
   );
 }

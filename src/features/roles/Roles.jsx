@@ -6,6 +6,10 @@ import UserForm from "./components/userForm";
 import UserCard from "./components/UserCard";
 import UserCardSkeleton from "./components/UserCardSkeleton";
 import { useGetAllUsers } from "./api/queries/useGetAllUsers";
+import DownIcon from "@/assets/icons/DownIcon";
+import BaseInput from "@/components/inputs/BaseInput";
+import IconButton from "@/components/buttons/IconButton";
+import Label from "@/components/texts/Label";
 
 export default function Roles() {
   const { data: allUsers, isLoading: isLoadingAllUsers } = useGetAllUsers();
@@ -27,12 +31,40 @@ export default function Roles() {
           </BaseButton>
         </div>
       </div>
-      <div className="grid grid-cols-1 gap-6 mt-2 sm:grid-cols-2 md:grid-cols-3">
-        {!isLoadingAllUsers &&
-          allUsers.map((user) => <UserCard key={user.id} data={user} />)}
+      <div className="flex-1">
+        <div className="grid grid-cols-1 gap-6 mt-2 sm:grid-cols-2 md:grid-cols-3">
+          {!isLoadingAllUsers &&
+            allUsers.map((user) => <UserCard key={user.id} data={user} />)}
 
-        {isLoadingAllUsers &&
-          Array.from({ length: 5 }, (_, i) => <UserCardSkeleton key={i} />)}
+          {isLoadingAllUsers &&
+            Array.from({ length: 5 }, (_, i) => <UserCardSkeleton key={i} />)}
+        </div>
+      </div>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <BaseInput
+            hideLabel
+            type="number"
+            id="per_page"
+            label="per page"
+            // palceholder="per page"
+            className="p-2 size-14 lg:p-2"
+          />
+          <Label
+            id="per_page"
+            label="per page"
+            palceholder="per page"
+            className="text-lg"
+          />
+        </div>
+        <div className="flex items-center justify-center gap-2 text-custom_yellow">
+          <IconButton>
+            <DownIcon className="size-4" />
+          </IconButton>
+          <IconButton>
+            <DownIcon className="size-4" />
+          </IconButton>
+        </div>
       </div>
       <Dialog
         isOpen={isOpenCreateUser}

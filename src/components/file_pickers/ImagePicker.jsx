@@ -20,27 +20,31 @@ export default function ImagePicker({ multiple = false, images, setImages }) {
   return (
     <div className="flex flex-col items-center space-y-4">
       {/* File Picker */}
-      <label
-        htmlFor="file-upload"
-        className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-lg cursor-pointer border-custom_line_one hover:bg-custom_bg_one"
-      >
-        <div className="flex flex-col items-center">
-          {/* SVG Icon */}
-          <div className="p-3 mb-2 rounded-lg text-custom_text_two bg-custom_bg_ten size-10">
-            <UploadFileIcon />
+      {images.length == 0 && (
+        <label
+          htmlFor="file-upload"
+          className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-lg cursor-pointer border-custom_line_one hover:bg-custom_bg_one"
+        >
+          <div className="flex flex-col items-center">
+            {/* SVG Icon */}
+            <div className="p-3 mb-2 rounded-lg text-custom_text_two bg-custom_bg_ten size-10">
+              <UploadFileIcon />
+            </div>
+            <p className="font-medium text-custom_text_two">Upload Images</p>
+            <p className="text-xs font-normal text-custom_text_seven">
+              Jpeg, Png (max size 2 MB)
+            </p>
           </div>
-          <p className="font-medium text-custom_text_two">Upload Images</p>
-          <p className="text-xs font-normal text-custom_text_seven">Jpeg, Png</p>
-        </div>
-        <input
-          id="file-upload"
-          type="file"
-          multiple={multiple}
-          accept="image/jpeg, image/png"
-          className="hidden"
-          onChange={handleFileChange}
-        />
-      </label>
+          <input
+            id="file-upload"
+            type="file"
+            multiple={multiple}
+            accept="image/jpeg, image/png"
+            className="hidden"
+            onChange={handleFileChange}
+          />
+        </label>
+      )}
 
       {/* Image Previews */}
       {images.length > 0 && (
@@ -66,4 +70,3 @@ export default function ImagePicker({ multiple = false, images, setImages }) {
     </div>
   );
 }
-
