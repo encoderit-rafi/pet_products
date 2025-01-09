@@ -7,7 +7,7 @@ import Dialog from "@/components/dialogs/Dialog";
 import UserForm from "./UserForm";
 
 export default function UserCard({ data, onClickEdit, onClickDelete }) {
-  console.log('UserCard', data)
+  // console.log('UserCard', data)
   // const [isOpenUpdateUser, setIsOpenUpdateUser] = useState(false);
   // const [isOpenDeleteUser, setIsOpenDeleteUser] = useState(false);
 
@@ -38,11 +38,11 @@ export default function UserCard({ data, onClickEdit, onClickDelete }) {
         </div>
         <div className="flex items-center justify-center gap-2 text-custom_yellow">
           <IconButton
-            onClick={() => onClickEdit(data)}>
+            onClick={onClickEdit}>
             <EditIcon className="size-4" />
           </IconButton>
           <IconButton
-            onClick={() => onClickDelete(data)}
+            onClick={onClickDelete}
           >
             <DeleteIcon className="size-4" />
           </IconButton>

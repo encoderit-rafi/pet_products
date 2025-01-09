@@ -9,7 +9,7 @@ export const useCreateUserMutation = () => {
   return useMutation({
     mutationKey: "create-user",
     mutationFn: async (data) => {
-      const body = toFormData({ ...data, is_brand_employee: 0 });
+      const body = toFormData(data);
       return await Axios.post(`/users`, body);
     },
     onSuccess: () => {

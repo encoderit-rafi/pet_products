@@ -10,15 +10,22 @@ import { useForm } from "react-hook-form";
 import MultiSelectListbox from "@/components/dropdowns/MultiSelectListbox";
 import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
 import { useGetAllRoles } from "@/api/roles/queries/useGetAllRoles";
-import { validationRules } from "@/consts";
+import { omitEmpty, validationRules } from "@/consts";
 import { useCreateUserMutation } from "../api/mutations/useCreateUserMutation";
 import BaseButton from "@/components/buttons/BaseButton";
 import InputBox from "@/components/box/InputBox";
 import { useGetAllUsers } from "../api/queries/useGetAllUsers";
 import ImagePreview from "@/components/file_pickers/ImagePreview";
-export default function UserForm({ handelOnClickCancel, data = { form_type: 'create' } }) {
-  console.log({ data })
+import { useUpdateUser } from "../api/mutations/useUpdateUser";
+
+export default function UserForm({ handelOnClickCancel, formValues }) {
+
   const { refetch: refetchAllUsers } = useGetAllUsers({ setToUrl: false, isEnabled: false });
+  const { mutate: createUser, isLoading: isLoadingCreateUser } =
+    useCreateUserMutation();
+  const { mutate: updateUser, isLoading: isLoadingUpdateUser } =
+    useUpdateUser();
+
   const {
     register,
     formState,
@@ -30,35 +37,30 @@ export default function UserForm({ handelOnClickCancel, data = { form_type: 'cre
   } = useForm();
   const { data: getAllRoles } = useGetAllRoles();
   const { data: getAllBrands } = useGetAllBrands();
-  const { mutate: createUser, isLoading: isLoadingCreateUser } =
-    useCreateUserMutation();
 
   const [images, setImages] = useState([]);
+  const [selectNewImages, setSelectNewImages] = useState(false);
   const [number, setNumber] = useState("");
   const [selectedRoles, setSelectedRoles] = useState([]);
   const [selectedBrands, setSelectedBrands] = useState([]);
   const { errors } = formState;
   console.log({ errors });
   useEffect(() => {
-    console.log({ images })
-
-  }, [images]);
-  useEffect(() => {
-    if (data.form_type === 'update') {
-      const { name, email, phone_number, profile_image, brands, roles } = data;
-      // setImages([profile_image]);
+    if (formValues.type === 'update') {
+      const { name, email, image, brands, roles } = formValues.user;
       setValue('name', name);
       setValue('email', email);
-      setNumber(phone_number);
-      // setSelectedBrands(brands);
-      // setSelectedRoles(roles);
+      setSelectedBrands(brands);
+      setSelectedRoles(roles);
+      // setNumber(phone_number);
+      // setImages([profile_image]);
     }
 
-  }, []);
+  }, [formValues]);
   useEffect(() => {
     const fieldsToUpdate = [
       { key: "profile_image", value: images },
-      { key: "phone_number", value: number },
+      // { key: "phone_number", value: number },
       { key: "brand_ids", value: selectedBrands.map((item) => item.id) },
       { key: "role_ids", value: selectedRoles.map((item) => item.id) },
     ];
@@ -74,6 +76,7 @@ export default function UserForm({ handelOnClickCancel, data = { form_type: 'cre
     setNumber("");
     setSelectedRoles([]);
     setSelectedBrands([]);
+    setSelectNewImages(false)
   }
   function onSubmit(data) {
     const validations = [
@@ -82,11 +85,11 @@ export default function UserForm({ handelOnClickCancel, data = { form_type: 'cre
         condition: (value) => value.length === 0,
         message: "Select an image",
       },
-      {
-        key: "phone_number",
-        condition: (value) => value.length <= 3,
-        message: "Phone number is required",
-      },
+      // {
+      //   key: "phone_number",
+      //   condition: (value) => value.length <= 3,
+      //   message: "Phone number is required",
+      // },
       {
         key: "brand_ids",
         condition: (value) => value.length === 0,
@@ -105,34 +108,54 @@ export default function UserForm({ handelOnClickCancel, data = { form_type: 'cre
         return;
       }
     }
-
-    createUser(
-      {
-        ...data,
-        profile_image: data.profile_image[0],
-        is_brand_employee: 0,
-      },
-      {
-        onSuccess: () => {
-          refetchAllUsers();
-          resetFields();
-          handelOnClickCancel();
-        },
+    formValues.type === 'update' ?
+      updateUser({
+        id: formValues.user.id,
+        data: omitEmpty({
+          ...data,
+          profile_image: null,
+          new_profile_image: data.profile_image[0],
+          is_brand_employee: 0,
+        })
       }
-    );
+        ,
+        {
+          onSuccess: () => {
+            refetchAllUsers();
+            resetFields();
+            handelOnClickCancel();
+          },
+        }
+      )
+      :
+      createUser(
+        {
+          ...data,
+          profile_image: data.profile_image[0],
+          is_brand_employee: 0,
+        },
+        {
+          onSuccess: () => {
+            refetchAllUsers();
+            resetFields();
+            handelOnClickCancel();
+          },
+        }
+      );
   }
   return (
     <form
       className="flex flex-col mt-4 space-y-4"
       onSubmit={handleSubmit(onSubmit)}
     >
-      {data.form_type === 'update' && data.image != null &&
+      {formValues.type === 'update' && formValues?.user.image != null && !selectNewImages &&
+        <ImagePreview src={formValues.user.image.url}
+          onClickClose={() => setSelectNewImages(true)}
+        />
 
-        <ImagePreview sre={data.image.url} />
-        // data.image.url
       }
       {
-        (data.form_type === 'create' || (data.form_type === 'update' && data.image == null)) &&
+        (formValues.type === 'create' || selectNewImages || (formValues.type === 'update' && formValues?.user.image == null)) &&
 
         <ImagePicker images={images} setImages={setImages} />
       }
@@ -157,7 +180,7 @@ export default function UserForm({ handelOnClickCancel, data = { form_type: 'cre
           register={register("email", validationRules.email)}
         />
 
-        <InputBox>
+        {/* <InputBox>
           <Label
             id="phone_number"
             label="phone number"
@@ -168,7 +191,7 @@ export default function UserForm({ handelOnClickCancel, data = { form_type: 'cre
             setNumber={setNumber}
             isError={errors.phone_number}
           />
-        </InputBox>
+        </InputBox> */}
         <InputBox>
           <Label id="brands" label="brands" palceholder="brands " />
           <MultiSelectListbox

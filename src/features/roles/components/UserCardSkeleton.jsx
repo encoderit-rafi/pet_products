@@ -3,7 +3,7 @@ import BorderBox from "@/components/box/BorderBox";
 
 export default function UserCardSkeleton() {
   return (
-    <BorderBox className="p-2 lg:p-2 !border-custom_line_eight animate-pulse">
+    <BorderBox className="p-2 lg:p-2 !border-custom_bg_one animate-pulse">
       <div className="flex items-center gap-2">
         {/* Skeleton for image */}
         <div className="size-14 bg-custom_bg_one rounded-2xl">

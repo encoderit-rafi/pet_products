@@ -12,17 +12,22 @@ import Label from "@/components/texts/Label";
 import { useGetAllUsers } from "./api/queries/useGetAllUsers";
 // import { useDebounce } from "react-use";
 import { debounce, PAGINATION } from "@/consts";
+import DialogConfirmDelete from "@/components/dialogs/DialogConfirmDelete";
+import { useDeleteUser } from "./api/mutations/useDeleteUser";
 
 export default function Roles() {
   const { data: allUsers, refetch: refetchAllUsers, isLoading: isLoadingAllUsers, isFetching: isFetchingAllUsers, states,
     setStates } = useGetAllUsers({ setToUrl: true, isEnabled: true });
   console.log("✅ ~ file: Roles.jsx:12 ~ Roles ~ allUsers:", allUsers);
+  const { mutate: deleteUser, isLoading: isLoadingDeleteUser, isError: isErrorDeleteUser } =
+    useDeleteUser();
   const [page, setPage] = useState(states.page);
   const [perPage, setPerPage] = useState(states.per_page);
   const [tempData, setTempData] = useState(null);
   const [isOpenCreateUser, setIsOpenCreateUser] = useState(false);
   const [isOpenUpdateUser, setIsOpenUpdateUser] = useState(false);
   const [isOpenDeleteUser, setIsOpenDeleteUser] = useState(false);
+  const [formValues, setFormValues] = useState({ type: 'create', user: null });
   useEffect(() => {
     // debounce(
     //   setStates({ page: 1, per_page: perPage })
@@ -38,6 +43,18 @@ export default function Roles() {
   useEffect(() => {
     refetchAllUsers()
   }, [page, perPage]);
+  function confirmDeleteuser() {
+    deleteUser(formValues.user, {
+      onSuccess: () => {
+        refetchAllUsers()
+        // setTempData(null)
+        setFormValues({ type: 'create', user: null })
+        setIsOpenDeleteUser(false)
+      },
+
+    })
+    // setIsOpenDeleteUser(false)
+  }
   return (
     <div className="flex flex-col h-full gap-4">
       <div className="flex items-center justify-between">
@@ -65,12 +82,14 @@ export default function Roles() {
           {/* {Array.from({ length: 5 }, (_, i) => <UserCardSkeleton key={i} />)} */}
           {!isLoadingAllUsers && !isFetchingAllUsers && allUsers?.data?.length > 0
             ? allUsers.data.map((user) => <UserCard key={user.id} data={user}
-              onClickEdit={(data) => {
-                setTempData(data)
+              onClickEdit={() => {
+                // setTempData(user)
+                setFormValues({ type: 'update', user })
                 setIsOpenUpdateUser(true)
               }}
-              onClickDelete={(data) => {
-                setTempData(data)
+              onClickDelete={() => {
+                // setTempData(user)
+                setFormValues({ type: 'delete', user })
                 setIsOpenDeleteUser(true)
               }}
             />)
@@ -119,20 +138,34 @@ export default function Roles() {
         title="add new user"
         className="max-w-lg "
       >
-        <UserForm handelOnClickCancel={() => setIsOpenCreateUser(false)} />
+        <UserForm
+          formValues={formValues}
+          handelOnClickCancel={() => setIsOpenCreateUser(false)} />
       </Dialog>
       <Dialog
         isOpen={isOpenUpdateUser}
         title="update user"
         className="max-w-lg "
       >
-        <UserForm handelOnClickCancel={() => {
-          setTempData(null)
-          setIsOpenUpdateUser(false)
-        }}
-          data={{ ...tempData, form_type: "update" }}
+        <UserForm
+          formValues={formValues}
+          handelOnClickCancel={() => {
+            // setTempData(null)
+            setFormValues({ type: 'create', user: null })
+            setIsOpenUpdateUser(false)
+          }}
         />
       </Dialog>
+      <DialogConfirmDelete text={formValues?.user?.name}
+        isOpen={isOpenDeleteUser}
+        onClickClose={() => {
+          // setTempData(null)
+          setFormValues({ type: 'create', user: null })
+          setIsOpenDeleteUser(false)
+        }}
+        onClickDelete={confirmDeleteuser}
+        isLoading={isLoadingDeleteUser && !isErrorDeleteUser}
+      />
     </div>
   );
 }

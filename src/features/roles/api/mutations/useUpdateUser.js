@@ -1,5 +1,6 @@
 import { Axios } from "@/axios";
-import { useQueryClient } from "react-query";
+import { toFormData } from "@/consts";
+import { useMutation, useQueryClient } from "react-query";
 
 export const useUpdateUser = () => {
   const queryClient = useQueryClient();
@@ -7,7 +8,8 @@ export const useUpdateUser = () => {
   return useMutation({
     mutationKey: "update-user",
     mutationFn: async ({ id, data }) => {
-      return await Axios.post(`/users/${id}`, data);
+      const body = toFormData({ ...data, _method: "PUT" });
+      return await Axios.post(`/users/${id}`, body);
     },
     onSuccess: () => {
       toast.success("User successfully updated");
