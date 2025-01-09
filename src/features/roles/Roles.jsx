@@ -16,6 +16,7 @@ import DialogConfirmDelete from "@/components/dialogs/DialogConfirmDelete";
 import { useDeleteUser } from "./api/mutations/useDeleteUser";
 import { useDebounce } from "@/hooks/useDebounce";
 import Pagination from "@/components/pagination";
+import { Axios } from "@/axios";
 
 export default function Roles() {
   const {
@@ -26,6 +27,12 @@ export default function Roles() {
     params: paramsAllUsers,
     setParams: setParamsAllUsers,
   } = useGetAllUsers({ setToUrl: true, isEnabled: false });
+  // const {
+  //   mutate: deleteUser,
+  //   isLoading: isLoadingDeleteUser,
+  //   isError: isErrorDeleteUser
+  // } = useDeleteUser({ setToUrl: true, isEnabled: false });
+
   useEffect(() => {
     fetchAllUsers();
   }, []);
@@ -33,24 +40,31 @@ export default function Roles() {
     fetchAllUsers();
   }, [paramsAllUsers]);
 
-  const {
-    mutate: deleteUser,
-    isLoading: isLoadingDeleteUser,
-    isError: isErrorDeleteUser,
-  } = useDeleteUser();
+
   const [isOpenCreateUser, setIsOpenCreateUser] = useState(false);
   const [isOpenUpdateUser, setIsOpenUpdateUser] = useState(false);
   const [isOpenDeleteUser, setIsOpenDeleteUser] = useState(false);
+  const [isLoadingDeleteUser, setIsLoadingDeleteUser] = useState(false);
   const [formValues, setFormValues] = useState({ type: "create", user: null });
 
-  function confirmDeleteUser() {
-    deleteUser(formValues.user, {
-      onSuccess: () => {
-        fetchAllUsers();
-        setFormValues({ type: "create", user: null });
-        setIsOpenDeleteUser(false);
-      },
-    });
+  async function confirmDeleteUser() {
+    // deleteUser(formValues?.user, {
+    //   onSuccess: () => {
+    //     setParamsAllUsers(paramsAllUsers)
+    //     fetchAllUsers();
+    //     setFormValues({ type: "create", user: null });
+    //     setIsOpenDeleteUser(false);
+    //   },
+    // });
+    setIsLoadingDeleteUser(true)
+    const res = await Axios.get(`/users/delete/${formValues?.user?.id}`)
+    if (res.status === 200) {
+      setParamsAllUsers(paramsAllUsers)
+      fetchAllUsers();
+      setFormValues({ type: "create", user: null });
+      setIsOpenDeleteUser(false);
+    }
+    setIsLoadingDeleteUser(false)
   }
   return (
     <div className="flex flex-col h-full gap-4 overflow-hidden">
@@ -71,25 +85,25 @@ export default function Roles() {
       <div className="flex-1 overflow-auto">
         <div className="grid grid-cols-1 gap-6 mt-2 md:grid-cols-2 xl:grid-cols-3">
           {!isLoadingAllUsers &&
-          !isFetchingAllUsers &&
-          allUsers?.data?.length > 0
+            !isFetchingAllUsers &&
+            allUsers?.data?.length > 0
             ? allUsers.data.map((user) => (
-                <UserCard
-                  key={user.id}
-                  data={user}
-                  onClickEdit={() => {
-                    setFormValues({ type: "update", user });
-                    setIsOpenUpdateUser(true);
-                  }}
-                  onClickDelete={() => {
-                    setFormValues({ type: "delete", user });
-                    setIsOpenDeleteUser(true);
-                  }}
-                />
-              ))
+              <UserCard
+                key={user.id}
+                data={user}
+                onClickEdit={() => {
+                  setFormValues({ type: "update", user });
+                  setIsOpenUpdateUser(true);
+                }}
+                onClickDelete={() => {
+                  setFormValues({ type: "delete", user });
+                  setIsOpenDeleteUser(true);
+                }}
+              />
+            ))
             : Array.from({ length: PAGINATION.per_page }, (_, i) => (
-                <UserCardSkeleton key={i} />
-              ))}
+              <UserCardSkeleton key={i} />
+            ))}
         </div>
       </div>
 
@@ -141,7 +155,7 @@ export default function Roles() {
           setIsOpenDeleteUser(false);
         }}
         onClickDelete={confirmDeleteUser}
-        isLoading={isLoadingDeleteUser && !isErrorDeleteUser}
+        isLoading={isLoadingDeleteUser}
       />
     </div>
   );
