@@ -87,6 +87,7 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
       clearErrors(key);
     });
   }, [images, number, selectedBrands, selectedRoles]);
+
   function resetFields() {
     reset();
     setImages([]);
@@ -180,7 +181,11 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
       {(formValues.type === "create" ||
         selectNewImages ||
         (formValues.type === "update" && formValues?.user.image == null)) && (
-        <ImagePicker images={images} setImages={setImages} />
+        <ImagePicker
+          images={images}
+          setImages={setImages}
+          isError={errors?.profile_image?.message}
+        />
       )}
 
       {/* <ImagePicker /> */}
