@@ -20,10 +20,7 @@ import { useUpdateUser } from "../api/mutations/useUpdateUser";
 import toast from "react-hot-toast";
 
 export default function UserForm({ handelOnClickCancel, formValues }) {
-  console.log(
-    "✅ ~ file: userForm.jsx:23 ~ UserForm ~ formValues:",
-    formValues
-  );
+
   const {
     refetch: fetchAllUsers,
     params,
@@ -32,7 +29,6 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
     setToUrl: false,
     isEnabled: false,
   });
-  console.log("✅ ~ file: userForm.jsx:24 ~ UserForm ~ params:", params);
   const {
     mutate: createUser,
     isLoading: isLoadingCreateUser,
@@ -62,7 +58,6 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
   const [selectedRoles, setSelectedRoles] = useState([]);
   const [selectedBrands, setSelectedBrands] = useState([]);
   const { errors } = formState;
-  console.log({ errors });
   useEffect(() => {
     if (formValues.type === "update") {
       const { name, email, phone_number, brands, roles } = formValues.user;

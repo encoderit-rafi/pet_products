@@ -14,15 +14,7 @@ export default function Pagination({
   onPageChange,
   onPerPageChange,
 }) {
-  console.log("Pagination", {
-    to,
-    total,
-    last_page,
-    current_page,
-    per_page,
-    onPageChange,
-    onPerPageChange,
-  });
+
   const [page, setPage] = useState(current_page);
   const [perPage, setPerPage] = useState(per_page);
   const debouncedPerPage = useDebounce(perPage);

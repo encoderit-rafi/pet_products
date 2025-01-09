@@ -35,10 +35,9 @@ const GlowingRectangle = (props) => {
     />
   );
 };
-const CustomTooltip = ({ active, payload,tooltipDataKey,tooltipLabel='' }) => {
+const CustomTooltip = ({ active, payload, tooltipDataKey, tooltipLabel = '' }) => {
   const { isDark } = useTheme();
   if (active && payload && payload.length) {
-    // console.log({ demo })
     return (
       <div
         className={`bg-custom_bg_three capitalize text-custom_text_three py-2 px-6 rounded-md ${isDark
@@ -46,7 +45,7 @@ const CustomTooltip = ({ active, payload,tooltipDataKey,tooltipLabel='' }) => {
           : "drop-shadow-[0_0_15px_rgba(0,0,0,0.5)]"
           }`}
       >
-        {tooltipLabel}{ " "}
+        {tooltipLabel}{" "}
         {payload[0].payload[tooltipDataKey]}
       </div>
     );
@@ -94,7 +93,7 @@ const CustomTick = ({ x, y, payload }) => {
   );
 };
 
-export default function BaseBarChart({data,xAxisDataKey,barDataKey,tooltipDataKey,tooltipLabel}) {
+export default function BaseBarChart({ data, xAxisDataKey, barDataKey, tooltipDataKey, tooltipLabel }) {
   // data,xAxisDataKey.barDataKey,tooltipDataKey
   const { width } = useWindowSize();
   return (

@@ -11,7 +11,6 @@ export default function InputPlace({ className }) {
   });
   function handelOnPlacesChanged() {
     let address = inputRef.current.getPlaces();
-    console.log({ address });
   }
   return (
     <>

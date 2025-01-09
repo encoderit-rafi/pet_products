@@ -12,17 +12,14 @@ export default function ImagePicker({
   // const [images, setImages] = useState([]);
 
   const handleFileChange = (e) => {
-    console.log("AF::selectedFiles");
     const selectedFiles = Array.from(e.target.files); // Convert FileList to an array
     if (selectedFiles.length > 0) {
-      console.log("BF:::selectedFiles");
       multiple
         ? setImages((prev) => [...prev, ...selectedFiles])
         : setImages(selectedFiles);
     }
   };
   useEffect(() => {
-    console.log({ images });
   }, [images]);
   const handleRemoveImage = (index) => {
     setImages((prev) => prev.filter((_, i) => i !== index));

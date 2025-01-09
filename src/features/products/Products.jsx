@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import demoData from "@/lib/data/demo";
 import Table from "@/components/tables/Table";
 import BaseMenu from "@/components/menus/BaseMenu";
@@ -9,6 +9,9 @@ import EditIcon from "@/assets/icons/EditIcon";
 import DeleteIcon from "@/assets/icons/DeleteIcon";
 import InputSearch from "@/components/inputs/InputSearch";
 import Title from "@/components/texts/Title";
+import { useGetAllProducts } from "./api/queries/useGetAllProducts";
+import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
+import { useGetAllCategories } from "@/api/categories/queries/useGetAllCategories";
 
 const query = {
   headers: [
@@ -84,23 +87,7 @@ const query = {
   isLoading: false,
   data: demoData,
 };
-const departments = [
-  {
-    id: 1,
-    name: "department 1",
-    value: "department_1",
-  },
-  {
-    id: 2,
-    name: "department 2",
-    value: "department_2",
-  },
-  {
-    id: 3,
-    name: "department 3",
-    value: "department_3",
-  },
-];
+
 const brands = [
   {
     id: 1,
@@ -137,8 +124,24 @@ const categories = [
 ];
 
 export default function Products() {
-  const [department, setDepartment] = useState(null);
-  const [brand, setBrand] = useState(null);
+  // const { data: getAllBrands } = useGetAllBrands();
+  const { data: getAllCategories, refetch: fetchAllCategories, searchParams: searchParamsAllCategories } = useGetAllCategories();
+  const {
+    data: allProducts,
+    refetch: fetchAllProducts,
+    isLoading: isLoadingAllProducts,
+    isFetching: isFetchingAllProducts,
+    params: paramsAllProducts,
+    setParams: setParamsAllProducts,
+  } = useGetAllProducts({ setToUrl: true, isEnabled: false });
+  useEffect(() => {
+    fetchAllProducts();
+  }, []);
+  useEffect(() => {
+    console.log({ allProducts })
+  }, [allProducts]);
+  // const [brand, setBrand] = useState(getAllBrands?.[0]);
+  const [brand, setBrand] = useState();
   const [category, setCategory] = useState(null);
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
   return (
@@ -151,12 +154,7 @@ export default function Products() {
               <InputSearch className="pr-1 py-1.5" />
             </div>
             <div className="items-center hidden gap-3 lg:flex">
-              <BaseMenu
-                text="select department"
-                data={departments}
-                value={department}
-                setValue={(item) => setDepartment(item)}
-              />
+
               <BaseMenu
                 text="select brand"
                 data={brands}
@@ -169,18 +167,12 @@ export default function Products() {
                 value={category}
                 setValue={(item) => setCategory(item)}
               />
-              <ExportButton />
+              {/* <ExportButton /> */}
             </div>
           </div>
         </div>
         <div className="flex items-center gap-3 lg:hidden">
-          {/* <BaseMenu
-            text="select department"
-            data={departments}
-            value={department}
-            setValue={(item) => setDepartment(item)}
-          />
-          */}
+
           <BaseMenu
             text="brand"
             data={brands}
@@ -193,7 +185,7 @@ export default function Products() {
             value={category}
             setValue={(item) => setCategory(item)}
           />
-          <ExportButton />
+          {/* <ExportButton /> */}
         </div>
       </div>
       <BorderBox>

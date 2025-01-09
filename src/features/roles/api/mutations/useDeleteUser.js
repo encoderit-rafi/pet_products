@@ -10,14 +10,6 @@ export const useDeleteUser = () => {
     mutationFn: async (user) => {
       return await Axios.delete(`/users/${user.id}`);
     },
-    onSuccess: (data) => {
 
-      toast.success('User successfully deleted');
-      // queryClient.invalidateQueries("get-all-users");
-    },
-    onError: (error) => {
-      console.log("ERROR::", error)
-      toast.error(error.response.data.message);
-    },
   });
 };

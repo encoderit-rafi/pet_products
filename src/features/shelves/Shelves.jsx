@@ -102,9 +102,7 @@ export default function Shelves() {
   const [isOpenAddNewStandType, setIsOpenAddNewStandType] = useState(false);
   const [isOpenAddNewPOSMaterials, setIsOpenAddNewPOSMaterials] =
     useState(false);
-  useEffect(() => {
-    console.log(activeTabIndex);
-  }, [activeTabIndex]);
+
   function handelOpenModal() {
     switch (activeTabIndex) {
       case 0:
@@ -194,7 +192,7 @@ export default function Shelves() {
               id="Cost"
               label="Cost"
               palceholder="Cost"
-              // className="py-3 rounded-lg"
+            // className="py-3 rounded-lg"
             />
           </div>
           <div className="flex items-center gap-4">

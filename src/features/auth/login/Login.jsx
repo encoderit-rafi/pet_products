@@ -41,7 +41,6 @@ export default function Login() {
     useAuthUserQuery();
   const { register, formState, handleSubmit } = useForm();
   const { errors } = formState;
-  console.log({ errors });
   const [showPassword, setShowPassword] = useState(false);
   function handlePasswordShow() {
     setShowPassword(!showPassword);
@@ -49,7 +48,6 @@ export default function Login() {
   function onSubmit(data) {
     loginUser(data, {
       onSuccess: async (res) => {
-        console.log("🟥 ~ onSuccess: ~ res:", res);
         await handelCheckAuthUser();
         // toast.success(res.data.message);
         navigate("/");

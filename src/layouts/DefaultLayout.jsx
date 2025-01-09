@@ -4,7 +4,6 @@ import { Navigate, Outlet } from "react-router-dom";
 
 export default function DefaultLayout() {
   const { theme } = useTheme();
-  console.log("✅ ~ file: DefaultLayout.jsx:6 ~ DefaultLayout ~ theme:", theme);
   const { user } = useAuth();
   if (user) return <Navigate replace to="/" />;
   return (
