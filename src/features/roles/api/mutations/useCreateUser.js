@@ -3,7 +3,7 @@ import { Axios } from "@/axios";
 import toast from "react-hot-toast";
 import { toFormData } from "@/consts";
 //* [create a new user]
-export const useCreateUserMutation = () => {
+export const useCreateUser = () => {
   // const queryClient = useQueryClient();
 
   return useMutation({

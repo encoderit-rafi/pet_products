@@ -9,13 +9,6 @@ import EditIcon from "@/assets/icons/EditIcon";
 import DeleteIcon from "@/assets/icons/DeleteIcon";
 import InputSearch from "@/components/inputs/InputSearch";
 import Title from "@/components/texts/Title";
-import Drawer from "@/components/navigators/Drawer";
-import BaseButton from "@/components/buttons/BaseButton";
-import LinkedinIcon from "@/assets/icons/LinkedinIcon";
-import FacebookIcon from "@/assets/icons/FacebookIcon";
-import WhatsappIcon from "@/assets/icons/WhatsappIcon";
-import PhoneIcon from "@/assets/icons/PhoneIcon";
-import MessageIcon from "@/assets/icons/MessageIcon";
 
 const query = {
   headers: [

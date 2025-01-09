@@ -11,7 +11,7 @@ import MultiSelectListbox from "@/components/dropdowns/MultiSelectListbox";
 import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
 import { useGetAllRoles } from "@/api/roles/queries/useGetAllRoles";
 import { omitEmpty, validationRules } from "@/consts";
-import { useCreateUserMutation } from "../api/mutations/useCreateUserMutation";
+import { useCreateUser } from "../api/mutations/useCreateUser";
 import BaseButton from "@/components/buttons/BaseButton";
 import InputBox from "@/components/box/InputBox";
 import { useGetAllUsers } from "../api/queries/useGetAllUsers";
@@ -37,7 +37,7 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
     mutate: createUser,
     isLoading: isLoadingCreateUser,
     isError: isErrorCreateUser,
-  } = useCreateUserMutation();
+  } = useCreateUser();
   const {
     mutate: updateUser,
     isLoading: isLoadingUpdateUser,
@@ -131,39 +131,39 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
     }
     formValues.type === "update"
       ? updateUser(
-          {
-            id: formValues.user.id,
-            data: omitEmpty({
-              ...data,
-              profile_image: data.profile_image[0],
-              is_brand_employee: 1,
-            }),
-          },
-          {
-            onSuccess: () => {
-              setParams({ page: params.page, per_page: params.per_page });
-              fetchAllUsers();
-              resetFields();
-              handelOnClickCancel();
-            },
-          }
-        )
-      : createUser(
-          {
+        {
+          id: formValues.user.id,
+          data: omitEmpty({
             ...data,
             profile_image: data.profile_image[0],
             is_brand_employee: 1,
+          }),
+        },
+        {
+          onSuccess: () => {
+            setParams({ page: params.page, per_page: params.per_page });
+            fetchAllUsers();
+            resetFields();
+            handelOnClickCancel();
           },
-          {
-            onSuccess: () => {
-              // fetchAllUsers();
-              setParams({ page: params.page, per_page: params.per_page });
-              fetchAllUsers();
-              resetFields();
-              handelOnClickCancel();
-            },
-          }
-        );
+        }
+      )
+      : createUser(
+        {
+          ...data,
+          profile_image: data.profile_image[0],
+          is_brand_employee: 1,
+        },
+        {
+          onSuccess: () => {
+            // fetchAllUsers();
+            setParams({ page: params.page, per_page: params.per_page });
+            fetchAllUsers();
+            resetFields();
+            handelOnClickCancel();
+          },
+        }
+      );
   }
   return (
     <form
@@ -181,12 +181,12 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
       {(formValues.type === "create" ||
         selectNewImages ||
         (formValues.type === "update" && formValues?.user.image == null)) && (
-        <ImagePicker
-          images={images}
-          setImages={setImages}
-          isError={errors?.profile_image?.message}
-        />
-      )}
+          <ImagePicker
+            images={images}
+            setImages={setImages}
+            isError={errors?.profile_image?.message}
+          />
+        )}
 
       {/* <ImagePicker /> */}
       <div className="space-y-4 overflow-auto max-h-32 lg:max-h-72">
@@ -203,9 +203,8 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
           type="email"
           label="email"
           palceholder="email"
-          className={`py-3 rounded-lg ${
-            errors?.email ? "!border-red-500" : ""
-          }`}
+          className={`py-3 rounded-lg ${errors?.email ? "!border-red-500" : ""
+            }`}
           register={register("email", validationRules.email)}
         />
 
