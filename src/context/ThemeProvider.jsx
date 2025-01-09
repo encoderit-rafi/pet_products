@@ -21,7 +21,7 @@ export const ThemeProvider = ({ children }) => {
 
   return (
     <ThemeContext.Provider value={{ isDark, theme, toggleTheme }}>
-      <div className={theme}>{children}</div>
+      <div className={`${theme} h-svh overflow-hidden`}>{children}</div>
     </ThemeContext.Provider>
   );
 };

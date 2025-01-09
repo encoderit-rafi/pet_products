@@ -20,8 +20,9 @@ export default function AppLayout() {
 
   return (
     <div
-      className={`${theme == "dark" ? "dark" : "light"
-        } font-poppins flex flex-col pt-3 lg:pt-5 pr-3 lg:pr-5 pb-3 lg:pb-5 space-y-6 overflow-hidden text-white bg-custom_bg_one h-svh`}
+      className={`${
+        theme == "dark" ? "dark" : "light"
+      } font-poppins flex flex-col pt-3 lg:pt-5 pr-3 lg:pr-5 pb-3 lg:pb-5 space-y-6 text-white bg-custom_bg_one h-full`}
     >
       <Header />
       <div className="flex flex-1 gap-3 overflow-hidden">

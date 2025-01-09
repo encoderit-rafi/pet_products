@@ -16,43 +16,51 @@ import DialogConfirmDelete from "@/components/dialogs/DialogConfirmDelete";
 import { useDeleteUser } from "./api/mutations/useDeleteUser";
 
 export default function Roles() {
-  const { data: allUsers, refetch: refetchAllUsers, isLoading: isLoadingAllUsers, isFetching: isFetchingAllUsers, states,
-    setStates } = useGetAllUsers({ setToUrl: true, isEnabled: true });
+  const {
+    data: allUsers,
+    refetch: refetchAllUsers,
+    isLoading: isLoadingAllUsers,
+    isFetching: isFetchingAllUsers,
+    states,
+    setStates,
+  } = useGetAllUsers({ setToUrl: true, isEnabled: true });
   console.log("✅ ~ file: Roles.jsx:12 ~ Roles ~ allUsers:", allUsers);
-  const { mutate: deleteUser, isLoading: isLoadingDeleteUser, isError: isErrorDeleteUser } =
-    useDeleteUser();
+  const {
+    mutate: deleteUser,
+    isLoading: isLoadingDeleteUser,
+    isError: isErrorDeleteUser,
+  } = useDeleteUser();
   const [page, setPage] = useState(states.page);
   const [perPage, setPerPage] = useState(states.per_page);
   const [tempData, setTempData] = useState(null);
   const [isOpenCreateUser, setIsOpenCreateUser] = useState(false);
   const [isOpenUpdateUser, setIsOpenUpdateUser] = useState(false);
   const [isOpenDeleteUser, setIsOpenDeleteUser] = useState(false);
-  const [formValues, setFormValues] = useState({ type: 'create', user: null });
+  const [formValues, setFormValues] = useState({ type: "create", user: null });
   useEffect(() => {
     // debounce(
     //   setStates({ page: 1, per_page: perPage })
     // )
-    setStates({ page: 1, per_page: perPage })
+    setStates({ page: 1, per_page: perPage });
   }, [perPage]);
   useEffect(() => {
     // debounce(
     //   setStates((old) => ({ ...old, page }))
     // )
-    setStates((old) => ({ ...old, page }))
+    setStates((old) => ({ ...old, page }));
   }, [page]);
   useEffect(() => {
-    refetchAllUsers()
+    refetchAllUsers();
   }, [page, perPage]);
-  function confirmDeleteuser() {
+  function confirmDeleteUser() {
     deleteUser(formValues.user, {
       onSuccess: () => {
-        refetchAllUsers()
+        refetchAllUsers();
         // setTempData(null)
-        setFormValues({ type: 'create', user: null })
-        setIsOpenDeleteUser(false)
+        setFormValues({ type: "create", user: null });
+        setIsOpenDeleteUser(false);
       },
-
-    })
+    });
     // setIsOpenDeleteUser(false)
   }
   return (
@@ -80,22 +88,29 @@ export default function Roles() {
             </div> */}
         <div className="grid grid-cols-1 gap-6 mt-2 sm:grid-cols-2 md:grid-cols-3">
           {/* {Array.from({ length: 5 }, (_, i) => <UserCardSkeleton key={i} />)} */}
-          {!isLoadingAllUsers && !isFetchingAllUsers && allUsers?.data?.length > 0
-            ? allUsers.data.map((user) => <UserCard key={user.id} data={user}
-              onClickEdit={() => {
-                // setTempData(user)
-                setFormValues({ type: 'update', user })
-                setIsOpenUpdateUser(true)
-              }}
-              onClickDelete={() => {
-                // setTempData(user)
-                setFormValues({ type: 'delete', user })
-                setIsOpenDeleteUser(true)
-              }}
-            />)
-            : Array.from({ length: PAGINATION.per_page }, (_, i) => <UserCardSkeleton key={i} />)}
+          {!isLoadingAllUsers &&
+          !isFetchingAllUsers &&
+          allUsers?.data?.length > 0
+            ? allUsers.data.map((user) => (
+                <UserCard
+                  key={user.id}
+                  data={user}
+                  onClickEdit={() => {
+                    // setTempData(user)
+                    setFormValues({ type: "update", user });
+                    setIsOpenUpdateUser(true);
+                  }}
+                  onClickDelete={() => {
+                    // setTempData(user)
+                    setFormValues({ type: "delete", user });
+                    setIsOpenDeleteUser(true);
+                  }}
+                />
+              ))
+            : Array.from({ length: PAGINATION.per_page }, (_, i) => (
+                <UserCardSkeleton key={i} />
+              ))}
         </div>
-
       </div>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -106,7 +121,15 @@ export default function Roles() {
             min={1}
             className="w-16 h-10 text-center"
             value={perPage}
-            onChange={(e) => setPerPage(+e.target.value < 1 ? 1 : +e.target.value > allUsers.total ? allUsers.total : +e.target.value)}
+            onChange={(e) =>
+              setPerPage(
+                +e.target.value < 1
+                  ? 1
+                  : +e.target.value > allUsers.total
+                  ? allUsers.total
+                  : +e.target.value
+              )
+            }
           />
           <Label
             id="per_page"
@@ -116,21 +139,16 @@ export default function Roles() {
           />
         </div>
         <div className="flex items-center justify-center gap-2 text-custom_yellow">
-          {
-            page > 1 && (
-              <IconButton onClick={() => setPage(val => val - 1)}>
-                <DownIcon className="size-4 rotate-90" />
-              </IconButton>
-            )
-          }
-          {
-            page < allUsers?.last_page && (
-              <IconButton onClick={() => setPage(val => val + 1)}>
-                <DownIcon className="size-4 -rotate-90" />
-              </IconButton>
-            )
-          }
-
+          {page > 1 && (
+            <IconButton onClick={() => setPage((val) => val - 1)}>
+              <DownIcon className="rotate-90 size-4" />
+            </IconButton>
+          )}
+          {page < allUsers?.last_page && (
+            <IconButton onClick={() => setPage((val) => val + 1)}>
+              <DownIcon className="-rotate-90 size-4" />
+            </IconButton>
+          )}
         </div>
       </div>
       <Dialog
@@ -140,7 +158,8 @@ export default function Roles() {
       >
         <UserForm
           formValues={formValues}
-          handelOnClickCancel={() => setIsOpenCreateUser(false)} />
+          handelOnClickCancel={() => setIsOpenCreateUser(false)}
+        />
       </Dialog>
       <Dialog
         isOpen={isOpenUpdateUser}
@@ -151,19 +170,20 @@ export default function Roles() {
           formValues={formValues}
           handelOnClickCancel={() => {
             // setTempData(null)
-            setFormValues({ type: 'create', user: null })
-            setIsOpenUpdateUser(false)
+            setFormValues({ type: "create", user: null });
+            setIsOpenUpdateUser(false);
           }}
         />
       </Dialog>
-      <DialogConfirmDelete text={formValues?.user?.name}
+      <DialogConfirmDelete
+        text={formValues?.user?.name}
         isOpen={isOpenDeleteUser}
         onClickClose={() => {
           // setTempData(null)
-          setFormValues({ type: 'create', user: null })
-          setIsOpenDeleteUser(false)
+          setFormValues({ type: "create", user: null });
+          setIsOpenDeleteUser(false);
         }}
-        onClickDelete={confirmDeleteuser}
+        onClickDelete={confirmDeleteUser}
         isLoading={isLoadingDeleteUser && !isErrorDeleteUser}
       />
     </div>
