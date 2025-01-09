@@ -20,6 +20,10 @@ import { useUpdateUser } from "../api/mutations/useUpdateUser";
 import toast from "react-hot-toast";
 
 export default function UserForm({ handelOnClickCancel, formValues }) {
+  console.log(
+    "✅ ~ file: userForm.jsx:23 ~ UserForm ~ formValues:",
+    formValues
+  );
   const {
     refetch: fetchAllUsers,
     params,
@@ -61,12 +65,12 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
   console.log({ errors });
   useEffect(() => {
     if (formValues.type === "update") {
-      const { name, email, image, brands, roles } = formValues.user;
+      const { name, email, phone_number, brands, roles } = formValues.user;
       setValue("name", name);
       setValue("email", email);
       setSelectedBrands(brands);
       setSelectedRoles(roles);
-      // setNumber(phone_number);
+      setNumber(phone_number);
       // setImages([profile_image]);
     }
   }, [formValues]);
@@ -93,7 +97,11 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
   }
   function onSubmit(data) {
     const validations = [
-      formValues.type == "create" && {
+      (formValues.type == "create" ||
+        (formValues.type == "update" && formValues.user.image == null) ||
+        (formValues.type == "update" &&
+          formValues.user.image != null &&
+          selectNewImages)) && {
         key: "profile_image",
         condition: (value) => value.length === 0,
         message: "Select an image",
