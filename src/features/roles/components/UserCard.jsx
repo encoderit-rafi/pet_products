@@ -19,11 +19,11 @@ export default function UserCard({ data, onClickEdit, onClickDelete }) {
           <p className="text-sm font-normal text-custom_text_four">
             {data.name}
           </p>
-          <div className="flex divide-x divide-custom_line_two">
+          <div className="flex overflow-x-auto divide-x divide-custom_line_two">
             {data.roles.map((role) => (
               <p
                 key={role.id}
-                className="px-1 text-xs text-custom_text_five font-extralight"
+                className="px-1 text-xs whitespace-nowrap text-custom_text_five font-extralight"
               >
                 {role.name}
               </p>

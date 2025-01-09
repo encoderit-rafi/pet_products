@@ -12,8 +12,8 @@ export const useUpdateUser = () => {
       return await Axios.post(`/users/${id}`, body);
     },
     onSuccess: () => {
-      toast.success("User successfully updated");
-      queryClient.invalidateQueries("get-all-users");
+      // toast.success("User successfully updated");
+      // queryClient.invalidateQueries("get-all-users");
     },
     onError: (error) => {
       toast.error(error.response.data.message);

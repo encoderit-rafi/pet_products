@@ -6,28 +6,26 @@ import { useSearchParams } from "react-router-dom";
 
 export const useGetAllUsers = ({ setToUrl, isEnabled }) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [states, setStates] = useState({
+  const [params, setParams] = useState({
     page: searchParams.get("page") || PAGINATION.page,
     per_page: searchParams.get("per_page") || PAGINATION.per_page,
-
-  })
+  });
   useEffect(() => {
     if (setToUrl) {
-      setSearchParams(states)
+      setSearchParams(params);
     }
-  }, [states])
+  }, [params]);
   const { data, isLoading, isFetching, refetch } = useQuery({
-    queryKey: ["get-all-users"],
+    queryKey: [`get-all-users-page-${params.page}-per_page-${params.per_page}`],
     enabled: isEnabled,
     retry: false,
     keepPreviousData: false,
     queryFn: async () => {
-      return (await Axios.get("/users", {
-        params: {
-          page: states.page,
-          per_page: states.per_page,
-        }
-      })).data;
+      return (
+        await Axios.get("/users", {
+          params,
+        })
+      ).data;
     },
   });
   return {
@@ -35,7 +33,7 @@ export const useGetAllUsers = ({ setToUrl, isEnabled }) => {
     isLoading,
     isFetching,
     refetch,
-    states,
-    setStates
+    params,
+    setParams,
   };
 };

@@ -17,14 +17,28 @@ import InputBox from "@/components/box/InputBox";
 import { useGetAllUsers } from "../api/queries/useGetAllUsers";
 import ImagePreview from "@/components/file_pickers/ImagePreview";
 import { useUpdateUser } from "../api/mutations/useUpdateUser";
+import toast from "react-hot-toast";
 
 export default function UserForm({ handelOnClickCancel, formValues }) {
-
-  const { refetch: refetchAllUsers } = useGetAllUsers({ setToUrl: false, isEnabled: false });
-  const { mutate: createUser, isLoading: isLoadingCreateUser } =
-    useCreateUserMutation();
-  const { mutate: updateUser, isLoading: isLoadingUpdateUser } =
-    useUpdateUser();
+  const {
+    refetch: fetchAllUsers,
+    params,
+    setParams,
+  } = useGetAllUsers({
+    setToUrl: false,
+    isEnabled: false,
+  });
+  console.log("✅ ~ file: userForm.jsx:24 ~ UserForm ~ params:", params);
+  const {
+    mutate: createUser,
+    isLoading: isLoadingCreateUser,
+    isError: isErrorCreateUser,
+  } = useCreateUserMutation();
+  const {
+    mutate: updateUser,
+    isLoading: isLoadingUpdateUser,
+    isError: isErrorUpdateUser,
+  } = useUpdateUser();
 
   const {
     register,
@@ -46,21 +60,20 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
   const { errors } = formState;
   console.log({ errors });
   useEffect(() => {
-    if (formValues.type === 'update') {
+    if (formValues.type === "update") {
       const { name, email, image, brands, roles } = formValues.user;
-      setValue('name', name);
-      setValue('email', email);
+      setValue("name", name);
+      setValue("email", email);
       setSelectedBrands(brands);
       setSelectedRoles(roles);
       // setNumber(phone_number);
       // setImages([profile_image]);
     }
-
   }, [formValues]);
   useEffect(() => {
     const fieldsToUpdate = [
       { key: "profile_image", value: images },
-      // { key: "phone_number", value: number },
+      { key: "phone_number", value: number },
       { key: "brand_ids", value: selectedBrands.map((item) => item.id) },
       { key: "role_ids", value: selectedRoles.map((item) => item.id) },
     ];
@@ -76,20 +89,20 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
     setNumber("");
     setSelectedRoles([]);
     setSelectedBrands([]);
-    setSelectNewImages(false)
+    setSelectNewImages(false);
   }
   function onSubmit(data) {
     const validations = [
-      {
+      formValues.type == "create" && {
         key: "profile_image",
         condition: (value) => value.length === 0,
         message: "Select an image",
       },
-      // {
-      //   key: "phone_number",
-      //   condition: (value) => value.length <= 3,
-      //   message: "Phone number is required",
-      // },
+      {
+        key: "phone_number",
+        condition: (value) => value.length <= 3,
+        message: "Phone number is required",
+      },
       {
         key: "brand_ids",
         condition: (value) => value.length === 0,
@@ -100,65 +113,67 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
         condition: (value) => value.length === 0,
         message: "Select a role",
       },
-    ];
-
+    ].filter(Boolean);
     for (const { key, condition, message } of validations) {
       if (condition(data[key])) {
         setError(key, { type: "manual", message });
         return;
       }
     }
-    formValues.type === 'update' ?
-      updateUser({
-        id: formValues.user.id,
-        data: omitEmpty({
-          ...data,
-          profile_image: null,
-          new_profile_image: data.profile_image[0],
-          is_brand_employee: 0,
-        })
-      }
-        ,
-        {
-          onSuccess: () => {
-            refetchAllUsers();
-            resetFields();
-            handelOnClickCancel();
+    formValues.type === "update"
+      ? updateUser(
+          {
+            id: formValues.user.id,
+            data: omitEmpty({
+              ...data,
+              profile_image: data.profile_image[0],
+              is_brand_employee: 1,
+            }),
           },
-        }
-      )
-      :
-      createUser(
-        {
-          ...data,
-          profile_image: data.profile_image[0],
-          is_brand_employee: 0,
-        },
-        {
-          onSuccess: () => {
-            refetchAllUsers();
-            resetFields();
-            handelOnClickCancel();
+          {
+            onSuccess: () => {
+              setParams({ page: params.page, per_page: params.per_page });
+              fetchAllUsers();
+              resetFields();
+              handelOnClickCancel();
+            },
+          }
+        )
+      : createUser(
+          {
+            ...data,
+            profile_image: data.profile_image[0],
+            is_brand_employee: 1,
           },
-        }
-      );
+          {
+            onSuccess: () => {
+              // fetchAllUsers();
+              setParams({ page: params.page, per_page: params.per_page });
+              fetchAllUsers();
+              resetFields();
+              handelOnClickCancel();
+            },
+          }
+        );
   }
   return (
     <form
       className="flex flex-col mt-4 space-y-4"
       onSubmit={handleSubmit(onSubmit)}
     >
-      {formValues.type === 'update' && formValues?.user.image != null && !selectNewImages &&
-        <ImagePreview src={formValues.user.image.url}
-          onClickClose={() => setSelectNewImages(true)}
-        />
-
-      }
-      {
-        (formValues.type === 'create' || selectNewImages || (formValues.type === 'update' && formValues?.user.image == null)) &&
-
+      {formValues.type === "update" &&
+        formValues?.user.image != null &&
+        !selectNewImages && (
+          <ImagePreview
+            src={formValues.user.image.url}
+            onClickClose={() => setSelectNewImages(true)}
+          />
+        )}
+      {(formValues.type === "create" ||
+        selectNewImages ||
+        (formValues.type === "update" && formValues?.user.image == null)) && (
         <ImagePicker images={images} setImages={setImages} />
-      }
+      )}
 
       {/* <ImagePicker /> */}
       <div className="space-y-4 overflow-auto max-h-32 lg:max-h-72">
@@ -175,12 +190,13 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
           type="email"
           label="email"
           palceholder="email"
-          className={`py-3 rounded-lg ${errors?.email ? "!border-red-500" : ""
-            }`}
+          className={`py-3 rounded-lg ${
+            errors?.email ? "!border-red-500" : ""
+          }`}
           register={register("email", validationRules.email)}
         />
 
-        {/* <InputBox>
+        <InputBox>
           <Label
             id="phone_number"
             label="phone number"
@@ -191,7 +207,7 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
             setNumber={setNumber}
             isError={errors.phone_number}
           />
-        </InputBox> */}
+        </InputBox>
         <InputBox>
           <Label id="brands" label="brands" palceholder="brands " />
           <MultiSelectListbox
@@ -217,15 +233,27 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
             resetFields();
             handelOnClickCancel();
           }}
-          isDisabled={isLoadingCreateUser}
+          isDisabled={
+            formValues.type == "create"
+              ? isLoadingCreateUser && !isErrorCreateUser
+              : isLoadingUpdateUser && !isErrorUpdateUser
+          }
         >
           cancel
         </BaseButton>
         <BaseButton
           variant="gradient"
           type="submit"
-          isLoading={isLoadingCreateUser}
-          isDisabled={isLoadingCreateUser}
+          isLoading={
+            formValues.type == "create"
+              ? isLoadingCreateUser && !isErrorCreateUser
+              : isLoadingUpdateUser && !isErrorUpdateUser
+          }
+          isDisabled={
+            formValues.type == "create"
+              ? isLoadingCreateUser && !isErrorCreateUser
+              : isLoadingUpdateUser && !isErrorUpdateUser
+          }
         >
           confirm
         </BaseButton>
