@@ -3,7 +3,7 @@ import React from "react";
 import InputWithIcon from "./InputWithIcon";
 import cn from "@/lib/utils/cn";
 
-export default function InputSearch({ className, placeholder = "search" }) {
+export default function InputSearch({ className, placeholder = "search", ...props }) {
   return (
     <InputWithIcon
       id=""
@@ -18,6 +18,7 @@ export default function InputSearch({ className, placeholder = "search" }) {
           <SearchIcon className="size-full" />
         </div>
       }
+      {...props}
     />
   );
 }

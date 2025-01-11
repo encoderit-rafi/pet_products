@@ -3,19 +3,27 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import DownIcon from "@/assets/icons/DownIcon";
 import cn from "@/lib/utils/cn";
 import { useTheme } from "@/context/ThemeProvider";
+import LoadingIcon from "@/assets/icons/LoadingIcon";
 
-export default function BaseMenu({ text, data, value, setValue, className }) {
+export default function BaseMenu({ text, data, value, setValue, className, isLoading }) {
   const { isDark } = useTheme();
   return (
     <Menu>
       <MenuButton
         className={cn(
           "inline-flex whitespace-nowrap  text-xs border text-custom_text_two font-light capitalize items-center justify-between gap-2 bg-custom_bg_two border-custom_line_two rounded-full py-1.5 px-3",
+          { "cursor-not-allowed": isLoading },
           className
         )}
+        disabled={isLoading}
       >
         {value?.name ?? text}
-        <DownIcon className="w-3 text-custom_line_two" />
+        {
+          isLoading ? <LoadingIcon
+            className="w-3 text-custom_line_two"
+          /> :
+            <DownIcon className="w-3 text-custom_line_two" />
+        }
       </MenuButton>
 
       <MenuItems
@@ -29,7 +37,7 @@ export default function BaseMenu({ text, data, value, setValue, className }) {
           }
         )}
       >
-        {data.map((item) => (
+        {data.length > 0 ? data?.map((item) => (
           <MenuItem key={item.id}>
             <button
               className={cn(
@@ -41,10 +49,10 @@ export default function BaseMenu({ text, data, value, setValue, className }) {
                   "data-[focus]:bg-[#ffffff]": !isDark,
                   "bg-[#ffffff] pl-5":
                     // (!isDark && item.value == value?.value) ||
-                    !isDark && item.value == value?.id,
+                    !isDark && item.id == value?.id,
                   "bg-[#313639] pl-5":
                     // (isDark && item.value == value?.value) ||
-                    isDark && item.value == value?.id,
+                    isDark && item.id == value?.id,
                 }
               )}
               onClick={() => setValue(item)}
@@ -52,7 +60,19 @@ export default function BaseMenu({ text, data, value, setValue, className }) {
               {item?.name}
             </button>
           </MenuItem>
-        ))}
+        )) :
+          <MenuItem >
+            <button
+              className={cn(
+                "group text-xs transition-all duration-300 !hover:bg-red-600 text-center capitalize flex w-full items-center gap-2 rounded-lg py-1.5 px-3  text-red-500",
+
+              )}
+            >
+              No data found
+            </button>
+          </MenuItem>
+
+        }
       </MenuItems>
     </Menu>
   );
