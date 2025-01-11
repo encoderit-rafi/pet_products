@@ -17,109 +17,7 @@ import Pagination from "@/components/pagination";
 import { PAGINATION } from "@/consts";
 import { useDebounce } from "@/hooks/useDebounce";
 
-// const query = {
-//   headers: [
-//     {
-//       name: "name",
-//       value: "name",
-//       cellValue: (row) => {
-//         return (
-//           <div className="flex items-center gap-3">
-//             <div className="size-5">
-//               {
-//                 row?.image_url ?
-//                   <img
-//                     src={row?.image_url}
-//                     alt=""
-//                     className="object-cover object-center rounded-full size-full"
-//                   />
-//                   :
-//                   < PlaceholderImage />
-//               }
 
-//             </div>
-//             <span>{row?.name}</span>
-//           </div>
-//         );
-//       },
-//     },
-//     // {
-//     //   name: "sku",
-//     //   value: "sku",
-//     //   cellValue: (row) => {
-//     //     return row?.sku;
-//     //   },
-//     // },
-//     {
-//       name: "price",
-//       value: "price",
-//       cellValue: (row) => {
-//         return row?.price;
-//       },
-//     },
-//     {
-//       name: "category",
-//       value: "category",
-//       cellValue: (row) => {
-//         return row?.category;
-//       },
-//     },
-//     // {
-//     //   name: "total units sold",
-//     //   value: "total_units_sold",
-//     //   cellValue: (row) => {
-//     //     return row?.total_units_sold;
-//     //   },
-//     // },
-//     // {
-//     //   name: "total units sold",
-//     //   value: "total_units_sold",
-//     //   cellValue: (row) => {
-//     //     return row?.total_units_sold;
-//     //   },
-//     // },
-//     // {
-//     //   name: "criteria category",
-//     //   value: "criteria_category",
-//     //   cellValue: (row) => {
-//     //     return row?.criteria_category;
-//     //   },
-//     // },
-//     // {
-//     //   name: <p className="text-right">actions</p>,
-//     //   value: "actions",
-//     //   cellValue: (row) => {
-//     //     return (
-//     //       <div className="flex flex-row-reverse gap-3 text-custom_yellow">
-//     //         <DeleteIcon className={"h-4"} />
-//     //         <EditIcon className={"h-4"} />
-//     //       </div>
-//     //     );
-//     //   },
-//     // },
-//   ],
-//   isLoading: false,
-//   data: allProducts?.data || [],
-
-// };
-
-// const brands = [
-//   {
-//     id: 1,
-//     name: "brand 1",
-//     value: "brand_1",
-//   },
-//   {
-//     id: 2,
-//     name: "brand 2",
-//     value: "brand_2",
-//   },
-//   {
-//     id: 3,
-//     name: "brand 3",
-//     value: "brand_3",
-//   },
-// ];
 const categories = [
   {
     id: 1,
@@ -139,20 +37,14 @@ const categories = [
 ];
 
 export default function Products() {
-  const { data: getAllBrands, isLoading: isLoadingAllBrands } = useGetAllBrands();
+  const { data: allBrands, isLoading: isLoadingAllBrands } = useGetAllBrands();
   const { data: allCategories, isLoading: isLoadingAllCategories,
-    refetch: fetchAllCategories,
     setParams: setParamsAllCategories,
   } = useGetAllCategories();
-  const [category, setCategory] = useState(null);
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [search, setSearch] = useState('');
-  const debouncedSearch = useDebounce(search);
-  useEffect(() => {
-    setParamsAllProducts((old) => ({ ...old, page: 1, search: debouncedSearch }))
-  }, [debouncedSearch]);
+
   const [brand, setBrand] = useState();
+  const [category, setCategory] = useState(null);
   const {
     data: allProducts,
     refetch: fetchAllProducts,
@@ -161,22 +53,38 @@ export default function Products() {
     params: paramsAllProducts,
     setParams: setParamsAllProducts,
   } = useGetAllProducts({
-    setToUrl: true, isEnabled: false,
+    setToUrl: true, isEnabled: true,
   });
+  const [search, setSearch] = useState(paramsAllProducts.search || '');
+  const debouncedSearch = useDebounce(search);
   useEffect(() => {
-    fetchAllProducts()
-  }, [])
+    setParamsAllProducts((old) => ({ ...old, page: 1, search: debouncedSearch }))
+  }, [debouncedSearch]);
   useEffect(() => {
-    fetchAllProducts();
-  }, [paramsAllProducts]);
+    // fetchAllProducts()
+    if (allBrands?.length > 0 || paramsAllProducts.brand_id) {
+      setBrand(allBrands?.find(item => item.id == paramsAllProducts.brand_id))
+    }
+  }, [allBrands,])
   useEffect(() => {
-    setParamsAllProducts((old) => ({ ...old, page: 1, brand_id: brand?.id }))
-    setParamsAllCategories({ brand_id: brand?.id })
+    // fetchAllProducts()
+    if (allCategories?.length > 0 || paramsAllProducts.brand_id) {
+      setCategory(allCategories?.find(item => item.id == paramsAllProducts.category_id))
+    }
+  }, [allCategories])
+  useEffect(() => {
+    brand?.id && setParamsAllProducts((old) => ({
+      page: 1, per_page: old.per_page,
+      search: old.search, brand_id: brand?.id
+    }))
+    brand?.id && setParamsAllCategories({ brand_id: brand?.id })
+    setCategory(null)
   }, [brand]);
   useEffect(() => {
-    setParamsAllProducts((old) => ({ ...old, page: 1, category_id: category?.id }))
+    category?.id && setParamsAllProducts((old) => ({ ...old, page: 1, category_id: category?.id }))
   }, [category]);
-  const query = useMemo(() => ({
+
+  const queryProducts = useMemo(() => ({
     headers: [
       {
         name: "name",
@@ -197,53 +105,53 @@ export default function Products() {
                 }
 
               </div>
-              <span>{row?.name}</span>
+              <span>{row?.product_name_en || "-"}</span>
             </div>
           );
         },
       },
-      // {
-      //   name: "sku",
-      //   value: "sku",
-      //   cellValue: (row) => {
-      //     return row?.sku;
-      //   },
-      // },
       {
-        name: "price",
-        value: "price",
+        name: "sku",
+        value: "product_sku",
         cellValue: (row) => {
-          return row?.price;
+          return row?.product_sku || "-";
+        },
+      },
+      {
+        name: "brand",
+        value: "brand",
+        cellValue: (row) => {
+          return row?.brand?.name || "-";
         },
       },
       {
         name: "category",
         value: "category",
         cellValue: (row) => {
-          return row?.category;
+          return row?.category?.name || "-";
         },
       },
-      // {
-      //   name: "total units sold",
-      //   value: "total_units_sold",
-      //   cellValue: (row) => {
-      //     return row?.total_units_sold;
-      //   },
-      // },
-      // {
-      //   name: "total units sold",
-      //   value: "total_units_sold",
-      //   cellValue: (row) => {
-      //     return row?.total_units_sold;
-      //   },
-      // },
-      // {
-      //   name: "criteria category",
-      //   value: "criteria_category",
-      //   cellValue: (row) => {
-      //     return row?.criteria_category;
-      //   },
-      // },
+      {
+        name: "total_unit_sold",
+        value: "total_unit_sold",
+        cellValue: (row) => {
+          return row?.total_unit_sold;
+        },
+      },
+      {
+        name: "total_revenue",
+        value: "total_revenue",
+        cellValue: (row) => {
+          return row?.total_revenue;
+        },
+      },
+      {
+        name: "criteria_category",
+        value: "criteria_category",
+        cellValue: (row) => {
+          return row?.criteria_category?.name || "-";
+        },
+      },
       // {
       //   name: <p className="text-right">actions</p>,
       //   value: "actions",
@@ -261,23 +169,77 @@ export default function Products() {
     data: allProducts?.data || [],
 
   }), [allProducts]);
+  const queryProductsLoading = {
+    headers: [
+      {
+        name: "name",
+        value: "name",
+        cellValue: (row) => {
+          return (
+            <div className="flex items-center gap-3">
+              <div className="size-5 rounded-full bg-custom_bg_one animate-pulse" />
+              <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+            </div>
+          );
+        },
+      },
+      {
+        name: "sku",
+        value: "product_sku",
+        cellValue: () => <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+        ,
+      },
+      {
+        name: "brand",
+        value: "brand",
+        cellValue: () => <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+      },
+      {
+        name: "category",
+        value: "category",
+        cellValue: () => <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+      },
 
+      {
+        name: "total_unit_sold",
+        value: "total_unit_sold",
+        cellValue: () => <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+        ,
+      },
+      {
+        name: "total_revenue",
+        value: "total_revenue",
+        cellValue: () => <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+
+      },
+      {
+        name: "criteria_category",
+        value: "criteria_category",
+        cellValue: () => <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+
+      },
+    ],
+    isLoading: false,
+    data: Array.from({ length: PAGINATION.per_page }, (_, i) => (i))
+
+
+  }
   return (
     <div className="flex flex-col h-full gap-4 overflow-hidden">
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
-          <Title onClick={() => setIsOpenDrawer(true)}>dashboard {allProducts?.data?.length}</Title>
-          <div className="flex items-center gap-3">
-            <div className="w-[111px]">
+          <Title onClick={() => setIsOpenDrawer(true)}>dashboard </Title>
+          <div className="flex items-start lg:items-center gap-3">
+            <div className="w-[150px] lg:w-[111px]">
               <InputSearch className="pr-1 py-1.5"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>
-            <div className="items-center hidden gap-3 lg:flex">
+            <div className=" md:flex items-center hidden gap-3">
               <BaseMenu
                 text={isLoadingAllBrands ? "Loading..." : "select brand"}
-                data={getAllBrands || []}
+                data={allBrands || []}
                 value={brand}
                 setValue={(item) => setBrand(item)}
                 isLoading={isLoadingAllBrands}
@@ -289,52 +251,64 @@ export default function Products() {
                 setValue={(item) => setCategory(item)}
                 isLoading={isLoadingAllCategories}
               />
-              {/* <ExportButton /> */}
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-3 lg:hidden">
-          <BaseMenu
-            text="brand"
-            data={getAllBrands || []}
-            value={brand}
-            setValue={(item) => setBrand(item)}
-          />
-          <BaseMenu
-            text="category"
-            data={categories}
-            value={category}
-            setValue={(item) => setCategory(item)}
-          />
+        <div className="flex items-center gap-3 md:hidden">
+          <div className="flex-1">
+
+            <BaseMenu
+              text={isLoadingAllBrands ? "Loading..." : "select brand"}
+              data={allBrands || []}
+              value={brand}
+              setValue={(item) => setBrand(item)}
+              isLoading={isLoadingAllBrands}
+              className={'w-full'}
+            />
+          </div>
+          <div className="flex-1">
+
+            <BaseMenu
+              text={isLoadingAllCategories ? "Loading..." : "select category"}
+              data={allCategories || []}
+              value={category}
+              setValue={(item) => setCategory(item)}
+              isLoading={isLoadingAllCategories}
+              className={'w-full'}
+
+            />
+          </div>
         </div>
       </div>
       <div className="flex-1 overflow-auto">
         {
-          !isLoadingAllProducts &&
-            !isFetchingAllProducts &&
-            allProducts?.data?.length > 0 ?
-            <BorderBox>
-              <Table query={{ ...query, data: allProducts?.data || [], }} />
-            </BorderBox> :
-            "loading"
-          // allProducts?.data?.length
+          (isLoadingAllProducts ||
+            isFetchingAllProducts) &&
+          // allProducts?.data?.total > 0 
+          <BorderBox>
+            <Table query={queryProductsLoading} />
+          </BorderBox>
         }
-
+        {
+          !isLoadingAllProducts &&
+          !isFetchingAllProducts &&
+          allProducts?.total > 0 &&
+          <BorderBox>
+            <Table query={{ ...queryProducts, data: allProducts?.data || [], }} />
+          </BorderBox>
+        }
+        {
+          !isLoadingAllProducts &&
+          !isFetchingAllProducts &&
+          allProducts?.total == 0 &&
+          <BorderBox>
+            <h5 className="text-xl text-center text-red-500">No data found
+            </h5>
+          </BorderBox>
+        }
       </div>
-      {allProducts && (
-        // <Pagination
-        //   to={allProducts?.to}
-        //   total={allProducts?.total}
-        //   current_page={allProducts?.current_page}
-        //   last_page={allProducts?.last_page}
-        //   per_page={allProducts?.per_page}
-        //   onPageChange={(val) =>
-        //     setParamsAllProducts((old) => ({ ...old, page: val }))
-        //   }
-        //   onPerPageChange={(val) =>
-        //     setParamsAllProducts((old) => ({ page: 1, per_page: val }))
-        //   }
-        // />
+
+      {allProducts?.total > 0 && (
         <Pagination
           to={allProducts?.to}
           total={allProducts?.total}

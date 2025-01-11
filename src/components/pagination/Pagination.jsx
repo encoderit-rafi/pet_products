@@ -25,7 +25,7 @@ export default function Pagination({
     onPageChange(page);
   }, [page]);
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between relative">
       <div className="flex items-center gap-2">
         <BaseInput
           hideLabel
@@ -38,7 +38,7 @@ export default function Pagination({
         />
         <Label id="per_page" label="per page" className="text-md" />
       </div>
-      <Label label={`${to}/${total}`} />
+      <Label label={`${to}/${total}`} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
       <div className="flex items-center justify-center gap-2 text-custom_yellow">
         {page > 1 && (
           <IconButton onClick={() => setPage((val) => val - 1)}>

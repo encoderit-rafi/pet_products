@@ -13,6 +13,7 @@ export const useGetAllCategories = () => {
     retry: false,
     keepPreviousData: false,
     enabled: !!params.brand_id,
+    staleTime: 1000 * 60 * 10,
     queryFn: async () => {
       return (await Axios.get("/categories", { params: params })).data;
     },
