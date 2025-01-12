@@ -17,6 +17,7 @@ import { useDeleteUser } from "./api/mutations/useDeleteUser";
 import { useDebounce } from "@/hooks/useDebounce";
 import Pagination from "@/components/pagination";
 import { Axios } from "@/axios";
+import { useCallback } from "react";
 
 export default function Roles() {
   const {
@@ -33,9 +34,9 @@ export default function Roles() {
   //   isError: isErrorDeleteUser
   // } = useDeleteUser({ setToUrl: true, isEnabled: false });
 
-  useEffect(() => {
-    fetchAllUsers();
-  }, []);
+  // useEffect(() => {
+  //   fetchAllUsers();
+  // }, []);
   useEffect(() => {
     fetchAllUsers();
   }, [paramsAllUsers]);
@@ -66,6 +67,15 @@ export default function Roles() {
     }
     setIsLoadingDeleteUser(false)
   }
+  const handlePageChange = useCallback(
+    (val) => setParamsAllUsers((old) => ({ ...old, page: val })),
+    [setParamsAllUsers]
+  );
+
+  const handlePerPageChange = useCallback(
+    (val) => setParamsAllUsers((old) => ({ ...old, page: 1, per_page: val })),
+    [setParamsAllUsers]
+  );
   return (
     <div className="flex flex-col h-full gap-4 overflow-hidden">
       <div className="flex items-center justify-between">
@@ -107,22 +117,18 @@ export default function Roles() {
         </div>
       </div>
 
-      {allUsers && (
+      {allUsers?.total > 0 && (
         <Pagination
           to={allUsers?.to}
           total={allUsers?.total}
           current_page={allUsers?.current_page}
           last_page={allUsers?.last_page}
           per_page={allUsers?.per_page}
-          onPageChange={(val) =>
-            setParamsAllUsers((old) => ({ ...old, page: val }))
-          }
-          onPerPageChange={(val) =>
-            setParamsAllUsers((old) => ({ page: 1, per_page: val }))
-          }
+          onPageChange={handlePageChange}
+          onPerPageChange={handlePerPageChange}
         />
-      )}
 
+      )}
       <Dialog
         isOpen={isOpenCreateUser}
         title="add new user"

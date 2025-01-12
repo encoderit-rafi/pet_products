@@ -35,9 +35,9 @@ export default function Products() {
   });
   const [search, setSearch] = useState(paramsAllProducts.search || '');
   // const debouncedSearch = useDebounce(search);
-  useEffect(() => {
-    fetchAllProducts()
-  }, []);
+  // useEffect(() => {
+  //   fetchAllProducts()
+  // }, []);
   useEffect(() => {
     fetchAllProducts()
   }, [paramsAllProducts]);
