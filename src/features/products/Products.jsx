@@ -54,8 +54,9 @@ export default function Products() {
   }, [allCategories])
   useEffect(() => {
     brand?.id && setParamsAllProducts((old) => ({
+      ...old,
       page: 1, per_page: old.per_page,
-      search: old.search, brand_id: brand?.id
+      brand_id: brand?.id
     }))
     brand?.id && setParamsAllCategories({ brand_id: brand?.id })
     setCategory(null)
@@ -254,6 +255,7 @@ export default function Products() {
                 value={category}
                 setValue={(item) => setCategory(item)}
                 isLoading={isLoadingAllCategories}
+                errorText={brand?.id ? "No Category Found" : "Select a Brand First"}
               />
             </div>
           </div>

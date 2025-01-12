@@ -5,7 +5,7 @@ import cn from "@/lib/utils/cn";
 import { useTheme } from "@/context/ThemeProvider";
 import LoadingIcon from "@/assets/icons/LoadingIcon";
 
-export default function BaseMenu({ text, data, value, setValue, className, isLoading }) {
+export default function BaseMenu({ text, data, value, setValue, className, isLoading, errorText = "No data found" }) {
   const { isDark } = useTheme();
   return (
     <Menu>
@@ -68,7 +68,7 @@ export default function BaseMenu({ text, data, value, setValue, className, isLoa
 
               )}
             >
-              No data found
+              {errorText}
             </button>
           </MenuItem>
 
