@@ -1,7 +1,4 @@
-import MailIcon from "@/assets/icons/MailIcon";
 import cn from "@/lib/utils/cn";
-import React from "react";
-
 export default function InputWithIcon({
   id,
   type,

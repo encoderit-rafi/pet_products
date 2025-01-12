@@ -30,7 +30,7 @@ export default function BaseMenu({ text, data, value, setValue, className, isLoa
         transition
         anchor="bottom end"
         className={cn(
-          "w-56 z-[60] origin-top-right rounded-lg mt-2 p-2 text-sm/6  transition duration-200 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 space-y-2",
+          "w-56 z-[60] h-40 origin-top-right rounded-lg mt-2 p-2 text-sm/6  transition duration-200 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 space-y-2",
           {
             "bg-[#21272b]": isDark,
             "bg-[#f8f8f8]": !isDark,

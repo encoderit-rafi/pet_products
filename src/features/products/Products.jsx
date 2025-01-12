@@ -11,11 +11,14 @@ import InputSearch from "@/components/inputs/InputSearch";
 import PlaceholderImage from "@/components/placeholders/PlaceholderImage";
 
 import { useGetAllProducts } from "./api/queries/useGetAllProducts";
-import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
+// import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
 import { useGetAllCategories } from "@/api/categories/queries/useGetAllCategories";
+import BaseMenuInfiniteQuery from "@/components/menus/BaseMenuInfiniteQuery";
+import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
 
 export default function Products() {
-  const { data: allBrands, isLoading: isLoadingAllBrands } = useGetAllBrands();
+  const { data: allBrands, isLoading: isLoadingAllBrands, params: paramsAllBrands, setParams: setParamsAllBrands } = useGetAllBrands();
+
   const { data: allCategories, isLoading: isLoadingAllCategories,
     setParams: setParamsAllCategories,
   } = useGetAllCategories();
@@ -34,10 +37,6 @@ export default function Products() {
     setToUrl: true, isEnabled: false,
   });
   const [search, setSearch] = useState(paramsAllProducts.search || '');
-  // const debouncedSearch = useDebounce(search);
-  // useEffect(() => {
-  //   fetchAllProducts()
-  // }, []);
   useEffect(() => {
     fetchAllProducts()
   }, [paramsAllProducts]);
@@ -74,6 +73,10 @@ export default function Products() {
   const handlePerPageChange = useCallback(
     (val) => setParamsAllProducts((old) => ({ ...old, page: 1, per_page: val })),
     [setParamsAllProducts]
+  );
+  const handleFetchAllBrands = useCallback(
+    (val) => setParamsAllBrands((old) => ({ ...old, page: +old.page + 1, per_page: val })),
+    [setParamsAllBrands]
   );
   const handelSearch = () => {
     setParamsAllProducts((old) => ({ ...old, page: 1, search: search }))
@@ -242,12 +245,22 @@ export default function Products() {
               </form>
             </div>
             <div className=" md:flex items-center hidden gap-3">
+              {/* <BaseMenuInfiniteQuery
+                text={isLoadingAllBrands ? "Loading..." : "select brand"}
+                data={storeAllBrands}
+                value={brand}
+                setValue={(item) => setBrand(item)}
+                isLoading={isLoadingAllBrands}
+                fetchData={handleFetchAllBrands}
+              // fetchNextPage={fetchNextPageAllBrands} hasNextPage={hasNextPageAllBrands} isFetchingNextPage={isFetchingNextPageAllBrands}
+              /> */}
               <BaseMenu
                 text={isLoadingAllBrands ? "Loading..." : "select brand"}
                 data={allBrands || []}
                 value={brand}
                 setValue={(item) => setBrand(item)}
                 isLoading={isLoadingAllBrands}
+
               />
               <BaseMenu
                 text={isLoadingAllCategories ? "Loading..." : "select category"}
@@ -269,8 +282,9 @@ export default function Products() {
               value={brand}
               setValue={(item) => setBrand(item)}
               isLoading={isLoadingAllBrands}
-              className={'w-full'}
+
             />
+
           </div>
           <div className="flex-1">
 
@@ -280,8 +294,7 @@ export default function Products() {
               value={category}
               setValue={(item) => setCategory(item)}
               isLoading={isLoadingAllCategories}
-              className={'w-full'}
-
+              errorText={brand?.id ? "No Category Found" : "Select a Brand First"}
             />
           </div>
         </div>

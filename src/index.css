@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @font-face {
   font-family: "Poppins";
   src: url("/fonts/poppins/Poppins-Thin.ttf") format("truetype");
@@ -144,6 +145,46 @@
       --custom_line_nine: #fff;
     }
   }
+
+  .recharts-text,
+  text {
+    @apply text-xs fill-custom_text_two;
+  }
+
+  .btn-contact {
+    @apply flex flex-col items-center gap-2 text-xs capitalize text-custom_text_six w-full font-light;
+  }
+
+  .base-input {
+    @apply border bg-transparent text-sm font-light !text-custom_text_two border-custom_line_seven rounded-md px-3 py-2 outline-none placeholder:capitalize placeholder:text-custom_text_two focus:border-custom_line_seven;
+  }
+
+  .recharts-rectangle.recharts-tooltip-cursor {
+    fill: transparent !important;
+  }
+
+  .react-datepicker {
+    @apply !font-poppins text-sm/6 !bg-custom_bg_one !rounded-lg !border-none transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 space-y-2 absolute z-50 p-1 lg:right-12 right-16;
+    /* background-color: var(--custom_bg_one) !important; */
+  }
+
+  .react-datepicker__header {
+    @apply !bg-custom_bg_one !font-poppins !pt-0;
+  }
+
+  .react-datepicker__current-month,
+  .react-datepicker__day-name,
+  .react-datepicker__day {
+    @apply !text-custom_text_two;
+  }
+
+  .react-datepicker__day--selected {
+    @apply !bg-[#f0f0f0] !text-[#21272b];
+  }
+
+  .react-datepicker__day:hover {
+    @apply !text-[#21272b];
+  }
 }
 
 @layer utilities {
@@ -166,27 +207,8 @@
     background-color: #555;
   }
 }
-.recharts-text,
-text {
-  @apply text-xs fill-custom_text_two;
-}
-.btn-contact {
-  @apply flex flex-col items-center gap-2 text-xs capitalize text-custom_text_six w-full font-light;
-}
-.base-input {
-  @apply border bg-transparent text-sm font-light text-custom_text_two border-custom_line_seven rounded-md px-3 py-2 outline-none placeholder:capitalize placeholder:!text-custom_text_two focus:border-custom_line_seven;
-}
-.recharts-rectangle.recharts-tooltip-cursor {
-  fill: transparent !important;
-}
 
-.react-datepicker {
-  @apply !font-poppins text-sm/6 !bg-custom_bg_one !rounded-lg !border-none transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 space-y-2 absolute z-50 p-1 lg:right-12 right-16;
-  /* background-color: var(--custom_bg_one) !important; */
-}
-.react-datepicker__header {
-  @apply !bg-custom_bg_one !font-poppins !pt-0;
-}
+
 .react-datepicker__triangle {
   display: none;
 }
@@ -195,21 +217,14 @@ text {
 .react-datepicker__navigation-icon--next {
   margin-top: 0 !important;
 }
+
 .react-datepicker__navigation-icon--previous::before,
 .react-datepicker__navigation-icon--next::before {
   top: 30% !important;
 }
-.react-datepicker__current-month,
-.react-datepicker__day-name,
-.react-datepicker__day {
-  @apply !text-custom_text_two;
-}
-.react-datepicker__day--selected {
-  @apply !bg-[#f0f0f0] !text-[#21272b];
-}
-.react-datepicker__day:hover {
-  @apply !text-[#21272b];
-}
+
+
+
 /* .react-tel-input .flag-dropdown {
   position: relative;
 } */
@@ -217,15 +232,19 @@ text {
 .react-tel-input .selected-flag:focus {
   background-color: transparent;
 }
+
 .arrow {
   display: none;
 }
+
 .react-tel-input .flag-dropdown.open .selected-flag {
   background: transparent;
 }
+
 .flag {
   position: relative;
 }
+
 .country-list {
   background-color: rgb(51, 51, 51);
   color: rgb(255, 255, 255);
@@ -245,6 +264,7 @@ text {
   background-color: var(--custom_bg_two);
   border-radius: 6px;
 }
+
 .react-tel-input .country-list .country-name {
   color: var(--custom_text_one);
 }
