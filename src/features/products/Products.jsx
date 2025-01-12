@@ -1,40 +1,18 @@
-import React, { useEffect, useMemo, useState } from "react";
-import demoData from "@/lib/data/demo";
-import Table from "@/components/tables/Table";
-import BaseMenu from "@/components/menus/BaseMenu";
-import ExportButton from "@/components/buttons/ExportButton";
-import BorderBox from "@/components/box/BorderBox";
-import PlaceholderImage from "@/components/placeholders/PlaceholderImage";
-import EditIcon from "@/assets/icons/EditIcon";
-import DeleteIcon from "@/assets/icons/DeleteIcon";
-import InputSearch from "@/components/inputs/InputSearch";
+import React, { useEffect, useMemo, useState, useCallback } from "react";
+
+import { PAGINATION } from "@/consts";
+
 import Title from "@/components/texts/Title";
+import Table from "@/components/tables/Table";
+import Pagination from "@/components/pagination";
+import BaseMenu from "@/components/menus/BaseMenu";
+import BorderBox from "@/components/box/BorderBox";
+import InputSearch from "@/components/inputs/InputSearch";
+import PlaceholderImage from "@/components/placeholders/PlaceholderImage";
+
 import { useGetAllProducts } from "./api/queries/useGetAllProducts";
 import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
 import { useGetAllCategories } from "@/api/categories/queries/useGetAllCategories";
-import { useSearchParams } from "react-router-dom";
-import Pagination from "@/components/pagination";
-import { useDebounce } from "@/hooks/useDebounce";
-import { PAGINATION } from "@/consts";
-
-
-const categories = [
-  {
-    id: 1,
-    name: "category 1",
-    value: "category_1",
-  },
-  {
-    id: 2,
-    name: "category 2",
-    value: "category_2",
-  },
-  {
-    id: 3,
-    name: "category 3",
-    value: "category_3",
-  },
-];
 
 export default function Products() {
   const { data: allBrands, isLoading: isLoadingAllBrands } = useGetAllBrands();
@@ -53,21 +31,23 @@ export default function Products() {
     params: paramsAllProducts,
     setParams: setParamsAllProducts,
   } = useGetAllProducts({
-    setToUrl: true, isEnabled: true,
+    setToUrl: true, isEnabled: false,
   });
   const [search, setSearch] = useState(paramsAllProducts.search || '');
-  const debouncedSearch = useDebounce(search);
+  // const debouncedSearch = useDebounce(search);
   useEffect(() => {
-    setParamsAllProducts((old) => ({ ...old, page: 1, search: debouncedSearch }))
-  }, [debouncedSearch]);
+    fetchAllProducts()
+  }, []);
   useEffect(() => {
-    // fetchAllProducts()
+    fetchAllProducts()
+  }, [paramsAllProducts]);
+
+  useEffect(() => {
     if (allBrands?.length > 0 || paramsAllProducts.brand_id) {
       setBrand(allBrands?.find(item => item.id == paramsAllProducts.brand_id))
     }
   }, [allBrands,])
   useEffect(() => {
-    // fetchAllProducts()
     if (allCategories?.length > 0 || paramsAllProducts.brand_id) {
       setCategory(allCategories?.find(item => item.id == paramsAllProducts.category_id))
     }
@@ -84,6 +64,20 @@ export default function Products() {
     category?.id && setParamsAllProducts((old) => ({ ...old, page: 1, category_id: category?.id }))
   }, [category]);
 
+
+  const handlePageChange = useCallback(
+    (val) => setParamsAllProducts((old) => ({ ...old, page: val })),
+    [setParamsAllProducts]
+  );
+
+  const handlePerPageChange = useCallback(
+    (val) => setParamsAllProducts((old) => ({ ...old, page: 1, per_page: val })),
+    [setParamsAllProducts]
+  );
+  const handelSearch = () => {
+    setParamsAllProducts((old) => ({ ...old, page: 1, search: search }))
+  }
+  // TABLE HEADERS
   const queryProducts = useMemo(() => ({
     headers: [
       {
@@ -95,20 +89,9 @@ export default function Products() {
               <div className="size-5">
                 {
                   row?.image_url ?
-                    // <picture
-                    //   className="object-cover object-center rounded-full size-full"
-                    // >
-                    //   <source srcset={row?.image_url} />
-                    //   <img
-                    //     src="https://community.softr.io/uploads/db9110/original/2X/7/74e6e7e382d0ff5d7773ca9a87e6f6f8817a68a6.jpeg"
-                    //     alt="Fallback imagae"
-                    //     className="object-cover object-center rounded-full size-full"
-                    //   />
-                    // </picture>
                     <img
                       src={row?.image_url}
                       alt={row?.product_name_en}
-                      onerror="this.src='https://community.softr.io/uploads/db9110/original/2X/7/74e6e7e382d0ff5d7773ca9a87e6f6f8817a68a6.jpeg';"
                       onError={(e) => (e.target.src = "https://community.softr.io/uploads/db9110/original/2X/7/74e6e7e382d0ff5d7773ca9a87e6f6f8817a68a6.jpeg")}
                       aria-label="An illustrative image"
                       className="object-cover object-center rounded-full size-full"
@@ -154,10 +137,10 @@ export default function Products() {
         },
       },
       {
-        name: "total revenue",
+        name: "total sales value ",
         value: "total_revenue",
         cellValue: (row) => {
-          return row?.total_revenue;
+          return row?.total_revenue ? `SR ${row?.total_revenue}` : "-";
         },
       },
       {
@@ -216,19 +199,19 @@ export default function Products() {
       },
 
       {
-        name: "total_unit_sold",
+        name: "total unit sold",
         value: "total_unit_sold",
         cellValue: () => <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
         ,
       },
       {
-        name: "total_revenue",
+        name: "total sales value ",
         value: "total_revenue",
         cellValue: () => <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
 
       },
       {
-        name: "criteria_category",
+        name: "criteria category",
         value: "criteria_category",
         cellValue: () => <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
 
@@ -239,6 +222,7 @@ export default function Products() {
 
 
   }
+
   return (
     <div className="flex flex-col h-full gap-4 overflow-hidden">
       <div className="flex flex-col gap-3">
@@ -246,10 +230,15 @@ export default function Products() {
           <Title onClick={() => setIsOpenDrawer(true)}>dashboard </Title>
           <div className="flex items-start lg:items-center gap-3">
             <div className="w-[150px] lg:w-[111px]">
-              <InputSearch className="pr-1 py-1.5"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
+              <form onSubmit={(e) => {
+                e.preventDefault()
+                handelSearch()
+              }}>
+                <InputSearch className="pr-1 py-1.5"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </form>
             </div>
             <div className=" md:flex items-center hidden gap-3">
               <BaseMenu
@@ -296,33 +285,17 @@ export default function Products() {
         </div>
       </div>
       <div className="flex-1 overflow-auto">
-        {
-          (isLoadingAllProducts ||
-            isFetchingAllProducts) &&
-          // allProducts?.data?.total > 0 
-          <BorderBox>
+        <BorderBox>
+          {isLoadingAllProducts || isFetchingAllProducts ? (
             <Table query={queryProductsLoading} />
-          </BorderBox>
-        }
-        {
-          !isLoadingAllProducts &&
-          !isFetchingAllProducts &&
-          allProducts?.total > 0 &&
-          <BorderBox>
-            <Table query={{ ...queryProducts, data: allProducts?.data || [], }} />
-          </BorderBox>
-        }
-        {
-          !isLoadingAllProducts &&
-          !isFetchingAllProducts &&
-          allProducts?.total == 0 &&
-          <BorderBox>
-            <h5 className="text-xl text-center text-red-500">No data found
-            </h5>
-          </BorderBox>
-        }
-      </div>
+          ) : allProducts?.total > 0 ? (
+            <Table query={{ ...queryProducts, data: allProducts?.data || [] }} />
+          ) : (
+            <h5 className="text-xl text-center text-red-500">No data found</h5>
+          )}
+        </BorderBox>
 
+      </div>
       {allProducts?.total > 0 && (
         <Pagination
           to={allProducts?.to}
@@ -330,14 +303,12 @@ export default function Products() {
           current_page={allProducts?.current_page}
           last_page={allProducts?.last_page}
           per_page={allProducts?.per_page}
-          onPageChange={(val) =>
-            setParamsAllProducts((old) => ({ ...old, page: val }))
-          }
-          onPerPageChange={(val) =>
-            setParamsAllProducts((old) => ({ page: 1, per_page: val }))
-          }
+          onPageChange={handlePageChange}
+          onPerPageChange={handlePerPageChange}
         />
+
       )}
+
     </div>
   );
 }
