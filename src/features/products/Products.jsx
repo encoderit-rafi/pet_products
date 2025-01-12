@@ -14,8 +14,8 @@ import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
 import { useGetAllCategories } from "@/api/categories/queries/useGetAllCategories";
 import { useSearchParams } from "react-router-dom";
 import Pagination from "@/components/pagination";
-import { PAGINATION } from "@/consts";
 import { useDebounce } from "@/hooks/useDebounce";
+import { PAGINATION } from "@/consts";
 
 
 const categories = [
@@ -95,11 +95,26 @@ export default function Products() {
               <div className="size-5">
                 {
                   row?.image_url ?
+                    // <picture
+                    //   className="object-cover object-center rounded-full size-full"
+                    // >
+                    //   <source srcset={row?.image_url} />
+                    //   <img
+                    //     src="https://community.softr.io/uploads/db9110/original/2X/7/74e6e7e382d0ff5d7773ca9a87e6f6f8817a68a6.jpeg"
+                    //     alt="Fallback imagae"
+                    //     className="object-cover object-center rounded-full size-full"
+                    //   />
+                    // </picture>
                     <img
                       src={row?.image_url}
-                      alt=""
+                      alt={row?.product_name_en}
+                      onerror="this.src='https://community.softr.io/uploads/db9110/original/2X/7/74e6e7e382d0ff5d7773ca9a87e6f6f8817a68a6.jpeg';"
+                      onError={(e) => (e.target.src = "https://community.softr.io/uploads/db9110/original/2X/7/74e6e7e382d0ff5d7773ca9a87e6f6f8817a68a6.jpeg")}
+                      aria-label="An illustrative image"
                       className="object-cover object-center rounded-full size-full"
                     />
+
+
                     :
                     < PlaceholderImage />
                 }
@@ -132,21 +147,21 @@ export default function Products() {
         },
       },
       {
-        name: "total_unit_sold",
+        name: "total unit sold",
         value: "total_unit_sold",
         cellValue: (row) => {
           return row?.total_unit_sold;
         },
       },
       {
-        name: "total_revenue",
+        name: "total revenue",
         value: "total_revenue",
         cellValue: (row) => {
           return row?.total_revenue;
         },
       },
       {
-        name: "criteria_category",
+        name: "criteria category",
         value: "criteria_category",
         cellValue: (row) => {
           return row?.criteria_category?.name || "-";
