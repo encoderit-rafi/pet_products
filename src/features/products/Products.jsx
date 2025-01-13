@@ -18,8 +18,11 @@ import {
   useGetAllBrands,
   useGetAllBrandsInfinite,
 } from "@/api/brands/queries/useGetAllBrands";
+// import { useSearchParam } from "react-use";
+import { useSearchParams } from "react-router-dom";
 
 export default function Products() {
+  const [searchParams] = useSearchParams();
   // const { data: allBrands, isLoading: isLoadingAllBrands, params: paramsAllBrands, setParams: setParamsAllBrands } = useGetAllBrands();
   const [storeAllBrands, setStoreAllBrands] = useState([]);
   const {
@@ -46,6 +49,13 @@ export default function Products() {
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
 
   const [brand, setBrand] = useState();
+  useEffect(() => {
+    const id = searchParams.get("brand_id");
+    const name = searchParams.get("brand_name");
+    if (id && name) {
+      setBrand({ id, name });
+    }
+  }, [searchParams]);
   const [category, setCategory] = useState(null);
   const {
     data: allProducts,
@@ -99,6 +109,7 @@ export default function Products() {
         page: 1,
         per_page: old.per_page,
         brand_id: brand?.id,
+        brand_name: brand?.name,
       }));
     brand?.id && setParamsAllCategories({ brand_id: brand?.id });
     setCategory(null);

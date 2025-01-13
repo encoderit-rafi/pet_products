@@ -38,9 +38,7 @@ export const useGetAllBrandsInfinite = () => {
     error,
   } = useInfiniteQuery({
     queryKey: ["get-all-brands-infinite"],
-    keepPreviousData: true,
-    staleTime: 1000 * 60 * 60,
-    cacheTime: 1000 * 60 * 60,
+
     queryFn: async ({ pageParam = 1 }) => {
       const response = await Axios.get(`/brands`, {
         params: {
