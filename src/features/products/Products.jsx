@@ -153,8 +153,7 @@ export default function Products() {
                       src={row?.image_url}
                       alt={row?.product_name_en}
                       onError={(e) =>
-                        (e.target.src =
-                          "https://community.softr.io/uploads/db9110/original/2X/7/74e6e7e382d0ff5d7773ca9a87e6f6f8817a68a6.jpeg")
+                        (e.target.src = "/placeholder-image.webp")
                       }
                       aria-label="An illustrative image"
                       className="object-cover object-center rounded-full size-full"
