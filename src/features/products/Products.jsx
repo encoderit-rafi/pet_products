@@ -14,11 +14,12 @@ import { useGetAllProducts } from "./api/queries/useGetAllProducts";
 // import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
 import { useGetAllCategories } from "@/api/categories/queries/useGetAllCategories";
 import BaseMenuInfiniteQuery from "@/components/menus/BaseMenuInfiniteQuery";
-import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
+import { useGetAllBrands, useGetAllBrandsInfinite } from "@/api/brands/queries/useGetAllBrands";
 
 export default function Products() {
-  const { data: allBrands, isLoading: isLoadingAllBrands, params: paramsAllBrands, setParams: setParamsAllBrands } = useGetAllBrands();
-
+  // const { data: allBrands, isLoading: isLoadingAllBrands, params: paramsAllBrands, setParams: setParamsAllBrands } = useGetAllBrands();
+  const { data: allBrands, status: statusAllBrands, hasNextPage: hasNextPageAllBrands, fetchNextPage: fetchNextPageAllBrands, isFetchingNextPage: isFetchingNextPageAllBrands } = useGetAllBrandsInfinite();
+  console.log("BRANDS ::", allBrands)
   const { data: allCategories, isLoading: isLoadingAllCategories,
     setParams: setParamsAllCategories,
   } = useGetAllCategories();
@@ -41,11 +42,17 @@ export default function Products() {
     fetchAllProducts()
   }, [paramsAllProducts]);
 
+  // useEffect(() => {
+  //   if (allBrands?.length > 0 || paramsAllProducts.brand_id) {
+  //     setBrand(allBrands?.find(item => item.id == paramsAllProducts.brand_id))
+  //   }
+  // }, [allBrands])
   useEffect(() => {
-    if (allBrands?.length > 0 || paramsAllProducts.brand_id) {
-      setBrand(allBrands?.find(item => item.id == paramsAllProducts.brand_id))
+    if (allBrands?.pages?.[0]?.data?.data?.length > 0 || paramsAllProducts.brand_id) {
+      setBrand(allBrands?.pages?.[0]?.data?.data?.find(item => item.id == paramsAllProducts.brand_id))
     }
-  }, [allBrands,])
+  }, [allBrands?.pages?.[0]?.data?.data])
+
   useEffect(() => {
     if (allCategories?.length > 0 || paramsAllProducts.brand_id) {
       setCategory(allCategories?.find(item => item.id == paramsAllProducts.category_id))
@@ -74,10 +81,7 @@ export default function Products() {
     (val) => setParamsAllProducts((old) => ({ ...old, page: 1, per_page: val })),
     [setParamsAllProducts]
   );
-  const handleFetchAllBrands = useCallback(
-    (val) => setParamsAllBrands((old) => ({ ...old, page: +old.page + 1, per_page: val })),
-    [setParamsAllBrands]
-  );
+
   const handelSearch = () => {
     setParamsAllProducts((old) => ({ ...old, page: 1, search: search }))
   }
@@ -137,14 +141,15 @@ export default function Products() {
         name: "total unit sold",
         value: "total_unit_sold",
         cellValue: (row) => {
-          return row?.total_unit_sold;
+          return <p className="text-right">{row?.total_unit_sold}</p>;
         },
       },
       {
         name: "total sales value ",
         value: "total_revenue",
         cellValue: (row) => {
-          return row?.total_revenue ? `SR ${row?.total_revenue}` : "-";
+          return <p className="text-right">{row?.total_revenue ? `SR ${row?.total_revenue}` : "-"}</p>;
+          ;
         },
       },
       {
@@ -245,23 +250,25 @@ export default function Products() {
               </form>
             </div>
             <div className=" md:flex items-center hidden gap-3">
-              {/* <BaseMenuInfiniteQuery
-                text={isLoadingAllBrands ? "Loading..." : "select brand"}
-                data={storeAllBrands}
+              <BaseMenuInfiniteQuery
+                text={statusAllBrands == "loading" ? "Loading..." : "select brand"}
+                // data={allBrands?.data || []}
+                data={allBrands?.pages?.[0]?.data?.data || []}
                 value={brand}
                 setValue={(item) => setBrand(item)}
-                isLoading={isLoadingAllBrands}
-                fetchData={handleFetchAllBrands}
-              // fetchNextPage={fetchNextPageAllBrands} hasNextPage={hasNextPageAllBrands} isFetchingNextPage={isFetchingNextPageAllBrands}
-              /> */}
-              <BaseMenu
+                isLoading={statusAllBrands == "loading"}
+                fetchNextPage={() => fetchNextPageAllBrands()}
+                hasNextPage={hasNextPageAllBrands}
+                isFetchingNextPage={isFetchingNextPageAllBrands}
+              />
+              {/* <BaseMenu
                 text={isLoadingAllBrands ? "Loading..." : "select brand"}
                 data={allBrands || []}
                 value={brand}
                 setValue={(item) => setBrand(item)}
                 isLoading={isLoadingAllBrands}
 
-              />
+              /> */}
               <BaseMenu
                 text={isLoadingAllCategories ? "Loading..." : "select category"}
                 data={allCategories || []}
@@ -276,14 +283,14 @@ export default function Products() {
         <div className="flex items-center gap-3 md:hidden">
           <div className="flex-1">
 
-            <BaseMenu
+            {/* <BaseMenu
               text={isLoadingAllBrands ? "Loading..." : "select brand"}
               data={allBrands || []}
               value={brand}
               setValue={(item) => setBrand(item)}
               isLoading={isLoadingAllBrands}
 
-            />
+            /> */}
 
           </div>
           <div className="flex-1">

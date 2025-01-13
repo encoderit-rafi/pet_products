@@ -14,11 +14,14 @@ export default function BaseMenuInfiniteQuery({
  className,
  errorText = "No data found",
  data, isLoading,
- fetchData
- //  fetchNextPage, hasNextPage, isFetchingNextPage
+ fetchNextPage, hasNextPage, isFetchingNextPage
 }) {
+ // console.log("data", data)
  const { isDark } = useTheme();
- const { ref, inView } = useInView();
+ const { ref, inView } = useInView({
+  threshold: 0,
+  // triggerOnce: true
+ });
 
  // Get brands data using the custom hook
  // const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetAllBrands();
@@ -31,7 +34,7 @@ export default function BaseMenuInfiniteQuery({
  // }, [inView, hasNextPage, fetchNextPage]);
  useEffect(() => {
   console.log("scroll last")
-  fetchData()
+  fetchNextPage()
  }, [inView]);
 
  // const items = data?.pages?.flatMap((page) => page) || []; // Flatten the paginated data
@@ -102,12 +105,14 @@ export default function BaseMenuInfiniteQuery({
       </div>
      </MenuItem>
     )} */}
-    <MenuItem ref={ref}>
-     <div className="text-center text-xs text-gray-500">
-      {/* {isFetchingNextPage ? "Loading more..." : "Load more..."} */}
-      Loading more...
-     </div>
-    </MenuItem>
+    {hasNextPage &&
+     <MenuItem ref={ref}>
+      <div className="text-center text-xs text-gray-500">
+       {/* {isFetchingNextPage ? "Loading more..." : "Load more..."} */}
+       Loading more...
+      </div>
+     </MenuItem>
+    }
 
    </MenuItems>
   </Menu>

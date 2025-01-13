@@ -20,11 +20,14 @@ export default function DialogLogout({ isOpenConfirmLogoutDialog, setIsOpenConfi
     <div className="flex items-center gap-4 mt-5">
      <BaseButton
       className="text-sm font-medium"
+      isDisabled={isLoadingLogOut}
       onClick={() => setIsOpenConfirmLogoutDialog(false)}
      >
       close
      </BaseButton>
      <BaseButton variant="gradient" className="text-sm font-medium"
+      isLoading={isLoadingLogOut}
+      isDisabled={isLoadingLogOut}
       onClick={logoutUser}
      >
       {/* <NavLink to="/login"> */}
