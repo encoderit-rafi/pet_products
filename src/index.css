@@ -208,7 +208,6 @@
   }
 }
 
-
 .react-datepicker__triangle {
   display: none;
 }
@@ -222,8 +221,6 @@
 .react-datepicker__navigation-icon--next::before {
   top: 30% !important;
 }
-
-
 
 /* .react-tel-input .flag-dropdown {
   position: relative;
