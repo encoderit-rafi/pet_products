@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 
 export const useGetSalesAndCitiesBarChart = () => {
   const [searchParams, setSearchParams] = useState({
-    range: "this_year",
+    range: "this_week",
     brand_id: "4",
   });
   const { data, isLoading } = useQuery({

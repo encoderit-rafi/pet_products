@@ -146,45 +146,9 @@
     }
   }
 
-  .recharts-text,
-  text {
-    @apply text-xs fill-custom_text_two;
-  }
 
-  .btn-contact {
-    @apply flex flex-col items-center gap-2 text-xs capitalize text-custom_text_six w-full font-light;
-  }
 
-  .base-input {
-    @apply border bg-transparent text-sm font-light !text-custom_text_two border-custom_line_seven rounded-md px-3 py-2 outline-none placeholder:capitalize placeholder:text-custom_text_two focus:border-custom_line_seven;
-  }
 
-  .recharts-rectangle.recharts-tooltip-cursor {
-    fill: transparent !important;
-  }
-
-  .react-datepicker {
-    @apply !font-poppins text-sm/6 !bg-custom_bg_one !rounded-lg !border-none transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 space-y-2 absolute z-50 p-1 lg:right-12 right-16;
-    /* background-color: var(--custom_bg_one) !important; */
-  }
-
-  .react-datepicker__header {
-    @apply !bg-custom_bg_one !font-poppins !pt-0;
-  }
-
-  .react-datepicker__current-month,
-  .react-datepicker__day-name,
-  .react-datepicker__day {
-    @apply !text-custom_text_two;
-  }
-
-  .react-datepicker__day--selected {
-    @apply !bg-[#f0f0f0] !text-[#21272b];
-  }
-
-  .react-datepicker__day:hover {
-    @apply !text-[#21272b];
-  }
 }
 
 @layer utilities {
@@ -206,6 +170,45 @@
   ::-webkit-scrollbar-thumb:hover {
     background-color: #555;
   }
+}
+
+.btn-contact {
+  @apply flex flex-col items-center gap-2 text-xs capitalize text-custom_text_six w-full font-light;
+}
+
+.base-input {
+  @apply border bg-transparent text-sm font-light !text-custom_text_two border-custom_line_seven rounded-md px-3 py-2 outline-none placeholder:capitalize placeholder:text-custom_text_two focus:border-custom_line_seven;
+}
+
+.recharts-text,
+text {
+  @apply text-xs fill-custom_text_two;
+}
+
+.recharts-rectangle.recharts-tooltip-cursor {
+  fill: transparent !important;
+}
+
+.react-datepicker {
+  @apply !font-poppins text-sm/6 !bg-custom_bg_one !rounded-lg !border-none transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 space-y-2 absolute z-50 p-1 lg:right-12 right-16;
+}
+
+.react-datepicker__header {
+  @apply !bg-custom_bg_one !font-poppins !pt-0;
+}
+
+.react-datepicker__current-month,
+.react-datepicker__day-name,
+.react-datepicker__day {
+  @apply !text-custom_text_two;
+}
+
+.react-datepicker__day--selected {
+  @apply !bg-[#f0f0f0] !text-[#21272b];
+}
+
+.react-datepicker__day:hover {
+  @apply !text-[#21272b];
 }
 
 .react-datepicker__triangle {

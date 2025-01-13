@@ -7,7 +7,7 @@ import { useSearchParams } from "react-router-dom";
 export const useGetAllBrands = () => {
   const [params, setParams] = useState({
     page: PAGINATION.page,
-    per_page: PAGINATION.per_page,
+    per_page: 1000,
     sort_by: "asc",
   });
 

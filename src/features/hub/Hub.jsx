@@ -217,12 +217,12 @@ export default function Hub() {
     <div className="p-1 overflow-x-hidden ">
       <div className="grid grid-cols-12 gap-6">
         {/* heading 1*/}
-        <div className="content-center col-span-8">
+        <div className="content-center col-span-12">
           <Title>Total Sales</Title>
         </div>
-        <div className="col-span-4">
+        {/* <div className="col-span-4">
           <InputSearch placeholder="search" />
-        </div>
+        </div> */}
         {/* charts 1*/}
         <div className="col-span-12 lg:col-span-8">
           <BorderBox>
@@ -235,10 +235,9 @@ export default function Hub() {
                   value={months}
                   setValue={setMonths}
                 />
-                <ExportButton />
               </div>
             </div>
-            <div className="h-72">{/* <BaseBarChart /> */}</div>
+            <div className="h-72"></div>
           </BorderBox>
         </div>
         <div className="col-span-12 lg:col-span-4">
@@ -295,7 +294,7 @@ export default function Hub() {
                   value={months}
                   setValue={setMonths}
                 />
-                <ExportButton />
+                {/* <ExportButton /> */}
               </div>
             </div>
             <div className="h-72">{/* <BaseBarChart /> */}</div>
@@ -325,7 +324,7 @@ export default function Hub() {
                   value={months}
                   setValue={setMonths}
                 />
-                <ExportButton />
+                {/* <ExportButton /> */}
               </div>
             </div>
             <div className="h-72">
@@ -334,11 +333,11 @@ export default function Hub() {
           </BorderBox>
         </div>
         {/* heading 3*/}
-        <div className="col-span-12">
+        {/* <div className="col-span-12">
           <Title>Marketing</Title>
-        </div>
+        </div> */}
         {/* charts 4*/}
-        <div className="col-span-12 lg:col-span-8">
+        {/* <div className="col-span-12 lg:col-span-8">
           <BorderBox>
             <div className="flex items-center justify-between mb-3">
               <SubTitle>Brand Marketing</SubTitle>
@@ -357,10 +356,10 @@ export default function Hub() {
                   value={months}
                   setValue={setMonths}
                 />
-                <ExportButton />
+                
               </div>
             </div>
-            <div className="h-72">{/* <BaseBarChart /> */}</div>
+            <div className="h-72"></div>
           </BorderBox>
         </div>
         <div className="col-span-12 lg:col-span-4">
@@ -375,7 +374,7 @@ export default function Hub() {
               <Table query={query} />
             </div>
           </BorderBox>
-        </div>
+        </div> */}
       </div>
     </div>
   );

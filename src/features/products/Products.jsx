@@ -23,23 +23,23 @@ import { useSearchParams } from "react-router-dom";
 
 export default function Products() {
   const [searchParams] = useSearchParams();
-  // const { data: allBrands, isLoading: isLoadingAllBrands, params: paramsAllBrands, setParams: setParamsAllBrands } = useGetAllBrands();
-  const [storeAllBrands, setStoreAllBrands] = useState([]);
-  const {
-    data: allBrands,
-    status: statusAllBrands,
-    hasNextPage: hasNextPageAllBrands,
-    fetchNextPage: fetchNextPageAllBrands,
-    isFetchingNextPage: isFetchingNextPageAllBrands,
-  } = useGetAllBrandsInfinite();
-  useEffect(() => {
-    if (allBrands?.pages?.length > 0) {
-      const modifyAll = allBrands?.pages.reduce((initial, page) => {
-        return [...initial, ...page.data];
-      }, []);
-      setStoreAllBrands(modifyAll);
-    }
-  }, [allBrands?.pages]);
+  const { data: allBrands, isLoading: isLoadingAllBrands, params: paramsAllBrands, setParams: setParamsAllBrands } = useGetAllBrands();
+  // const [storeAllBrands, setStoreAllBrands] = useState([]);
+  // const {
+  //   data: allBrands,
+  //   status: statusAllBrands,
+  //   hasNextPage: hasNextPageAllBrands,
+  //   fetchNextPage: fetchNextPageAllBrands,
+  //   isFetchingNextPage: isFetchingNextPageAllBrands,
+  // } = useGetAllBrandsInfinite();
+  // useEffect(() => {
+  //   if (allBrands?.pages?.length > 0) {
+  //     const modifyAll = allBrands?.pages.reduce((initial, page) => {
+  //       return [...initial, ...page.data];
+  //     }, []);
+  //     setStoreAllBrands(modifyAll);
+  //   }
+  // }, [allBrands?.pages]);
 
   const {
     data: allCategories,
@@ -73,27 +73,12 @@ export default function Products() {
     fetchAllProducts();
   }, [paramsAllProducts]);
 
-  // useEffect(() => {
-  //   if (allBrands?.length > 0 || paramsAllProducts.brand_id) {
-  //     setBrand(allBrands?.find(item => item.id == paramsAllProducts.brand_id))
-  //   }
-  // }, [allBrands])
-  // useEffect(() => {
-  //   if (allBrands?.pages?.[0]?.data?.length > 0 || paramsAllProducts.brand_id) {
-  //     setBrand(
-  //       allBrands?.pages?.[0]?.data?.find(
-  //         (item) => item.id == paramsAllProducts.brand_id
-  //       )
-  //     );
-  //   }
-  // }, [allBrands?.pages?.[0]]?.data);
   useEffect(() => {
-    if (storeAllBrands?.length > 0 || paramsAllProducts.brand_id) {
-      setBrand(
-        storeAllBrands?.find((item) => item.id == paramsAllProducts.brand_id)
-      );
+    if (allBrands?.length > 0 || paramsAllProducts.brand_id) {
+      setBrand(allBrands?.find(item => item.id == paramsAllProducts.brand_id))
     }
-  }, [storeAllBrands]);
+  }, [allBrands])
+
 
   useEffect(() => {
     if (allCategories?.length > 0 || paramsAllProducts.brand_id) {
@@ -109,7 +94,6 @@ export default function Products() {
         page: 1,
         per_page: old.per_page,
         brand_id: brand?.id,
-        brand_name: brand?.name,
       }));
     brand?.id && setParamsAllCategories({ brand_id: brand?.id });
     setCategory(null);
@@ -314,7 +298,7 @@ export default function Products() {
               </form>
             </div>
             <div className="items-center hidden gap-3 md:flex">
-              <BaseMenuInfiniteQuery
+              {/* <BaseMenuInfiniteQuery
                 text={
                   statusAllBrands == "loading" ? "Loading..." : "select brand"
                 }
@@ -327,15 +311,15 @@ export default function Products() {
                 fetchNextPage={() => fetchNextPageAllBrands()}
                 hasNextPage={hasNextPageAllBrands}
                 isFetchingNextPage={isFetchingNextPageAllBrands}
-              />
-              {/* <BaseMenu
+              /> */}
+              <BaseMenu
                 text={isLoadingAllBrands ? "Loading..." : "select brand"}
                 data={allBrands || []}
                 value={brand}
                 setValue={(item) => setBrand(item)}
                 isLoading={isLoadingAllBrands}
 
-              /> */}
+              />
               <BaseMenu
                 text={isLoadingAllCategories ? "Loading..." : "select category"}
                 data={allCategories || []}

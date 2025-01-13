@@ -31,7 +31,7 @@ export default function BarChartSalesVsCities() {
     searchParams,
     setSearchParams,
   } = useGetSalesAndCitiesBarChart();
-  const { data: dataBrands } = useGetAllBrands();
+  const { data: allBrands } = useGetAllBrands();
   const [brand, setBrand] = useState(null);
   useEffect(() => {
     setSearchParams((old) => ({ ...old, brand_id: brand?.id }));
@@ -45,13 +45,12 @@ export default function BarChartSalesVsCities() {
             <BaseMenu
               text="select brand"
               data={
-                dataBrands?.map((item) => ({
+                allBrands?.map((item) => ({
                   id: item.id,
                   name: item.name,
-                  value: item.id,
                 })) || []
               }
-              value={dataBrands?.find(
+              value={allBrands?.find(
                 (item) => item.id == searchParams.brand_id
               )}
               setValue={(item) => setBrand(item)}
@@ -64,7 +63,6 @@ export default function BarChartSalesVsCities() {
               setSearchParams((old) => ({ ...old, range: item.value }))
             }
           />
-          <ExportButton />
         </div>
       </div>
       <div className="h-72">
