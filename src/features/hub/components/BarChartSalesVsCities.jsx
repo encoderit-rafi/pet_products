@@ -9,62 +9,71 @@ import { ranges } from "@/consts";
 import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
 import BaseDropdown from "@/components/dropdowns/BaseDropdown";
 
-const brands = [
-  {
-    id: 1,
-    name: "brand 1",
-    value: "brand_1",
-  },
-  {
-    id: 2,
-    name: "brand 2",
-    value: "brand_2",
-  },
-  {
-    id: 3,
-    name: "brand 3",
-    value: "brand_3",
-  },
-];
+// const brands = [
+//   {
+//     id: 1,
+//     name: "brand 1",
+//     value: "brand_1",
+//   },
+//   {
+//     id: 2,
+//     name: "brand 2",
+//     value: "brand_2",
+//   },
+//   {
+//     id: 3,
+//     name: "brand 3",
+//     value: "brand_3",
+//   },
+// ];
 export default function BarChartSalesVsCities() {
   const {
     data: dataSalesAndCitiesBarChart,
     searchParams,
     setSearchParams,
   } = useGetSalesAndCitiesBarChart();
-  const { data: allBrands } = useGetAllBrands();
-  const [brand, setBrand] = useState(null);
+  const { data: allBrands, isLoading: isLoadingAllBrands } = useGetAllBrands();
+  const [brand, setBrand] = useState(() => allBrands);
+  const [range, setRange] = useState(() => ranges[0]);
   useEffect(() => {
     setSearchParams((old) => ({ ...old, brand_id: brand?.id }));
   }, [brand]);
+  // useEffect(() => {
+  //   allBrands && setBrand(allBrands[0]);
+  // }, [allBrands]);
   return (
     <BorderBox>
       <div className="flex items-center justify-between mb-3">
         <SubTitle>Sales vs Cities</SubTitle>
         <div className="flex items-center gap-3">
           <div className="hidden md:block">
-            <BaseMenu
-              text="select brand"
-              data={
-                allBrands?.map((item) => ({
-                  id: item.id,
-                  name: item.name,
-                })) || []
-              }
-              value={allBrands?.find(
-                (item) => item.id == searchParams.brand_id
-              )}
-              setValue={(item) => setBrand(item)}
+            <BaseDropdown
+              multiple
+              variant="rounded"
+              defaultText="select brand"
+              isLoading={isLoadingAllBrands}
+              options={allBrands || []}
+              selected={brand}
+              setSelected={(data) => {
+                setBrand((old) => {
+                  return old?.some((val) => val.id == data.id) ?
+                    old.filter(val => val.id != data.id) : [...old, data]
+                })
+
+              }}
             />
           </div>
-          {/* <BaseMenu
-            data={ranges}
-            value={ranges.find((item) => item.value == searchParams.range)}
-            setValue={(item) =>
-              setSearchParams((old) => ({ ...old, range: item.value }))
-            }
-          /> */}
-          <BaseDropdown options={ranges} variant="rounded" />
+
+          <BaseDropdown
+            variant="rounded"
+            options={ranges}
+            selected={[range]}
+            setSelected={(data) => {
+              data.id != range.id &&
+                setRange(data)
+
+            }}
+          />
         </div>
       </div>
       <div className="h-72">

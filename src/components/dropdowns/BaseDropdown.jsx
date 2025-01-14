@@ -16,29 +16,20 @@ import LoadingIcon from "@/assets/icons/LoadingIcon";
 const BaseDropdown = ({
   isLoading = false,
   options,
-  // selected,
-  // setSelected,
+  selected,
+  setSelected,
   className,
   variant = "base",
   defaultText = "select option",
   multiple = false,
-  showCloseButton = false,
-  toggleSelected = false,
 }) => {
   const { isDark } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState([]);
 
-  const toggleOption = (data) => {
-    setSelected((prev) =>
-      prev.some((item) => item.id == data.id)
-        ? prev.filter((item) => item.id !== data.id)
-        : [...prev, data]
-    );
+  function onClickHandler(data) {
+    setSelected(data)
+    !multiple && closeDropdown()
   };
-  // function openDropdown() {
-  //   setIsOpen(true);
-  // }
   function closeDropdown() {
     setIsOpen(false);
   }
@@ -47,13 +38,10 @@ const BaseDropdown = ({
     <div className="relative w-full">
       <Listbox
         as="div"
-        // value={selected}
         open={isOpen}
       >
         <ListboxButton
           className={cn(
-            // "relative w-full text-left base-input",
-
             "flex items-center justify-between gap-2 !py-2 focus:outline-none data-[focus]:outline-none data-[focus]:-outline-offset-none",
             {
               "cursor-wait": isLoading,
@@ -66,11 +54,12 @@ const BaseDropdown = ({
           onClick={() => setIsOpen((prev) => !prev)}
         >
           <span className="leading-none ">
-            {multiple && selected?.length > 0
+            {!isLoading && multiple && selected?.length > 0
               ? `Selected (${selected?.length})`
-              : !multiple && selected?.name
-              ? selected.name
-              : defaultText}
+              : !isLoading && !multiple && selected?.length > 0
+                ? selected[0]?.name
+                : defaultText}
+
           </span>
           <div className="flex items-center justify-center size-3 text-custom_line_two">
             {isLoading ? <LoadingIcon /> : <DownIcon />}
@@ -87,17 +76,8 @@ const BaseDropdown = ({
           <ListboxOptions
             static
             anchor="bottom end"
-            // className={cn(
-            //   "z-[60] h-40 origin-top-right rounded-lg mt-2 p-2 text-sm/6  transition duration-200 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 space-y-2",
-            //   {
-            //     "w-[var(--button-width)]": variant == "base",
-            //     "w-56": variant == "rounded",
-            //     "bg-[#21272b]": isDark,
-            //     "bg-[#f8f8f8]": !isDark,
-            //   }
-            // )}
             className={cn(
-              "z-[60] mt-1 space-y-1 rounded-xl p-1 [--anchor-gap:var(--spacing-1)] focus:outline-none transition duration-200 ease-in data-[leave]:data-[closed]:opacity-0",
+              "z-[60] mt-1 space-y-1 rounded-xl p-1 [--anchor-gap:var(--spacing-1)] focus:outline-none transition duration-200 ease-in data-[leave]:data-[closed]:opacity-0 shadow-lg",
               {
                 "w-[var(--button-width)]": variant == "base",
                 "w-56": variant == "rounded",
@@ -108,45 +88,29 @@ const BaseDropdown = ({
           >
             {options?.map((option) => (
               <ListboxOption
-                key={option.id}
-                value={option.id}
-                // className={cn(
-                //   "group text-xs transition-all duration-300  hover:pl-5 capitalize flex w-full items-center gap-2 rounded-lg py-1.5 px-3 cursor-pointer",
-                //   {
-                //     "text-white": isDark,
-                //     "text-black": !isDark,
-                //     "data-[focus]:bg-[#313639]": isDark,
-                //     "data-[focus]:bg-[#ffffff]": !isDark,
-                //     // "bg-[#ffffff] ": !isDark && item.id == selected?.id,
-                //     // "bg-[#313639]": isDark && item.id == selected?.id,
-                //     // "bg-[#ffffff] ": !isDark && item.id == selected?.id,
-                //     // "bg-[#313639]": isDark && item.id == selected?.id,
-                //   }
-                // )}
+                key={option?.id}
+                value={option?.id}
                 className={cn(
                   "group text-xs cursor-pointer transition-all duration-300  capitalize  w-full flex justify-between items-center gap-2 rounded-lg py-1.5 px-3 hover:px-4",
                   {
                     "text-white": isDark,
                     "text-black": !isDark,
-                    "data-[focus]:bg-[#313639]": isDark,
-                    "data-[focus]:bg-[#ffffff]": !isDark,
-                    // "bg-[#ffffff] pl-5":
-                    //   !isDark &&
-                    //   selectedOptions.some((select) => select.id == option.id),
-                    // "bg-[#313639] pl-5":
-                    //   isDark &&
-                    //   selectedOptions.some((select) => select.id == option.id),
+                    "hover:bg-[#313639]": isDark,
+                    "hover:bg-[#ffffff]": !isDark,
+                    "bg-[#ffffff]":
+                      !isDark &&
+                      selected?.some((select) => select?.id == option?.id),
+                    "bg-[#313639]":
+                      isDark &&
+                      selected?.some((select) => select?.id == option?.id),
                   }
                 )}
-                onClick={() => toggleOption(option)}
+                onClick={() => onClickHandler(option)}
               >
-                {/* {((multiple &&
-                  selected.some((select) => select?.id == option?.id)) ||
-                  selected?.id == option?.id) && (
-                  <CheckIcon className="size-4" />
-                )} */}
                 <span>{option.name}</span>
-                {/* <CheckIcon className="invisible transition-all duration-500 scale-90 opacity-0 group-hover:opacity-100 group-hover:visible group-hover:scale-100 size-4" /> */}
+                <CheckIcon className={cn("invisible transition-all duration-500 scale-90 opacity-0 size-3 text-[#74b222]", {
+                  "opacity-100 visible scale-100 ": selected?.some((select) => select?.id == option?.id)
+                })} />
               </ListboxOption>
             ))}
           </ListboxOptions>
