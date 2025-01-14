@@ -44,12 +44,12 @@ const MultiSelectListbox = ({
         as="div"
         value={selectedOptions}
         open={isOpen}
-        onChange={() => { }}
+        onChange={() => {}}
       >
         <ListboxButton
           className={cn(
             "relative w-full text-left base-input",
-            "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25",
+            "focus:outline-none data-[focus]:outline-none data-[focus]:-outline-offset-2 data-[focus]:outline-white/25",
             className
           )}
           onClick={() => setIsOpen((prev) => !prev)}

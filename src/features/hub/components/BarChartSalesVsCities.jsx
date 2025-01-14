@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import { useGetSalesAndCitiesBarChart } from "../api/queries/sales_and_cities/useGetSalesAndCitiesBarChart";
 import { ranges } from "@/consts";
 import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
+import BaseDropdown from "@/components/dropdowns/BaseDropdown";
 
 const brands = [
   {
@@ -56,13 +57,14 @@ export default function BarChartSalesVsCities() {
               setValue={(item) => setBrand(item)}
             />
           </div>
-          <BaseMenu
+          {/* <BaseMenu
             data={ranges}
             value={ranges.find((item) => item.value == searchParams.range)}
             setValue={(item) =>
               setSearchParams((old) => ({ ...old, range: item.value }))
             }
-          />
+          /> */}
+          <BaseDropdown options={ranges} variant="rounded" />
         </div>
       </div>
       <div className="h-72">

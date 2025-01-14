@@ -10,6 +10,7 @@ import BaseMenu from "@/components/menus/BaseMenu";
 import { useState } from "react";
 import Table from "@/components/tables/Table";
 import PlaceholderImage from "@/components/placeholders/PlaceholderImage";
+import { ranges } from "@/consts";
 
 import BarChartSalesVsCities from "./components/BarChartSalesVsCities";
 const demoData = [
