@@ -31,9 +31,9 @@ export default function SalesVsCities() {
   useEffect(() => {
     fetch();
   }, [params]);
-  useEffect(() => {
-    allBrands?.length > 0 && setBrands(allBrands);
-  }, [allBrands]);
+  // useEffect(() => {
+  //   allBrands?.length > 0 && setBrands(allBrands);
+  // }, [allBrands]);
   return (
     <BorderBox>
       <div className="flex items-center justify-between mb-3">
@@ -71,8 +71,7 @@ export default function SalesVsCities() {
         <BaseBarChart
           xAxisDataKey="city"
           barDataKey="total_revenue"
-          tooltipDataKey="units_sold"
-          tooltipLabel="units sold:"
+          tooltipDataKey="total_revenue"
           data={data?.data?.bar_chart_data || []} //🚧 issues remove slice(1,7)
         />
       </div>

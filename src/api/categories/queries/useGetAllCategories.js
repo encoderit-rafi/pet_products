@@ -6,14 +6,15 @@ import { useSearchParams } from "react-router-dom";
 export const useGetAllCategories = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [params, setParams] = useState({
-    brand_id: '',
+    brand_id: "",
   });
   const { data, isLoading, refetch } = useQuery({
     queryKey: [`get-all-categories-brand_id_${params.brand_id}`],
     retry: false,
     keepPreviousData: false,
     enabled: !!params.brand_id,
-    staleTime: 1000 * 60 * 10,
+    staleTime: 1000 * 60 * 60,
+    cacheTime: 1000 * 60 * 60,
     queryFn: async () => {
       return (await Axios.get("/categories", { params: params })).data;
     },

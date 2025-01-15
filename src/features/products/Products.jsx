@@ -13,13 +13,10 @@ import PlaceholderImage from "@/components/placeholders/PlaceholderImage";
 import { useGetAllProducts } from "./api/queries/useGetAllProducts";
 // import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
 import { useGetAllCategories } from "@/api/categories/queries/useGetAllCategories";
-import BaseMenuInfiniteQuery from "@/components/menus/BaseMenuInfiniteQuery";
-import {
-  useGetAllBrands,
-  useGetAllBrandsInfinite,
-} from "@/api/brands/queries/useGetAllBrands";
+import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
 // import { useSearchParam } from "react-use";
 import { useSearchParams } from "react-router-dom";
+import BaseDropdown from "@/components/dropdowns/BaseDropdown";
 
 export default function Products() {
   const [searchParams] = useSearchParams();
@@ -288,33 +285,25 @@ export default function Products() {
               </form>
             </div>
             <div className="items-center hidden gap-3 md:flex">
-              {/* <BaseMenuInfiniteQuery
-                text={
-                  statusAllBrands == "loading" ? "Loading..." : "select brand"
-                }
-                // data={allBrands?.data || []}
-                // data={allBrands?.pages?.[0]?.data || []}
-                data={storeAllBrands || []}
-                value={brand}
-                setValue={(item) => setBrand(item)}
-                isLoading={statusAllBrands == "loading"}
-                fetchNextPage={() => fetchNextPageAllBrands()}
-                hasNextPage={hasNextPageAllBrands}
-                isFetchingNextPage={isFetchingNextPageAllBrands}
-              /> */}
-              <BaseMenu
-                text={isLoadingAllBrands ? "Loading..." : "select brand"}
-                data={allBrands || []}
-                value={brand}
-                setValue={(item) => setBrand(item)}
+              <BaseDropdown
+                variant="rounded"
+                defaultText="select brand"
                 isLoading={isLoadingAllBrands}
+                options={allBrands || []}
+                selected={[brand]}
+                setSelected={(data) => {
+                  data?.id != brand?.id && setBrand(data);
+                }}
               />
-              <BaseMenu
-                text={isLoadingAllCategories ? "Loading..." : "select category"}
-                data={allCategories || []}
-                value={category}
-                setValue={(item) => setCategory(item)}
+              <BaseDropdown
+                variant="rounded"
+                defaultText="select category"
                 isLoading={isLoadingAllCategories}
+                options={allCategories || []}
+                selected={[category]}
+                setSelected={(data) => {
+                  data?.id != category?.id && setCategory(data);
+                }}
                 errorText={
                   brand?.id ? "No Category Found" : "Select a Brand First"
                 }
@@ -324,14 +313,29 @@ export default function Products() {
         </div>
         <div className="flex items-center gap-3 md:hidden">
           <div className="flex-1">
-            {/* <BaseMenu
-              text={isLoadingAllBrands ? "Loading..." : "select brand"}
-              data={allBrands || []}
-              value={brand}
-              setValue={(item) => setBrand(item)}
+            <BaseDropdown
+              variant="rounded"
+              defaultText="select brand"
               isLoading={isLoadingAllBrands}
-
-            /> */}
+              options={allBrands || []}
+              selected={[brand]}
+              setSelected={(data) => {
+                data?.id != brand?.id && setBrand(data);
+              }}
+            />
+            <BaseDropdown
+              variant="rounded"
+              defaultText="select category"
+              isLoading={isLoadingAllCategories}
+              options={allCategories || []}
+              selected={[category]}
+              setSelected={(data) => {
+                data?.id != category?.id && setCategory(data);
+              }}
+              errorText={
+                brand?.id ? "No Category Found" : "Select a Brand First"
+              }
+            />
           </div>
           <div className="flex-1">
             <BaseMenu

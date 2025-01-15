@@ -14,13 +14,11 @@ import PlaceholderImage from "@/components/placeholders/PlaceholderImage";
 // import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
 import { useGetAllCategories } from "@/api/categories/queries/useGetAllCategories";
 import BaseMenuInfiniteQuery from "@/components/menus/BaseMenuInfiniteQuery";
-import {
-  useGetAllBrands,
-  useGetAllBrandsInfinite,
-} from "@/api/brands/queries/useGetAllBrands";
+import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
 // import { useSearchParam } from "react-use";
 import { useSearchParams } from "react-router-dom";
 import { useGetAllProducts } from "@/features/products/api/queries/useGetAllProducts";
+import BaseDropdown from "@/components/dropdowns/BaseDropdown";
 
 export default function TotalInventory() {
   const [searchParams] = useSearchParams();
@@ -269,7 +267,8 @@ export default function TotalInventory() {
   };
 
   return (
-    <div className="flex flex-col h-full gap-4 overflow-hidden">
+    // <div className="flex flex-col h-full gap-4 overflow-hidden">
+    <BorderBox>
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
           <Title onClick={() => setIsOpenDrawer(true)}>Total Inventory </Title>
@@ -289,28 +288,30 @@ export default function TotalInventory() {
               </form>
             </div>
             <div className="items-center hidden gap-3 md:flex">
-              {/* <BaseMenuInfiniteQuery
-                text={
-                  statusAllBrands == "loading" ? "Loading..." : "select brand"
-                }
-                // data={allBrands?.data || []}
-                // data={allBrands?.pages?.[0]?.data || []}
-                data={storeAllBrands || []}
-                value={brand}
-                setValue={(item) => setBrand(item)}
-                isLoading={statusAllBrands == "loading"}
-                fetchNextPage={() => fetchNextPageAllBrands()}
-                hasNextPage={hasNextPageAllBrands}
-                isFetchingNextPage={isFetchingNextPageAllBrands}
-              /> */}
-              <BaseMenu
-                text={isLoadingAllBrands ? "Loading..." : "select brand"}
-                data={allBrands || []}
-                value={brand}
-                setValue={(item) => setBrand(item)}
+              <BaseDropdown
+                variant="rounded"
+                defaultText="select brand"
                 isLoading={isLoadingAllBrands}
+                options={allBrands || []}
+                selected={[brand]}
+                setSelected={(data) => {
+                  data?.id != brand?.id && setBrand(data);
+                }}
               />
-              <BaseMenu
+              <BaseDropdown
+                variant="rounded"
+                defaultText="select category"
+                isLoading={isLoadingAllCategories}
+                options={allCategories || []}
+                selected={[category]}
+                setSelected={(data) => {
+                  data?.id != category?.id && setCategory(data);
+                }}
+                errorText={
+                  brand?.id ? "No Category Found" : "Select a Brand First"
+                }
+              />
+              {/* <BaseMenu
                 text={isLoadingAllCategories ? "Loading..." : "select category"}
                 data={allCategories || []}
                 value={category}
@@ -319,21 +320,12 @@ export default function TotalInventory() {
                 errorText={
                   brand?.id ? "No Category Found" : "Select a Brand First"
                 }
-              />
+              /> */}
             </div>
           </div>
         </div>
         <div className="flex items-center gap-3 md:hidden">
-          <div className="flex-1">
-            {/* <BaseMenu
-              text={isLoadingAllBrands ? "Loading..." : "select brand"}
-              data={allBrands || []}
-              value={brand}
-              setValue={(item) => setBrand(item)}
-              isLoading={isLoadingAllBrands}
-
-            /> */}
-          </div>
+          <div className="flex-1"></div>
           <div className="flex-1">
             <BaseMenu
               text={isLoadingAllCategories ? "Loading..." : "select category"}
@@ -349,17 +341,15 @@ export default function TotalInventory() {
         </div>
       </div>
       <div className="flex-1 overflow-auto">
-        <BorderBox>
-          {isLoadingAllProducts || isFetchingAllProducts ? (
-            <Table query={queryProductsLoading} />
-          ) : allProducts?.total > 0 ? (
-            <Table
-              query={{ ...queryProducts, data: allProducts?.data || [] }}
-            />
-          ) : (
-            <h5 className="text-xl text-center text-red-500">No data found</h5>
-          )}
-        </BorderBox>
+        {/* <BorderBox> */}
+        {isLoadingAllProducts || isFetchingAllProducts ? (
+          <Table query={queryProductsLoading} />
+        ) : allProducts?.total > 0 ? (
+          <Table query={{ ...queryProducts, data: allProducts?.data || [] }} />
+        ) : (
+          <h5 className="text-xl text-center text-red-500">No data found</h5>
+        )}
+        {/* </BorderBox> */}
       </div>
       {allProducts?.total > 0 && (
         <Pagination
@@ -372,6 +362,7 @@ export default function TotalInventory() {
           onPerPageChange={handlePerPageChange}
         />
       )}
-    </div>
+    </BorderBox>
+    // </div>
   );
 }

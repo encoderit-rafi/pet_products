@@ -6,23 +6,46 @@ import SubTitle from "@/components/texts/SubTitle";
 import BaseBarChart from "@/components/charts/BaseBarChart";
 import BaseDropdown from "@/components/dropdowns/BaseDropdown";
 import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
+import { useBrandsBarChart } from "../api/queries/brands/useBrandsBarChart";
 
 export default function BrandsChart() {
+  const {
+    data: brandsBarChart,
+    status: statusBrandsBarChart,
+    params: paramsBrandsBarChart,
+    refetch: fetchBrandsBarChart,
+    setParams: setParamsBrandsBarChart,
+  } = useBrandsBarChart();
   const { data: allBrands, isLoading: isLoadingAllBrands } = useGetAllBrands();
   const [brands, setBrands] = useState([]);
   const [range, setRange] = useState(() => ranges[0]);
-  // useEffect(() => {
-  //  brands?.length > 0 && range.value && setParams({
-  //   brand_id: brands.map(item => item.id),
-  //   range: range.value,
-  //  });
-  // }, [brands, range]);
-  // useEffect(() => {
-  //  fetch();
-  // }, [params]);
+
   useEffect(() => {
-    allBrands?.length > 0 && setBrands(allBrands);
-  }, [allBrands]);
+    brands?.length > 0 &&
+      range.value &&
+      setParamsBrandsBarChart({
+        brand_id: brands.map((item) => item.id),
+        range: range.value,
+      });
+  }, [brands, range]);
+
+  useEffect(() => {
+    console.log(
+      "✅ ~ file: BrandsChart.jsx:35 ~ useEffect ~ brandsBarChart:",
+      brandsBarChart
+    );
+  }, [brandsBarChart]);
+  useEffect(() => {
+    fetchBrandsBarChart();
+  }, []);
+
+  useEffect(() => {
+    fetchBrandsBarChart();
+  }, [paramsBrandsBarChart]);
+
+  // useEffect(() => {
+  //   allBrands?.length > 0 && setBrands(allBrands);
+  // }, [allBrands]);
   return (
     <BorderBox>
       <div className="flex items-center justify-between mb-3">
@@ -45,7 +68,6 @@ export default function BrandsChart() {
               }}
             />
           </div>
-
           <BaseDropdown
             variant="rounded"
             options={ranges}
@@ -58,12 +80,12 @@ export default function BrandsChart() {
       </div>
       <div className="h-72">
         <BaseBarChart
-          xAxisDataKey="city"
+          xAxisDataKey="name"
           barDataKey="total_revenue"
-          tooltipDataKey="units_sold"
+          tooltipDataKey="total_revenue"
           tooltipLabel="units sold:"
-          // data={data?.data?.bar_chart_data || []} //🚧 issues remove slice(1,7)
-          data={[]}
+          data={brandsBarChart?.bar_chart_data || []}
+          // data={[]}
         />
       </div>
     </BorderBox>

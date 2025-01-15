@@ -21,25 +21,23 @@ const BaseDropdown = ({
   className,
   variant = "base",
   defaultText = "select option",
+  errorText = "No data found",
   multiple = false,
 }) => {
   const { isDark } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
 
   function onClickHandler(data) {
-    setSelected(data)
-    !multiple && closeDropdown()
-  };
+    setSelected(data);
+    !multiple && closeDropdown();
+  }
   function closeDropdown() {
     setIsOpen(false);
   }
 
   return (
     <div className="relative">
-      <Listbox
-        as="div"
-        open={isOpen}
-      >
+      <Listbox as="div" open={isOpen}>
         <ListboxButton
           className={cn(
             "flex items-center justify-between gap-2 !py-2 focus:outline-none data-[focus]:outline-none data-[focus]:-outline-offset-none",
@@ -53,14 +51,21 @@ const BaseDropdown = ({
           disabled={isLoading}
           onClick={() => setIsOpen((prev) => !prev)}
         >
-          <span className="leading-none ">
+          {/* <span className="leading-none ">
             {!isLoading && multiple && selected?.length > 0
               ? `Selected (${selected?.length})`
               : !isLoading && !multiple && selected?.length > 0
-                ? selected[0]?.name
-                : defaultText}
-
+              ? selected[0]?.name
+              : defaultText}
+          </span> */}
+          <span className="leading-none">
+            {isLoading
+              ? defaultText
+              : multiple && selected?.length > 0
+              ? `Selected (${selected.length})`
+              : selected?.[0]?.name || defaultText}
           </span>
+
           <div className="flex items-center justify-center size-3 text-custom_line_two">
             {isLoading ? <LoadingIcon /> : <DownIcon />}
           </div>
@@ -86,10 +91,43 @@ const BaseDropdown = ({
               }
             )}
           >
-            {options?.map((option) => (
+            {options?.length > 0 ? (
+              options?.map((option) => (
+                <ListboxOption
+                  key={option?.id}
+                  value={option?.id}
+                  className={cn(
+                    "group text-xs cursor-pointer transition-all duration-300  capitalize  w-full flex justify-between items-center gap-2 rounded-lg py-1.5 px-3 hover:px-4",
+                    {
+                      "text-white": isDark,
+                      "text-black": !isDark,
+                      "hover:bg-[#313639]": isDark,
+                      "hover:bg-[#ffffff]": !isDark,
+                      "bg-[#ffffff]":
+                        !isDark &&
+                        selected?.some((select) => select?.id == option?.id),
+                      "bg-[#313639]":
+                        isDark &&
+                        selected?.some((select) => select?.id == option?.id),
+                    }
+                  )}
+                  onClick={() => onClickHandler(option)}
+                >
+                  <span>{option.name}</span>
+                  <CheckIcon
+                    className={cn(
+                      "invisible transition-all duration-500 scale-90 opacity-0 size-3 text-[#74b222]",
+                      {
+                        "opacity-100 visible scale-100 ": selected?.some(
+                          (select) => select?.id == option?.id
+                        ),
+                      }
+                    )}
+                  />
+                </ListboxOption>
+              ))
+            ) : (
               <ListboxOption
-                key={option?.id}
-                value={option?.id}
                 className={cn(
                   "group text-xs cursor-pointer transition-all duration-300  capitalize  w-full flex justify-between items-center gap-2 rounded-lg py-1.5 px-3 hover:px-4",
                   {
@@ -97,22 +135,13 @@ const BaseDropdown = ({
                     "text-black": !isDark,
                     "hover:bg-[#313639]": isDark,
                     "hover:bg-[#ffffff]": !isDark,
-                    "bg-[#ffffff]":
-                      !isDark &&
-                      selected?.some((select) => select?.id == option?.id),
-                    "bg-[#313639]":
-                      isDark &&
-                      selected?.some((select) => select?.id == option?.id),
                   }
                 )}
-                onClick={() => onClickHandler(option)}
               >
-                <span>{option.name}</span>
-                <CheckIcon className={cn("invisible transition-all duration-500 scale-90 opacity-0 size-3 text-[#74b222]", {
-                  "opacity-100 visible scale-100 ": selected?.some((select) => select?.id == option?.id)
-                })} />
+                <span className="text-red-500">{errorText}</span>
               </ListboxOption>
-            ))}
+              // <span className="text-red-500">{errorText}</span>
+            )}
           </ListboxOptions>
         </Transition>
       </Listbox>

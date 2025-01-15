@@ -9,19 +9,23 @@ export const useGetSalesAndCitiesBarChart = () => {
   });
   const { data, status, refetch } = useQuery({
     queryKey: [
-      `get-sales-and-cities-bar-chart-brand_id_${params.brand_id}-range_${params.range}`
+      `get-sales-and-cities-bar-chart-brand_id_${params.brand_id}-range_${params.range}`,
     ],
     enabled: false,
     retry: false,
     keepPreviousData: false,
     queryFn: async () => {
       return (
-        await Axios.get("/distributions/barchart", { params })
-      ).data;
+        // await Axios.get("/distributions/barchart", { params })
+        (await Axios.get("/analytic/brands/citychart", { params })).data
+      );
     },
   });
   return {
-    data, status, refetch,
-    params, setParams
+    data,
+    status,
+    refetch,
+    params,
+    setParams,
   };
 };
