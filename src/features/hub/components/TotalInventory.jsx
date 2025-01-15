@@ -10,7 +10,7 @@ import BorderBox from "@/components/box/BorderBox";
 import InputSearch from "@/components/inputs/InputSearch";
 import PlaceholderImage from "@/components/placeholders/PlaceholderImage";
 
-import { useGetAllProducts } from "./api/queries/useGetAllProducts";
+// import { useGetAllProducts } from "./api/queries/useGetAllProducts";
 // import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
 import { useGetAllCategories } from "@/api/categories/queries/useGetAllCategories";
 import BaseMenuInfiniteQuery from "@/components/menus/BaseMenuInfiniteQuery";
@@ -20,8 +20,9 @@ import {
 } from "@/api/brands/queries/useGetAllBrands";
 // import { useSearchParam } from "react-use";
 import { useSearchParams } from "react-router-dom";
+import { useGetAllProducts } from "@/features/products/api/queries/useGetAllProducts";
 
-export default function Products() {
+export default function TotalInventory() {
   const [searchParams] = useSearchParams();
   const {
     data: allBrands,
@@ -271,7 +272,7 @@ export default function Products() {
     <div className="flex flex-col h-full gap-4 overflow-hidden">
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
-          <Title onClick={() => setIsOpenDrawer(true)}>dashboard </Title>
+          <Title onClick={() => setIsOpenDrawer(true)}>Total Inventory </Title>
           <div className="flex items-start gap-3 lg:items-center">
             <div className="w-[150px] lg:w-[111px]">
               <form

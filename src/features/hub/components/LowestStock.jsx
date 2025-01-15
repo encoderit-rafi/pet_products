@@ -1,10 +1,10 @@
+import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
 import BorderBox from "@/components/box/BorderBox";
 import BaseDropdown from "@/components/dropdowns/BaseDropdown";
-import InputSearch from "@/components/inputs/InputSearch";
 import Table from "@/components/tables/Table";
 import SubTitle from "@/components/texts/SubTitle";
 import { ranges } from "@/consts";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 const demoData = [
   {
     id: 1,
@@ -101,15 +101,42 @@ const query = {
   isLoading: false,
   data: demoData,
 };
-export default function TopClients() {
+export default function LowestStock() {
+  const { data: allBrands, isLoading: isLoadingAllBrands } = useGetAllBrands();
+  const [brands, setBrands] = useState([]);
   const [range, setRange] = useState(() => ranges[0]);
-
+  // useEffect(() => {
+  //   brands?.length > 0 && range.value && setParams({
+  //     brand_id: brands.map(item => item.id),
+  //     range: range.value,
+  //   });
+  // }, [brands, range]);
+  // useEffect(() => {
+  //   fetch();
+  // }, [params]);
+  useEffect(() => {
+    allBrands?.length > 0 && setBrands(allBrands);
+  }, [allBrands]);
   return (
     <BorderBox>
       <div className="flex items-center justify-between">
-        <SubTitle>Top Clients</SubTitle>
+        <SubTitle>Lowest Stock</SubTitle>
         <div className="flex items-center gap-1">
-          <InputSearch className="w-20 ml-auto" />
+          <BaseDropdown
+            multiple
+            variant="rounded"
+            defaultText="select brands"
+            isLoading={isLoadingAllBrands}
+            options={allBrands || []}
+            selected={brands}
+            setSelected={(data) => {
+              setBrands((old) => {
+                return old?.some((val) => val?.id == data?.id)
+                  ? old.filter((val) => val.id != data.id)
+                  : [...old, data];
+              });
+            }}
+          />
           <BaseDropdown
             variant="rounded"
             options={ranges}

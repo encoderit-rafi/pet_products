@@ -15,6 +15,9 @@ import { ranges } from "@/consts";
 import SalesVsCities from "./components/SalesVsCities";
 import TopClients from "./components/TopClients";
 import BrandsChart from "./components/BrandsChart";
+import BrandsInventory from "./components/BrandsInventory";
+import LowestStock from "./components/LowestStock";
+import TotalInventory from "./components/TotalInventory";
 const demoData = [
   {
     id: 1,
@@ -289,7 +292,7 @@ export default function Hub() {
         </div>
         {/* charts 3*/}
         <div className="col-span-12 lg:col-span-8">
-          <BorderBox>
+          {/* <BorderBox>
             <div className="flex items-center justify-between mb-3">
               <SubTitle>Brands Inventory</SubTitle>
               <div className="flex items-center gap-3">
@@ -299,14 +302,15 @@ export default function Hub() {
                   value={months}
                   setValue={setMonths}
                 />
-                {/* <ExportButton /> */}
+                
               </div>
             </div>
-            <div className="h-72">{/* <BaseBarChart /> */}</div>
-          </BorderBox>
+            <div className="h-72"></div>
+          </BorderBox> */}
+          <BrandsInventory />
         </div>
         <div className="col-span-12 lg:col-span-4">
-          <BorderBox>
+          {/* <BorderBox>
             <div className="flex items-center justify-between">
               <SubTitle>Lowest Stock</SubTitle>
               <div className="flex items-center gap-3">
@@ -316,10 +320,11 @@ export default function Hub() {
             <div className="h-72">
               <Table query={query} />
             </div>
-          </BorderBox>
+          </BorderBox> */}
+          <LowestStock />
         </div>
         <div className="col-span-12">
-          <BorderBox>
+          {/* <BorderBox>
             <div className="flex items-center justify-between">
               <SubTitle>Total Inventory</SubTitle>
               <div className="flex items-center gap-3">
@@ -329,13 +334,14 @@ export default function Hub() {
                   value={months}
                   setValue={setMonths}
                 />
-                {/* <ExportButton /> */}
+                
               </div>
             </div>
             <div className="h-72">
               <Table query={query1} />
             </div>
-          </BorderBox>
+          </BorderBox> */}
+          <TotalInventory />
         </div>
         {/* heading 3*/}
         {/* <div className="col-span-12">
