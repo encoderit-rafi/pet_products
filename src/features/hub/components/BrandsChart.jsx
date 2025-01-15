@@ -78,7 +78,7 @@ export default function BrandsChart() {
           />
         </div>
       </div>
-      <div className="h-72">
+      <div className="overflow-x-auto overflow-y-auto h-72">
         <BaseBarChart
           xAxisDataKey="name"
           barDataKey="total_revenue"

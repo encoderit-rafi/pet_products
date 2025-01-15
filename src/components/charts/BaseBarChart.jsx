@@ -92,14 +92,22 @@ export default function BaseBarChart({
   // data,xAxisDataKey.barDataKey,tooltipDataKey
   const { width } = useWindowSize();
   return (
-    <ResponsiveContainer width="100%" height="100%">
+    <ResponsiveContainer
+      width={1200}
+      // height={200}
+      style={{
+        // minWidth: "1000px",
+        overflow: "auto",
+      }}
+    >
       <BarChart
         // width={600}
-        // height={300}
+        // height={200}
         data={data}
-        // margin={{
-        //   bottom: 30,
-        // }}
+        margin={{
+          left: 30,
+          bottom: 30,
+        }}
       >
         <defs>
           {/* SVG Filter for Glow Effect */}
@@ -137,10 +145,16 @@ export default function BaseBarChart({
           dataKey={xAxisDataKey}
           axisLine={false}
           tickLine={false}
-          tick={<CustomTick />}
+          // tick={<CustomTick />}
         />
+
         {width > 640 && (
-          <YAxis axisLine={false} tickLine={false} className="text-sm" />
+          <YAxis
+            axisLine={false}
+            tickLine={false}
+            className="text-sm"
+            domain={[10000, 30000000]}
+          />
         )}
         <Tooltip content={<CustomTooltip tooltipDataKey={tooltipDataKey} />} />
         <Bar
@@ -150,6 +164,7 @@ export default function BaseBarChart({
           barSize={30}
           activeBar={<GlowingRectangle fill="#F6682B" />}
           style={{ background: "transparent" }}
+          // minPointSize={1}
         />
       </BarChart>
     </ResponsiveContainer>
