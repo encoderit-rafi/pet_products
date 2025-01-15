@@ -1,46 +1,38 @@
-import BorderBox from "@/components/box/BorderBox";
-import ExportButton from "@/components/buttons/ExportButton";
-import BaseBarChart from "@/components/charts/BaseBarChart";
-import BaseMenu from "@/components/menus/BaseMenu";
-import SubTitle from "@/components/texts/SubTitle";
-import React, { useEffect, useState } from "react";
-import { useGetSalesAndCitiesBarChart } from "../api/queries/sales_and_cities/useGetSalesAndCitiesBarChart";
+import { useEffect, useState } from "react";
 import { ranges } from "@/consts";
-import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
+
+import BorderBox from "@/components/box/BorderBox";
+import SubTitle from "@/components/texts/SubTitle";
+import BaseBarChart from "@/components/charts/BaseBarChart";
 import BaseDropdown from "@/components/dropdowns/BaseDropdown";
 
-// const brands = [
-//   {
-//     id: 1,
-//     name: "brand 1",
-//     value: "brand_1",
-//   },
-//   {
-//     id: 2,
-//     name: "brand 2",
-//     value: "brand_2",
-//   },
-//   {
-//     id: 3,
-//     name: "brand 3",
-//     value: "brand_3",
-//   },
-// ];
-export default function BarChartSalesVsCities() {
+import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
+import { useGetSalesAndCitiesBarChart } from "../api/queries/sales_and_cities/useGetSalesAndCitiesBarChart";
+
+export default function SalesVsCities() {
   const {
-    data: dataSalesAndCitiesBarChart,
-    searchParams,
-    setSearchParams,
+    data,
+    status,
+    params,
+    setParams,
+    refetch: fetch,
+
   } = useGetSalesAndCitiesBarChart();
   const { data: allBrands, isLoading: isLoadingAllBrands } = useGetAllBrands();
-  const [brand, setBrand] = useState(() => allBrands);
+  const [brands, setBrands] = useState([]);
   const [range, setRange] = useState(() => ranges[0]);
   useEffect(() => {
-    setSearchParams((old) => ({ ...old, brand_id: brand?.id }));
-  }, [brand]);
-  // useEffect(() => {
-  //   allBrands && setBrand(allBrands[0]);
-  // }, [allBrands]);
+    brands?.length > 0 && range.value && setParams({
+      brand_id: brands.map(item => item.id),
+      range: range.value,
+    });
+  }, [brands, range]);
+  useEffect(() => {
+    fetch();
+  }, [params]);
+  useEffect(() => {
+    allBrands?.length > 0 && setBrands(allBrands);
+  }, [allBrands]);
   return (
     <BorderBox>
       <div className="flex items-center justify-between mb-3">
@@ -50,18 +42,19 @@ export default function BarChartSalesVsCities() {
             <BaseDropdown
               multiple
               variant="rounded"
-              defaultText="select brand"
+              defaultText="select brands"
               isLoading={isLoadingAllBrands}
               options={allBrands || []}
-              selected={brand}
+              selected={brands}
               setSelected={(data) => {
-                setBrand((old) => {
-                  return old?.some((val) => val.id == data.id) ?
+                setBrands((old) => {
+                  return old?.some((val) => val?.id == data?.id) ?
                     old.filter(val => val.id != data.id) : [...old, data]
                 })
 
               }}
             />
+
           </div>
 
           <BaseDropdown
@@ -69,7 +62,7 @@ export default function BarChartSalesVsCities() {
             options={ranges}
             selected={[range]}
             setSelected={(data) => {
-              data.id != range.id &&
+              data?.id != range?.id &&
                 setRange(data)
 
             }}
@@ -82,7 +75,7 @@ export default function BarChartSalesVsCities() {
           barDataKey="total_revenue"
           tooltipDataKey="units_sold"
           tooltipLabel="units sold:"
-          data={dataSalesAndCitiesBarChart?.bar_chart_data.slice(1, 7)} //🚧 issues remove slice(1,7)
+          data={data?.data?.bar_chart_data || []} //🚧 issues remove slice(1,7)
         />
       </div>
     </BorderBox>

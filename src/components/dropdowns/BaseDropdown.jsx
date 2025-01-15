@@ -35,7 +35,7 @@ const BaseDropdown = ({
   }
 
   return (
-    <div className="relative w-full">
+    <div className="relative">
       <Listbox
         as="div"
         open={isOpen}

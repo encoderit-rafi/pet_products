@@ -12,7 +12,9 @@ import Table from "@/components/tables/Table";
 import PlaceholderImage from "@/components/placeholders/PlaceholderImage";
 import { ranges } from "@/consts";
 
-import BarChartSalesVsCities from "./components/BarChartSalesVsCities";
+import SalesVsCities from "./components/SalesVsCities";
+import TopClients from "./components/TopClients";
+import BrandsChart from "./components/BrandsChart";
 const demoData = [
   {
     id: 1,
@@ -226,7 +228,7 @@ export default function Hub() {
         </div> */}
         {/* charts 1*/}
         <div className="col-span-12 lg:col-span-8">
-          <BorderBox>
+          {/* <BorderBox>
             <div className="flex items-center justify-between mb-3">
               <SubTitle>Brands Chart</SubTitle>
               <div className="flex items-center gap-3">
@@ -239,7 +241,8 @@ export default function Hub() {
               </div>
             </div>
             <div className="h-72"></div>
-          </BorderBox>
+          </BorderBox> */}
+          <BrandsChart />
         </div>
         <div className="col-span-12 lg:col-span-4">
           <BorderBox>
@@ -264,10 +267,10 @@ export default function Hub() {
         </div>
         {/* charts 2*/}
         <div className="col-span-12 lg:col-span-8">
-          <BarChartSalesVsCities />
+          <SalesVsCities />
         </div>
         <div className="col-span-12 lg:col-span-4">
-          <BorderBox>
+          {/* <BorderBox>
             <div className="flex items-center justify-between">
               <SubTitle>Top Clients</SubTitle>
               <div className="flex items-center gap-3">
@@ -277,7 +280,8 @@ export default function Hub() {
             <div className="h-72">
               <Table query={query} />
             </div>
-          </BorderBox>
+          </BorderBox> */}
+          <TopClients />
         </div>
         {/* heading 2*/}
         <div className="col-span-12">

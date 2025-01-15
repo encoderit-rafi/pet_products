@@ -3,28 +3,25 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 
 export const useGetSalesAndCitiesBarChart = () => {
-  const [searchParams, setSearchParams] = useState({
-    range: "this_week",
-    brand_id: "4",
+  const [params, setParams] = useState({
+    brand_id: "",
+    range: "",
   });
-  const { data, isLoading } = useQuery({
+  const { data, status, refetch } = useQuery({
     queryKey: [
-      "get-sales-and-cities-bar-chart",
-      searchParams.range,
-      searchParams.brand_id,
+      `get-sales-and-cities-bar-chart-brand_id_${params.brand_id}-range_${params.range}`
     ],
+    enabled: false,
     retry: false,
     keepPreviousData: false,
     queryFn: async () => {
       return (
-        await Axios.get("/distributions/barchart", { params: searchParams })
-      ).data.data;
+        await Axios.get("/distributions/barchart", { params })
+      ).data;
     },
   });
   return {
-    data,
-    isLoading,
-    searchParams,
-    setSearchParams,
+    data, status, refetch,
+    params, setParams
   };
 };
