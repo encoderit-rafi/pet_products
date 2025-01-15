@@ -9,17 +9,16 @@ export const useBrandsBarChart = () => {
 
   const { data, status, refetch } = useQuery({
     queryKey: [
-      `get-all-brands-bar-chart-range_${
-        params.range
-      }-brand_ids_${params?.brand_ids?.join(",")}`,
+      `get-all-brands-bar-chart-range_${params.range
+      }-brand_ids_${params?.brand_id}`,
     ],
     enabled: false,
     retry: false,
     keepPreviousData: true,
-    staleTime: 1000 * 60 * 60,
-    cacheTime: 1000 * 60 * 60,
+    // staleTime: 1000 * 60 * 60,
+    // cacheTime: 1000 * 60 * 60,
     queryFn: async () => {
-      return (await Axios.get("/analytic/brands/brandchart", { params })).data
+      return (await Axios.get("/analytic/brand-charts", { params })).data
         .data;
     },
   });

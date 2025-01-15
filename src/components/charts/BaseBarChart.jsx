@@ -25,18 +25,18 @@ const GlowingRectangle = (props) => {
     />
   );
 };
-const CustomTooltip = ({ active, payload, tooltipDataKey }) => {
+const CustomTooltip = ({ active, payload, tooltipDataKey, tooltipLabel }) => {
   const { isDark } = useTheme();
   if (active && payload && payload.length) {
+    console.log({ payload })
     return (
       <div
-        className={`bg-custom_bg_three capitalize text-custom_text_three py-2 px-6 rounded-md ${
-          isDark
-            ? "drop-shadow-[0_0_15px_rgba(255,255,255,1)]"
-            : "drop-shadow-[0_0_15px_rgba(0,0,0,0.5)]"
-        }`}
+        className={`bg-custom_bg_three capitalize text-custom_text_three py-2 px-6 rounded-md ${isDark
+          ? "drop-shadow-[0_0_15px_rgba(255,255,255,1)]"
+          : "drop-shadow-[0_0_15px_rgba(0,0,0,0.5)]"
+          }`}
       >
-        {payload[0].payload[tooltipDataKey]}
+        {payload[0].payload[tooltipLabel]}: SAR {payload[0].payload[tooltipDataKey]}
       </div>
     );
   }
@@ -88,12 +88,15 @@ export default function BaseBarChart({
   xAxisDataKey,
   barDataKey,
   tooltipDataKey,
+  tooltipLabel,
+  max
 }) {
   // data,xAxisDataKey.barDataKey,tooltipDataKey
   const { width } = useWindowSize();
   return (
     <ResponsiveContainer
-      width={1200}
+      width={width > 640 ? "100%" : 400}
+      // width={1200}
       // height={200}
       style={{
         // minWidth: "1000px",
@@ -145,7 +148,7 @@ export default function BaseBarChart({
           dataKey={xAxisDataKey}
           axisLine={false}
           tickLine={false}
-          // tick={<CustomTick />}
+        // tick={<CustomTick />}
         />
 
         {width > 640 && (
@@ -153,10 +156,11 @@ export default function BaseBarChart({
             axisLine={false}
             tickLine={false}
             className="text-sm"
-            domain={[10000, 30000000]}
+            tickCount={8}
+            domain={[0, max]}
           />
         )}
-        <Tooltip content={<CustomTooltip tooltipDataKey={tooltipDataKey} />} />
+        <Tooltip content={<CustomTooltip tooltipDataKey={tooltipDataKey} tooltipLabel={tooltipLabel} />} />
         <Bar
           dataKey={barDataKey}
           fill="url(#colorGradient)"
@@ -164,7 +168,7 @@ export default function BaseBarChart({
           barSize={30}
           activeBar={<GlowingRectangle fill="#F6682B" />}
           style={{ background: "transparent" }}
-          // minPointSize={1}
+        // minPointSize={1}
         />
       </BarChart>
     </ResponsiveContainer>

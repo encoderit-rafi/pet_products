@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ranges } from "@/consts";
+import { omitEmpty, ranges } from "@/consts";
 
 import BorderBox from "@/components/box/BorderBox";
 import SubTitle from "@/components/texts/SubTitle";
@@ -11,51 +11,50 @@ import { useGetSalesAndCitiesBarChart } from "../api/queries/sales_and_cities/us
 
 export default function SalesVsCities() {
   const {
-    data,
-    status,
-    params,
-    setParams,
-    refetch: fetch,
+    data: cityBarChart,
+    status: statusCityBarChart,
+    params: paramsCityBarChart,
+    refetch: fetchCityBarChart,
+    setParams: setParamsCityBarChart,
   } = useGetSalesAndCitiesBarChart();
   const { data: allBrands, isLoading: isLoadingAllBrands } = useGetAllBrands();
   const [brands, setBrands] = useState([]);
   const [range, setRange] = useState(() => ranges[0]);
   useEffect(() => {
-    brands?.length > 0 &&
-      range.value &&
-      setParams({
-        brand_id: brands.map((item) => item.id),
-        range: range.value,
-      });
+    setParamsCityBarChart(omitEmpty({
+      brand_ids: brands.map((item) => item.id).join(","),
+      range: range.value,
+    }));
   }, [brands, range]);
+
   useEffect(() => {
-    fetch();
-  }, [params]);
-  // useEffect(() => {
-  //   allBrands?.length > 0 && setBrands(allBrands);
-  // }, [allBrands]);
+    ranges.lenght > 0 && setRange(ranges[0])
+  }, [ranges]);
+  useEffect(() => {
+    fetchCityBarChart();
+  }, [paramsCityBarChart]);
+
   return (
     <BorderBox>
       <div className="flex items-center justify-between mb-3">
         <SubTitle>Sales vs Cities</SubTitle>
         <div className="flex items-center gap-3">
-          <div className="hidden md:block">
-            <BaseDropdown
-              multiple
-              variant="rounded"
-              defaultText="select brands"
-              isLoading={isLoadingAllBrands}
-              options={allBrands || []}
-              selected={brands}
-              setSelected={(data) => {
-                setBrands((old) => {
-                  return old?.some((val) => val?.id == data?.id)
-                    ? old.filter((val) => val.id != data.id)
-                    : [...old, data];
-                });
-              }}
-            />
-          </div>
+
+          <BaseDropdown
+            multiple
+            variant="rounded"
+            defaultText="select brands"
+            isLoading={isLoadingAllBrands}
+            options={allBrands || []}
+            selected={brands}
+            setSelected={(data) => {
+              setBrands((old) => {
+                return old?.some((val) => val?.id == data?.id)
+                  ? old.filter((val) => val.id != data.id)
+                  : [...old, data];
+              });
+            }}
+          />
 
           <BaseDropdown
             variant="rounded"
@@ -72,7 +71,11 @@ export default function SalesVsCities() {
           xAxisDataKey="city"
           barDataKey="total_revenue"
           tooltipDataKey="total_revenue"
-          data={data?.data?.bar_chart_data || []} //🚧 issues remove slice(1,7)
+          tooltipLabel="city"
+          data={cityBarChart?.bar_chart_data || []} //🚧 issues remove slice(1,7)
+          max={cityBarChart?.max_value}
+
+
         />
       </div>
     </BorderBox>
