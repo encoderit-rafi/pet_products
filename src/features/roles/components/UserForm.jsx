@@ -18,6 +18,8 @@ import { useGetAllUsers } from "../api/queries/useGetAllUsers";
 import ImagePreview from "@/components/file_pickers/ImagePreview";
 import { useUpdateUser } from "../api/mutations/useUpdateUser";
 import toast from "react-hot-toast";
+import BaseDropdown from "@/components/dropdowns/BaseDropdown";
+import SelectionBox from "@/components/ui/SelectionBox";
 
 export default function UserForm({ handelOnClickCancel, formValues }) {
 
@@ -40,6 +42,8 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
     isError: isErrorUpdateUser,
   } = useUpdateUser();
 
+  const { data: allBrands, isLoading: isLoadingAllBrands } = useGetAllBrands();
+  const { data: allRoles, refetch: fetchAllRoles, params: paramsAllRoles, setParams: setParamsAllRoles } = useGetAllRoles();
   const {
     register,
     formState,
@@ -49,14 +53,12 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
     reset,
     clearErrors,
   } = useForm();
-  const { data: getAllRoles } = useGetAllRoles();
-  const { data: getAllBrands } = useGetAllBrands();
 
   const [images, setImages] = useState([]);
   const [selectNewImages, setSelectNewImages] = useState(false);
   const [number, setNumber] = useState("");
-  const [selectedRoles, setSelectedRoles] = useState([]);
   const [selectedBrands, setSelectedBrands] = useState([]);
+  const [selectedRoles, setSelectedRoles] = useState([]);
   const { errors } = formState;
   useEffect(() => {
     if (formValues.type === "update") {
@@ -69,6 +71,12 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
       // setImages([profile_image]);
     }
   }, [formValues]);
+  useEffect(() => {
+    setParamsAllRoles({ brand_ids: selectedBrands.map(item => item.id).join(",") })
+  }, [selectedBrands]);
+  useEffect(() => {
+    fetchAllRoles()
+  }, [paramsAllRoles]);
   useEffect(() => {
     const fieldsToUpdate = [
       { key: "profile_image", value: images },
@@ -217,22 +225,68 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
         </InputBox>
         <InputBox>
           <Label id="brands" label="brands" palceholder="brands " />
-          <MultiSelectListbox
-            options={getAllBrands || []}
+          {/* <MultiSelectListbox
+            options={allBrands || []}
             className={errors?.brand_ids && "!border-red-500"}
             selectedOptions={selectedBrands}
             setSelectedOptions={setSelectedBrands}
+          /> */}
+          <BaseDropdown
+            multiple
+            variant="base"
+            defaultText="select brands"
+            isLoading={isLoadingAllBrands}
+            className={"w-full"}
+            options={allBrands || []}
+            selected={selectedBrands}
+            setSelected={(data) => {
+              setSelectedBrands((old) => {
+                return old?.some((val) => val?.id == data?.id)
+                  ? old.filter((val) => val.id != data.id)
+                  : [...old, data];
+              });
+            }}
           />
         </InputBox>
+        {selectedBrands.length > 0 && <SelectionBox data={selectedBrands} onClickClose={(data) => {
+          setSelectedBrands((old) => {
+            return old?.some((val) => val?.id == data?.id)
+              ? old.filter((val) => val.id != data.id)
+              : [...old, data];
+          });
+        }} />}
         <InputBox>
           <Label id="roles" label="roles" palceholder="roles " />
-          <MultiSelectListbox
-            options={getAllRoles || []}
+          {/* <MultiSelectListbox
+            options={allRoles || []}
             className={errors?.role_ids && "!border-red-500"}
             selectedOptions={selectedRoles}
             setSelectedOptions={setSelectedRoles}
+          /> */}
+          <BaseDropdown
+            multiple
+            variant="base"
+            defaultText="select roles"
+            isLoading={isLoadingAllBrands}
+            className={"w-full"}
+            options={allRoles || []}
+            selected={selectedRoles}
+            setSelected={(data) => {
+              setSelectedRoles((old) => {
+                return old?.some((val) => val?.id == data?.id)
+                  ? old.filter((val) => val.id != data.id)
+                  : [...old, data];
+              });
+            }}
           />
         </InputBox>
+        {selectedRoles.length > 0 && <SelectionBox data={selectedRoles} onClickClose={(data) => {
+          setSelectedRoles((old) => {
+            return old?.some((val) => val?.id == data?.id)
+              ? old.filter((val) => val.id != data.id)
+              : [...old, data];
+          });
+        }} />}
       </div>
       <div className="flex items-center gap-4">
         <BaseButton

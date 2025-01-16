@@ -53,7 +53,7 @@ export default function TotalInventory() {
     params: paramsAllProducts,
     setParams: setParamsAllProducts,
   } = useGetAllProducts({
-    setToUrl: true,
+    setToUrl: false,
     isEnabled: false,
   });
   const [search, setSearch] = useState(paramsAllProducts.search || "");

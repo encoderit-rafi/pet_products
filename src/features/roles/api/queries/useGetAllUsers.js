@@ -25,7 +25,7 @@ export const useGetAllUsers = ({ setToUrl, isEnabled }) => {
         await Axios.get("/users", {
           params,
         })
-      ).data;
+      ).data.data;
     },
   });
   return {

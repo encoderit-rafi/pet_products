@@ -2,6 +2,7 @@ import cn from "@/lib/utils/cn";
 import React from "react";
 
 export default function Table({ query }) {
+  console.log({ query: query.data })
   return (
     <div
       className={"relative h-full max-h-[530px] overflow-y-auto text-xs pr-2"}
@@ -38,7 +39,7 @@ export default function Table({ query }) {
               {query?.headers.map((header) => (
                 <td
                   key={`${header.value}-${Math.random()}`}
-                  className={`whitespace-nowrap first:px-0 last:px-0 px-4 py-3  text-xs text-custom_text_two font-light capitalize hover:cursor-default`}
+                  className={`whitespace-nowrap first:px-0 last:px-0 px-4 py-3 text-xs text-custom_text_two font-light capitalize hover:cursor-default`}
                 >
                   {header.cellValue(row)}
                 </td>

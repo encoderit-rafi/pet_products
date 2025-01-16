@@ -3,8 +3,9 @@ import BorderBox from "@/components/box/BorderBox";
 import BaseDropdown from "@/components/dropdowns/BaseDropdown";
 import Table from "@/components/tables/Table";
 import SubTitle from "@/components/texts/SubTitle";
-import { ranges } from "@/consts";
-import React, { useEffect, useState } from "react";
+import { omitEmpty, ranges } from "@/consts";
+import React, { useEffect, useMemo, useState } from "react";
+import { useGetAllLowestStocks } from "../api/queries/lowest_stocks/useGetAllLowestStocks";
 const demoData = [
   {
     id: 1,
@@ -67,56 +68,92 @@ const demoData = [
     criteria_category: "High Demand",
   },
 ];
-const query = {
-  headers: [
-    {
-      name: "SAP Code",
-      value: "name",
-      cellValue: (row) => {
-        return row.name;
-      },
-    },
-    {
-      name: "name",
-      value: "name",
-      cellValue: (row) => {
-        return row.name;
-      },
-    },
-    {
-      name: "Quantity",
-      value: "sku",
-      cellValue: (row) => {
-        return row?.sku;
-      },
-    },
-    {
-      name: "Sales Amount",
-      value: "brand",
-      cellValue: (row) => {
-        return row?.brand;
-      },
-    },
-  ],
-  isLoading: false,
-  data: demoData,
-};
+
 export default function LowestStock() {
+  const {
+    data: allLowestStocks,
+    status: statusAllLowestStocks,
+    params: paramsAllLowestStocks,
+    refetch: fetchAllLowestStocks,
+    setParams: setParamsAllLowestStocks,
+  } = useGetAllLowestStocks();
   const { data: allBrands, isLoading: isLoadingAllBrands } = useGetAllBrands();
   const [brands, setBrands] = useState([]);
   const [range, setRange] = useState(() => ranges[0]);
-  // useEffect(() => {
-  //   brands?.length > 0 && range.value && setParams({
-  //     brand_id: brands.map(item => item.id),
-  //     range: range.value,
-  //   });
-  // }, [brands, range]);
-  // useEffect(() => {
-  //   fetch();
-  // }, [params]);
+  const query = useMemo(() => ({
+    headers: [
+      {
+        name: "Brand",
+        value: "name",
+        cellValue: (row) => {
+          return row.name;
+        },
+      },
+      {
+        name: "Products",
+        value: "products_count",
+        cellValue: (row) => {
+          return row.products_count;
+        },
+      },
+      {
+        name: "Stocks",
+        value: "total_remaining_stock",
+        cellValue: (row) => {
+          return row?.total_remaining_stock;
+        },
+      },
+
+    ],
+    isLoading: statusAllLowestStocks == "loading",
+    data: allLowestStocks?.data || [],
+  }), [allLowestStocks]);
+  const queryLoading = {
+    headers: [
+      {
+        name: "Brand",
+        value: "name",
+        cellValue: (row) => {
+          return (
+            <div className="flex items-center gap-3">
+              <div className="rounded-full size-5 bg-custom_bg_one animate-pulse" />
+              <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+            </div>
+          );
+        },
+
+      },
+      {
+        name: "Stocks",
+        value: "total_remaining_stock",
+        cellValue: (row) => {
+          return (
+            <div className="flex items-center gap-3">
+              <div className="rounded-full size-5 bg-custom_bg_one animate-pulse" />
+              <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+            </div>
+          );
+        },
+
+      },
+    ],
+    isLoading: statusAllLowestStocks == "loading",
+    data: Array.from({ length: 10 }, (_, i) => i),
+
+  }
   useEffect(() => {
-    allBrands?.length > 0 && setBrands(allBrands);
-  }, [allBrands]);
+    setParamsAllLowestStocks(omitEmpty({
+      brand_ids: brands.map((item) => item.id).join(","),
+      range: range.value,
+    }));
+  }, [brands, range]);
+
+  useEffect(() => {
+    ranges.lenght > 0 && setRange(ranges[0])
+  }, [ranges]);
+  useEffect(() => {
+    fetchAllLowestStocks();
+  }, [paramsAllLowestStocks]);
   return (
     <BorderBox>
       <div className="flex items-center justify-between">
@@ -148,7 +185,7 @@ export default function LowestStock() {
         </div>
       </div>
       <div className="h-72">
-        <Table query={query} />
+        <Table query={statusAllLowestStocks == "loading" ? queryLoading : query} />
       </div>
     </BorderBox>
   );

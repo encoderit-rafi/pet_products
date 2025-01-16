@@ -1,115 +1,152 @@
-import BorderBox from "@/components/box/BorderBox";
-import BaseDropdown from "@/components/dropdowns/BaseDropdown";
-import InputSearch from "@/components/inputs/InputSearch";
-import Table from "@/components/tables/Table";
-import SubTitle from "@/components/texts/SubTitle";
-import { ranges } from "@/consts";
-import React, { useState } from "react";
-const demoData = [
-  {
-    id: 1,
-    name: "Product A",
-    sku: "SKU001",
-    brand: "BrandX",
-    category: "Hub Appliances",
-    total_units_sold: 499,
-    total_sales_value: 28800,
-    criteria_category: "High Demand",
-  },
-  {
-    id: 2,
-    name: "Product B",
-    sku: "SKU002",
-    brand: "BrandY",
-    category: "Sports",
-    total_units_sold: 430,
-    total_sales_value: 36454,
-    criteria_category: "Moderate Demand",
-  },
-  {
-    id: 3,
-    name: "Product C",
-    sku: "SKU003",
-    brand: "BrandX",
-    category: "Sports",
-    total_units_sold: 242,
-    total_sales_value: 14181,
-    criteria_category: "High Demand",
-  },
-  {
-    id: 4,
-    name: "Product D",
-    sku: "SKU004",
-    brand: "BrandB",
-    category: "Sports",
-    total_units_sold: 490,
-    total_sales_value: 37496,
-    criteria_category: "Low Demand",
-  },
-  {
-    id: 5,
-    name: "Product E",
-    sku: "SKU005",
-    brand: "BrandX",
-    category: "Clothing",
-    total_units_sold: 69,
-    total_sales_value: 10489,
-    criteria_category: "Moderate Demand",
-  },
-  {
-    id: 6,
-    name: "Product F",
-    sku: "SKU006",
-    brand: "BrandX",
-    category: "Sports",
-    total_units_sold: 461,
-    total_sales_value: 26846,
-    criteria_category: "High Demand",
-  },
-];
-const query = {
-  headers: [
-    {
-      name: "SAP Code",
-      value: "name",
-      cellValue: (row) => {
-        return row.name;
-      },
-    },
-    {
-      name: "name",
-      value: "name",
-      cellValue: (row) => {
-        return row.name;
-      },
-    },
-    {
-      name: "Quantity",
-      value: "sku",
-      cellValue: (row) => {
-        return row?.sku;
-      },
-    },
-    {
-      name: "Sales Amount",
-      value: "brand",
-      cellValue: (row) => {
-        return row?.brand;
-      },
-    },
-  ],
-  isLoading: false,
-  data: demoData,
-};
-export default function TopClients() {
-  const [range, setRange] = useState(() => ranges[0]);
+import { useEffect, useMemo, useState } from "react";
 
+import Table from "@/components/tables/Table";
+import BorderBox from "@/components/box/BorderBox";
+import SubTitle from "@/components/texts/SubTitle";
+import InputSearch from "@/components/inputs/InputSearch";
+import BaseDropdown from "@/components/dropdowns/BaseDropdown";
+
+import { omitEmpty, ranges } from "@/consts";
+import { useGetAllTopClients } from "../api/queries/top_clients/useGetAllTopClients";
+
+export default function TopClients() {
+  const {
+    data: allTopClients,
+    status: statusAllTopClients,
+    params: paramsAllTopClients,
+    refetch: fetchAllTopClients,
+    setParams: setParamsAllTopClients,
+  } = useGetAllTopClients();
+  const [search, setSearch] = useState("");
+  const [range, setRange] = useState(() => ranges[0]);
+  const handelSearch = () => {
+    setParamsAllTopClients((old) => ({ ...old, search: search }));
+  };
+  const query = useMemo(() => ({
+    headers: [
+      // {
+      //   name: "SAP Code",
+      //   value: "sap_client_code",
+      //   cellValue: (row) => {
+      //     return row.sap_client_code;
+      //   },
+      // },
+      {
+        name: "name",
+        value: "name_en",
+        cellValue: (row) => {
+          return row.name_en;
+        },
+      },
+      // {
+      //   name: "Quantity",
+      //   value: "invoice_quantity",
+      //   cellValue: (row) => {
+      //     return row?.invoice_quantity;
+      //   },
+      // },
+      {
+        name: "Sales Amount",
+        value: "invoice_value",
+        cellValue: (row) => {
+          return row?.invoice_value;
+        },
+      },
+    ],
+    isLoading: statusAllTopClients == "loading",
+    data: allTopClients?.data || [],
+  }), [allTopClients]);
+  const queryLoading = {
+    headers: [
+      // {
+      //   name: "SAP Code",
+      //   value: "sap_client_code",
+      //   cellValue: (row) => {
+      //     return (
+      //       <div className="flex items-center gap-3">
+      //         <div className="rounded-full size-5 bg-custom_bg_one animate-pulse" />
+      //         <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+      //       </div>
+      //     );
+      //   },
+
+      // },
+      {
+        name: "name",
+        value: "name_en",
+        cellValue: (row) => {
+          return (
+            <div className="flex items-center gap-3">
+              <div className="rounded-full size-5 bg-custom_bg_one animate-pulse" />
+              <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+            </div>
+          );
+        },
+
+      },
+      // {
+      //   name: "Quantity",
+      //   value: "invoice_quantity",
+      //   cellValue: (row) => {
+      //     return (
+      //       <div className="flex items-center gap-3">
+      //         <div className="rounded-full size-5 bg-custom_bg_one animate-pulse" />
+      //         <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+      //       </div>
+      //     );
+      //   },
+
+      // },
+      {
+        name: "Sales Amount",
+        value: "invoice_value",
+        cellValue: (row) => {
+          return (
+            <div className="flex items-center gap-3">
+              <div className="rounded-full size-5 bg-custom_bg_one animate-pulse" />
+              <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+            </div>
+          );
+        },
+
+      },
+    ],
+    isLoading: statusAllTopClients == "loading",
+    data: Array.from({ length: 10 }, (_, i) => i),
+
+  }
+
+
+  useEffect(() => {
+    setParamsAllTopClients(omitEmpty({
+      range: range.value,
+    }));
+  }, [range]);
+
+  useEffect(() => {
+    ranges.lenght > 0 && setRange(ranges[0])
+  }, [ranges]);
+  useEffect(() => {
+    fetchAllTopClients();
+  }, [paramsAllTopClients]);
   return (
     <BorderBox>
       <div className="flex items-center justify-between">
         <SubTitle>Top Clients</SubTitle>
         <div className="flex items-center gap-1">
-          <InputSearch className="w-20 ml-auto" />
+          <form
+            className="w-20 ml-auto"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handelSearch();
+            }}
+          >
+            <InputSearch
+              className="pr-1 py-1.5"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </form>
           <BaseDropdown
             variant="rounded"
             options={ranges}
@@ -121,7 +158,7 @@ export default function TopClients() {
         </div>
       </div>
       <div className="h-72">
-        <Table query={query} />
+        <Table query={statusAllTopClients == "loading" ? queryLoading : query} />
       </div>
     </BorderBox>
   );
