@@ -1,16 +1,14 @@
-import React from "react";
+import CameraIcon from "@/assets/icons/CameraIcon";
+import ImageIcon from "@/assets/icons/ImageIcon";
+import BaseInput from "../inputs/BaseInput";
 import Drawer from "../navigators/Drawer";
 import BaseButton from "../buttons/BaseButton";
 import Label from "../texts/Label";
 import InputPlace from "../inputs/InputPlace";
 import InputPhoneNumber from "../inputs/InputPhoneNumber";
-import CameraIcon from "@/assets/icons/CameraIcon";
-import ImageIcon from "@/assets/icons/ImageIcon";
-import BaseInput from "../inputs/BaseInput";
 export default function DrawerSingleApplicationSupport({
   isOpen,
   setIsOpen,
-  children,
 }) {
   return (
     <Drawer isOpen={isOpen} className="flex flex-col max-w-md">

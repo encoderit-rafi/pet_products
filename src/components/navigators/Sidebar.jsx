@@ -1,4 +1,3 @@
-import React, { Children } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 //* icons😎
 import ProductsIcon from "@/assets/icons/ProductsIcon";
@@ -8,7 +7,6 @@ import RolesIcon from "@/assets/icons/RolesIcon";
 import TermsIcon from "@/assets/icons/TermsIcon";
 import ShelvesIcon from "@/assets/icons/ShelvesIcon";
 import HubIcon from "@/assets/icons/HubIcon";
-import ConnectIcon from "@/assets/icons/ConnectIcon";
 //* data📂
 const routes = [
   { path: "/", name: "hub", icon: <HubIcon className="w-4" /> },
@@ -35,32 +33,11 @@ const routes = [
     icon: <TermsIcon className="w-4" />,
   },
 ];
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import cn from "@/lib/utils/cn";
-import LogoutIcon from "@/assets/icons/LogoutIcon";
-import Dialog from "../dialogs/Dialog";
-import BaseButton from "../buttons/BaseButton";
 import { useState } from "react";
-import { useTheme } from "@/context/ThemeProvider";
-import Logout from "../buttons/ButtonLogout";
-import Drawer from "./Drawer";
-import Title from "../texts/Title";
-import BorderBox from "../box/BorderBox";
-import LinkedinIcon from "@/assets/icons/LinkedinIcon";
-import FacebookIcon from "@/assets/icons/FacebookIcon";
-import WhatsappIcon from "@/assets/icons/WhatsappIcon";
-import MessageIcon from "@/assets/icons/MessageIcon";
-import PhoneIcon from "@/assets/icons/PhoneIcon";
-import ImageIcon from "@/assets/icons/ImageIcon";
-import CameraIcon from "@/assets/icons/CameraIcon";
-import InputText from "../inputs/InputText";
-import Label from "../texts/Label";
-import InputPhoneNumber from "../inputs/InputPhoneNumber";
-import InputPlace from "../inputs/InputPlace";
 import ButtonContact from "../buttons/ButtonContact";
 import DrawerApplicationSupport from "../drawers/DrawerApplicationSupport";
 import CardApplicationSupport from "../cards/CardApplicationSupport";
-import BaseInput from "../inputs/BaseInput";
 import DrawerSingleApplicationSupport from "../drawers/DrawerSingleApplicationSupport";
 
 export default function Sidebar({ className, children }) {

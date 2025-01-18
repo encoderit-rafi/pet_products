@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function SelectionBox({ data = [], onClickClose }) {
  return (
-  <div className="flex items-center w-full gap-3 pb-1 mt-3 overflow-x-auto">
+  <div className="flex items-center w-full gap-1 pb-1 !mt-1 overflow-x-auto">
    {data?.map((item) => (
     <div
      key={item.id}

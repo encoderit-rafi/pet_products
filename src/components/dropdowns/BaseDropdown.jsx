@@ -40,7 +40,8 @@ const BaseDropdown = ({
       <Listbox as="div" open={isOpen}>
         <ListboxButton
           className={cn(
-            "flex items-center justify-between gap-2 !py-2 focus:outline-none data-[focus]:outline-none data-[focus]:-outline-offset-none",
+            // "flex items-center justify-between gap-2 text-sm focus:outline-none data-[focus]:outline-none data-[focus]:-outline-offset-none",
+            "flex items-center justify-between",
             {
               "cursor-wait": isLoading,
               "base-input": variant == "base",
@@ -51,19 +52,12 @@ const BaseDropdown = ({
           disabled={isLoading}
           onClick={() => setIsOpen((prev) => !prev)}
         >
-          {/* <span className="leading-none ">
-            {!isLoading && multiple && selected?.length > 0
-              ? `Selected (${selected?.length})`
-              : !isLoading && !multiple && selected?.length > 0
-              ? selected[0]?.name
-              : defaultText}
-          </span> */}
           <span className="leading-none">
             {isLoading
               ? defaultText
               : multiple && selected?.length > 0
-              ? `Selected (${selected.length})`
-              : selected?.[0]?.name || defaultText}
+                ? `Selected (${selected.length})`
+                : selected?.[0]?.name || defaultText}
           </span>
 
           <div className="flex items-center justify-center size-3 text-custom_line_two">

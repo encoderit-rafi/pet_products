@@ -169,14 +169,15 @@
 }
 
 .select-dropdown-rounded {
-  @apply inline-flex whitespace-nowrap  text-xs border text-custom_text_two font-light capitalize items-center justify-between gap-2 bg-custom_bg_two border-custom_line_two rounded-full py-1.5 px-3;
+  @apply inline-flex whitespace-nowrap text-xs border text-custom_text_two font-light capitalize items-center justify-between gap-2 bg-custom_bg_two border-custom_line_two rounded-full py-1.5 px-3;
 }
+
 .btn-contact {
   @apply flex flex-col items-center w-full gap-2 text-xs font-light capitalize text-custom_text_six;
 }
 
 .base-input {
-  @apply border bg-transparent text-sm font-light !text-custom_text_two border-custom_line_seven rounded-md px-3 py-2 outline-none placeholder:capitalize placeholder:text-custom_text_two focus:border-custom_line_seven;
+  @apply border h-10 bg-transparent text-sm font-light !text-custom_text_two border-custom_line_seven rounded-md px-3 py-2 outline-none placeholder:text-custom_text_two focus:border-custom_line_seven;
 }
 
 .recharts-text,

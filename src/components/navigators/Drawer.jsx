@@ -2,11 +2,11 @@ import cn from "@/lib/utils/cn";
 import React from "react";
 import Logout from "../buttons/ButtonLogout";
 
-export default function Drawer({ isOpen, children, className, onClickOutside }) {
+export default function Drawer({ isOpen, children, className, onClickOutside, backDrop = true }) {
   return (
     <div
-      className={`fixed inset-0  z-50 flex flex-row-reverse transition-all duration-200 ${isOpen ? "visible bg-black/10 backdrop-blur-sm" : "invisible"
-        }`}
+      className={`fixed inset-0  z-50 flex flex-row-reverse transition-all duration-200 ${isOpen ? "visible " : "invisible"
+        } ${backDrop ? "bg-black/10 backdrop-blur-sm" : " "}`}
       onClick={onClickOutside}
     >
       <div

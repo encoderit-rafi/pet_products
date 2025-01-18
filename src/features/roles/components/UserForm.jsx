@@ -192,7 +192,7 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
         )}
 
       {/* <ImagePicker /> */}
-      <div className="space-y-4 overflow-auto max-h-32 lg:max-h-72">
+      <div className="space-y-3 overflow-auto max-h-32 lg:max-h-72">
         <BaseInput
           id="name"
           type="text"
@@ -225,16 +225,10 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
         </InputBox>
         <InputBox>
           <Label id="brands" label="brands" palceholder="brands " />
-          {/* <MultiSelectListbox
-            options={allBrands || []}
-            className={errors?.brand_ids && "!border-red-500"}
-            selectedOptions={selectedBrands}
-            setSelectedOptions={setSelectedBrands}
-          /> */}
           <BaseDropdown
             multiple
             variant="base"
-            defaultText="select brands"
+            defaultText="Select Brands"
             isLoading={isLoadingAllBrands}
             className={"w-full"}
             options={allBrands || []}
@@ -257,12 +251,6 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
         }} />}
         <InputBox>
           <Label id="roles" label="roles" palceholder="roles " />
-          {/* <MultiSelectListbox
-            options={allRoles || []}
-            className={errors?.role_ids && "!border-red-500"}
-            selectedOptions={selectedRoles}
-            setSelectedOptions={setSelectedRoles}
-          /> */}
           <BaseDropdown
             multiple
             variant="base"

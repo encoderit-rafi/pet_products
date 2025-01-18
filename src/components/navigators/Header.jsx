@@ -32,6 +32,8 @@ import InputPhoneNumber from "../inputs/InputPhoneNumber";
 import DrawerApplicationSupport from "../drawers/DrawerApplicationSupport";
 import CardApplicationSupport from "../cards/CardApplicationSupport";
 import DrawerSingleApplicationSupport from "../drawers/DrawerSingleApplicationSupport";
+import DrawerViewUser from "../drawers/DrawerViewUser";
+import DrawerUpdateUser from "../drawers/DrawerUpdateUser";
 const data = [
   {
     id: 1,
@@ -75,6 +77,7 @@ export default function Header() {
   ] = useState(false);
   const [isOpenConfirmLogoutDialog, setIsOpenConfirmLogoutDialog] =
     useState(false);
+
   return (
     <header className="flex items-center justify-between pl-3 text-white md:pl-5">
       <ToggleLogo />
@@ -84,7 +87,10 @@ export default function Header() {
         </div>
         <NotificationButton />
         <div className="hidden lg:block">
-          <ProfileCard />
+          <ProfileCard
+            onClick={() => setIsOpenViewUser(true)}
+
+          />
         </div>
         <div className=" lg:hidden">
           <IconButton
@@ -151,6 +157,7 @@ export default function Header() {
         isOpen={isOpenDrawerSingleApplicationSupport}
         setIsOpen={() => setIsOpenDrawerSingleApplicationSupport(false)}
       />
+
     </header>
   );
 }

@@ -1,4 +1,3 @@
-import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
 import { Axios } from "@/axios";
 import { PAGINATION } from "@/consts";
 import { useEffect, useState } from "react";
