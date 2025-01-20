@@ -19,14 +19,16 @@ export default function BrandsInventory() {
   const [brands, setBrands] = useState([]);
   const [range, setRange] = useState(() => ranges[0]);
   useEffect(() => {
-    setParamsInventoriesBarChart(omitEmpty({
-      brand_ids: brands.map((item) => item.id).join(","),
-      range: range.value,
-    }));
+    setParamsInventoriesBarChart(
+      omitEmpty({
+        brand_ids: brands.map((item) => item.id).join(","),
+        range: range.value,
+      })
+    );
   }, [brands, range]);
 
   useEffect(() => {
-    ranges.lenght > 0 && setRange(ranges[0])
+    ranges.lenght > 0 && setRange(ranges[0]);
   }, [ranges]);
   useEffect(() => {
     fetchInventoriesBarChart();
@@ -69,10 +71,9 @@ export default function BrandsInventory() {
           barDataKey="total_remaining_stock"
           tooltipDataKey="total_remaining_stock"
           tooltipLabel="name"
+          tooltipPrefix="UNITS"
           data={inventoriesBarChart?.bar_chart_data || []}
           max={inventoriesBarChart?.max_value}
-
-
         />
       </div>
     </BorderBox>

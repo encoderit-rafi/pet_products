@@ -25,63 +25,70 @@ const GlowingRectangle = (props) => {
     />
   );
 };
-const CustomTooltip = ({ active, payload, tooltipDataKey, tooltipLabel }) => {
+const CustomTooltip = ({
+  active,
+  payload,
+  tooltipDataKey,
+  tooltipLabel,
+  tooltipPrefix = "",
+}) => {
   const { isDark } = useTheme();
   if (active && payload && payload.length) {
-    console.log({ payload })
+    console.log({ payload });
     return (
       <div
-        className={`bg-custom_bg_three capitalize text-custom_text_three py-2 px-6 rounded-md ${isDark
-          ? "drop-shadow-[0_0_15px_rgba(255,255,255,1)]"
-          : "drop-shadow-[0_0_15px_rgba(0,0,0,0.5)]"
-          }`}
+        className={`bg-custom_bg_three capitalize text-sm text-custom_text_three py-2 px-6 rounded-md ${
+          isDark
+            ? "drop-shadow-[0_0_15px_rgba(255,255,255,1)]"
+            : "drop-shadow-[0_0_15px_rgba(0,0,0,0.5)]"
+        }`}
       >
-        {payload[0].payload[tooltipLabel]}: SAR {payload[0].payload[tooltipDataKey]}
+        {payload[0].payload[tooltipLabel]}: {tooltipPrefix}{" "}
+        {payload[0].payload[tooltipDataKey]}
       </div>
     );
   }
 };
-const CustomTick = ({ x, y, payload }) => {
-  const iconSize = 20; // Set the size of the icon
+// const CustomTick = ({ x, y, payload }) => {
+//   const iconSize = 20; // Set the size of the icon
 
-  return (
-    <g transform={`translate(${x}, ${y})`}>
-      {/* <foreignObject x={-iconSize / 2} y={0} width={iconSize} height={iconSize}>
-        <div
-          style={{
-            width: `${iconSize}px`,
-            height: `${iconSize}px`,
-            borderRadius: "50%",
-            overflow: "hidden",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <img
-            src="https://community.softr.io/uploads/db9110/original/2X/7/74e6e7e382d0ff5d7773ca9a87e6f6f8817a68a6.jpeg"
-            alt={payload.value}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-            }}
-          />
-        </div>
-      </foreignObject> */}
-      {/* Text Label Below the Image */}
-      <text
-        x={0}
-        y={20} // Position text below the image iconSize + 20
-        textAnchor="middle"
-        fill="#636363"
-        fontSize={12}
-      >
-        {payload.value}
-      </text>
-    </g>
-  );
-};
+//   return (
+//     <g transform={`translate(${x}, ${y})`}>
+//       <foreignObject x={-iconSize / 2} y={0} width={iconSize} height={iconSize}>
+//         <div
+//           style={{
+//             width: `${iconSize}px`,
+//             height: `${iconSize}px`,
+//             borderRadius: "50%",
+//             overflow: "hidden",
+//             display: "flex",
+//             justifyContent: "center",
+//             alignItems: "center",
+//           }}
+//         >
+//           <img
+//             src="https://community.softr.io/uploads/db9110/original/2X/7/74e6e7e382d0ff5d7773ca9a87e6f6f8817a68a6.jpeg"
+//             alt={payload.value}
+//             style={{
+//               width: "100%",
+//               height: "100%",
+//               objectFit: "cover",
+//             }}
+//           />
+//         </div>
+//       </foreignObject>
+//       <text
+//         x={0}
+//         y={20} // Position text below the image iconSize + 20
+//         textAnchor="middle"
+//         fill="#636363"
+//         fontSize={12}
+//       >
+//         {payload.value}
+//       </text>
+//     </g>
+//   );
+// };
 
 export default function BaseBarChart({
   data,
@@ -89,7 +96,8 @@ export default function BaseBarChart({
   barDataKey,
   tooltipDataKey,
   tooltipLabel,
-  max
+  tooltipPrefix,
+  max,
 }) {
   // data,xAxisDataKey.barDataKey,tooltipDataKey
   const { width } = useWindowSize();
@@ -148,7 +156,7 @@ export default function BaseBarChart({
           dataKey={xAxisDataKey}
           axisLine={false}
           tickLine={false}
-        // tick={<CustomTick />}
+          // tick={<CustomTick />}
         />
 
         {width > 640 && (
@@ -160,7 +168,15 @@ export default function BaseBarChart({
             domain={[0, max]}
           />
         )}
-        <Tooltip content={<CustomTooltip tooltipDataKey={tooltipDataKey} tooltipLabel={tooltipLabel} />} />
+        <Tooltip
+          content={
+            <CustomTooltip
+              tooltipDataKey={tooltipDataKey}
+              tooltipLabel={tooltipLabel}
+              tooltipPrefix={tooltipPrefix}
+            />
+          }
+        />
         <Bar
           dataKey={barDataKey}
           fill="url(#colorGradient)"
@@ -168,7 +184,7 @@ export default function BaseBarChart({
           barSize={30}
           activeBar={<GlowingRectangle fill="#F6682B" />}
           style={{ background: "transparent" }}
-        // minPointSize={1}
+          // minPointSize={1}
         />
       </BarChart>
     </ResponsiveContainer>

@@ -22,21 +22,20 @@ export default function BrandsChart() {
   const [range, setRange] = useState();
 
   useEffect(() => {
-
-    setParamsBrandsBarChart(omitEmpty({
-      brand_ids: brands.map((item) => item.id).join(","),
-      range: range?.value,
-    }));
+    setParamsBrandsBarChart(
+      omitEmpty({
+        brand_ids: brands.map((item) => item.id).join(","),
+        range: range?.value,
+      })
+    );
   }, [brands, range]);
 
   useEffect(() => {
-    ranges.lenght > 0 && setRange(ranges[0])
+    ranges.lenght > 0 && setRange(ranges[0]);
   }, [ranges]);
   useEffect(() => {
     fetchBrandsBarChart();
   }, [paramsBrandsBarChart]);
-
-
 
   // useEffect(() => {
   //   allBrands?.length > 0 && setBrands(allBrands);
@@ -46,7 +45,6 @@ export default function BrandsChart() {
       <div className="flex items-center justify-between mb-3">
         <SubTitle>Brands Chart</SubTitle>
         <div className="flex items-center gap-3">
-
           <BaseDropdown
             multiple
             variant="rounded"
@@ -78,10 +76,11 @@ export default function BrandsChart() {
           barDataKey="total_revenue"
           tooltipDataKey="total_revenue"
           tooltipLabel="name"
+          tooltipPrefix="SAR"
           data={brandsBarChart?.bar_chart_data || []}
           max={brandsBarChart?.max_value}
-        // max={Math.max(...brandsBarChart?.bar_chart_data.map(item => +item.total_revenue)) + 10000}
-        // data={[]}
+          // max={Math.max(...brandsBarChart?.bar_chart_data.map(item => +item.total_revenue)) + 10000}
+          // data={[]}
         />
       </div>
     </BorderBox>

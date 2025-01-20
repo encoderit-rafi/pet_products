@@ -6,21 +6,22 @@ import toast from "react-hot-toast";
 
 //* [login user]
 export const useLoginMutation = () => {
- return useMutation({
-  mutationKey: "login",
-  mutationFn: async (data) => {
-   return await Axios.post("/auth/login", data).then((response) => {
-    return response;
-   });
-  },
-  onSuccess: (res) => {
-   localStorage.setItem("token", res.data.data.token);
-  },
+  return useMutation({
+    mutationKey: "login",
+    retry: false,
+    mutationFn: async (data) => {
+      return await Axios.post("/auth/login", data).then((response) => {
+        return response;
+      });
+    },
+    onSuccess: (res) => {
+      localStorage.setItem("token", res.data.data.token);
+    },
 
-  onError: (error) => {
-   toast.error(error.response.data.message);
-  },
- });
+    onError: (error) => {
+      toast.error(error.response.data.message);
+    },
+  });
 };
 
 //* [create a new user]
@@ -41,32 +42,30 @@ export const useLoginMutation = () => {
 //   });
 // };
 
-
-
 //* [logout user]
 export const useLogoutQuery = () => {
- const queryClient = useQueryClient();
- const navigate = useNavigate();
- const { setToken, setUser } = useAuth();
- return useQuery({
-  queryKey: ["logout-user"],
-  enabled: false,
-  retry: false,
-  keepPreviousData: false,
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const { setToken, setUser } = useAuth();
+  return useQuery({
+    queryKey: ["logout-user"],
+    enabled: false,
+    retry: false,
+    keepPreviousData: false,
 
-  queryFn: async () => {
-   await Axios.get("/logout");
-  },
-  onSuccess() {
-   localStorage.removeItem("tms_token");
-   localStorage.removeItem("tms_user");
-   queryClient.clear();
-   setUser(null);
-   setToken(null);
-   navigate("/login");
-   // toast.success("Logged out successfully");
-  },
- });
+    queryFn: async () => {
+      await Axios.get("/logout");
+    },
+    onSuccess() {
+      localStorage.removeItem("tms_token");
+      localStorage.removeItem("tms_user");
+      queryClient.clear();
+      setUser(null);
+      setToken(null);
+      navigate("/login");
+      // toast.success("Logged out successfully");
+    },
+  });
 };
 
 //* [change password]

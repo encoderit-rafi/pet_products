@@ -2,8 +2,8 @@ import ToggleLogo from "../ui/ToggleLogo";
 import ButtonToggleTheme from "../buttons/ButtonToggleTheme";
 import NotificationButton from "../buttons/NotificationButton";
 import ProfileCard from "../cards/ProfileCard";
-
 import BellIcon from "@/assets/icons/BellIcon";
+
 import IconButton from "../buttons/IconButton";
 import MenuIcon from "@/assets/icons/MenuIcon";
 import Sidebar from "./Sidebar";
@@ -87,10 +87,7 @@ export default function Header() {
         </div>
         <NotificationButton />
         <div className="hidden lg:block">
-          <ProfileCard
-            onClick={() => setIsOpenViewUser(true)}
-
-          />
+          <ProfileCard onClick={() => setIsOpenViewUser(true)} />
         </div>
         <div className=" lg:hidden">
           <IconButton
@@ -157,7 +154,6 @@ export default function Header() {
         isOpen={isOpenDrawerSingleApplicationSupport}
         setIsOpen={() => setIsOpenDrawerSingleApplicationSupport(false)}
       />
-
     </header>
   );
 }

@@ -22,7 +22,6 @@ import BaseDropdown from "@/components/dropdowns/BaseDropdown";
 import SelectionBox from "@/components/ui/SelectionBox";
 
 export default function UserForm({ handelOnClickCancel, formValues }) {
-
   const {
     refetch: fetchAllUsers,
     params,
@@ -43,7 +42,12 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
   } = useUpdateUser();
 
   const { data: allBrands, isLoading: isLoadingAllBrands } = useGetAllBrands();
-  const { data: allRoles, refetch: fetchAllRoles, params: paramsAllRoles, setParams: setParamsAllRoles } = useGetAllRoles();
+  const {
+    data: allRoles,
+    refetch: fetchAllRoles,
+    params: paramsAllRoles,
+    setParams: setParamsAllRoles,
+  } = useGetAllRoles();
   const {
     register,
     formState,
@@ -72,10 +76,12 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
     }
   }, [formValues]);
   useEffect(() => {
-    setParamsAllRoles({ brand_ids: selectedBrands.map(item => item.id).join(",") })
+    setParamsAllRoles({
+      brand_ids: selectedBrands.map((item) => item.id).join(","),
+    });
   }, [selectedBrands]);
   useEffect(() => {
-    fetchAllRoles()
+    fetchAllRoles();
   }, [paramsAllRoles]);
   useEffect(() => {
     const fieldsToUpdate = [
@@ -134,39 +140,39 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
     }
     formValues.type === "update"
       ? updateUser(
-        {
-          id: formValues.user.id,
-          data: omitEmpty({
+          {
+            id: formValues.user.id,
+            data: omitEmpty({
+              ...data,
+              profile_image: data.profile_image[0],
+              is_brand_employee: 1,
+            }),
+          },
+          {
+            onSuccess: () => {
+              setParams({ page: params.page, per_page: params.per_page });
+              fetchAllUsers();
+              resetFields();
+              handelOnClickCancel();
+            },
+          }
+        )
+      : createUser(
+          {
             ...data,
             profile_image: data.profile_image[0],
             is_brand_employee: 1,
-          }),
-        },
-        {
-          onSuccess: () => {
-            setParams({ page: params.page, per_page: params.per_page });
-            fetchAllUsers();
-            resetFields();
-            handelOnClickCancel();
           },
-        }
-      )
-      : createUser(
-        {
-          ...data,
-          profile_image: data.profile_image[0],
-          is_brand_employee: 1,
-        },
-        {
-          onSuccess: () => {
-            // fetchAllUsers();
-            setParams({ page: params.page, per_page: params.per_page });
-            fetchAllUsers();
-            resetFields();
-            handelOnClickCancel();
-          },
-        }
-      );
+          {
+            onSuccess: () => {
+              // fetchAllUsers();
+              setParams({ page: params.page, per_page: params.per_page });
+              fetchAllUsers();
+              resetFields();
+              handelOnClickCancel();
+            },
+          }
+        );
   }
   return (
     <form
@@ -184,12 +190,12 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
       {(formValues.type === "create" ||
         selectNewImages ||
         (formValues.type === "update" && formValues?.user.image == null)) && (
-          <ImagePicker
-            images={images}
-            setImages={setImages}
-            isError={errors?.profile_image?.message}
-          />
-        )}
+        <ImagePicker
+          images={images}
+          setImages={setImages}
+          isError={errors?.profile_image?.message}
+        />
+      )}
 
       {/* <ImagePicker /> */}
       <div className="space-y-3 overflow-auto max-h-32 lg:max-h-72">
@@ -206,8 +212,9 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
           type="email"
           label="email"
           palceholder="email"
-          className={`py-3 rounded-lg ${errors?.email ? "!border-red-500" : ""
-            }`}
+          className={`py-3 rounded-lg ${
+            errors?.email ? "!border-red-500" : ""
+          }`}
           register={register("email", validationRules.email)}
         />
 
@@ -242,13 +249,18 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
             }}
           />
         </InputBox>
-        {selectedBrands.length > 0 && <SelectionBox data={selectedBrands} onClickClose={(data) => {
-          setSelectedBrands((old) => {
-            return old?.some((val) => val?.id == data?.id)
-              ? old.filter((val) => val.id != data.id)
-              : [...old, data];
-          });
-        }} />}
+        {selectedBrands.length > 0 && (
+          <SelectionBox
+            data={selectedBrands}
+            onClickClose={(data) => {
+              setSelectedBrands((old) => {
+                return old?.some((val) => val?.id == data?.id)
+                  ? old.filter((val) => val.id != data.id)
+                  : [...old, data];
+              });
+            }}
+          />
+        )}
         <InputBox>
           <Label id="roles" label="roles" palceholder="roles " />
           <BaseDropdown
@@ -268,13 +280,18 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
             }}
           />
         </InputBox>
-        {selectedRoles.length > 0 && <SelectionBox data={selectedRoles} onClickClose={(data) => {
-          setSelectedRoles((old) => {
-            return old?.some((val) => val?.id == data?.id)
-              ? old.filter((val) => val.id != data.id)
-              : [...old, data];
-          });
-        }} />}
+        {selectedRoles.length > 0 && (
+          <SelectionBox
+            data={selectedRoles}
+            onClickClose={(data) => {
+              setSelectedRoles((old) => {
+                return old?.some((val) => val?.id == data?.id)
+                  ? old.filter((val) => val.id != data.id)
+                  : [...old, data];
+              });
+            }}
+          />
+        )}
       </div>
       <div className="flex items-center gap-4">
         <BaseButton

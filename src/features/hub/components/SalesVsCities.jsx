@@ -21,14 +21,16 @@ export default function SalesVsCities() {
   const [brands, setBrands] = useState([]);
   const [range, setRange] = useState(() => ranges[0]);
   useEffect(() => {
-    setParamsCityBarChart(omitEmpty({
-      brand_ids: brands.map((item) => item.id).join(","),
-      range: range.value,
-    }));
+    setParamsCityBarChart(
+      omitEmpty({
+        brand_ids: brands.map((item) => item.id).join(","),
+        range: range.value,
+      })
+    );
   }, [brands, range]);
 
   useEffect(() => {
-    ranges.lenght > 0 && setRange(ranges[0])
+    ranges.length > 0 && setRange(ranges[0]);
   }, [ranges]);
   useEffect(() => {
     fetchCityBarChart();
@@ -39,7 +41,6 @@ export default function SalesVsCities() {
       <div className="flex items-center justify-between mb-3">
         <SubTitle>Sales vs Cities</SubTitle>
         <div className="flex items-center gap-3">
-
           <BaseDropdown
             multiple
             variant="rounded"
@@ -72,10 +73,9 @@ export default function SalesVsCities() {
           barDataKey="total_revenue"
           tooltipDataKey="total_revenue"
           tooltipLabel="city"
+          tooltipPrefix="SAR"
           data={cityBarChart?.bar_chart_data || []} //🚧 issues remove slice(1,7)
           max={cityBarChart?.max_value}
-
-
         />
       </div>
     </BorderBox>

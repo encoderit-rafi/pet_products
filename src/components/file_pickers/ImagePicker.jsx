@@ -13,23 +13,20 @@ export default function ImagePicker({
 
   const handleFileChange = (e) => {
     const selectedFiles = Array.from(e.target.files); // Convert FileList to an array
-    if (selectedFiles.length > 0) {
+    if (selectedFiles?.length > 0) {
       multiple
         ? setImages((prev) => [...prev, ...selectedFiles])
         : setImages(selectedFiles);
     }
   };
-  useEffect(() => {
-  }, [images]);
+  useEffect(() => {}, [images]);
   const handleRemoveImage = (index) => {
     setImages((prev) => prev.filter((_, i) => i !== index));
   };
 
   return (
     <div className="flex flex-col items-center space-y-4">
-      {/* File Picker */}
-      {/* {images.length} */}
-      {images.length === 0 && (
+      {images?.length === 0 && (
         <label
           htmlFor="file-upload"
           className={cn(
@@ -60,22 +57,9 @@ export default function ImagePicker({
       )}
 
       {/* Image Previews */}
-      {images.length > 0 && (
+      {images?.length > 0 && (
         <div className="flex items-center w-full gap-2 overflow-x-auto">
           {images.map((file, index) => (
-            // <div key={index} className="relative mx-auto group shrink-0">
-            //   <img
-            //     src={URL.createObjectURL(file)} // Works now
-            //     alt="preview"
-            //     className="object-cover rounded-lg size-40"
-            //   />
-            //   <button
-            //     onClick={() => handleRemoveImage(index)}
-            //     className="absolute text-white bg-red-500 rounded-full opacity-75 top-2 right-2 size-6 hover:opacity-100"
-            //   >
-            //     &times;
-            //   </button>
-            // </div>
             <ImagePreview
               key={index}
               src={URL.createObjectURL(file)}
