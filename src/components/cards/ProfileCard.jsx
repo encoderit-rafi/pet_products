@@ -76,7 +76,7 @@ export default function ProfileCard({ ...props }) {
           transition
           anchor="bottom end"
           className={cn(
-            "w-56 z-[60] mt-1 space-y-3 rounded-xl p-1 [--anchor-gap:var(--spacing-1)] focus:outline-none transition duration-200 ease-in data-[leave]:data-[closed]:opacity-0 shadow-lg",
+            "w-56 z-[60] border border-custom_line_two mt-1 space-y-3 rounded-xl p-1 [--anchor-gap:var(--spacing-1)] focus:outline-none transition duration-200 ease-in data-[leave]:data-[closed]:opacity-0 shadow-lg",
             {
               "bg-[#21272b]": isDark,
               "bg-[#f8f8f8]": !isDark,
