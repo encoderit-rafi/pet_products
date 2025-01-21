@@ -33,21 +33,13 @@ export default function ProfileCard({ ...props }) {
         setIsOpenUpdateUser(true);
       },
     },
-    // {
-    //   icon: <LogoutIcon className="text-red-500 size-4" />,
-    //   text: <span className="text-red-500">log out</span>,
-    //   action: () => setIsOpenConfirmLogoutDialog(true),
-    // },
   ];
   console.log({ user });
   return (
     <>
       <Menu>
         <MenuButton>
-          <div
-            className="flex items-center gap-1 cursor-pointer lg:gap-2"
-            // {...props}
-          >
+          <div className="flex items-center gap-1 cursor-pointer lg:gap-2">
             <div className="p-1 size-12 bg-custom_bg_five rounded-[13px] shadow-sm">
               <img
                 src={user?.image?.url || "/placeholder-image.webp"}
@@ -73,8 +65,6 @@ export default function ProfileCard({ ...props }) {
           className={cn(
             "w-56 z-[60]  mt-4 space-y-3 rounded-xl p-1 [--anchor-gap:var(--spacing-1)] focus:outline-none transition duration-200 ease-in data-[leave]:data-[closed]:opacity-0 shadow-lg",
             {
-              // "bg-[#21272b]": isDark,
-              // "bg-[#f8f8f8]": !isDark,
               "bg-[#181c1f]": isDark,
               "bg-[#f0f0f0]": !isDark,
             }

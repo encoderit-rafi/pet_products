@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css"; // Default styles
 
-const InputPhoneNumber = ({ number, setNumber, isError }) => {
+const InputPhoneNumber = ({ number, setNumber, isError, disabled }) => {
   const [selectedCountry, setSelectedCountry] = useState({});
   useEffect(() => {
     // console.log(
@@ -17,6 +17,7 @@ const InputPhoneNumber = ({ number, setNumber, isError }) => {
   }, [number]);
   return (
     <PhoneInput
+      disabled={disabled}
       country={"sa"}
       countryCodeEditable={false}
       value={number}
@@ -29,14 +30,16 @@ const InputPhoneNumber = ({ number, setNumber, isError }) => {
       }}
       containerStyle={{
         width: "100%",
-        border: isError ? "1px solid red" : "1px solid var(--custom_line_seven)",
+        border: isError
+          ? "1px solid red"
+          : "1px solid var(--custom_line_seven)",
         // backgroundColor: "#333333",
         borderRadius: "8px",
       }}
       inputStyle={{
         width: "100%",
         // height: "100%",
-        height: '40px',
+        height: "40px",
         border: "none",
         // borderRadius: "8px",
         backgroundColor: "transparent",
@@ -52,7 +55,9 @@ const InputPhoneNumber = ({ number, setNumber, isError }) => {
       buttonStyle={{
         backgroundColor: "transparent",
         border: "none",
-        borderRight: isError ? "1px solid red" : "1px solid var(--custom_line_seven)",
+        borderRight: isError
+          ? "1px solid red"
+          : "1px solid var(--custom_line_seven)",
         padding: "0 8px",
         display: "flex",
         alignItems: "center",
