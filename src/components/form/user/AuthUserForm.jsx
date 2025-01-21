@@ -91,7 +91,7 @@ export default function AuthUserForm({ setIsOpen }) {
     selectedFiles?.length > 0 && setImages(selectedFiles);
   }
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col flex-1">
       <div className="flex-1 mt-5 space-y-6 overflow-y-auto">
         <div className="flex items-center justify-between">
           <ImagePickerIcon handleFileChange={onHandleFileChange} />

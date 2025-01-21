@@ -1,12 +1,8 @@
-import UploadFileIcon from "@/assets/icons/UploadFileIcon";
-import React, { useEffect, useState } from "react";
-import ImagePreview from "./ImagePreview";
 import cn from "@/lib/utils/cn";
 import ImageIcon from "@/assets/icons/ImageIcon";
 
 export default function ImagePickerIcon({
   multiple = false,
-  isError,
   handleFileChange,
 }) {
   return (
