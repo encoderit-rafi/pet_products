@@ -60,8 +60,9 @@ export default function Terms() {
             <TabPanel key={tab.id}>
               <div className="mt-2 space-y-5 overflow-y-auto text-sm leading-relaxed lg:text-base font-extralight md:text-justify ">
                 {data?.length > 0 &&
-                  data.find((data) => data.type == searchParams.get("type"))
-                    ?.details}
+                  data.find(
+                    (data) => data.type == (searchParams.get("type") || "terms")
+                  )?.details}
               </div>
             </TabPanel>
           ))}

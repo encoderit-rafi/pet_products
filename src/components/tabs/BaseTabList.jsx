@@ -16,7 +16,7 @@ export default function BaseTabList({
             "border-b-2 text-xs font-light !text-custom_text_eleven  border-b-custom_line_six  p-3 focus:outline-none",
             {
               "border-b-custom_bg_three !text-custom_bg_three ":
-                activeTab.id == item.id,
+                activeTab?.id == item?.id,
             },
             className?.tab
           )}
