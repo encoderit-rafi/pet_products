@@ -123,7 +123,7 @@ export default function Header() {
       <Dialog isOpen={isOpenContact} title="" className="z-[9999]">
         <div className="flex flex-col space-y-4">
           <div className="grid grid-cols-2 gap-2">
-            {data.map((item) => (
+            {data?.map((item) => (
               <BaseButton
                 key={item.id}
                 onClick={() => setIsOpenDrawerApplicationSupport(true)}

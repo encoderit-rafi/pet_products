@@ -64,7 +64,7 @@ export default function ButtonContact({ setIsOpenDrawerApplicationSupport }) {
               }
             )}
           >
-            {data.map((item) => (
+            {data?.map((item) => (
               <MenuItem key={item.id}>
                 <button
                   className={cn(

@@ -38,7 +38,7 @@ export default function BasePieChart() {
           endAngle={-270}
           paddingAngle={2}
         >
-          {data.map((entry, index) => (
+          {data?.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={entry.color} stroke="none" />
           ))}
         </Pie>

@@ -87,7 +87,7 @@ export default function Roles() {
           {!isLoadingAllUsers &&
             !isFetchingAllUsers &&
             allUsers?.data?.length > 0
-            ? allUsers.data.map((user) => (
+            ? allUsers.data?.map((user) => (
               <UserCard
                 key={user.id}
                 data={user}

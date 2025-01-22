@@ -143,7 +143,7 @@ export default function LowestStock() {
   }
   useEffect(() => {
     setParamsAllLowestStocks(omitEmpty({
-      brand_ids: brands.map((item) => item.id).join(","),
+      brand_ids: brands?.map((item) => item.id).join(","),
       range: range.value,
     }));
   }, [brands, range]);

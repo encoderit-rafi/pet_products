@@ -77,7 +77,7 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
   }, [formValues]);
   useEffect(() => {
     setParamsAllRoles({
-      brand_ids: selectedBrands.map((item) => item.id).join(","),
+      brand_ids: selectedBrands?.map((item) => item.id).join(","),
     });
   }, [selectedBrands]);
   useEffect(() => {
@@ -87,8 +87,8 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
     const fieldsToUpdate = [
       { key: "profile_image", value: images },
       { key: "phone_number", value: number },
-      { key: "brand_ids", value: selectedBrands.map((item) => item.id) },
-      { key: "role_ids", value: selectedRoles.map((item) => item.id) },
+      { key: "brand_ids", value: selectedBrands?.map((item) => item.id) },
+      { key: "role_ids", value: selectedRoles?.map((item) => item.id) },
     ];
 
     fieldsToUpdate.forEach(({ key, value }) => {
@@ -140,39 +140,39 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
     }
     formValues.type === "update"
       ? updateUser(
-          {
-            id: formValues.user.id,
-            data: omitEmpty({
-              ...data,
-              profile_image: data.profile_image[0],
-              is_brand_employee: 1,
-            }),
-          },
-          {
-            onSuccess: () => {
-              setParams({ page: params.page, per_page: params.per_page });
-              fetchAllUsers();
-              resetFields();
-              handelOnClickCancel();
-            },
-          }
-        )
-      : createUser(
-          {
+        {
+          id: formValues.user.id,
+          data: omitEmpty({
             ...data,
             profile_image: data.profile_image[0],
             is_brand_employee: 1,
+          }),
+        },
+        {
+          onSuccess: () => {
+            setParams({ page: params.page, per_page: params.per_page });
+            fetchAllUsers();
+            resetFields();
+            handelOnClickCancel();
           },
-          {
-            onSuccess: () => {
-              // fetchAllUsers();
-              setParams({ page: params.page, per_page: params.per_page });
-              fetchAllUsers();
-              resetFields();
-              handelOnClickCancel();
-            },
-          }
-        );
+        }
+      )
+      : createUser(
+        {
+          ...data,
+          profile_image: data.profile_image[0],
+          is_brand_employee: 1,
+        },
+        {
+          onSuccess: () => {
+            // fetchAllUsers();
+            setParams({ page: params.page, per_page: params.per_page });
+            fetchAllUsers();
+            resetFields();
+            handelOnClickCancel();
+          },
+        }
+      );
   }
   return (
     <form
@@ -190,12 +190,12 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
       {(formValues.type === "create" ||
         selectNewImages ||
         (formValues.type === "update" && formValues?.user.image == null)) && (
-        <ImagePicker
-          images={images}
-          setImages={setImages}
-          isError={errors?.profile_image?.message}
-        />
-      )}
+          <ImagePicker
+            images={images}
+            setImages={setImages}
+            isError={errors?.profile_image?.message}
+          />
+        )}
 
       {/* <ImagePicker /> */}
       <div className="space-y-3 overflow-auto max-h-32 lg:max-h-72">
@@ -212,9 +212,8 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
           type="email"
           label="email"
           palceholder="email"
-          className={`py-3 rounded-lg ${
-            errors?.email ? "!border-red-500" : ""
-          }`}
+          className={`py-3 rounded-lg ${errors?.email ? "!border-red-500" : ""
+            }`}
           register={register("email", validationRules.email)}
         />
 

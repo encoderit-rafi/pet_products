@@ -70,7 +70,7 @@ export default function ProfileCard({ ...props }) {
             }
           )}
         >
-          {options.map((data) => (
+          {options?.map((data) => (
             <MenuItem key={data.text}>
               <button
                 className={cn(

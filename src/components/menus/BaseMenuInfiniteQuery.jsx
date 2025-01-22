@@ -69,7 +69,7 @@ export default function BaseMenuInfiniteQuery({
     )}
    >
     {data.length > 0 ? (
-     data.map((item) => (
+     data?.map((item) => (
       <MenuItem key={item.id}>
        <button
         className={cn(

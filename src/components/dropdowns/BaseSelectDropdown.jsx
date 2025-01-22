@@ -55,7 +55,7 @@ export default function BaseSelectDropdown() {
             }
           )}
         >
-          {people.map((person) => (
+          {people?.map((person) => (
             <ListboxOption
               key={person.name}
               value={person}

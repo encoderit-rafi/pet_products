@@ -36,7 +36,7 @@ export default function Table({ query }) {
               key={`${row.id}-${Math.random()}`}
               className="border-b text-custom_text_two border-custom_line_two"
             >
-              {query?.headers.map((header) => (
+              {query?.headers?.map((header) => (
                 <td
                   key={`${header.value}-${Math.random()}`}
                   className={`whitespace-nowrap first:px-0 last:px-0 px-4 py-3 text-xs text-custom_text_two font-light capitalize hover:cursor-default`}

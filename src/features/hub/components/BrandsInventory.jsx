@@ -21,7 +21,7 @@ export default function BrandsInventory() {
   useEffect(() => {
     setParamsInventoriesBarChart(
       omitEmpty({
-        brand_ids: brands.map((item) => item.id).join(","),
+        brand_ids: brands?.map((item) => item.id).join(","),
         range: range.value,
       })
     );

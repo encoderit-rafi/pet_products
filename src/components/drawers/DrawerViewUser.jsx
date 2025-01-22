@@ -32,13 +32,13 @@ export default function DrawerViewUser({ isOpen, setIsOpen, onClickEdit }) {
             </span>
           </div>
           <Title>Brands</Title>
-          {user.brands.map((brand) => (
+          {user?.brands?.map((brand) => (
             <li key={brand.id} className="text-custom_text_five">
               {brand.name}
             </li>
           ))}
           <Title>Roles</Title>
-          {user.roles.map((role) => (
+          {user?.roles?.map((role) => (
             <li key={role.id} className="text-custom_text_five">
               {role.name}
               {role.brand?.name && `(${role.brand?.name})`}

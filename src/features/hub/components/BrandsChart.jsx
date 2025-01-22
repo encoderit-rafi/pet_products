@@ -24,7 +24,7 @@ export default function BrandsChart() {
   useEffect(() => {
     setParamsBrandsBarChart(
       omitEmpty({
-        brand_ids: brands.map((item) => item.id).join(","),
+        brand_ids: brands?.map((item) => item.id).join(","),
         range: range?.value,
       })
     );
@@ -79,8 +79,8 @@ export default function BrandsChart() {
           tooltipPrefix="SAR"
           data={brandsBarChart?.bar_chart_data || []}
           max={brandsBarChart?.max_value}
-          // max={Math.max(...brandsBarChart?.bar_chart_data.map(item => +item.total_revenue)) + 10000}
-          // data={[]}
+        // max={Math.max(...brandsBarChart?.bar_chart_data.map(item => +item.total_revenue)) + 10000}
+        // data={[]}
         />
       </div>
     </BorderBox>

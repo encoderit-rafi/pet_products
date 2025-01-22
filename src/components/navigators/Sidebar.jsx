@@ -62,7 +62,7 @@ export default function Sidebar({ className, children }) {
             />
           </div>
 
-          {routes.map((route) => (
+          {routes?.map((route) => (
             <li key={route.name} className="relative group">
               <NavLink
                 to={route.path}

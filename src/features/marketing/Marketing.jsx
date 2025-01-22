@@ -251,7 +251,7 @@ export default function Marketing() {
             className="object-cover object-center rounded-lg size-12"
           />
           <div className="flex items-center justify-between flex-1 gap-3 overflow-x-auto">
-            {data.map((item, i) => (
+            {data?.map((item, i) => (
               <div key={i} className="space-y-1 shrink-0">
                 <SubTitle className="text-sm font-extralight">
                   {item.name}
@@ -270,11 +270,11 @@ export default function Marketing() {
           </div>
         </div>
         <div className="flex gap-3 mt-3 overflow-x-auto">
-          {dataPerMonth.map((data, i) => (
+          {dataPerMonth?.map((data, i) => (
             <div key={i} className="">
               <div className="relative flex gap-2">
-                {data.value.map((item, i) =>
-                  item.data.map((val) => (
+                {data.value?.map((item, i) =>
+                  item.data?.map((val) => (
                     <>
                       <div
                         key={i}

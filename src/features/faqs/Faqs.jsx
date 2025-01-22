@@ -28,7 +28,7 @@ export default function Faqs() {
             <div key={i} className="bg-custom_bg_one rounded-xl animate-pulse h-11" />
           )}
           {
-            statusAllFAQs != "loading" && allFAQs?.data.map(data =>
+            statusAllFAQs != "loading" && allFAQs?.data?.map(data =>
 
               // <Disclosure key={data.id}>
               //   <DisclosureButton className="flex items-center justify-between w-full px-5 py-3 text-xs lg:text-sm font-medium bg-custom_bg_seven rounded-xl group">

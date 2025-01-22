@@ -17,7 +17,7 @@ export default function ImagePicker({
         : setImages(selectedFiles);
     }
   };
-  useEffect(() => {}, [images]);
+  useEffect(() => { }, [images]);
   const handleRemoveImage = (index) => {
     setImages((prev) => prev.filter((_, i) => i !== index));
   };
@@ -56,7 +56,7 @@ export default function ImagePicker({
 
       {images?.length > 0 && (
         <div className="flex items-center w-full gap-2 overflow-x-auto">
-          {images.map((file, index) => (
+          {images?.map((file, index) => (
             <ImagePreview
               key={index}
               src={URL.createObjectURL(file)}
