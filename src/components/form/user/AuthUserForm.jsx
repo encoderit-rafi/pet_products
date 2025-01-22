@@ -82,6 +82,7 @@ export default function AuthUserForm({ setIsOpen }) {
       {
         onSuccess: () => {
           fetchAuthUser();
+          setIsOpen(false);
         },
       }
     );

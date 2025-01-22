@@ -71,7 +71,7 @@ export default function BrandsInventory() {
           barDataKey="total_remaining_stock"
           tooltipDataKey="total_remaining_stock"
           tooltipLabel="name"
-          tooltipPrefix="UNITS"
+          // tooltipPrefix="UNITS"
           data={inventoriesBarChart?.bar_chart_data || []}
           max={inventoriesBarChart?.max_value}
         />

@@ -43,8 +43,9 @@ const CustomTooltip = ({
             : "drop-shadow-[0_0_15px_rgba(0,0,0,0.5)]"
         }`}
       >
-        {payload[0].payload[tooltipLabel]}: {tooltipPrefix}{" "}
-        {payload[0].payload[tooltipDataKey]}
+        {payload[0].payload[tooltipLabel]}: {tooltipPrefix} {""}
+        {/* {payload[0].payload[tooltipDataKey]} */}
+        {parseInt(payload[0].payload[tooltipDataKey], 10).toLocaleString()}
       </div>
     );
   }

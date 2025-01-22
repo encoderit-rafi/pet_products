@@ -13,7 +13,7 @@ export const useGetAllBrands = () => {
     queryKey: [`get-all-brands-page_${params.page}`],
     retry: false,
     keepPreviousData: false,
-    // staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 10,
     queryFn: async () => {
       return (await Axios.get("/brands", { params })).data.data;
     },
