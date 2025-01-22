@@ -31,13 +31,18 @@ export default function DrawerViewUser({ isOpen, setIsOpen, onClickEdit }) {
               +{user.phone_number}
             </span>
           </div>
-          <Title>Brands</Title>
+          {user?.brands?.length > 0
+            && <Title>Brands</Title>
+          }
           {user?.brands?.map((brand) => (
             <li key={brand.id} className="text-custom_text_five">
               {brand.name}
             </li>
           ))}
-          <Title>Roles</Title>
+          {user?.roles?.length > 0
+            &&
+            <Title>Roles</Title>
+          }
           {user?.roles?.map((role) => (
             <li key={role.id} className="text-custom_text_five">
               {role.name}

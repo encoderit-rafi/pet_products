@@ -24,13 +24,13 @@ export default function TopClients() {
   };
   const query = useMemo(() => ({
     headers: [
-      // {
-      //   name: "SAP Code",
-      //   value: "sap_client_code",
-      //   cellValue: (row) => {
-      //     return row.sap_client_code;
-      //   },
-      // },
+      {
+        name: "SAP Code",
+        value: "sap_client_code",
+        cellValue: (row) => {
+          return row.sap_client_code;
+        },
+      },
       {
         name: "name",
         value: "name_en",

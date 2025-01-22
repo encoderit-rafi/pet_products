@@ -261,7 +261,7 @@ export default function Products() {
       },
     ],
     isLoading: false,
-    data: Array.from({ length: PAGINATION.per_page }, (_, i) => i),
+    data: Array.from({ length: 5 }, (_, i) => i),
   };
 
   return (
