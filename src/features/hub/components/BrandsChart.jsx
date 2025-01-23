@@ -72,6 +72,7 @@ export default function BrandsChart() {
       </div>
       <div className="overflow-x-auto overflow-y-auto h-72">
         <BaseBarChart
+          showIcon
           xAxisDataKey="name"
           barDataKey="total_revenue"
           tooltipDataKey="total_revenue"
@@ -79,9 +80,9 @@ export default function BrandsChart() {
           tooltipPrefix="SAR"
           data={brandsBarChart?.bar_chart_data || []}
           max={brandsBarChart?.max_value}
-        // max={Math.max(...brandsBarChart?.bar_chart_data.map(item => +item.total_revenue)) + 10000}
-        // data={[]}
+
         />
+
       </div>
     </BorderBox>
   );
