@@ -10,6 +10,7 @@ export default function DrawerUpdateUser({ isOpen, setIsOpen, backDrop }) {
       {/* <div className="flex-1 bg-gray-600"> */}
       <AuthUserForm setIsOpen={setIsOpen} />
       {/* </div> */}
+
     </Drawer>
   );
 }

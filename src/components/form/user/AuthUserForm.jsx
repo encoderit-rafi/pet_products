@@ -9,25 +9,43 @@ import InputPhoneNumber from "@/components/inputs/InputPhoneNumber";
 import InputPlace from "@/components/inputs/InputPlace";
 import Label from "@/components/texts/Label";
 import { useAuth } from "@/context/AuthProvider";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { omitEmpty, validationRules } from "@/consts";
 import { useUpdateAuthUser } from "@/api/auth/mutations/useUpdateAuthUser";
 import { useAuthUserQuery } from "@/api/auth/queries/useAuthUserQuery";
 import ImagePickerIcon from "@/components/file_pickers/ImagePickerIcon";
-
+import cn from "@/lib/utils/cn";
+import Drawer from "@/components/navigators/Drawer";
+import Webcam from "react-webcam";
+import base64ToFile from "@/lib/utils/base64ToFile";
+const videoConstraints = {
+  width: 1280,
+  height: 720,
+  facingMode: "user"
+};
 export default function AuthUserForm({ setIsOpen }) {
   const { data: authUserData, refetch: fetchAuthUser } = useAuthUserQuery();
+
   const {
     mutate: updateAuthUser,
     isLoading: isLoadingUpdateAuthUser,
     // isError: isErrorUpdateAuthUser,
   } = useUpdateAuthUser();
   const { user, setUser } = useAuth();
+  // const [isOpenCapImageDrawer, setIsOpenCapImageDrawer] = useState(false);
   const [number, setNumber] = useState();
   const [images, setImages] = useState([]);
-
-  console.log("✅ ~ file: AuthUserForm.jsx:16 ~ AuthUserForm ~ user:", user);
+  const [isOpenCapImageDrawer, setIsOpenCapImageDrawer] = useState();
+  const webcamRef = useRef(null);
+  const capture = useCallback(
+    () => {
+      // const imageSrc = webcamRef.current.getScreenshot();
+      setImages([base64ToFile(webcamRef.current.getScreenshot())])
+      setIsOpenCapImageDrawer(false)
+    },
+    [webcamRef]
+  );
   const {
     register,
     formState,
@@ -105,9 +123,15 @@ export default function AuthUserForm({ setIsOpen }) {
             className="size-28"
             hideCloseButton
           />
-          <div className="flex items-center justify-center px-6 py-3 bg-transparent border rounded-full border-custom_line_four siz-10 text-custom_yellow">
+          <div
+            className={cn(
+              "flex items-center justify-center px-6 py-3 bg-transparent border rounded-full cursor-pointer text-custom_yellow border-custom_line_nine"
+            )}
+            onClick={() => setIsOpenCapImageDrawer(true)}
+          >
             <CameraIcon className="size-5" />
           </div>
+
         </div>
 
         <BaseInput
@@ -134,10 +158,6 @@ export default function AuthUserForm({ setIsOpen }) {
             isError={errors?.phone_number}
           />
         </InputBox>
-        {/* <InputBox className="flex flex-col w-full">
-          <Label id="address" label="address" />
-          <InputPlace />
-        </InputBox> */}
       </div>
       <div className="flex gap-4 mt-10">
         <BaseButton
@@ -156,11 +176,42 @@ export default function AuthUserForm({ setIsOpen }) {
           className="text-xs font-light lg:text-sm"
           isLoading={isLoadingUpdateAuthUser}
           isDisabled={isLoadingUpdateAuthUser}
-          // onClick={setIsOpen}
+        // onClick={setIsOpen}
         >
           save change
         </BaseButton>
       </div>
+      <Drawer
+        isOpen={isOpenCapImageDrawer}
+      >
+        <div className="h-full flex flex-col">
+          <div className="flex-1">
+
+            {isOpenCapImageDrawer && <Webcam
+              audio={false}
+              height={720}
+              ref={webcamRef}
+              screenshotFormat="image/jpeg"
+              width={1280}
+              videoConstraints={videoConstraints}
+              className="rounded-lg"
+            />}
+          </div>
+
+          <div className="flex items-center gap-4">
+
+            <BaseButton
+              onClick={() => setIsOpenCapImageDrawer(false)}
+
+            >close</BaseButton>
+            <BaseButton
+              variant="gradient"
+              onClick={capture}
+
+            >capture</BaseButton>
+          </div>
+        </div>
+      </Drawer>
     </form>
   );
 }

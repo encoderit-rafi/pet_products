@@ -10,6 +10,8 @@ import DrawerUpdateUser from "../drawers/DrawerUpdateUser";
 import DialogLogout from "../dialogs/DialogLogout";
 import ProfileIcon from "@/assets/icons/ProfileIcon";
 import ProfileEditIcon from "@/assets/icons/ProfileEditIcon";
+import Drawer from "../navigators/Drawer";
+import BaseButton from "../buttons/BaseButton";
 
 export default function ProfileCard({ ...props }) {
   const { user } = useAuth();
@@ -17,6 +19,8 @@ export default function ProfileCard({ ...props }) {
   const [isBackdrop, setIsBackdrop] = useState(true);
   const [isOpenViewUser, setIsOpenViewUser] = useState(false);
   const [isOpenUpdateUser, setIsOpenUpdateUser] = useState(false);
+
+
   const [isOpenConfirmLogoutDialog, setIsOpenConfirmLogoutDialog] =
     useState(false);
   const options = [
@@ -114,6 +118,7 @@ export default function ProfileCard({ ...props }) {
         isOpenConfirmLogoutDialog={isOpenConfirmLogoutDialog}
         setIsOpenConfirmLogoutDialog={setIsOpenConfirmLogoutDialog}
       />
+
     </>
   );
 }
