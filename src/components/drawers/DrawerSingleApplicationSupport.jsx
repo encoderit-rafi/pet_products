@@ -58,10 +58,10 @@ export default function DrawerSingleApplicationSupport({
           <Label id="phone_number" label="phone number" />
           <InputPhoneNumber />
         </div>
-        <div className="space-y-2">
+        {/* <div className="space-y-2">
           <Label id="address" label="address" />
           <InputPlace />
-        </div>
+        </div> */}
       </div>
       <div className="flex gap-4 mt-10">
         <BaseButton
