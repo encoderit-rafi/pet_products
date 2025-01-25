@@ -78,6 +78,8 @@ const CustomTick = ({ x, y, payload, data, showIcon }) => {
               height: "100%",
               objectFit: "cover",
             }}
+            onError={(e) => (e.target.src = "/placeholder-image.webp")}
+
           />
         </div>
       </foreignObject>}
