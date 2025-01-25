@@ -74,6 +74,7 @@ export default function BrandsInventory() {
           // tooltipPrefix="UNITS"
           data={inventoriesBarChart?.bar_chart_data || []}
           max={inventoriesBarChart?.max_value}
+          showIcon
         />
       </div>
     </BorderBox>

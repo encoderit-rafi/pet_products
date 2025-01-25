@@ -51,7 +51,7 @@ const CustomTooltip = ({
 };
 const CustomTick = ({ x, y, payload, data, showIcon }) => {
   console.log("🚀 ~ CustomTick ~ data:", data[payload.index])
-  const iconSize = 20; // Set the size of the icon
+  const iconSize = 30; // Set the size of the icon
   const iconURL = data[payload.index].logo || "/placeholder-image.webp" // Set the size of the icon
   console.log("🚀 ~ CustomTick ~ iconURL:", iconURL)
 
