@@ -37,10 +37,11 @@ const CustomTooltip = ({
     // console.log({ payload });
     return (
       <div
-        className={`bg-custom_bg_three capitalize text-sm text-custom_text_three py-2 px-6 rounded-md ${isDark
-          ? "drop-shadow-[0_0_15px_rgba(255,255,255,1)]"
-          : "drop-shadow-[0_0_15px_rgba(0,0,0,0.5)]"
-          }`}
+        className={`bg-custom_bg_three capitalize text-sm text-custom_text_three py-2 px-6 rounded-md ${
+          isDark
+            ? "drop-shadow-[0_0_15px_rgba(255,255,255,1)]"
+            : "drop-shadow-[0_0_15px_rgba(0,0,0,0.5)]"
+        }`}
       >
         {payload[0].payload[tooltipLabel]}: {tooltipPrefix} {""}
         {/* {payload[0].payload[tooltipDataKey]} */}
@@ -50,39 +51,45 @@ const CustomTooltip = ({
   }
 };
 const CustomTick = ({ x, y, payload, data, showIcon }) => {
-  console.log("🚀 ~ CustomTick ~ data:", data[payload.index])
+  console.log("🚀 ~ CustomTick ~ data:", data[payload.index]);
   const iconSize = 30; // Set the size of the icon
-  const iconURL = data[payload.index].logo || "/placeholder-image.webp" // Set the size of the icon
-  console.log("🚀 ~ CustomTick ~ iconURL:", iconURL)
+  const iconURL = data[payload.index].logo || "/placeholder-image.webp"; // Set the size of the icon
+  console.log("🚀 ~ CustomTick ~ iconURL:", iconURL);
 
   return (
     <g transform={`translate(${x}, ${y})`}>
-      {showIcon && <foreignObject x={-iconSize / 2} y={0} width={iconSize} height={iconSize}>
-        <div
-          style={{
-            width: `${iconSize}px`,
-            height: `${iconSize}px`,
-            borderRadius: "50%",
-            overflow: "hidden",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            background: "white"
-          }}
+      {showIcon && (
+        <foreignObject
+          x={-iconSize / 2}
+          y={0}
+          width={iconSize}
+          height={iconSize}
         >
-          <img
-            src={iconURL}
-            alt={payload.value}
+          <div
             style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
+              width: `${iconSize}px`,
+              height: `${iconSize}px`,
+              borderRadius: "50%",
+              overflow: "hidden",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              background: "white",
             }}
-            onError={(e) => (e.target.src = "/placeholder-image.webp")}
-
-          />
-        </div>
-      </foreignObject>}
+          >
+            <img
+              src={iconURL}
+              alt={payload.value}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+              onError={(e) => (e.target.src = "/placeholder-image.webp")}
+            />
+          </div>
+        </foreignObject>
+      )}
       <text
         x={0}
         y={20 + (showIcon ? iconSize : 0)} // Position text below the image iconSize + 20
@@ -104,7 +111,7 @@ export default function BaseBarChart({
   tooltipLabel,
   tooltipPrefix,
   max,
-  showIcon = false
+  showIcon = false,
 }) {
   const { width } = useWindowSize();
   return (
@@ -185,7 +192,7 @@ export default function BaseBarChart({
           barSize={30}
           activeBar={<GlowingRectangle fill="#F6682B" />}
           style={{ background: "transparent" }}
-        // minPointSize={1}
+          // minPointSize={1}
         />
       </BarChart>
     </ResponsiveContainer>
