@@ -8,8 +8,6 @@ import ButtonLogout from "@/components/buttons/ButtonLogout";
 import DialogLogout from "@/components/dialogs/DialogLogout";
 import { useAuth } from "@/context/AuthProvider";
 
-//* icons😎
-
 export default function AppLayout() {
   const { theme } = useTheme();
   const { user } = useAuth();

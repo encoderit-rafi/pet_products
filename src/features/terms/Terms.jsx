@@ -24,10 +24,7 @@ export default function Terms() {
       ? tabs[0]
       : tabs.find((tab) => tab.value == searchParams.get("type"))
   );
-  // const [activeTab, setActiveTab] = useState();
-  // const [currentData, setCurrentData] = useState(
-  //   () => data?.find((data) => data.type == activeTab.value)?.details
-  // );
+
   useEffect(() => {
     setActiveTab(
       searchParams.get("type") == null
@@ -35,9 +32,7 @@ export default function Terms() {
         : tabs.find((tab) => tab.value == searchParams.get("type"))
     );
   }, [searchParams.get("type")]);
-  // useEffect(() => {
-  //   setCurrentData(data?.find((data) => data.type == activeTab.value)?.details);
-  // }, [activeTab]);
+
   return (
     <div className="flex flex-col h-full gap-4 text-custom_bg_three">
       <TabGroup>
@@ -48,8 +43,6 @@ export default function Terms() {
               list={tabs}
               activeTab={activeTab}
               handelOnChangeTab={(item) => {
-                console.log("✅ ~ file: Terms.jsx:40 ~ Terms ~ item:", item);
-
                 setSearchParams({ type: item.value });
               }}
             />
