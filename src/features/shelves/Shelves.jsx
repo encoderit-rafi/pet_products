@@ -20,6 +20,7 @@ import { useSearchParams } from "react-router-dom";
 import { useGetAllShelves } from "./api/queries/useGetAllShelves";
 import Pagination from "@/components/pagination";
 import { useGetAllStandTypes } from "./api/queries/useGetAllStandTypes";
+import { useGetAllPosMaterials } from "./api/queries/useGetAllPosMaterials";
 // const query = {
 //   headers: [
 //     {
@@ -100,6 +101,13 @@ export default function Shelves() {
     params: paramsAllStandTypes,
     setParams: setParamsAllStandTypes,
   } = useGetAllStandTypes({ isEnabled: true });
+  const {
+    data: allPosMaterials,
+    isLoading: isLoadingAllPosMaterials,
+    isFetching: isFetchingAllPosMaterials,
+    params: paramsAllPosMaterials,
+    setParams: setParamsAllPosMaterials,
+  } = useGetAllPosMaterials({ isEnabled: true });
   const queryShelves = useMemo(
     () => ({
       headers: [
@@ -201,41 +209,62 @@ export default function Shelves() {
         {
           name: "brand",
           value: "name",
-          cellValue: (row) => row.name,
+          cellValue: (row) => row?.brand.name,
         },
         {
           name: "stand type",
           value: "stand_type",
           cellValue: (row) => {
-            return row?.stand_type.name;
+            return row?.name;
           },
         },
         {
-          name: "store",
-          value: "store",
+          name: "POS materials",
+          value: "pos_materials",
           cellValue: (row) => {
-            return "API KEY MISSING";
+            return row?.pos_materials.length > 0 ? "Yes" : "No";
           },
         },
         {
-          name: "location",
-          value: "location",
+          name: "FS units",
+          value: "fs_units",
           cellValue: (row) => {
-            return "API KEY MISSING";
+            return row?.fs_units.length > 0 ? "Yes" : "No";
           },
         },
         {
-          name: "images",
-          value: "images",
+          name: "shelves",
+          value: "shelves",
           cellValue: (row) => {
-            return "API KEY MISSING";
+            return row?.shelves.length > 0 ? "Yes" : "No";
           },
         },
+        // {
+        //   name: "store",
+        //   value: "store",
+        //   cellValue: (row) => {
+        //     return "API KEY MISSING";
+        //   },
+        // },
+        // {
+        //   name: "location",
+        //   value: "location",
+        //   cellValue: (row) => {
+        //     return "API KEY MISSING";
+        //   },
+        // },
+        // {
+        //   name: "images",
+        //   value: "images",
+        //   cellValue: (row) => {
+        //     return "API KEY MISSING";
+        //   },
+        // },
         {
           name: "cost",
           value: "cost",
           cellValue: (row) => {
-            return row?.stand_type.cost;
+            return row?.cost ? `SR ${row?.cost}` : "-";
           },
         },
       ],
@@ -266,19 +295,90 @@ export default function Shelves() {
         ),
       },
       {
-        name: "store",
-        value: "store",
+        name: "POS materials",
+        value: "pos_materials",
         cellValue: () => (
           <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
         ),
       },
       {
-        name: "location",
-        value: "location",
+        name: "FS units",
+        value: "fs_units",
         cellValue: () => (
           <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
         ),
       },
+      {
+        name: "shelves",
+        value: "shelves",
+        cellValue: () => (
+          <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+        ),
+      },
+
+      {
+        name: "cost",
+        value: "cost",
+        cellValue: () => (
+          <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+        ),
+      },
+    ],
+    isLoading: false,
+    data: Array.from({ length: 5 }, (_, i) => i),
+  };
+  const queryPosMaterials = useMemo(
+    () => ({
+      headers: [
+        {
+          name: "brand",
+          value: "name",
+          cellValue: (row) => row?.brand_id,
+        },
+        {
+          name: "POS materials",
+          value: "name",
+          cellValue: (row) => {
+            return row?.name;
+          },
+        },
+
+        {
+          name: "cost",
+          value: "cost",
+          cellValue: (row) => {
+            return row?.cost ? `SR ${row?.cost}` : "-";
+          },
+        },
+      ],
+      isLoading: false,
+      data: allStandTypes?.data || [],
+    }),
+    [allStandTypes]
+  );
+  const queryPosMaterialsLoading = {
+    headers: [
+      {
+        name: "brand",
+        value: "name",
+        cellValue: (row) => {
+          return (
+            <div className="flex items-center gap-3">
+              <div className="rounded-full size-5 bg-custom_bg_one animate-pulse" />
+              <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+            </div>
+          );
+        },
+      },
+
+      {
+        name: "POS materials",
+        value: "pos_materials",
+        cellValue: () => (
+          <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+        ),
+      },
+
       {
         name: "cost",
         value: "cost",
@@ -429,6 +529,36 @@ export default function Shelves() {
                   current_page={allStandTypes?.current_page}
                   last_page={allStandTypes?.last_page}
                   per_page={allStandTypes?.per_page}
+                  onPageChange={handlePageChange}
+                  onPerPageChange={handlePerPageChange}
+                  c
+                />
+              )}
+            </TabPanel>
+            <TabPanel className={"flex flex-col flex-1"}>
+              <BorderBox className={"my-4 flex-1"}>
+                {isLoadingAllPosMaterials || isFetchingAllPosMaterials ? (
+                  <Table query={queryPosMaterialsLoading} />
+                ) : allPosMaterials?.total > 0 ? (
+                  <Table
+                    query={{
+                      ...queryPosMaterials,
+                      data: allPosMaterials?.data || [],
+                    }}
+                  />
+                ) : (
+                  <h5 className="text-xl text-center text-red-500">
+                    No data found
+                  </h5>
+                )}
+              </BorderBox>
+              {allPosMaterials?.total > 0 && (
+                <Pagination
+                  to={allPosMaterials?.to}
+                  total={allPosMaterials?.total}
+                  current_page={allPosMaterials?.current_page}
+                  last_page={allPosMaterials?.last_page}
+                  per_page={allPosMaterials?.per_page}
                   onPageChange={handlePageChange}
                   onPerPageChange={handlePerPageChange}
                   c
