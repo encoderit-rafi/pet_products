@@ -10,8 +10,11 @@ export const ranges = [
 export const PAGINATION = {
   page: 1,
   per_page: 20,
-}
+};
 export const validationRules = {
+  required: {
+    required: "Field is required",
+  },
   name: {
     required: "Name is required",
   },

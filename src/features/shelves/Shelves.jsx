@@ -4,7 +4,6 @@ import demoData from "@/lib/data/demo";
 import BorderBox from "@/components/box/BorderBox";
 import Table from "@/components/tables/Table";
 import BaseButton from "@/components/buttons/BaseButton";
-import ImagePicker from "@/components/file_pickers/ImagePicker";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Dialog from "@/components/dialogs/Dialog";
 import BaseMenu from "@/components/menus/BaseMenu";
@@ -21,6 +20,13 @@ import { useGetAllShelves } from "./api/queries/useGetAllShelves";
 import Pagination from "@/components/pagination";
 import { useGetAllStandTypes } from "./api/queries/useGetAllStandTypes";
 import { useGetAllPosMaterials } from "./api/queries/useGetAllPosMaterials";
+import BaseDropdown from "@/components/dropdowns/BaseDropdown";
+import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
+import { useGetAllProducts } from "../products/api/queries/useGetAllProducts";
+import ImagePicker from "@/components/file_pickers/ImagePicker";
+import { validationRules } from "@/consts";
+import { useForm } from "react-hook-form";
+import StandTypeForm from "./components/StandTypeForm";
 // const query = {
 //   headers: [
 //     {
@@ -108,6 +114,7 @@ export default function Shelves() {
     params: paramsAllPosMaterials,
     setParams: setParamsAllPosMaterials,
   } = useGetAllPosMaterials({ isEnabled: true });
+
   const queryShelves = useMemo(
     () => ({
       headers: [
@@ -333,7 +340,7 @@ export default function Shelves() {
         {
           name: "brand",
           value: "name",
-          cellValue: (row) => row?.brand_id,
+          cellValue: (row) => row?.brand.name,
         },
         {
           name: "POS materials",
@@ -433,6 +440,7 @@ export default function Shelves() {
         return;
     }
   }
+
   return (
     <div className="flex flex-col h-full gap-4 text-custom_bg_three">
       <TabGroup
@@ -571,10 +579,10 @@ export default function Shelves() {
       <Dialog
         isOpen={isOpenAddNewStand}
         title="add new stand"
-        className="max-w-lg "
+        className="max-w-lg"
       >
-        <div className="flex flex-col space-y-4">
-          <ImagePicker />
+        <form className="flex flex-col space-y-4">
+          <ImagePicker isError={false} />
           <div className="space-y-4 overflow-auto max-h-32 lg:max-h-72">
             <div className="space-y-2">
               <Label id="brand" label="brand" palceholder="brand" />
@@ -617,69 +625,19 @@ export default function Shelves() {
             </BaseButton>
             <BaseButton variant="gradient">confirm</BaseButton>
           </div>
-        </div>
+        </form>
       </Dialog>
       <Dialog
         isOpen={isOpenAddNewStandType}
         title="Add New Stand Type"
         className="max-w-3xl"
       >
-        <div className="flex flex-col mt-4 space-y-4">
-          <ImagePicker />
-          <div className="grid items-start grid-cols-1 gap-4 overflow-auto max-h-72">
-            {/* <MultiSelectListbox />
-            <CustomPhoneInput /> */}
-            <BaseInput
-              id="Type Name"
-              label="Type Name"
-              palceholder="Enter Value"
-            />
-            <BaseInput
-              id="First Shelf"
-              label="First Shelf"
-              palceholder="Number of Shelves"
-            />
-            <div className="space-y-2">
-              <Label id="brand" label="brand" palceholder="brand" />
-              <BaseSelectDropdown />
-            </div>
-            <BaseInput
-              id="First Shelf"
-              label="First Shelf"
-              palceholder="Number of Shelves"
-            />
-            <div className="space-y-2">
-              <Label
-                id="Materials list"
-                label="Materials list"
-                palceholder="Materials list"
-              />
-              <BaseSelectDropdown />
-            </div>
-            <BaseInput
-              id="First Shelf"
-              label="First Shelf"
-              palceholder="Number of Shelves"
-            />
-            <BaseInput id="Cost" label="Cost" palceholder="Cost" />
-            <BaseInput
-              id="First Shelf"
-              label="First Shelf"
-              palceholder="Number of Shelves"
-            />
-          </div>
-          <div className="flex items-center gap-4">
-            <BaseButton onClick={() => setIsOpenAddNewStandType(false)}>
-              cancel
-            </BaseButton>
-            <BaseButton variant="gradient">confirm</BaseButton>
-          </div>
-        </div>
+        <StandTypeForm />
       </Dialog>
       <Dialog
         isOpen={isOpenAddNewPOSMaterials}
         title="Create POS Materials"
-        className="max-w-lg"
+        className="max-w-2xl"
       >
         <div className="flex flex-col mt-4 space-y-4">
           <ImagePicker />

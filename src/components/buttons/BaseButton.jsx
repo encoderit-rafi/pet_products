@@ -9,6 +9,7 @@ export default function BaseButton({
   icon,
   variant = "base",
   type = "button",
+  iconColor = "",
   isLoading = false,
   isDisabled = false,
   ...props
@@ -30,14 +31,14 @@ export default function BaseButton({
       disabled={isDisabled}
       {...props}
     >
-      <div className="flex items-center justify-center gap-2">
+      <div className="flex items-center justify-center gap-2 ">
         {icon == "plus" && (
-          <span className="size-3">
+          <span className={`size-3 ${iconColor}`}>
             <PlusIcon />
           </span>
         )}
         {isLoading && (
-          <span className="size-3">
+          <span className={`size-3`}>
             <LoadingIcon />
           </span>
         )}

@@ -1,0 +1,29 @@
+import React from "react";
+import BaseDropdown from "./BaseDropdown";
+import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
+import Label from "../texts/Label";
+
+export default function BrandsDropdown({
+  variant = "base",
+  defaultText = "Select Brand",
+  className,
+  selected,
+  setSelected,
+}) {
+  const { data, isLoading, isFetching } = useGetAllBrands();
+  return (
+    <div className="">
+      <Label label="select brand" />
+
+      <BaseDropdown
+        variant={variant}
+        defaultText={defaultText}
+        className={`w-full ${className}`}
+        isLoading={isLoading || isFetching}
+        options={data || []}
+        selected={selected}
+        setSelected={(data) => setSelected(data)}
+      />
+    </div>
+  );
+}

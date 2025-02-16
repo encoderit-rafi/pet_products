@@ -15,6 +15,7 @@ import LoadingIcon from "@/assets/icons/LoadingIcon";
 
 const BaseDropdown = ({
   isLoading = false,
+  isDisable = false,
   options,
   selected,
   setSelected,
@@ -23,6 +24,7 @@ const BaseDropdown = ({
   defaultText = "select option",
   errorText = "No data found",
   multiple = false,
+  field = "name",
 }) => {
   const { isDark } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
@@ -49,15 +51,16 @@ const BaseDropdown = ({
             },
             className
           )}
-          disabled={isLoading}
+          disabled={isLoading || isDisable}
           onClick={() => setIsOpen((prev) => !prev)}
         >
-          <span className="leading-none">
+          <span className="leading-none truncate">
             {isLoading
               ? defaultText
               : multiple && selected?.length > 0
-                ? `Selected (${selected.length})`
-                : selected?.[0]?.name || defaultText}
+              ? `Selected (${selected.length})`
+              : // : selected?.[0]?.name || defaultText}
+                selected?.[0]?.[field] || defaultText}
           </span>
 
           <div className="flex items-center justify-center size-3 text-custom_line_two">
@@ -107,7 +110,8 @@ const BaseDropdown = ({
                   )}
                   onClick={() => onClickHandler(option)}
                 >
-                  <span>{option.name}</span>
+                  {/* <span>{option.name}</span> */}
+                  <span>{option[field]}</span>
                   <CheckIcon
                     className={cn(
                       "invisible transition-all duration-500 scale-90 opacity-0 size-3 text-[#74b222]",

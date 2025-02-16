@@ -14,7 +14,7 @@ export default function BaseInput({
   ...props
 }) {
   return (
-    <InputBox className="flex flex-col w-full">
+    <InputBox className="flex flex-col w-full space-y-1">
       {!hideLabel && <Label id={id} palceholder={palceholder} label={label} />}
       <input
         id={id}

@@ -9,7 +9,7 @@ export const useGetAllBrands = () => {
     sort_by: "asc",
   });
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isFetching } = useQuery({
     queryKey: [`get-all-brands-page_${params.page}`],
     retry: false,
     keepPreviousData: false,
@@ -21,6 +21,7 @@ export const useGetAllBrands = () => {
   return {
     data,
     isLoading,
+    isFetching,
     params,
     setParams,
   };
