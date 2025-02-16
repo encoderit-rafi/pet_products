@@ -15,7 +15,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-export default function StandTypeForm() {
+export default function StandTypeForm({ onClose }) {
   const {
     register,
     formState,
@@ -83,6 +83,18 @@ export default function StandTypeForm() {
   useEffect(() => {
     console.log(shelves);
   }, [shelves]);
+  function handelClose() {
+    setValue("shelf_name", "");
+    setValue("level", "");
+    setSelectedProduct([]);
+    setSelectedProducts([]);
+    setSelectedMaterials(() => []);
+    setSelectedBrand([]);
+    setShelves([]);
+    setCost(0);
+    setSelectedQuantity(1);
+    onClose();
+  }
   function onSubmit(item) {
     const data = {
       brand_id: selectedBrand?.[0].id,
@@ -367,9 +379,7 @@ export default function StandTypeForm() {
         </div>
       </div>
       <div className="flex items-center gap-4">
-        {/* <BaseButton onClick={() => setIsOpenAddNewStandType(false)}>
-      cancel
-    </BaseButton> */}
+        <BaseButton onClick={handelClose}>cancel</BaseButton>
         <BaseButton variant="gradient" type="submit">
           confirm
         </BaseButton>

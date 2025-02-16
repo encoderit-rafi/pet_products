@@ -632,7 +632,7 @@ export default function Shelves() {
         title="Add New Stand Type"
         className="max-w-3xl"
       >
-        <StandTypeForm />
+        <StandTypeForm onClose={() => setIsOpenAddNewStandType(false)} />
       </Dialog>
       <Dialog
         isOpen={isOpenAddNewPOSMaterials}
