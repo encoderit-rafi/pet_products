@@ -27,6 +27,7 @@ import ImagePicker from "@/components/file_pickers/ImagePicker";
 import { validationRules } from "@/consts";
 import { useForm } from "react-hook-form";
 import StandTypeForm from "./components/StandTypeForm";
+import POSMaterialsForm from "./components/POSMaterialsForm";
 // const query = {
 //   headers: [
 //     {
@@ -639,24 +640,7 @@ export default function Shelves() {
         title="Create POS Materials"
         className="max-w-2xl"
       >
-        <div className="flex flex-col mt-4 space-y-4">
-          <ImagePicker />
-          <div className="space-y-2 overflow-auto max-h-72">
-            <BaseInput id="Name" label="Name" palceholder="Name" />
-
-            <div className="space-y-2">
-              <Label id="brand" label="brand" palceholder="brand" />
-              <BaseSelectDropdown />
-            </div>
-            <BaseInput id="Cost" label="Cost" palceholder="Cost" />
-          </div>
-          <div className="flex items-center gap-4">
-            <BaseButton onClick={() => setIsOpenAddNewPOSMaterials(false)}>
-              cancel
-            </BaseButton>
-            <BaseButton variant="gradient">confirm</BaseButton>
-          </div>
-        </div>
+        <POSMaterialsForm onClose={() => setIsOpenAddNewPOSMaterials(false)} />
       </Dialog>
     </div>
   );

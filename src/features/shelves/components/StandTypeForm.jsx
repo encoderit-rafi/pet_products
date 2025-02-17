@@ -34,15 +34,8 @@ export default function StandTypeForm({ onClose }) {
   } = useGetAllProducts({
     isEnabled: true,
   });
-  function resetFields() {
-    reset();
-    // setImages([]);
-    // setNumber("");
-    // setSelectedRoles([]);
-    // setSelectedBrands([]);
-    // setSelectNewImages(false);
-  }
-  // const [productCount, setSelectedProductCount] = useState(1);
+
+  const [images, setImages] = useState([]);
   const [cost, setCost] = useState(0);
   const [selectedProduct, setSelectedProduct] = useState([]);
   const [selectedProducts, setSelectedProducts] = useState([]);
@@ -50,6 +43,18 @@ export default function StandTypeForm({ onClose }) {
   const [selectedBrand, setSelectedBrand] = useState([]);
   const [selectedMaterials, setSelectedMaterials] = useState([]);
   const [shelves, setShelves] = useState([]);
+
+  function resetFields() {
+    reset();
+    setSelectedProduct([]);
+    setSelectedProducts([]);
+    setSelectedMaterials(() => []);
+    setSelectedBrand([]);
+    setShelves([]);
+    setCost(0);
+    setSelectedQuantity(1);
+  }
+
   useEffect(() => {
     let materialsCost = 0;
     let productsCost = 0;
@@ -73,6 +78,7 @@ export default function StandTypeForm({ onClose }) {
     }
     setCost(materialsCost + productsCost);
   }, [selectedMaterials, shelves]);
+
   useEffect(() => {
     setValue("shelf_name", "");
     setValue("level", "");
@@ -84,19 +90,12 @@ export default function StandTypeForm({ onClose }) {
     console.log(shelves);
   }, [shelves]);
   function handelClose() {
-    setValue("shelf_name", "");
-    setValue("level", "");
-    setSelectedProduct([]);
-    setSelectedProducts([]);
-    setSelectedMaterials(() => []);
-    setSelectedBrand([]);
-    setShelves([]);
-    setCost(0);
-    setSelectedQuantity(1);
+    resetFields();
     onClose();
   }
   function onSubmit(item) {
     const data = {
+      image: images[0],
       brand_id: selectedBrand?.[0].id,
       name: item.name,
       pos_materials: selectedMaterials.map((item) => item.id),
@@ -143,12 +142,19 @@ export default function StandTypeForm({ onClose }) {
     //   }
     // }
   }
-  return (
-    <form className="flex flex-col mt-4" onSubmit={handleSubmit(onSubmit)}>
-      <ImagePicker />
 
+  return (
+    <form
+      className="flex flex-col mt-4 space-y-2"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <ImagePicker
+        images={images}
+        setImages={setImages}
+        // isError={errors?.profile_image?.message}
+      />
       <div className="flex flex-col lg:flex-row gap-5">
-        <div className="w-1/2 space-y-2">
+        <div className="lg:w-1/2 w-full space-y-2">
           <BaseInput
             id="name"
             label="Name"
@@ -199,8 +205,8 @@ export default function StandTypeForm({ onClose }) {
             }}
           />
         </div>
-        <div className="w-1/2 ">
-          <div className="flex items-center gap-2">
+        <div className="lg:w-1/2 w-full ">
+          <div className="flex items-center">
             <Label label={"Shelves"} />
             {shelves.length <= 5 && (
               <BaseButton
