@@ -214,7 +214,9 @@ export default function Shelves() {
       ? tabs[0]
       : tabs.find((tab) => tab.value == searchParams.get("type"))
   );
-
+  useEffect(() => {
+    setActiveTabIndex(activeTab.id);
+  }, [activeTab]);
   useEffect(() => {
     setActiveTab(
       searchParams.get("type") == null
