@@ -29,52 +29,7 @@ import { useForm } from "react-hook-form";
 import StandTypeForm from "./components/StandTypeForm";
 import POSMaterialsForm from "./components/POSMaterialsForm";
 import StandForm from "./components/StandForm";
-// const query = {
-//   headers: [
-//     {
-//       name: "brand",
-//       value: "name",
-//       cellValue: (row) => row.name,
-//     },
-//     {
-//       name: "stand type",
-//       value: "stand_type",
-//       cellValue: (row) => {
-//         return row?.stand_type.name;
-//       },
-//     },
-//     {
-//       name: "store",
-//       value: "store",
-//       cellValue: (row) => {
-//         return "API KEY MISSING";
-//       },
-//     },
-//     {
-//       name: "location",
-//       value: "location",
-//       cellValue: (row) => {
-//         return "API KEY MISSING";
-//       },
-//     },
-//     {
-//       name: "images",
-//       value: "images",
-//       cellValue: (row) => {
-//         return "API KEY MISSING";
-//       },
-//     },
-//     {
-//       name: "cost",
-//       value: "cost",
-//       cellValue: (row) => {
-//         return row?.stand_type.cost;
-//       },
-//     },
-//   ],
-//   isLoading: false,
-//   data: demoData,
-// };
+
 const tabs = [
   {
     id: 0,
@@ -218,59 +173,6 @@ export default function Shelves() {
     [allStandTypes]
   );
 
-  //   headers: [
-  //     {
-  //       name: "brand",
-  //       value: "name",
-  //       cellValue: (row) => {
-  //         return (
-  //           <div className="flex items-center gap-3">
-  //             <div className="rounded-full size-5 bg-custom_bg_one animate-pulse" />
-  //             <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-  //           </div>
-  //         );
-  //       },
-  //     },
-  //     {
-  //       name: "stand type",
-  //       value: "stand_type",
-  //       cellValue: () => (
-  //         <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-  //       ),
-  //     },
-  //     {
-  //       name: "POS materials",
-  //       value: "pos_materials",
-  //       cellValue: () => (
-  //         <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-  //       ),
-  //     },
-  //     {
-  //       name: "FS units",
-  //       value: "fs_units",
-  //       cellValue: () => (
-  //         <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-  //       ),
-  //     },
-  //     {
-  //       name: "shelves",
-  //       value: "shelves",
-  //       cellValue: () => (
-  //         <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-  //       ),
-  //     },
-
-  //     {
-  //       name: "cost",
-  //       value: "cost",
-  //       cellValue: () => (
-  //         <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-  //       ),
-  //     },
-  //   ],
-  //   isLoading: false,
-  //   data: Array.from({ length: 5 }, (_, i) => i),
-  // };
   const queryPosMaterials = useMemo(
     () => ({
       headers: [
@@ -454,7 +356,6 @@ export default function Shelves() {
                   per_page={allStandTypes?.per_page}
                   onPageChange={handlePageChange}
                   onPerPageChange={handlePerPageChange}
-                  c
                 />
               )}
             </TabPanel>

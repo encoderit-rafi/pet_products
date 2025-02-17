@@ -2,3 +2,4 @@
 
 - Dropdown modules
 - Table loading
+- Form validation

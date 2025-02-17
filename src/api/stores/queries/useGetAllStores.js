@@ -3,7 +3,9 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 
 export const useGetAllStores = () => {
-  const [params, setParams] = useState({});
+  const [params, setParams] = useState({
+    per_page: 500,
+  });
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["get-all-stores"],
     retry: false,

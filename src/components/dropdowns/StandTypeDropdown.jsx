@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BaseDropdown from "./BaseDropdown";
 import Label from "../texts/Label";
 import { useGetAllStandTypes } from "@/features/shelves/api/queries/useGetAllStandTypes";
@@ -6,14 +6,22 @@ import { useGetAllStandTypes } from "@/features/shelves/api/queries/useGetAllSta
 export default function StandTypeDropdown({
   variant = "base",
   defaultText = "Select",
+  isDisable,
   className,
   selected,
   setSelected,
-}) {
-  const { data, isLoading, isFetching } = useGetAllStandTypes({
+  params = {
     setToUrl: false,
+    isEnabled: false,
+  },
+}) {
+  const { data, isLoading, isFetching, setParams } = useGetAllStandTypes({
+    setToUrl: params.setToUrl,
+    isEnabled: params.isEnabled,
   });
-
+  useEffect(() => {
+    setParams({ brand_id: params.brand_id });
+  }, [params.brand_id]);
   return (
     <div className="">
       <Label label="stand type" />
@@ -23,7 +31,8 @@ export default function StandTypeDropdown({
         defaultText={defaultText}
         className={`w-full ${className}`}
         isLoading={isLoading || isFetching}
-        options={data || []}
+        options={data?.data || []}
+        isDisable={isDisable}
         selected={selected}
         setSelected={(data) => setSelected(data)}
       />

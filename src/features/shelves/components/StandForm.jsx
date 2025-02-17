@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BaseButton from "@/components/buttons/BaseButton";
 import BrandsDropdown from "@/components/dropdowns/BrandsDropdown";
 
@@ -9,9 +9,24 @@ import { validationRules } from "@/consts";
 import { useForm } from "react-hook-form";
 import StandTypeDropdown from "@/components/dropdowns/StandTypeDropdown";
 import StoresDropdown from "@/components/dropdowns/StoresDropdown";
+import { useCreateStand } from "../api/mutations/useCreateStand";
+import { useGetAllShelves } from "../api/queries/useGetAllShelves";
 
 export default function StandForm({ onClose }) {
-  const { register, formState, handleSubmit, reset } = useForm();
+  const {
+    register,
+    formState,
+    handleSubmit,
+    reset,
+    setError,
+    setValue,
+    clearErrors,
+  } = useForm();
+  const { mutate: createStand, isLoading } = useCreateStand();
+  const { refetch: fetchAllShelves } = useGetAllShelves({
+    setToUrl: false,
+    isEnabled: false,
+  });
   const { errors } = formState;
   const [images, setImages] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState([]);
@@ -21,51 +36,57 @@ export default function StandForm({ onClose }) {
     reset();
     setImages([]);
     setSelectedBrand([]);
+    setSelectedStandType([]);
+    setSelectedStore([]);
   }
   function handelClose() {
     resetFields();
     onClose();
   }
+  useEffect(() => {
+    const fieldsToUpdate = [
+      { key: "images", value: images?.[0] },
+      { key: "brand_id", value: selectedBrand?.[0]?.id },
+      { key: "stand_type_id", value: selectedStandType?.[0]?.id },
+      { key: "client_id", value: selectedStore?.[0]?.id },
+    ];
+
+    fieldsToUpdate.forEach(({ key, value }) => {
+      setValue(key, value);
+      clearErrors(key);
+    });
+  }, [images, selectedBrand, selectedStandType, selectedStore]);
   function onSubmit(item) {
-    const data = {
-      image: images[0],
-      brand_id: selectedBrand?.[0].id,
-      name: item.name,
-      cost: item.cost,
-    };
-    console.log("🚀 ~ onSubmit ~ data:", data);
-    // const validations = [
-    //   (formValues.type == "create" ||
-    //     (formValues.type == "update" && formValues.user.image == null) ||
-    //     (formValues.type == "update" &&
-    //       formValues.user.image != null &&
-    //       selectNewImages)) && {
-    //     key: "profile_image",
-    //     condition: (value) => value?.length === 0,
-    //     message: "Select an image",
-    //   },
-    //   {
-    //     key: "phone_number",
-    //     condition: (value) => value?.length <= 3,
-    //     message: "Phone number is required",
-    //   },
-    //   {
-    //     key: "brand_ids",
-    //     condition: (value) => value.length === 0,
-    //     message: "Select a brand",
-    //   },
-    //   {
-    //     key: "role_ids",
-    //     condition: (value) => value.length === 0,
-    //     message: "Select a role",
-    //   },
-    // ].filter(Boolean);
-    // for (const { key, condition, message } of validations) {
-    //   if (condition(data[key])) {
-    //     setError(key, { type: "manual", message });
-    //     return;
-    //   }
-    // }
+    const validations = [
+      {
+        key: "brand_id",
+        condition: (value) => value.length === 0,
+        message: "Brand is required",
+      },
+      {
+        key: "stand_type_id",
+        condition: (value) => value.length === 0,
+        message: "Stand type is required",
+      },
+      {
+        key: "client_id",
+        condition: (value) => value.length === 0,
+        message: "Store is required",
+      },
+    ].filter(Boolean);
+    for (const { key, condition, message } of validations) {
+      if (condition(item[key])) {
+        setError(key, { type: "manual", message });
+        return;
+      }
+    }
+    // console.log("🚀 ~ onSubmit ~ data:", item);
+    createStand(item, {
+      onSuccess() {
+        fetchAllShelves();
+        handelClose();
+      },
+    });
   }
 
   return (
@@ -85,6 +106,8 @@ export default function StandForm({ onClose }) {
         }}
       />
       <StandTypeDropdown
+        isDisable={selectedBrand?.length == 0 ? true : false}
+        params={{ brand_id: selectedBrand?.[0]?.id }}
         selected={selectedStandType}
         setSelected={(data) => {
           data?.id != selectedStandType?.[0]?.id &&
@@ -97,20 +120,32 @@ export default function StandForm({ onClose }) {
           data?.id != selectedStore?.[0]?.id && setSelectedStore([data]);
         }}
       />
-      <BaseInput
-        id="cost"
-        label="Cost"
-        palceholder="Enter Cost"
-        // value={cost}
-        // onChange={(e) => {
-        //   setCost(e.target.value);
-        // }}
-        className={`py-3 rounded-lg ${errors?.name ? "!border-red-500" : ""}`}
-        register={register("cost", validationRules.required)}
-      />
       <div className="flex items-center gap-4">
-        <BaseButton onClick={handelClose}>cancel</BaseButton>
-        <BaseButton variant="gradient" type="submit">
+        <BaseInput
+          id="location"
+          label="location"
+          palceholder="Enter location"
+          className={`py-3 rounded-lg ${errors?.name ? "!border-red-500" : ""}`}
+          register={register("location", validationRules.required)}
+        />
+        <BaseInput
+          id="cost"
+          label="Cost"
+          palceholder="Enter Cost"
+          className={`py-3 rounded-lg ${errors?.name ? "!border-red-500" : ""}`}
+          register={register("cost", validationRules.required)}
+        />
+      </div>
+      <div className="flex items-center gap-4">
+        <BaseButton onClick={handelClose} isDisabled={isLoading}>
+          cancel
+        </BaseButton>
+        <BaseButton
+          isDisabled={isLoading}
+          isLoading={isLoading}
+          variant="gradient"
+          type="submit"
+        >
           confirm
         </BaseButton>
       </div>
