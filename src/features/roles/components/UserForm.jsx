@@ -140,39 +140,39 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
     }
     formValues.type === "update"
       ? updateUser(
-        {
-          id: formValues.user.id,
-          data: omitEmpty({
+          {
+            id: formValues.user.id,
+            data: omitEmpty({
+              ...data,
+              profile_image: data.profile_image[0],
+              is_brand_employee: 1,
+            }),
+          },
+          {
+            onSuccess: () => {
+              setParams({ page: params.page, per_page: params.per_page });
+              fetchAllUsers();
+              resetFields();
+              handelOnClickCancel();
+            },
+          }
+        )
+      : createUser(
+          {
             ...data,
             profile_image: data.profile_image[0],
             is_brand_employee: 1,
-          }),
-        },
-        {
-          onSuccess: () => {
-            setParams({ page: params.page, per_page: params.per_page });
-            fetchAllUsers();
-            resetFields();
-            handelOnClickCancel();
           },
-        }
-      )
-      : createUser(
-        {
-          ...data,
-          profile_image: data.profile_image[0],
-          is_brand_employee: 1,
-        },
-        {
-          onSuccess: () => {
-            // fetchAllUsers();
-            setParams({ page: params.page, per_page: params.per_page });
-            fetchAllUsers();
-            resetFields();
-            handelOnClickCancel();
-          },
-        }
-      );
+          {
+            onSuccess: () => {
+              // fetchAllUsers();
+              setParams({ page: params.page, per_page: params.per_page });
+              fetchAllUsers();
+              resetFields();
+              handelOnClickCancel();
+            },
+          }
+        );
   }
   return (
     <form
@@ -190,12 +190,12 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
       {(formValues.type === "create" ||
         selectNewImages ||
         (formValues.type === "update" && formValues?.user.image == null)) && (
-          <ImagePicker
-            images={images}
-            setImages={setImages}
-            isError={errors?.profile_image?.message}
-          />
-        )}
+        <ImagePicker
+          images={images}
+          setImages={setImages}
+          isError={errors?.profile_image?.message}
+        />
+      )}
 
       {/* <ImagePicker /> */}
       <div className="space-y-3 overflow-auto max-h-32 lg:max-h-72">
@@ -212,8 +212,9 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
           type="email"
           label="email"
           palceholder="email"
-          className={`py-3 rounded-lg ${errors?.email ? "!border-red-500" : ""
-            }`}
+          className={`py-3 rounded-lg ${
+            errors?.email ? "!border-red-500" : ""
+          }`}
           register={register("email", validationRules.email)}
         />
 

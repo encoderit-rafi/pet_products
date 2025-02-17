@@ -22,7 +22,7 @@ import { useGetAllStandTypes } from "./api/queries/useGetAllStandTypes";
 import { useGetAllPosMaterials } from "./api/queries/useGetAllPosMaterials";
 import BaseDropdown from "@/components/dropdowns/BaseDropdown";
 import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
-import { useGetAllProducts } from "../products/api/queries/useGetAllProducts";
+// import { useGetAllProducts } from "../products/api/queries/useGetAllRoles";
 import ImagePicker from "@/components/file_pickers/ImagePicker";
 import { validationRules } from "@/consts";
 import { useForm } from "react-hook-form";
@@ -161,57 +161,12 @@ export default function Shelves() {
           },
         },
       ],
-      isLoading: false,
+      isLoading: isLoadingAllShelves || isFetchingAllShelves,
       data: allShelves?.data || [],
     }),
     [allShelves]
   );
-  const queryShelvesLoading = {
-    headers: [
-      {
-        name: "brand",
-        value: "name",
-        cellValue: (row) => {
-          return (
-            <div className="flex items-center gap-3">
-              <div className="rounded-full size-5 bg-custom_bg_one animate-pulse" />
-              <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-            </div>
-          );
-        },
-      },
-      {
-        name: "stand type",
-        value: "stand_type",
-        cellValue: () => (
-          <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-        ),
-      },
-      {
-        name: "store",
-        value: "store",
-        cellValue: () => (
-          <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-        ),
-      },
-      {
-        name: "location",
-        value: "location",
-        cellValue: () => (
-          <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-        ),
-      },
-      {
-        name: "cost",
-        value: "cost",
-        cellValue: () => (
-          <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-        ),
-      },
-    ],
-    isLoading: false,
-    data: Array.from({ length: 5 }, (_, i) => i),
-  };
+
   const queryStandTypes = useMemo(
     () => ({
       headers: [
@@ -248,27 +203,7 @@ export default function Shelves() {
             return row?.shelves.length > 0 ? "Yes" : "No";
           },
         },
-        // {
-        //   name: "store",
-        //   value: "store",
-        //   cellValue: (row) => {
-        //     return "API KEY MISSING";
-        //   },
-        // },
-        // {
-        //   name: "location",
-        //   value: "location",
-        //   cellValue: (row) => {
-        //     return "API KEY MISSING";
-        //   },
-        // },
-        // {
-        //   name: "images",
-        //   value: "images",
-        //   cellValue: (row) => {
-        //     return "API KEY MISSING";
-        //   },
-        // },
+
         {
           name: "cost",
           value: "cost",
@@ -277,65 +212,65 @@ export default function Shelves() {
           },
         },
       ],
-      isLoading: false,
+      isLoading: isLoadingAllStandTypes || isFetchingAllStandTypes,
       data: allStandTypes?.data || [],
     }),
     [allStandTypes]
   );
-  const queryStandTypesLoading = {
-    headers: [
-      {
-        name: "brand",
-        value: "name",
-        cellValue: (row) => {
-          return (
-            <div className="flex items-center gap-3">
-              <div className="rounded-full size-5 bg-custom_bg_one animate-pulse" />
-              <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-            </div>
-          );
-        },
-      },
-      {
-        name: "stand type",
-        value: "stand_type",
-        cellValue: () => (
-          <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-        ),
-      },
-      {
-        name: "POS materials",
-        value: "pos_materials",
-        cellValue: () => (
-          <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-        ),
-      },
-      {
-        name: "FS units",
-        value: "fs_units",
-        cellValue: () => (
-          <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-        ),
-      },
-      {
-        name: "shelves",
-        value: "shelves",
-        cellValue: () => (
-          <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-        ),
-      },
 
-      {
-        name: "cost",
-        value: "cost",
-        cellValue: () => (
-          <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-        ),
-      },
-    ],
-    isLoading: false,
-    data: Array.from({ length: 5 }, (_, i) => i),
-  };
+  //   headers: [
+  //     {
+  //       name: "brand",
+  //       value: "name",
+  //       cellValue: (row) => {
+  //         return (
+  //           <div className="flex items-center gap-3">
+  //             <div className="rounded-full size-5 bg-custom_bg_one animate-pulse" />
+  //             <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+  //           </div>
+  //         );
+  //       },
+  //     },
+  //     {
+  //       name: "stand type",
+  //       value: "stand_type",
+  //       cellValue: () => (
+  //         <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+  //       ),
+  //     },
+  //     {
+  //       name: "POS materials",
+  //       value: "pos_materials",
+  //       cellValue: () => (
+  //         <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+  //       ),
+  //     },
+  //     {
+  //       name: "FS units",
+  //       value: "fs_units",
+  //       cellValue: () => (
+  //         <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+  //       ),
+  //     },
+  //     {
+  //       name: "shelves",
+  //       value: "shelves",
+  //       cellValue: () => (
+  //         <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+  //       ),
+  //     },
+
+  //     {
+  //       name: "cost",
+  //       value: "cost",
+  //       cellValue: () => (
+  //         <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+  //       ),
+  //     },
+  //   ],
+  //   isLoading: false,
+  //   data: Array.from({ length: 5 }, (_, i) => i),
+  // };
   const queryPosMaterials = useMemo(
     () => ({
       headers: [
@@ -491,17 +426,7 @@ export default function Shelves() {
           <TabPanels className="flex flex-col flex-1">
             <TabPanel className={"flex flex-col flex-1"}>
               <BorderBox className={"my-4 flex-1"}>
-                {isLoadingAllShelves || isFetchingAllShelves ? (
-                  <Table query={queryShelvesLoading} />
-                ) : allShelves?.total > 0 ? (
-                  <Table
-                    query={{ ...queryShelves, data: allShelves?.data || [] }}
-                  />
-                ) : (
-                  <h5 className="text-xl text-center text-red-500">
-                    No data found
-                  </h5>
-                )}
+                <Table query={queryShelves} />
               </BorderBox>
               {allShelves?.total > 0 && (
                 <Pagination
@@ -518,20 +443,7 @@ export default function Shelves() {
             </TabPanel>
             <TabPanel className={"flex flex-col flex-1"}>
               <BorderBox className={"my-4 flex-1"}>
-                {isLoadingAllStandTypes || isFetchingAllStandTypes ? (
-                  <Table query={queryStandTypesLoading} />
-                ) : allStandTypes?.total > 0 ? (
-                  <Table
-                    query={{
-                      ...queryStandTypes,
-                      data: allStandTypes?.data || [],
-                    }}
-                  />
-                ) : (
-                  <h5 className="text-xl text-center text-red-500">
-                    No data found
-                  </h5>
-                )}
+                <Table query={queryStandTypes} />
               </BorderBox>
               {allStandTypes?.total > 0 && (
                 <Pagination

@@ -2,17 +2,15 @@ import { Axios } from "@/axios";
 import { useState } from "react";
 import { useQuery } from "react-query";
 
-export const useGetAllRoles = () => {
-  const [params, setParams] = useState({
-    brand_ids: "",
-  });
+export const useGetAllStores = () => {
+  const [params, setParams] = useState({});
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["get-all-roles"],
+    queryKey: ["get-all-stores"],
     retry: false,
     keepPreviousData: false,
     queryFn: async () => {
       return (
-        await Axios.get("/roles", {
+        await Axios.get("/clients", {
           params,
         })
       ).data;

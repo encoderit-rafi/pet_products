@@ -123,38 +123,6 @@ export default function StandTypeForm({ onClose }) {
         handelClose();
       },
     });
-    // const validations = [
-    //   (formValues.type == "create" ||
-    //     (formValues.type == "update" && formValues.user.image == null) ||
-    //     (formValues.type == "update" &&
-    //       formValues.user.image != null &&
-    //       selectNewImages)) && {
-    //     key: "profile_image",
-    //     condition: (value) => value?.length === 0,
-    //     message: "Select an image",
-    //   },
-    //   {
-    //     key: "phone_number",
-    //     condition: (value) => value?.length <= 3,
-    //     message: "Phone number is required",
-    //   },
-    //   {
-    //     key: "brand_ids",
-    //     condition: (value) => value.length === 0,
-    //     message: "Select a brand",
-    //   },
-    //   {
-    //     key: "role_ids",
-    //     condition: (value) => value.length === 0,
-    //     message: "Select a role",
-    //   },
-    // ].filter(Boolean);
-    // for (const { key, condition, message } of validations) {
-    //   if (condition(data[key])) {
-    //     setError(key, { type: "manual", message });
-    //     return;
-    //   }
-    // }
   }
 
   return (

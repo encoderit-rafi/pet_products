@@ -2,7 +2,7 @@ import cn from "@/lib/utils/cn";
 import React from "react";
 
 export default function Table({ query }) {
-  console.log({ query: query.data })
+  console.log({ query: query.data });
   return (
     <div
       className={"relative h-full max-h-[530px] overflow-y-auto text-xs pr-2"}
@@ -31,21 +31,37 @@ export default function Table({ query }) {
         </thead>
 
         <tbody className="">
-          {query?.data?.map((row) => (
-            <tr
-              key={`${row.id}-${Math.random()}`}
-              className="border-b text-custom_text_two border-custom_line_two"
-            >
-              {query?.headers?.map((header) => (
-                <td
-                  key={`${header.value}-${Math.random()}`}
-                  className={`whitespace-nowrap first:px-0 last:px-0 px-4 py-3 text-xs text-custom_text_two font-light capitalize hover:cursor-default`}
+          {query.isLoading
+            ? Array.from({ length: 5 }).map((_, i) => (
+                <tr
+                  key={`${i}-${Math.random()}`}
+                  className="border-b text-custom_text_two border-custom_line_two"
                 >
-                  {header.cellValue(row)}
-                </td>
+                  {query?.headers?.map((header) => (
+                    <td
+                      key={`${header.value}-${Math.random()}`}
+                      className={`whitespace-nowrap first:px-0 last:px-0 px-4 py-3 text-xs text-custom_text_two font-light capitalize hover:cursor-default`}
+                    >
+                      <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+                    </td>
+                  ))}
+                </tr>
+              ))
+            : query?.data?.map((row) => (
+                <tr
+                  key={`${row.id}-${Math.random()}`}
+                  className="border-b text-custom_text_two border-custom_line_two"
+                >
+                  {query?.headers?.map((header) => (
+                    <td
+                      key={`${header.value}-${Math.random()}`}
+                      className={`whitespace-nowrap first:px-0 last:px-0 px-4 py-3 text-xs text-custom_text_two font-light capitalize hover:cursor-default`}
+                    >
+                      {header.cellValue(row)}
+                    </td>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          ))}
         </tbody>
       </table>
     </div>

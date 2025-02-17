@@ -8,6 +8,7 @@ import BaseInput from "@/components/inputs/BaseInput";
 import { validationRules } from "@/consts";
 import { useForm } from "react-hook-form";
 import StandTypeDropdown from "@/components/dropdowns/StandTypeDropdown";
+import StoresDropdown from "@/components/dropdowns/StoresDropdown";
 
 export default function StandForm({ onClose }) {
   const { register, formState, handleSubmit, reset } = useForm();
@@ -15,6 +16,7 @@ export default function StandForm({ onClose }) {
   const [images, setImages] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState([]);
   const [selectedStandType, setSelectedStandType] = useState([]);
+  const [selectedStore, setSelectedStore] = useState([]);
   function resetFields() {
     reset();
     setImages([]);
@@ -87,6 +89,12 @@ export default function StandForm({ onClose }) {
         setSelected={(data) => {
           data?.id != selectedStandType?.[0]?.id &&
             setSelectedStandType([data]);
+        }}
+      />
+      <StoresDropdown
+        selected={selectedStore}
+        setSelected={(data) => {
+          data?.id != selectedStore?.[0]?.id && setSelectedStore([data]);
         }}
       />
       <BaseInput

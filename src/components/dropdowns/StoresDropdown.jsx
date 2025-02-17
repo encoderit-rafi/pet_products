@@ -1,22 +1,19 @@
 import React from "react";
 import BaseDropdown from "./BaseDropdown";
 import Label from "../texts/Label";
-import { useGetAllStandTypes } from "@/features/shelves/api/queries/useGetAllStandTypes";
+import { useGetAllStores } from "@/api/stores/queries/useGetAllStores";
 
-export default function StandTypeDropdown({
+export default function StoresDropdown({
   variant = "base",
   defaultText = "Select",
   className,
   selected,
   setSelected,
 }) {
-  const { data, isLoading, isFetching } = useGetAllStandTypes({
-    setToUrl: false,
-  });
-
+  const { data, isLoading, isFetching } = useGetAllStores();
   return (
     <div className="">
-      <Label label="stand type" />
+      <Label label="stores" />
 
       <BaseDropdown
         variant={variant}
