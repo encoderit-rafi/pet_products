@@ -28,6 +28,7 @@ import { validationRules } from "@/consts";
 import { useForm } from "react-hook-form";
 import StandTypeForm from "./components/StandTypeForm";
 import POSMaterialsForm from "./components/POSMaterialsForm";
+import StandForm from "./components/StandForm";
 // const query = {
 //   headers: [
 //     {
@@ -582,51 +583,7 @@ export default function Shelves() {
         title="add new stand"
         className="max-w-lg"
       >
-        <form className="flex flex-col space-y-4">
-          <ImagePicker isError={false} />
-          <div className="space-y-4 overflow-auto max-h-32 lg:max-h-72">
-            <div className="space-y-2">
-              <Label id="brand" label="brand" palceholder="brand" />
-              <BaseSelectDropdown />
-            </div>
-            <div className="space-y-2">
-              <Label
-                id="Stand Type"
-                label="Stand Type"
-                palceholder="Stand Type"
-              />
-              <BaseSelectDropdown />
-            </div>
-            <div className="space-y-2">
-              <Label
-                id="Stand Type"
-                label="Stand Type"
-                palceholder="Stand Type"
-              />
-              <BaseSelectDropdown />
-            </div>
-            <div className="space-y-2">
-              <Label id="Store" label="Store" palceholder="Store" />
-              <BaseSelectDropdown />
-            </div>
-            <div className="space-y-2 ">
-              <Label id="Location" label="Location" palceholder="Location" />
-              <BaseSelectDropdown />
-            </div>
-            <BaseInput
-              id="Cost"
-              label="Cost"
-              palceholder="Cost"
-              // className="py-3 rounded-lg"
-            />
-          </div>
-          <div className="flex items-center gap-4">
-            <BaseButton onClick={() => setIsOpenAddNewStand(false)}>
-              cancel
-            </BaseButton>
-            <BaseButton variant="gradient">confirm</BaseButton>
-          </div>
-        </form>
+        <StandForm onClose={() => setIsOpenAddNewStand(false)} />
       </Dialog>
       <Dialog
         isOpen={isOpenAddNewStandType}

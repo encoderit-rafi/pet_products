@@ -7,12 +7,14 @@ import BaseInput from "@/components/inputs/BaseInput";
 
 import { validationRules } from "@/consts";
 import { useForm } from "react-hook-form";
+import StandTypeDropdown from "@/components/dropdowns/StandTypeDropdown";
 
-export default function POSMaterialsForm({ onClose }) {
+export default function StandForm({ onClose }) {
   const { register, formState, handleSubmit, reset } = useForm();
   const { errors } = formState;
   const [images, setImages] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState([]);
+  const [selectedStandType, setSelectedStandType] = useState([]);
   function resetFields() {
     reset();
     setImages([]);
@@ -74,17 +76,17 @@ export default function POSMaterialsForm({ onClose }) {
         setImages={setImages}
         // isError={errors?.profile_image?.message}
       />
-      <BaseInput
-        id="name"
-        label="Name"
-        palceholder="Enter Value"
-        className={`py-3 rounded-lg ${errors?.name ? "!border-red-500" : ""}`}
-        register={register("name", validationRules.name)}
-      />
       <BrandsDropdown
         selected={selectedBrand}
         setSelected={(data) => {
           data?.id != selectedBrand?.[0]?.id && setSelectedBrand([data]);
+        }}
+      />
+      <StandTypeDropdown
+        selected={selectedStandType}
+        setSelected={(data) => {
+          data?.id != selectedStandType?.[0]?.id &&
+            setSelectedStandType([data]);
         }}
       />
       <BaseInput
