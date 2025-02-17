@@ -14,8 +14,15 @@ import { useGetAllProducts } from "@/features/products/api/queries/useGetAllProd
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { useCreateStandType } from "../api/mutations/useCreateStandType";
+import { useGetAllStandTypes } from "../api/queries/useGetAllStandTypes";
 
 export default function StandTypeForm({ onClose }) {
+  const { mutate: createStandType, isLoading } = useCreateStandType();
+  const { refetch: fetchAllStandTypes } = useGetAllStandTypes({
+    setToUrl: false,
+    isEnabled: false,
+  });
   const {
     register,
     formState,
@@ -98,6 +105,7 @@ export default function StandTypeForm({ onClose }) {
       image: images[0],
       brand_id: selectedBrand?.[0].id,
       name: item.name,
+      cost: cost,
       pos_materials: selectedMaterials.map((item) => item.id),
       shelves: shelves.map((shelf) => ({
         name: shelf.name,
@@ -109,6 +117,12 @@ export default function StandTypeForm({ onClose }) {
       })),
     };
     console.log("🚀 ~ onSubmit ~ data:", data);
+    createStandType(data, {
+      onSuccess() {
+        fetchAllStandTypes();
+        handelClose();
+      },
+    });
     // const validations = [
     //   (formValues.type == "create" ||
     //     (formValues.type == "update" && formValues.user.image == null) ||
@@ -153,8 +167,8 @@ export default function StandTypeForm({ onClose }) {
         setImages={setImages}
         // isError={errors?.profile_image?.message}
       />
-      <div className="flex flex-col lg:flex-row gap-5">
-        <div className="lg:w-1/2 w-full space-y-2">
+      <div className="flex flex-col gap-5 lg:flex-row">
+        <div className="w-full space-y-2 lg:w-1/2">
           <BaseInput
             id="name"
             label="Name"
@@ -205,7 +219,7 @@ export default function StandTypeForm({ onClose }) {
             }}
           />
         </div>
-        <div className="lg:w-1/2 w-full ">
+        <div className="w-full lg:w-1/2 ">
           <div className="flex items-center">
             <Label label={"Shelves"} />
             {shelves.length <= 5 && (
@@ -315,9 +329,9 @@ export default function StandTypeForm({ onClose }) {
             <div className="space-y-2 mt-2 max-h-[150px] overflow-y-auto">
               {selectedProducts.length > 0 &&
                 selectedProducts.map((item, i) => (
-                  <div key={i} className="bg-custom_bg_two rounded-md p-3 ">
+                  <div key={i} className="p-3 rounded-md bg-custom_bg_two ">
                     <span
-                      className="block ml-auto  w-fit cursor-pointer"
+                      className="block ml-auto cursor-pointer w-fit"
                       onClick={() => {
                         setSelectedProducts((old) =>
                           old.filter(
@@ -343,9 +357,9 @@ export default function StandTypeForm({ onClose }) {
           <div className="space-y-2 mt-2 max-h-[150px] overflow-y-auto">
             {shelves.length > 0 &&
               shelves.map((item, i) => (
-                <div key={i} className="bg-custom_bg_two rounded-md p-2">
+                <div key={i} className="p-2 rounded-md bg-custom_bg_two">
                   <span
-                    className="block ml-auto  w-fit cursor-pointer"
+                    className="block ml-auto cursor-pointer w-fit"
                     onClick={() => {
                       setShelves((old) =>
                         old.filter((data) => data.level != item.level)
@@ -364,13 +378,13 @@ export default function StandTypeForm({ onClose }) {
                     Products:
                     {item?.products?.map((product, i) => (
                       <div className="" key={i}>
-                        <p className="font-medium text-xs">
+                        <p className="text-xs font-medium">
                           Name:{" "}
                           <span className="font-thin">
                             {product.product_name_en}
                           </span>
                         </p>
-                        <p className="font-medium text-xs">
+                        <p className="text-xs font-medium">
                           Quantity:{" "}
                           <span className="font-thin">
                             {product.product_quantity}
@@ -385,8 +399,15 @@ export default function StandTypeForm({ onClose }) {
         </div>
       </div>
       <div className="flex items-center gap-4">
-        <BaseButton onClick={handelClose}>cancel</BaseButton>
-        <BaseButton variant="gradient" type="submit">
+        <BaseButton onClick={handelClose} isDisabled={isLoading}>
+          cancel
+        </BaseButton>
+        <BaseButton
+          variant="gradient"
+          type="submit"
+          isDisabled={isLoading}
+          isLoading={isLoading}
+        >
           confirm
         </BaseButton>
       </div>

@@ -7,8 +7,15 @@ import BaseInput from "@/components/inputs/BaseInput";
 
 import { validationRules } from "@/consts";
 import { useForm } from "react-hook-form";
+import { useCreatePOSMaterial } from "../api/mutations/useCreatePOSMaterial";
+import { useGetAllPosMaterials } from "../api/queries/useGetAllPosMaterials";
 
 export default function POSMaterialsForm({ onClose }) {
+  const { refetch: fetchAllPosMaterials } = useGetAllPosMaterials({
+    setToUrl: false,
+    isEnabled: false,
+  });
+  const { mutate: createPOSMaterials, isLoading } = useCreatePOSMaterial();
   const { register, formState, handleSubmit, reset } = useForm();
   const { errors } = formState;
   const [images, setImages] = useState([]);
@@ -30,38 +37,12 @@ export default function POSMaterialsForm({ onClose }) {
       cost: item.cost,
     };
     console.log("🚀 ~ onSubmit ~ data:", data);
-    // const validations = [
-    //   (formValues.type == "create" ||
-    //     (formValues.type == "update" && formValues.user.image == null) ||
-    //     (formValues.type == "update" &&
-    //       formValues.user.image != null &&
-    //       selectNewImages)) && {
-    //     key: "profile_image",
-    //     condition: (value) => value?.length === 0,
-    //     message: "Select an image",
-    //   },
-    //   {
-    //     key: "phone_number",
-    //     condition: (value) => value?.length <= 3,
-    //     message: "Phone number is required",
-    //   },
-    //   {
-    //     key: "brand_ids",
-    //     condition: (value) => value.length === 0,
-    //     message: "Select a brand",
-    //   },
-    //   {
-    //     key: "role_ids",
-    //     condition: (value) => value.length === 0,
-    //     message: "Select a role",
-    //   },
-    // ].filter(Boolean);
-    // for (const { key, condition, message } of validations) {
-    //   if (condition(data[key])) {
-    //     setError(key, { type: "manual", message });
-    //     return;
-    //   }
-    // }
+    createPOSMaterials(data, {
+      onSuccess() {
+        fetchAllPosMaterials();
+        handelClose();
+      },
+    });
   }
 
   return (
@@ -91,16 +72,19 @@ export default function POSMaterialsForm({ onClose }) {
         id="cost"
         label="Cost"
         palceholder="Enter Cost"
-        // value={cost}
-        // onChange={(e) => {
-        //   setCost(e.target.value);
-        // }}
         className={`py-3 rounded-lg ${errors?.name ? "!border-red-500" : ""}`}
         register={register("cost", validationRules.required)}
       />
       <div className="flex items-center gap-4">
-        <BaseButton onClick={handelClose}>cancel</BaseButton>
-        <BaseButton variant="gradient" type="submit">
+        <BaseButton onClick={handelClose} isDisabled={isLoading}>
+          cancel
+        </BaseButton>
+        <BaseButton
+          variant="gradient"
+          type="submit"
+          isLoading={isLoading}
+          isDisabled={isLoading}
+        >
           confirm
         </BaseButton>
       </div>

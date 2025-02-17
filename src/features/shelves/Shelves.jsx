@@ -361,10 +361,11 @@ export default function Shelves() {
         },
       ],
       isLoading: false,
-      data: allStandTypes?.data || [],
+      data: allPosMaterials?.data || [],
     }),
-    [allStandTypes]
+    [allPosMaterials]
   );
+
   const queryPosMaterialsLoading = {
     headers: [
       {
@@ -551,10 +552,11 @@ export default function Shelves() {
                   <Table query={queryPosMaterialsLoading} />
                 ) : allPosMaterials?.total > 0 ? (
                   <Table
-                    query={{
-                      ...queryPosMaterials,
-                      data: allPosMaterials?.data || [],
-                    }}
+                    // query={{
+                    //   ...queryPosMaterials,
+                    //   data: allPosMaterials?.data || [],
+                    // }}
+                    query={queryPosMaterials}
                   />
                 ) : (
                   <h5 className="text-xl text-center text-red-500">
