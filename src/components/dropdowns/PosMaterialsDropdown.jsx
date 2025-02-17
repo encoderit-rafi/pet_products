@@ -31,7 +31,7 @@ export default function PosMaterialsDropdown({
         defaultText={defaultText}
         className={`w-full ${className}`}
         isLoading={isLoading || isFetching}
-        options={data || []}
+        options={data?.data || []}
         selected={selected}
         setSelected={(data) => setSelected(data)}
         isDisable={isDisable}

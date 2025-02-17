@@ -16,6 +16,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useCreateStandType } from "../api/mutations/useCreateStandType";
 import { useGetAllStandTypes } from "../api/queries/useGetAllStandTypes";
+import EditIcon from "@/assets/icons/EditIcon";
 
 export default function StandTypeForm({ onClose }) {
   const { mutate: createStandType, isLoading } = useCreateStandType();
@@ -124,19 +125,26 @@ export default function StandTypeForm({ onClose }) {
       },
     });
   }
-
+  const [editItemID, setEditItemID] = useState(null);
+  function handelEdit(item) {
+    console.log("🚀 ~ handelEdit ~ item:", item);
+    setEditItemID(item.level);
+    setValue("shelf_name", item.name);
+    setValue("level", item.level);
+    setSelectedProducts(item.products);
+  }
   return (
     <form
       className="flex flex-col mt-4 space-y-2"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <ImagePicker
-        images={images}
-        setImages={setImages}
-        // isError={errors?.profile_image?.message}
-      />
       <div className="flex flex-col gap-5 lg:flex-row">
         <div className="w-full space-y-2 lg:w-1/2">
+          <ImagePicker
+            images={images}
+            setImages={setImages}
+            // isError={errors?.profile_image?.message}
+          />
           <BaseInput
             id="name"
             label="Name"
@@ -190,7 +198,7 @@ export default function StandTypeForm({ onClose }) {
         <div className="w-full lg:w-1/2 ">
           <div className="flex items-center">
             <Label label={"Shelves"} />
-            {shelves.length <= 5 && (
+            {shelves.length < 5 && (
               <BaseButton
                 // variant="orange"
                 className={
@@ -198,33 +206,51 @@ export default function StandTypeForm({ onClose }) {
                 }
                 iconColor="!text-custom_orange"
                 onClick={() => {
-                  if (getValues("shelf_name") == "") {
-                    toast.error("Please Enter Shelf Name");
-                    return;
+                  if (editItemID) {
+                    setShelves((old) =>
+                      old.map((item) => {
+                        if (item.level == editItemID) {
+                          return {
+                            name: getValues("shelf_name"),
+                            level: getValues("level"),
+                            // pos_materials: selectedMaterials,
+                            products: selectedProducts,
+                          };
+                        } else {
+                          return item;
+                        }
+                      })
+                    );
+                    setEditItemID(null);
+                  } else {
+                    if (getValues("shelf_name") == "") {
+                      toast.error("Please Enter Shelf Name");
+                      return;
+                    }
+                    if (getValues("level") == "") {
+                      toast.error("Please Enter Level");
+                      return;
+                    }
+                    if (
+                      shelves.some((shelf) => shelf.level == getValues("level"))
+                    ) {
+                      toast.error("Level already included");
+                      return;
+                    }
+                    if (selectedProducts.length == 0) {
+                      toast.error("Please Select Minimum 1 Product");
+                      return;
+                    }
+                    setShelves((prev) => [
+                      ...prev,
+                      {
+                        name: getValues("shelf_name"),
+                        level: getValues("level"),
+                        // pos_materials: selectedMaterials,
+                        products: selectedProducts,
+                      },
+                    ]);
                   }
-                  if (getValues("level") == "") {
-                    toast.error("Please Enter Level");
-                    return;
-                  }
-                  if (
-                    shelves.some((shelf) => shelf.level == getValues("level"))
-                  ) {
-                    toast.error("Level already included");
-                    return;
-                  }
-                  if (selectedProducts.length == 0) {
-                    toast.error("Please Select Minimum 1 Product");
-                    return;
-                  }
-                  setShelves((prev) => [
-                    ...prev,
-                    {
-                      name: getValues("shelf_name"),
-                      level: getValues("level"),
-                      // pos_materials: selectedMaterials,
-                      products: selectedProducts,
-                    },
-                  ]);
                 }}
                 icon={"plus"}
               />
@@ -243,31 +269,33 @@ export default function StandTypeForm({ onClose }) {
               register={register("level")}
             />
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 mt-3">
             <Label label={"Products"} />
-            <BaseButton
-              // variant="orange"
-              className={
-                "w-fit p-2.5 rounded-full lg:rounded-full bg-transparent"
-              }
-              iconColor="!text-custom_orange"
-              onClick={() => {
-                if (selectedProduct.length == 0) {
-                  toast.error("Please Select Product");
-
-                  return;
-                } else {
-                  setSelectedProducts((old) => [
-                    ...old,
-                    {
-                      ...selectedProduct?.[0],
-                      product_quantity: selectedQuantity,
-                    },
-                  ]);
+            {shelves.length < 5 && (
+              <BaseButton
+                // variant="orange"
+                className={
+                  "w-fit p-2.5 rounded-full lg:rounded-full bg-transparent"
                 }
-              }}
-              icon={"plus"}
-            />
+                iconColor="!text-custom_orange"
+                onClick={() => {
+                  if (selectedProduct.length == 0) {
+                    toast.error("Please Select Product");
+
+                    return;
+                  } else {
+                    setSelectedProducts((old) => [
+                      ...old,
+                      {
+                        ...selectedProduct?.[0],
+                        product_quantity: selectedQuantity,
+                      },
+                    ]);
+                  }
+                }}
+                icon={"plus"}
+              />
+            )}
           </div>
           <div className="flex items-center gap-2">
             <div className="w-1/2">
@@ -322,20 +350,33 @@ export default function StandTypeForm({ onClose }) {
                 ))}
             </div>
           </div>
-          <div className="space-y-2 mt-2 max-h-[150px] overflow-y-auto">
+          <div className="space-y-2 mt-2 max-h-[350px] overflow-y-auto">
             {shelves.length > 0 &&
               shelves.map((item, i) => (
                 <div key={i} className="p-2 rounded-md bg-custom_bg_two">
-                  <span
-                    className="block ml-auto cursor-pointer w-fit"
-                    onClick={() => {
-                      setShelves((old) =>
-                        old.filter((data) => data.level != item.level)
-                      );
-                    }}
-                  >
-                    <CloseIcon className="size-2.5 text-custom_orange" />
-                  </span>
+                  <div className="flex  ml-auto items-center gap-2 w-fit">
+                    <span
+                      className="cursor-pointer"
+                      onClick={() => {
+                        // setShelves((old) =>
+                        //   old.filter((data) => data.level != item.level)
+                        // );
+                        handelEdit(item);
+                      }}
+                    >
+                      <EditIcon className="size-3 text-custom_yellow" />
+                    </span>
+                    <span
+                      className="cursor-pointer"
+                      onClick={() => {
+                        setShelves((old) =>
+                          old.filter((data) => data.level != item.level)
+                        );
+                      }}
+                    >
+                      <CloseIcon className="size-2.5 text-custom_yellow" />
+                    </span>
+                  </div>
                   <p className="font-medium">
                     Shelf: <span className="font-thin">{item.name}</span>
                   </p>
@@ -343,10 +384,16 @@ export default function StandTypeForm({ onClose }) {
                     Level: <span className="font-thin">{item.level}</span>
                   </p>
                   <p className="font-medium">
-                    Products:
+                    {/* Products: */}
+                    <div className="flex gap-2  font-medium">
+                      <div className="w-2/3">Name</div>
+                      <div className="w-1/3">Quantity</div>
+                    </div>
                     {item?.products?.map((product, i) => (
-                      <div className="" key={i}>
-                        <p className="text-xs font-medium">
+                      <div className="flex gap-2 font-thin text-sm" key={i}>
+                        <div className="w-2/3"> {product.product_name_en}</div>
+                        <div className="w-1/3"> {product.product_quantity}</div>
+                        {/* <p className="text-xs font-medium">
                           Name:{" "}
                           <span className="font-thin">
                             {product.product_name_en}
@@ -357,7 +404,7 @@ export default function StandTypeForm({ onClose }) {
                           <span className="font-thin">
                             {product.product_quantity}
                           </span>
-                        </p>
+                        </p> */}
                       </div>
                     ))}
                   </p>

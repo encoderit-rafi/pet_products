@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useSearchParams } from "react-router-dom";
 
-export const useGetAllPosMaterials = ({ setToUrl, isEnabled }) => {
+export const useGetAllStands = ({ setToUrl, isEnabled }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [params, setParams] = useState(() => {
     const queryParams = {
@@ -35,7 +35,7 @@ export const useGetAllPosMaterials = ({ setToUrl, isEnabled }) => {
   }, [params]);
   const { data, isLoading, isFetching, refetch } = useQuery({
     queryKey: [
-      `get-all-users-pos-materials-page_${params.page}-per_page_${params.per_page}-search_${params?.search}-brand_id_${params?.brand_id}-category_id_${params?.category_id}`,
+      `get-all-stands-page_${params.page}-per_page_${params.per_page}-search_${params?.search}-brand_id_${params?.brand_id}-category_id_${params?.category_id}`,
     ],
     enabled: isEnabled,
     retry: false,
@@ -43,10 +43,10 @@ export const useGetAllPosMaterials = ({ setToUrl, isEnabled }) => {
     staleTime: 1000 * 60 * 10,
     queryFn: async () => {
       return (
-        await Axios.get("/pos-materials", {
+        await Axios.get("/stands", {
           params,
         })
-      ).data;
+      ).data.data;
     },
   });
   return {

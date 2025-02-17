@@ -17,6 +17,7 @@ import BaseTabList from "@/components/tabs/BaseTabList";
 import { useWindowSize } from "react-use";
 import { useSearchParams } from "react-router-dom";
 import { useGetAllShelves } from "./api/queries/useGetAllShelves";
+import { useGetAllStands } from "./api/queries/useGetAllStands";
 import Pagination from "@/components/pagination";
 import { useGetAllStandTypes } from "./api/queries/useGetAllStandTypes";
 import { useGetAllPosMaterials } from "./api/queries/useGetAllPosMaterials";
@@ -50,13 +51,14 @@ const tabs = [
 export default function Shelves() {
   const { width } = useWindowSize();
   const [searchParams, setSearchParams] = useSearchParams();
+
   const {
     data: allShelves,
     isLoading: isLoadingAllShelves,
     isFetching: isFetchingAllShelves,
     params: paramsAllShelves,
     setParams: setParamsAllShelves,
-  } = useGetAllShelves({ isEnabled: true });
+  } = useGetAllStands({ isEnabled: true });
   const {
     data: allStandTypes,
     isLoading: isLoadingAllStandTypes,
@@ -78,13 +80,13 @@ export default function Shelves() {
         {
           name: "brand",
           value: "name",
-          cellValue: (row) => row.name,
+          cellValue: (row) => row?.brand_name || "-",
         },
         {
           name: "stand type",
           value: "stand_type",
           cellValue: (row) => {
-            return row?.stand_type.name;
+            return row?.stand_type_name || "-";
           },
         },
         {
@@ -98,21 +100,21 @@ export default function Shelves() {
           name: "location",
           value: "location",
           cellValue: (row) => {
-            return "API KEY MISSING";
+            return row?.location || "-";
           },
         },
         {
-          name: "images",
-          value: "images",
+          name: "image",
+          value: "image",
           cellValue: (row) => {
-            return "API KEY MISSING";
+            return row?.image || "-";
           },
         },
         {
           name: "cost",
           value: "cost",
           cellValue: (row) => {
-            return row?.stand_type.cost;
+            return row?.cost || "-";
           },
         },
       ],
@@ -197,47 +199,11 @@ export default function Shelves() {
           },
         },
       ],
-      isLoading: false,
+      isLoading: isLoadingAllPosMaterials || isFetchingAllPosMaterials,
       data: allPosMaterials?.data || [],
     }),
     [allPosMaterials]
   );
-
-  const queryPosMaterialsLoading = {
-    headers: [
-      {
-        name: "brand",
-        value: "name",
-        cellValue: (row) => {
-          return (
-            <div className="flex items-center gap-3">
-              <div className="rounded-full size-5 bg-custom_bg_one animate-pulse" />
-              <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-            </div>
-          );
-        },
-      },
-
-      {
-        name: "POS materials",
-        value: "pos_materials",
-        cellValue: () => (
-          <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-        ),
-      },
-
-      {
-        name: "cost",
-        value: "cost",
-        cellValue: () => (
-          <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-        ),
-      },
-    ],
-    isLoading: false,
-    data: Array.from({ length: 5 }, (_, i) => i),
-  };
-
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [isOpenAddNewStand, setIsOpenAddNewStand] = useState(false);
   const [isOpenAddNewStandType, setIsOpenAddNewStandType] = useState(false);
@@ -361,21 +327,18 @@ export default function Shelves() {
             </TabPanel>
             <TabPanel className={"flex flex-col flex-1"}>
               <BorderBox className={"my-4 flex-1"}>
-                {isLoadingAllPosMaterials || isFetchingAllPosMaterials ? (
+                <Table query={queryPosMaterials} />
+                {/* {isLoadingAllPosMaterials || isFetchingAllPosMaterials ? (
                   <Table query={queryPosMaterialsLoading} />
                 ) : allPosMaterials?.total > 0 ? (
                   <Table
-                    // query={{
-                    //   ...queryPosMaterials,
-                    //   data: allPosMaterials?.data || [],
-                    // }}
                     query={queryPosMaterials}
                   />
                 ) : (
                   <h5 className="text-xl text-center text-red-500">
                     No data found
                   </h5>
-                )}
+                )} */}
               </BorderBox>
               {allPosMaterials?.total > 0 && (
                 <Pagination
