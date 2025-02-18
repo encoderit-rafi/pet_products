@@ -107,7 +107,6 @@ export default function MediaKit() {
   );
   const [selectedBrand, setSelectedBrand] = useState([]);
   useEffect(() => {
-    // console.log("✅ ~ MediaKit ~ data:", data);
     if (data?.length > 0) {
       setSelectedBrand([
         data.find((data) => data.pivot.active == 1) || data[0],
@@ -181,8 +180,9 @@ export default function MediaKit() {
             />
           )}
         </div>
-        {/* <div className="flex flex-col flex-1">
-          <TabPanels className="flex flex-col flex-1">
+        <div className="flex flex-col flex-1">
+          {/* <BorderBox></BorderBox> */}
+          {/* <TabPanels className="flex flex-col flex-1">
             <TabPanel className={"flex flex-col flex-1"}>
               <BorderBox className={"my-4 flex-1"}>
                 <Table query={queryShelves} />
@@ -200,41 +200,8 @@ export default function MediaKit() {
                 />
               )}
             </TabPanel>
-            <TabPanel className={"flex flex-col flex-1"}>
-              <BorderBox className={"my-4 flex-1"}>
-                <Table query={queryStandTypes} />
-              </BorderBox>
-              {allStandTypes?.total > 0 && (
-                <Pagination
-                  to={allStandTypes?.to}
-                  total={allStandTypes?.total}
-                  current_page={allStandTypes?.current_page}
-                  last_page={allStandTypes?.last_page}
-                  per_page={allStandTypes?.per_page}
-                  onPageChange={handlePageChange}
-                  onPerPageChange={handlePerPageChange}
-                />
-              )}
-            </TabPanel>
-            <TabPanel className={"flex flex-col flex-1"}>
-              <BorderBox className={"my-4 flex-1"}>
-                <Table query={queryPosMaterials} />
-              </BorderBox>
-              {allPosMaterials?.total > 0 && (
-                <Pagination
-                  to={allPosMaterials?.to}
-                  total={allPosMaterials?.total}
-                  current_page={allPosMaterials?.current_page}
-                  last_page={allPosMaterials?.last_page}
-                  per_page={allPosMaterials?.per_page}
-                  onPageChange={handlePageChange}
-                  onPerPageChange={handlePerPageChange}
-                  c
-                />
-              )}
-            </TabPanel>
-          </TabPanels>
-        </div> */}
+          </TabPanels> */}
+        </div>
       </TabGroup>
       {/* <Dialog
         isOpen={isOpenAddNewStand}
@@ -242,20 +209,6 @@ export default function MediaKit() {
         className="max-w-lg"
       >
         <StandForm onClose={() => setIsOpenAddNewStand(false)} />
-      </Dialog> */}
-      {/* <Dialog
-        isOpen={isOpenAddNewStandType}
-        title="Add New Stand Type"
-        className="max-w-[1000px]"
-      >
-        <StandTypeForm onClose={() => setIsOpenAddNewStandType(false)} />
-      </Dialog> */}
-      {/* <Dialog
-        isOpen={isOpenAddNewPOSMaterials}
-        title="Create POS Materials"
-        className="max-w-2xl"
-      >
-        <POSMaterialsForm onClose={() => setIsOpenAddNewPOSMaterials(false)} />
       </Dialog> */}
     </div>
   );
