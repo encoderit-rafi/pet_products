@@ -1,35 +1,20 @@
 import Title from "@/components/texts/Title";
-import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
-import demoData from "@/lib/data/demo";
 import BorderBox from "@/components/box/BorderBox";
 import Table from "@/components/tables/Table";
 import BaseButton from "@/components/buttons/BaseButton";
-import { useCallback, useEffect, useMemo, useState } from "react";
 import Dialog from "@/components/dialogs/Dialog";
-import BaseMenu from "@/components/menus/BaseMenu";
-import BaseSelectDropdown from "@/components/dropdowns/BaseSelectDropdown";
-import Label from "@/components/texts/Label";
-import InputText from "@/components/inputs/InputText";
-import MultiSelectListbox from "@/components/dropdowns/MultiSelectListbox";
-import CustomPhoneInput from "@/components/inputs/InputPhoneNumber";
-import BaseInput from "@/components/inputs/BaseInput";
 import BaseTabList from "@/components/tabs/BaseTabList";
-import { useWindowSize } from "react-use";
-import { useSearchParams } from "react-router-dom";
-import { useGetAllShelves } from "./api/queries/useGetAllShelves";
-import { useGetAllStands } from "./api/queries/useGetAllStands";
 import Pagination from "@/components/pagination";
-import { useGetAllStandTypes } from "./api/queries/useGetAllStandTypes";
-import { useGetAllPosMaterials } from "./api/queries/useGetAllPosMaterials";
-import BaseDropdown from "@/components/dropdowns/BaseDropdown";
-import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
-// import { useGetAllProducts } from "../products/api/queries/useGetAllRoles";
-import ImagePicker from "@/components/file_pickers/ImagePicker";
-import { validationRules } from "@/consts";
-import { useForm } from "react-hook-form";
 import StandTypeForm from "./components/StandTypeForm";
 import POSMaterialsForm from "./components/POSMaterialsForm";
 import StandForm from "./components/StandForm";
+import { useWindowSize } from "react-use";
+import { useSearchParams } from "react-router-dom";
+import { useGetAllStands } from "./api/queries/useGetAllStands";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { TabGroup, TabPanel, TabPanels } from "@headlessui/react";
+import { useGetAllStandTypes } from "./api/queries/useGetAllStandTypes";
+import { useGetAllPosMaterials } from "./api/queries/useGetAllPosMaterials";
 
 const tabs = [
   {
@@ -205,15 +190,15 @@ export default function Shelves() {
     [allPosMaterials]
   );
   const [activeTabIndex, setActiveTabIndex] = useState(0);
-  const [isOpenAddNewStand, setIsOpenAddNewStand] = useState(false);
-  const [isOpenAddNewStandType, setIsOpenAddNewStandType] = useState(false);
-  const [isOpenAddNewPOSMaterials, setIsOpenAddNewPOSMaterials] =
-    useState(false);
   const [activeTab, setActiveTab] = useState(() =>
     searchParams.get("type") == null
       ? tabs[0]
       : tabs.find((tab) => tab.value == searchParams.get("type"))
   );
+  const [isOpenAddNewStand, setIsOpenAddNewStand] = useState(false);
+  const [isOpenAddNewStandType, setIsOpenAddNewStandType] = useState(false);
+  const [isOpenAddNewPOSMaterials, setIsOpenAddNewPOSMaterials] =
+    useState(false);
   useEffect(() => {
     setActiveTabIndex(activeTab.id);
   }, [activeTab]);
@@ -330,17 +315,6 @@ export default function Shelves() {
             <TabPanel className={"flex flex-col flex-1"}>
               <BorderBox className={"my-4 flex-1"}>
                 <Table query={queryPosMaterials} />
-                {/* {isLoadingAllPosMaterials || isFetchingAllPosMaterials ? (
-                  <Table query={queryPosMaterialsLoading} />
-                ) : allPosMaterials?.total > 0 ? (
-                  <Table
-                    query={queryPosMaterials}
-                  />
-                ) : (
-                  <h5 className="text-xl text-center text-red-500">
-                    No data found
-                  </h5>
-                )} */}
               </BorderBox>
               {allPosMaterials?.total > 0 && (
                 <Pagination
@@ -368,7 +342,7 @@ export default function Shelves() {
       <Dialog
         isOpen={isOpenAddNewStandType}
         title="Add New Stand Type"
-        className="max-w-3xl"
+        className="max-w-[1000px]"
       >
         <StandTypeForm onClose={() => setIsOpenAddNewStandType(false)} />
       </Dialog>

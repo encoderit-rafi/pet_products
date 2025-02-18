@@ -246,7 +246,6 @@ export default function StandTypeForm({ onClose }) {
                       {
                         name: getValues("shelf_name"),
                         level: getValues("level"),
-                        // pos_materials: selectedMaterials,
                         products: selectedProducts,
                       },
                     ]);

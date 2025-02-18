@@ -9,11 +9,12 @@ export default function BrandsDropdown({
   className,
   selected,
   setSelected,
+  hideLabel = false,
 }) {
   const { data, isLoading, isFetching } = useGetAllBrands();
   return (
     <div className="">
-      <Label label="select brand" />
+      {!hideLabel && <Label label="select brand" />}
 
       <BaseDropdown
         variant={variant}

@@ -13,7 +13,7 @@ export default function BaseTabList({
         <Tab
           key={index}
           className={cn(
-            "border-b-2 text-xs font-light !text-custom_text_eleven  border-b-custom_line_six  p-3 focus:outline-none",
+            "border-b-2 text-xs font-light !text-custom_text_eleven  border-b-custom_line_six  p-3 focus:outline-none ",
             {
               "border-b-custom_bg_three !text-custom_bg_three ":
                 activeTab?.id == item?.id,
@@ -22,7 +22,10 @@ export default function BaseTabList({
           )}
           onClick={() => handelOnChangeTab(item)}
         >
-          {item.name}
+          <div className="flex items-center">
+            {item?.icon && <span className="mr-1">{item?.icon}</span>}
+            {item.name}
+          </div>
         </Tab>
       ))}
     </TabList>

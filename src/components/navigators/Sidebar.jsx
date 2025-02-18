@@ -16,6 +16,11 @@ const routes = [
     icon: <ProductsIcon className="w-4" />,
   },
   {
+    path: "/media-kit",
+    name: "media kit",
+    icon: <PlayIcon className="w-3" />,
+  },
+  {
     path: "/marketing",
     name: "marketing",
     icon: <MarketingIcon className="w-[18px]" />,
@@ -39,6 +44,7 @@ import ButtonContact from "../buttons/ButtonContact";
 import DrawerApplicationSupport from "../drawers/DrawerApplicationSupport";
 import CardApplicationSupport from "../cards/CardApplicationSupport";
 import DrawerSingleApplicationSupport from "../drawers/DrawerSingleApplicationSupport";
+import PlayIcon from "@/assets/icons/PlayIcon";
 
 export default function Sidebar({ className, children }) {
   const location = useLocation();

@@ -19,6 +19,7 @@ import Terms from "./features/terms";
 import NotFound from "./features/not_found";
 import Login from "./features/auth/login";
 import DefaultLayout from "./layouts/DefaultLayout";
+import MediaKit from "./features/media_kit";
 // import DefaultLayout from "./layouts/DefaultLayout";
 // import Home from "./features/home";
 // Router Configuration
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
         element: <CriteriaAndSegment />,
       },
       { path: "products", element: <Products /> },
+      { path: "media-kit", element: <MediaKit /> },
       { path: "roles", element: <Roles /> },
       { path: "shelves", element: <Shelves /> },
       { path: "terms", element: <Terms /> },
@@ -54,10 +56,12 @@ const router = createBrowserRouter([
 ]);
 export default function App() {
   const queryClient = new QueryClient();
-  return <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <RouterProvider router={router} />;
-      <Toaster />
-    </AuthProvider>
-  </QueryClientProvider>
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <RouterProvider router={router} />;
+        <Toaster />
+      </AuthProvider>
+    </QueryClientProvider>
+  );
 }
