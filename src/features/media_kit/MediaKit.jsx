@@ -18,42 +18,14 @@ import MarketingMaterialsIcon from "@/assets/icons/MarketingMaterialsIcon";
 import MediaCommercialsIcon from "@/assets/icons/MediaCommercialsIcon";
 import BrandsDropdown from "@/components/dropdowns/BrandsDropdown";
 import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
+import { useGetAllMediaKits } from "./api/queries/useGetAllMediaKits";
+import MediaKitCardSkeleton from "./components/MediaKitCardSkeleton";
+import MediaKitCard from "./components/MediaKitCard";
+import { useMediaKitDownload } from "./api/queries/useMediaKitDownload";
+import DialogConfirmDelete from "@/components/dialogs/DialogConfirmDelete";
+import { useDeleteMediaKit } from "./api/mutations/useDeleteMediaKit";
 // import { useGetAllStandTypes } from "./api/queries/useGetAllStandTypes";
 // import { useGetAllPosMaterials } from "./api/queries/useGetAllPosMaterials";
-
-const tabs = [
-  {
-    id: 0,
-    name: "Brand Guidelines",
-    value: "brand-guidelines",
-    icon: "icon",
-  },
-  {
-    id: 1,
-    name: "Brand Logo",
-    value: "brand-logo",
-  },
-  {
-    id: 2,
-    name: "Product Images",
-    value: "product-images",
-  },
-  {
-    id: 3,
-    name: "Product Description",
-    value: "product-description",
-  },
-  {
-    id: 4,
-    name: "Marketing Materials",
-    value: "marketing-materials",
-  },
-  {
-    id: 5,
-    name: "Media Commercials",
-    value: "media-commercials",
-  },
-];
 
 export default function MediaKit() {
   const { data } = useGetAllBrands();
@@ -62,37 +34,37 @@ export default function MediaKit() {
     {
       id: 0,
       name: "Brand Guidelines",
-      value: "brand-guidelines",
+      value: "brand_guidelines",
       icon: <BrandGuidelinesIcon className="w-3" />,
     },
     {
       id: 1,
       name: "Brand Logo",
-      value: "brand-logo",
+      value: "brand_logo",
       icon: <BrandLogoIcon className="w-4" />,
     },
     {
       id: 2,
       name: "Product Images",
-      value: "product-images",
+      value: "product_images",
       icon: <ProductImagesIcon className="w-4" />,
     },
     {
       id: 3,
       name: "Product Description",
-      value: "product-description",
+      value: "product_description",
       icon: <ProductDescriptionIcon className="w-4" />,
     },
     {
       id: 4,
       name: "Marketing Materials",
-      value: "marketing-materials",
+      value: "marketing_materials",
       icon: <MarketingMaterialsIcon className="w-4" />,
     },
     {
       id: 5,
       name: "Media Commercials",
-      value: "media-commercials",
+      value: "media_commercials",
       icon: <MediaCommercialsIcon className="w-4" />,
     },
   ];
@@ -100,6 +72,8 @@ export default function MediaKit() {
   const { width } = useWindowSize();
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [isOpenDeleteFile, setIsOpenDeleteFile] = useState(false);
   const [activeTab, setActiveTab] = useState(() =>
     searchParams.get("type") == null
       ? tabs[0]
@@ -125,8 +99,53 @@ export default function MediaKit() {
   }, [searchParams.get("type")]);
   useEffect(() => {
     searchParams.get("type") == null &&
-      setSearchParams({ type: "brand-guidelines" });
+      setSearchParams({ type: "brand_guidelines" });
   }, [searchParams.get("type")]);
+
+  const {
+    data: allMediaKits,
+    refetch: fetchAllMediaKits,
+    isFetching,
+    isLoading,
+  } = useGetAllMediaKits({
+    brandId: selectedBrand[0]?.id,
+    category: activeTab?.value,
+  });
+  const { refetch: downloadMediaKit, isLoading: isLoadingDownloadMediaKit } =
+    useMediaKitDownload({
+      brandId: selectedBrand[0]?.id,
+      category: activeTab?.value,
+      fileName: selectedFile,
+    });
+  const { mutate: deleteMediaKit, isLoading: isLoadingDeleteMediaKit } =
+    useDeleteMediaKit();
+  function confirmDeleteMediaKit() {
+    deleteMediaKit(
+      {
+        brandId: selectedBrand[0]?.id,
+        category: activeTab?.value,
+        fileName: selectedFile,
+      },
+      {
+        onSuccess() {
+          fetchAllMediaKits();
+          setSelectedFile("");
+          setIsOpenDeleteFile(false);
+        },
+      }
+    );
+  }
+  useEffect(() => {
+    selectedFile && downloadMediaKit();
+    // fetchAllMediaKits();
+  }, [selectedFile]);
+  useEffect(() => {
+    fetchAllMediaKits();
+    console.log(selectedBrand[0]?.id);
+  }, [selectedBrand, activeTab]);
+  useEffect(() => {
+    console.log("✅ ~ MediaKit ~ allMediaKits:", allMediaKits);
+  }, [allMediaKits]);
   return (
     <div className="flex flex-col h-full gap-4 text-custom_bg_three">
       <TabGroup
@@ -181,35 +200,43 @@ export default function MediaKit() {
           )}
         </div>
         <div className="flex flex-col flex-1">
-          {/* <BorderBox></BorderBox> */}
-          {/* <TabPanels className="flex flex-col flex-1">
-            <TabPanel className={"flex flex-col flex-1"}>
-              <BorderBox className={"my-4 flex-1"}>
-                <Table query={queryShelves} />
-              </BorderBox>
-              {allShelves?.total > 0 && (
-                <Pagination
-                  to={allShelves?.to}
-                  total={allShelves?.total}
-                  current_page={allShelves?.current_page}
-                  last_page={allShelves?.last_page}
-                  per_page={allShelves?.per_page}
-                  onPageChange={handlePageChange}
-                  onPerPageChange={handlePerPageChange}
-                  c
+          <div className="grid grid-cols-1 gap-6 mt-2 md:grid-cols-2 xl:grid-cols-3">
+            {!isFetching && !isLoading && !Array.isArray(allMediaKits) ? (
+              <span className="text-red-500"> No Data Found</span>
+            ) : isFetching || isLoading ? (
+              Array.from({ length: 12 }, (_, i) => <MediaKitCardSkeleton />)
+            ) : (
+              allMediaKits?.map((data, i) => (
+                <MediaKitCard
+                  key={i}
+                  data={data}
+                  isLoadingDownload={
+                    isLoadingDownloadMediaKit && data.name == selectedFile
+                  }
+                  onClickDownload={() => {
+                    setSelectedFile(data.name);
+                  }}
+                  onClickDelete={() => {
+                    setSelectedFile(data.name);
+                    setIsOpenDeleteFile(true);
+                  }}
                 />
-              )}
-            </TabPanel>
-          </TabPanels> */}
+              ))
+            )}
+          </div>
         </div>
       </TabGroup>
-      {/* <Dialog
-        isOpen={isOpenAddNewStand}
-        title="add new stand"
-        className="max-w-lg"
-      >
-        <StandForm onClose={() => setIsOpenAddNewStand(false)} />
-      </Dialog> */}
+      <DialogConfirmDelete
+        text={selectedFile || ""}
+        isOpen={isOpenDeleteFile}
+        onClickClose={() => {
+          // setTempData(null)
+          setSelectedFile("");
+          setIsOpenDeleteFile(false);
+        }}
+        onClickDelete={confirmDeleteMediaKit}
+        isLoading={isLoadingDeleteMediaKit}
+      />
     </div>
   );
 }
