@@ -84,9 +84,11 @@ export default function MediaKit() {
   const [selectedBrand, setSelectedBrand] = useState([]);
   useEffect(() => {
     if (data?.length > 0) {
-      setSelectedBrand([
-        data.find((data) => data.pivot.active == 1) || data[0],
-      ]);
+      if (!!data?.pivot) {
+        setSelectedBrand([data.find((data) => data?.pivot?.active == 1)]);
+      } else {
+        setSelectedBrand([data[0]]);
+      }
     }
   }, [data]);
   useEffect(() => {
