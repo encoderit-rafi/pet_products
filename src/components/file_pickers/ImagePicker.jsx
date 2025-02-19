@@ -8,8 +8,12 @@ export default function ImagePicker({
   images,
   setImages,
   isError,
+  title = "Upload Images",
+  subTitle = "Jpeg, Png (max size 2 MB)",
+  accept = "image/jpeg, image/png",
+  hidePreview = false,
 }) {
-  const inputRef = useRef(null)
+  const inputRef = useRef(null);
   const handleFileChange = (e) => {
     const selectedFiles = Array.from(e.target.files);
     console.log("🚀 ~ handleFileChange ~ Selected Files:", selectedFiles);
@@ -28,7 +32,6 @@ export default function ImagePicker({
   return (
     <div className="flex flex-col items-center space-y-4">
       {images?.length === 0 && (
-
         <>
           <div
             className={cn(
@@ -38,30 +41,29 @@ export default function ImagePicker({
               }
             )}
             onClick={() => {
-              inputRef.current.click()
+              inputRef.current.click();
             }}
-
           >
             <div className="p-3 mb-2 rounded-lg text-custom_text_two bg-custom_bg_ten size-10">
               <UploadFileIcon />
             </div>
-            <p className="font-medium text-custom_text_two">Upload Images</p>
+            <p className="font-medium text-custom_text_two">{title}</p>
             <p className="text-xs font-normal text-custom_text_seven">
-              Jpeg, Png (max size 2 MB)
+              {subTitle}
             </p>
           </div>
           <input
             ref={inputRef}
             type="file"
             multiple={multiple}
-            accept="image/jpeg, image/png"
+            accept={accept}
             className="hidden"
             onChange={handleFileChange}
           />
         </>
       )}
 
-      {images?.length > 0 && (
+      {!hidePreview && images?.length > 0 && (
         <div className="flex items-center w-full gap-2 overflow-x-auto">
           {images?.map((file, index) => (
             <ImagePreview

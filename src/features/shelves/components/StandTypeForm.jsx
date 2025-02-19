@@ -264,11 +264,11 @@ export default function StandTypeForm({ onClose }) {
             <BaseInput
               id="Level"
               type="number"
-              palceholder="Level"
+              palceholder="Shelf Level"
               register={register("level")}
             />
           </div>
-          <div className="flex items-center gap-2 mt-3">
+          {/* <div className="flex items-center gap-2 mt-3">
             <Label label={"Products"} />
             {shelves.length < 5 && (
               <BaseButton
@@ -295,8 +295,8 @@ export default function StandTypeForm({ onClose }) {
                 icon={"plus"}
               />
             )}
-          </div>
-          <div className="flex items-center gap-2">
+          </div> */}
+          <div className="flex items-center gap-2 mt-4">
             <div className="w-1/2">
               <ProductsDropdown
                 isDisable={selectedBrand?.length == 0 ? true : false}
@@ -308,16 +308,45 @@ export default function StandTypeForm({ onClose }) {
                 }}
               />
             </div>
-            <div className="w-1/2">
-              <BaseInput
-                id="Quantity"
-                type="number"
-                palceholder="Quantity"
-                value={selectedQuantity}
-                onChange={(e) => {
-                  setSelectedQuantity(e.target.value);
-                }}
-              />
+            <div className="flex items-center w-1/2">
+              <div className="w-3/3">
+                <BaseInput
+                  id="Quantity"
+                  type="number"
+                  palceholder="Quantity"
+                  value={selectedQuantity}
+                  onChange={(e) => {
+                    setSelectedQuantity(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="w-1/3">
+                {shelves.length < 5 && (
+                  <BaseButton
+                    // variant="orange"
+                    className={
+                      "w-fit p-2.5 rounded-full lg:rounded-full bg-transparent"
+                    }
+                    iconColor="!text-custom_orange"
+                    onClick={() => {
+                      if (selectedProduct.length == 0) {
+                        toast.error("Please Select Product");
+
+                        return;
+                      } else {
+                        setSelectedProducts((old) => [
+                          ...old,
+                          {
+                            ...selectedProduct?.[0],
+                            product_quantity: selectedQuantity,
+                          },
+                        ]);
+                      }
+                    }}
+                    icon={"plus"}
+                  />
+                )}
+              </div>
             </div>
           </div>
           <div className="">
@@ -353,7 +382,7 @@ export default function StandTypeForm({ onClose }) {
             {shelves.length > 0 &&
               shelves.map((item, i) => (
                 <div key={i} className="p-2 rounded-md bg-custom_bg_two">
-                  <div className="flex  ml-auto items-center gap-2 w-fit">
+                  <div className="flex items-center gap-2 ml-auto w-fit">
                     <span
                       className="cursor-pointer"
                       onClick={() => {
@@ -384,12 +413,12 @@ export default function StandTypeForm({ onClose }) {
                   </p>
                   <p className="font-medium">
                     {/* Products: */}
-                    <div className="flex gap-2  font-medium">
+                    <div className="flex gap-2 font-medium">
                       <div className="w-2/3">Name</div>
                       <div className="w-1/3">Quantity</div>
                     </div>
                     {item?.products?.map((product, i) => (
-                      <div className="flex gap-2 font-thin text-sm" key={i}>
+                      <div className="flex gap-2 text-sm font-thin" key={i}>
                         <div className="w-2/3"> {product.product_name_en}</div>
                         <div className="w-1/3"> {product.product_quantity}</div>
                         {/* <p className="text-xs font-medium">

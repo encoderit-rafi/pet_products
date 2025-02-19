@@ -10,11 +10,19 @@ export const useMediaKitDownload = ({ brandId, category, fileName }) => {
     keepPreviousData: true,
     staleTime: 0,
     queryFn: async () => {
-      return (
-        await Axios.get(
-          `/media-kit/download/${brandId}/${category}/${fileName}`
-        )
-      ).data;
+      const response = await Axios.get(
+        `/media-kit/download/${brandId}/${category}/${fileName}`,
+        { responseType: "blob" }
+      );
+      console.log("✅ ~ queryFn: ~ data:", response);
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", fileName); // Set download filename
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
     },
   });
   return {

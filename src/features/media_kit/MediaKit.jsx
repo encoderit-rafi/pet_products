@@ -24,12 +24,13 @@ import MediaKitCard from "./components/MediaKitCard";
 import { useMediaKitDownload } from "./api/queries/useMediaKitDownload";
 import DialogConfirmDelete from "@/components/dialogs/DialogConfirmDelete";
 import { useDeleteMediaKit } from "./api/mutations/useDeleteMediaKit";
+import FileUploadForm from "./components/FileUploadForm";
 // import { useGetAllStandTypes } from "./api/queries/useGetAllStandTypes";
 // import { useGetAllPosMaterials } from "./api/queries/useGetAllPosMaterials";
 
 export default function MediaKit() {
   const { data } = useGetAllBrands();
-
+  const [isOpenFileUpload, setIsOpenFileUpload] = useState(false);
   const tabs = [
     {
       id: 0,
@@ -72,7 +73,8 @@ export default function MediaKit() {
   const { width } = useWindowSize();
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeTabIndex, setActiveTabIndex] = useState(0);
-  const [selectedFile, setSelectedFile] = useState(null);
+  // const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState({ type: "", name: "" });
   const [isOpenDeleteFile, setIsOpenDeleteFile] = useState(false);
   const [activeTab, setActiveTab] = useState(() =>
     searchParams.get("type") == null
@@ -115,7 +117,8 @@ export default function MediaKit() {
     useMediaKitDownload({
       brandId: selectedBrand[0]?.id,
       category: activeTab?.value,
-      fileName: selectedFile,
+      // fileName: selectedFile,
+      fileName: selectedFile.name,
     });
   const { mutate: deleteMediaKit, isLoading: isLoadingDeleteMediaKit } =
     useDeleteMediaKit();
@@ -124,19 +127,25 @@ export default function MediaKit() {
       {
         brandId: selectedBrand[0]?.id,
         category: activeTab?.value,
-        fileName: selectedFile,
+        // fileName: selectedFile,
+        fileName: selectedFile.name,
       },
       {
         onSuccess() {
           fetchAllMediaKits();
-          setSelectedFile("");
+          // setSelectedFile("");
+          setSelectedFile({
+            type: "",
+            name: "",
+          });
+
           setIsOpenDeleteFile(false);
         },
       }
     );
   }
   useEffect(() => {
-    selectedFile && downloadMediaKit();
+    selectedFile?.type == "download" && downloadMediaKit();
     // fetchAllMediaKits();
   }, [selectedFile]);
   useEffect(() => {
@@ -157,6 +166,16 @@ export default function MediaKit() {
           <div className="flex items-center justify-between flex-1">
             <Title>Media kit</Title>
             <div className="flex flex-row items-center gap-4">
+              <BrandsDropdown
+                variant="rounded"
+                hideLabel
+                className="w-36"
+                selected={selectedBrand}
+                setSelected={(data) => {
+                  data?.id != selectedBrand?.[0]?.id &&
+                    setSelectedBrand([data]);
+                }}
+              />
               {width > 1024 && (
                 <BaseTabList
                   list={tabs}
@@ -168,7 +187,8 @@ export default function MediaKit() {
                 />
               )}
               <div className="flex flex-row items-center flex-1 gap-4">
-                <BrandsDropdown
+                {/* <BrandsDropdown
+                  variant="rounded"
                   hideLabel
                   className="w-36"
                   selected={selectedBrand}
@@ -176,14 +196,14 @@ export default function MediaKit() {
                     data?.id != selectedBrand?.[0]?.id &&
                       setSelectedBrand([data]);
                   }}
-                />
+                /> */}
                 <BaseButton
                   variant="orange"
                   icon="plus"
                   className="px-3 ml-auto text-xs max-w-fit lg:px-5 lg:ml-0"
-                  // onClick={handelOpenModal}
+                  onClick={() => setIsOpenFileUpload(true)}
                 >
-                  <span className="hidden lg:block">add new</span>
+                  <span className="hidden lg:block">Upload FIle</span>
                 </BaseButton>
               </div>
             </div>
@@ -211,13 +231,24 @@ export default function MediaKit() {
                   key={i}
                   data={data}
                   isLoadingDownload={
-                    isLoadingDownloadMediaKit && data.name == selectedFile
+                    // isLoadingDownloadMediaKit && data.name == selectedFile
+                    isLoadingDownloadMediaKit &&
+                    data.original_name == selectedFile.name
                   }
                   onClickDownload={() => {
-                    setSelectedFile(data.name);
+                    // setSelectedFile(data.name);
+                    setSelectedFile({
+                      type: "download",
+                      name: data.original_name,
+                    });
                   }}
                   onClickDelete={() => {
-                    setSelectedFile(data.name);
+                    // setSelectedFile(data.name);
+                    setSelectedFile({
+                      type: "delete",
+                      name: data.original_name,
+                    });
+
                     setIsOpenDeleteFile(true);
                   }}
                 />
@@ -226,12 +257,25 @@ export default function MediaKit() {
           </div>
         </div>
       </TabGroup>
+      <Dialog
+        isOpen={isOpenFileUpload}
+        title="Upload your File"
+        className="max-w-lg"
+      >
+        <FileUploadForm
+          onClose={() => setIsOpenFileUpload(false)}
+          item={{
+            brandId: selectedBrand[0]?.id,
+            category: searchParams.get("type") || "brand_guidelines",
+          }}
+        />
+      </Dialog>
       <DialogConfirmDelete
-        text={selectedFile || ""}
+        text={selectedFile.name || ""}
         isOpen={isOpenDeleteFile}
         onClickClose={() => {
           // setTempData(null)
-          setSelectedFile("");
+          setSelectedFile({ type: "", name: "" });
           setIsOpenDeleteFile(false);
         }}
         onClickDelete={confirmDeleteMediaKit}
