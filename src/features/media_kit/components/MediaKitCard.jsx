@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import DeleteIcon from "@/assets/icons/DeleteIcon";
 import EditIcon from "@/assets/icons/EditIcon";
 import BorderBox from "@/components/box/BorderBox";
@@ -7,6 +7,8 @@ import DownloadIcon from "@/assets/icons/DownloadIcon";
 import { LoaderIcon } from "react-hot-toast";
 import ImageDialog from "@/components/dialogs/ImageDialog";
 import { useShowMediaKitFile } from "../api/queries/useShowMediaKitFile";
+import PdfIcon from "@/assets/icons/PdfIcon";
+import FileIcon from "@/assets/icons/FileIcon";
 
 export default function MediaKitCard({
   data,
@@ -18,39 +20,55 @@ export default function MediaKitCard({
   const {
     data: url,
     refetch: showMediaKit,
-    isLoading: isLoadingShowMediaKit,
+    isLoading,
+    isFetching,
   } = useShowMediaKitFile({
     brandId: data.brandId,
-    category: data?.category,
+    category: data.category,
     fileName: data.original_name,
   });
+  const [createObj, setCreateObj] = useState(null);
   useEffect(() => {
     showMediaKit();
-  }, [data]);
+  }, []);
   useEffect(() => {
     // showMediaKit();
     console.log("🚀 ~ url:", url);
+    url?.data && setCreateObj(window.URL.createObjectURL(url.data));
   }, [url]);
   const isImage = (ext) => ["png", "jpg", "jpeg", "gif", "webp"].includes(ext);
+  const handelIcon = (ext) => {
+    switch (ext) {
+      case "pdf":
+        return <PdfIcon className={"size-4"} />;
+
+      case "doc":
+        return <DocIcon className={"size-4"} />;
+
+      default:
+        return <FileIcon className={"size-4"} />;
+    }
+  };
 
   return (
     <BorderBox className="p-2 lg:p-2 !border-custom_line_eight">
       <div className="flex items-center gap-2">
         <div className="p-1 size-14 bg-custom_bg_two rounded-2xl shrink-0">
           {/* {data?.url} */}
-          {isImage(data.extension) ? (
-            <ImageDialog
-              src={window.URL.createObjectURL(url.data)}
-              className={"size-full rounded-xl"}
-            />
+          {isImage(data.extension) && !isLoading && !isFetching ? (
+            <ImageDialog src={createObj} className={"size-full rounded-xl"} />
           ) : (
             <div className="flex items-center justify-center rounded-lg size-full bg-custom_bg_eight">
-              {data.extension}
+              {data.extension == "pdf" ? (
+                <PdfIcon className={"size-4"} />
+              ) : (
+                handelIcon(data.extension)
+              )}
             </div>
           )}
         </div>
         <div className="flex flex-col justify-center flex-1 capitalize ">
-          <p className="w-40 text-sm font-normal text-custom_text_four">
+          <p className="w-40 text-sm font-normal text-custom_text_four truncate">
             {data.original_name}
           </p>
 

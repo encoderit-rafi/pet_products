@@ -10,6 +10,7 @@ export const useShowMediaKitFile = ({ brandId, category, fileName }) => {
     keepPreviousData: true,
     staleTime: 0,
     queryFn: async () => {
+      console.log("call");
       return await Axios.get(
         `/media-kit/show-file/${brandId}/${category}/${fileName}`,
         { responseType: "blob" }
