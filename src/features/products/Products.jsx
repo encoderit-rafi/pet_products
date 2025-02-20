@@ -17,6 +17,7 @@ import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
 // import { useSearchParam } from "react-use";
 import { useSearchParams } from "react-router-dom";
 import BaseDropdown from "@/components/dropdowns/BaseDropdown";
+import ImageDialog from "@/components/dialogs/ImageDialog";
 
 export default function Products() {
   const [searchParams] = useSearchParams();
@@ -120,14 +121,18 @@ export default function Products() {
               <div className="flex items-center gap-3">
                 <div className="size-5">
                   {row?.image_url ? (
-                    <img
+                    // <img
+                    //   src={row?.image_url}
+                    //   alt={row?.product_name_en}
+                    //   onError={(e) =>
+                    //     (e.target.src = "/placeholder-image.webp")
+                    //   }
+                    //   aria-label="An illustrative image"
+                    //   className="object-cover object-center rounded-full size-full"
+                    // />
+                    <ImageDialog
                       src={row?.image_url}
-                      alt={row?.product_name_en}
-                      onError={(e) =>
-                        (e.target.src = "/placeholder-image.webp")
-                      }
-                      aria-label="An illustrative image"
-                      className="object-cover object-center rounded-full size-full"
+                      name={row?.product_name_en}
                     />
                   ) : (
                     <PlaceholderImage />
@@ -197,78 +202,79 @@ export default function Products() {
         //   },
         // },
       ],
-      isLoading: false,
+      isLoading: isLoadingAllProducts || isFetchingAllProducts,
+      // isLoading: true,
       data: allProducts?.data || [],
     }),
     [allProducts]
   );
-  const queryProductsLoading = {
-    headers: [
-      {
-        name: "name",
-        value: "name",
-        cellValue: (row) => {
-          return (
-            <div className="flex items-center gap-3">
-              <div className="rounded-full size-5 bg-custom_bg_one animate-pulse" />
-              <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-            </div>
-          );
-        },
-      },
-      {
-        name: "sku",
-        value: "product_sku",
-        cellValue: () => (
-          <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-        ),
-      },
-      {
-        name: "brand",
-        value: "brand",
-        cellValue: () => (
-          <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-        ),
-      },
-      {
-        name: "category",
-        value: "category",
-        cellValue: () => (
-          <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-        ),
-      },
+  // const queryProductsLoading = {
+  //   headers: [
+  //     {
+  //       name: "name",
+  //       value: "name",
+  //       cellValue: (row) => {
+  //         return (
+  //           <div className="flex items-center gap-3">
+  //             <div className="rounded-full size-5 bg-custom_bg_one animate-pulse" />
+  //             <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+  //           </div>
+  //         );
+  //       },
+  //     },
+  //     {
+  //       name: "sku",
+  //       value: "product_sku",
+  //       cellValue: () => (
+  //         <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+  //       ),
+  //     },
+  //     {
+  //       name: "brand",
+  //       value: "brand",
+  //       cellValue: () => (
+  //         <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+  //       ),
+  //     },
+  //     {
+  //       name: "category",
+  //       value: "category",
+  //       cellValue: () => (
+  //         <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+  //       ),
+  //     },
 
-      {
-        name: "total unit sold",
-        value: "total_unit_sold",
-        cellValue: () => (
-          <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-        ),
-      },
-      {
-        name: "total sales value ",
-        value: "total_revenue",
-        cellValue: () => (
-          <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-        ),
-      },
-      {
-        name: "criteria category",
-        value: "criteria_category",
-        cellValue: () => (
-          <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-        ),
-      },
-    ],
-    isLoading: false,
-    data: Array.from({ length: 5 }, (_, i) => i),
-  };
+  //     {
+  //       name: "total unit sold",
+  //       value: "total_unit_sold",
+  //       cellValue: () => (
+  //         <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+  //       ),
+  //     },
+  //     {
+  //       name: "total sales value ",
+  //       value: "total_revenue",
+  //       cellValue: () => (
+  //         <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+  //       ),
+  //     },
+  //     {
+  //       name: "criteria category",
+  //       value: "criteria_category",
+  //       cellValue: () => (
+  //         <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
+  //       ),
+  //     },
+  //   ],
+  //   isLoading: false,
+  //   data: Array.from({ length: 5 }, (_, i) => i),
+  // };
 
   return (
     <div className="flex flex-col h-full gap-4 overflow-hidden">
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
-          <Title onClick={() => setIsOpenDrawer(true)}>dashboard </Title>
+          <Title onClick={() => setIsOpenDrawer(true)}>products </Title>
           <div className="flex items-start gap-3 lg:items-center">
             <div className="w-[150px] lg:w-[111px]">
               <form
@@ -353,15 +359,7 @@ export default function Products() {
       </div>
       <div className="flex-1 overflow-auto">
         <BorderBox>
-          {isLoadingAllProducts || isFetchingAllProducts ? (
-            <Table query={queryProductsLoading} />
-          ) : allProducts?.total > 0 ? (
-            <Table
-              query={{ ...queryProducts, data: allProducts?.data || [] }}
-            />
-          ) : (
-            <h5 className="text-xl text-center text-red-500">No data found</h5>
-          )}
+          <Table query={queryProducts} />
         </BorderBox>
       </div>
       {allProducts?.total > 0 && (

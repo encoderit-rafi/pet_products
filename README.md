@@ -1,5 +1,5 @@
 ### Refactor Code
 
 - Dropdown modules
-- Table loading
+- Remove < PlaceholderImage />
 - Form validation

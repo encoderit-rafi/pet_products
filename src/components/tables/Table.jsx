@@ -7,11 +7,6 @@ export default function Table({ query }) {
     <div
       className={"relative h-full max-h-[530px] overflow-y-auto text-xs pr-2"}
     >
-      {query.isLoading && (
-        <div className="w-full h-1 overflow-hidden bg-gray-200 rounded-full">
-          <div className="h-4 rounded-lg bg-custom_primary animate-loading"></div>
-        </div>
-      )}
       <table className="min-w-full table-fixed">
         <thead className="sticky top-0 bg-custom_bg_three">
           <tr>
