@@ -10,6 +10,8 @@ import {
 } from "recharts";
 import { useWindowSize } from "react-use";
 import { useTheme } from "@/context/ThemeProvider";
+import ImageDialog from "../dialogs/ImageDialog";
+import getImageUrl from "@/lib/utils/getImageUrl";
 
 const GlowingRectangle = (props) => {
   const { fill, x, y, width, height, radius } = props;
@@ -53,7 +55,8 @@ const CustomTooltip = ({
 const CustomTick = ({ x, y, payload, data, showIcon }) => {
   console.log("🚀 ~ CustomTick ~ data:", data[payload.index]);
   const iconSize = 30; // Set the size of the icon
-  const iconURL = data[payload.index].logo || "/placeholder-image.webp"; // Set the size of the icon
+  // const iconURL = data[payload.index].logo || "/placeholder-image.webp"; // Set the size of the icon
+  const iconURL = data[payload.index].series; // Set the size of the icon
   console.log("🚀 ~ CustomTick ~ iconURL:", iconURL);
 
   return (
@@ -78,7 +81,7 @@ const CustomTick = ({ x, y, payload, data, showIcon }) => {
             }}
           >
             <img
-              src={iconURL}
+              src={getImageUrl(iconURL, "logo", "jpg")}
               alt={payload.value}
               style={{
                 width: "100%",

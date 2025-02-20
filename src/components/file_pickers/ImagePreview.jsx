@@ -15,6 +15,7 @@ export default function ImagePreview({
         src={src}
         alt="preview"
         className="object-cover rounded-lg size-full"
+        onError={(e) => (e.target.src = "/placeholder-image.webp")}
       />
       {!hideCloseButton && (
         <button

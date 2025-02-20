@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import DeleteIcon from "@/assets/icons/DeleteIcon";
 import EditIcon from "@/assets/icons/EditIcon";
 import BorderBox from "@/components/box/BorderBox";
 import IconButton from "@/components/buttons/IconButton";
 import DownloadIcon from "@/assets/icons/DownloadIcon";
 import { LoaderIcon } from "react-hot-toast";
+import ImageDialog from "@/components/dialogs/ImageDialog";
+import { useShowMediaKitFile } from "../api/queries/useShowMediaKitFile";
 
 export default function MediaKitCard({
   data,
@@ -13,6 +15,22 @@ export default function MediaKitCard({
   isLoadingDelete,
   onClickDelete,
 }) {
+  const {
+    data: url,
+    refetch: showMediaKit,
+    isLoading: isLoadingShowMediaKit,
+  } = useShowMediaKitFile({
+    brandId: data.brandId,
+    category: data?.category,
+    fileName: data.original_name,
+  });
+  useEffect(() => {
+    showMediaKit();
+  }, [data]);
+  useEffect(() => {
+    // showMediaKit();
+    console.log("🚀 ~ url:", url);
+  }, [url]);
   const isImage = (ext) => ["png", "jpg", "jpeg", "gif", "webp"].includes(ext);
 
   return (
@@ -21,17 +39,10 @@ export default function MediaKitCard({
         <div className="p-1 size-14 bg-custom_bg_two rounded-2xl shrink-0">
           {/* {data?.url} */}
           {isImage(data.extension) ? (
-            // <img
-            //   src={data?.url || "/placeholder-image.webp"}
-            //   // src={data?.url}
-            //   onError={(e) => (e.target.src = "/placeholder-image.webp")}
-            //   alt=""
-            //   className="object-cover rounded-lg size-full"
-            // />
-            <div className="flex items-center relative overflow-hidden bg-[url('/placeholder-image.webp')] bg-black/90 bg-center bg-cover justify-center rounded-lg size-full">
-              <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-              <div className="relative z-10">{data.extension}</div>
-            </div>
+            <ImageDialog
+              src={window.URL.createObjectURL(url.data)}
+              className={"size-full rounded-xl"}
+            />
           ) : (
             <div className="flex items-center justify-center rounded-lg size-full bg-custom_bg_eight">
               {data.extension}

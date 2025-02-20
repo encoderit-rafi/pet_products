@@ -18,6 +18,7 @@ import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
 import { useSearchParams } from "react-router-dom";
 import BaseDropdown from "@/components/dropdowns/BaseDropdown";
 import ImageDialog from "@/components/dialogs/ImageDialog";
+import getImageUrl from "@/lib/utils/getImageUrl";
 
 export default function Products() {
   const [searchParams] = useSearchParams();
@@ -120,23 +121,10 @@ export default function Products() {
             return (
               <div className="flex items-center gap-3">
                 <div className="size-5">
-                  {row?.image_url ? (
-                    // <img
-                    //   src={row?.image_url}
-                    //   alt={row?.product_name_en}
-                    //   onError={(e) =>
-                    //     (e.target.src = "/placeholder-image.webp")
-                    //   }
-                    //   aria-label="An illustrative image"
-                    //   className="object-cover object-center rounded-full size-full"
-                    // />
-                    <ImageDialog
-                      src={row?.image_url}
-                      name={row?.product_name_en}
-                    />
-                  ) : (
-                    <PlaceholderImage />
-                  )}
+                  <ImageDialog
+                    src={getImageUrl(row.brand_series, row.sap_product_code)}
+                    name={row?.product_name_en}
+                  />
                 </div>
                 <span>{row?.product_name_en || "-"}</span>
               </div>

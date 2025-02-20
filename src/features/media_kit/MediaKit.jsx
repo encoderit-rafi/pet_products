@@ -25,6 +25,7 @@ import { useMediaKitDownload } from "./api/queries/useMediaKitDownload";
 import DialogConfirmDelete from "@/components/dialogs/DialogConfirmDelete";
 import { useDeleteMediaKit } from "./api/mutations/useDeleteMediaKit";
 import FileUploadForm from "./components/FileUploadForm";
+import { useShowMediaKitFile } from "./api/queries/useShowMediaKitFile";
 // import { useGetAllStandTypes } from "./api/queries/useGetAllStandTypes";
 // import { useGetAllPosMaterials } from "./api/queries/useGetAllPosMaterials";
 
@@ -75,6 +76,7 @@ export default function MediaKit() {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   // const [selectedFile, setSelectedFile] = useState(null);
   const [selectedFile, setSelectedFile] = useState({ type: "", name: "" });
+  // const [selectedShowFile, setSelectedShowFile] = useState("");
   const [isOpenDeleteFile, setIsOpenDeleteFile] = useState(false);
   const [activeTab, setActiveTab] = useState(() =>
     searchParams.get("type") == null
@@ -119,9 +121,14 @@ export default function MediaKit() {
     useMediaKitDownload({
       brandId: selectedBrand[0]?.id,
       category: activeTab?.value,
-      // fileName: selectedFile,
       fileName: selectedFile.name,
     });
+  // const { refetch: showMediaKit, isLoading: isLoadingShowMediaKit } =
+  // useShowMediaKitFile({
+  //     brandId: selectedBrand[0]?.id,
+  //     category: activeTab?.value,
+  //     fileName: selectedShowFile,
+  //   });
   const { mutate: deleteMediaKit, isLoading: isLoadingDeleteMediaKit } =
     useDeleteMediaKit();
   function confirmDeleteMediaKit() {
@@ -150,13 +157,14 @@ export default function MediaKit() {
     selectedFile?.type == "download" && downloadMediaKit();
     // fetchAllMediaKits();
   }, [selectedFile]);
+  // useEffect(() => {
+  //   selectedShowFile != "" && showMediaKit();
+  // }, [selectedShowFile]);
   useEffect(() => {
     fetchAllMediaKits();
     console.log(selectedBrand[0]?.id);
   }, [selectedBrand, activeTab]);
-  useEffect(() => {
-    console.log("✅ ~ MediaKit ~ allMediaKits:", allMediaKits);
-  }, [allMediaKits]);
+
   return (
     <div className="flex flex-col h-full gap-4 text-custom_bg_three">
       <TabGroup
@@ -189,16 +197,6 @@ export default function MediaKit() {
                 />
               )}
               <div className="flex flex-row items-center flex-1 gap-4">
-                {/* <BrandsDropdown
-                  variant="rounded"
-                  hideLabel
-                  className="w-36"
-                  selected={selectedBrand}
-                  setSelected={(data) => {
-                    data?.id != selectedBrand?.[0]?.id &&
-                      setSelectedBrand([data]);
-                  }}
-                /> */}
                 <BaseButton
                   variant="orange"
                   icon="plus"
@@ -231,7 +229,11 @@ export default function MediaKit() {
               allMediaKits?.map((data, i) => (
                 <MediaKitCard
                   key={i}
-                  data={data}
+                  data={{
+                    ...data,
+                    brandId: selectedBrand[0]?.id,
+                    category: activeTab?.value,
+                  }}
                   isLoadingDownload={
                     // isLoadingDownloadMediaKit && data.name == selectedFile
                     isLoadingDownloadMediaKit &&

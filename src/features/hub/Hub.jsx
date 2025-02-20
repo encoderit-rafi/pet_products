@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Title from "@/components/texts/Title";
 import SubTitle from "@/components/texts/SubTitle";
 import BorderBox from "@/components/box/BorderBox";
@@ -11,8 +11,12 @@ import BrandsChart from "./components/BrandsChart";
 import SalesVsCities from "./components/SalesVsCities";
 import TotalInventory from "./components/TotalInventory";
 import BrandsInventory from "./components/BrandsInventory";
+import getImageUrl from "@/lib/utils/getImageUrl";
 
 export default function Hub() {
+  useEffect(() => {
+    console.log(getImageUrl("P103", "logo", "jpg"));
+  }, []);
   return (
     <div className="p-1 overflow-x-hidden ">
       <div className="grid grid-cols-12 gap-6">

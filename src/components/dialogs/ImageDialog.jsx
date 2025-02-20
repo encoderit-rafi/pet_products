@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Dialog from "./Dialog";
 import ImagePreview from "../file_pickers/ImagePreview";
+import cn from "@/lib/utils/cn";
 
-export default function ImageDialog({ src, name }) {
+export default function ImageDialog({ src, name, className }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
@@ -10,7 +11,10 @@ export default function ImageDialog({ src, name }) {
         src={src}
         alt={name}
         aria-label={name}
-        className="object-cover object-center rounded-full size-5 cursor-pointer"
+        className={cn(
+          "object-cover object-center rounded-full size-5 cursor-pointer",
+          className
+        )}
         onError={(e) => (e.target.src = "/placeholder-image.webp")}
         onClick={() => setIsOpen(true)}
       />
@@ -18,7 +22,7 @@ export default function ImageDialog({ src, name }) {
         <ImagePreview
           src={src}
           onClickClose={() => setIsOpen(false)}
-          className={"size-64"}
+          className={"w-80"}
         />
       </Dialog>
     </>
