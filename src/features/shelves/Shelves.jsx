@@ -78,7 +78,7 @@ export default function Shelves() {
           name: "store",
           value: "store",
           cellValue: (row) => {
-            return "API KEY MISSING";
+            return row.client_name_en;
           },
         },
         {

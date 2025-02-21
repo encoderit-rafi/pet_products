@@ -20,6 +20,7 @@ import NotFound from "./features/not_found";
 import Login from "./features/auth/login";
 import DefaultLayout from "./layouts/DefaultLayout";
 import MediaKit from "./features/media_kit";
+import Brands from "./features/brands";
 // import DefaultLayout from "./layouts/DefaultLayout";
 // import Home from "./features/home";
 // Router Configuration
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
         path: "marketing/criteria_and_segment",
         element: <CriteriaAndSegment />,
       },
+      { path: "brands", element: <Brands /> },
       { path: "products", element: <Products /> },
       { path: "media-kit", element: <MediaKit /> },
       { path: "roles", element: <Roles /> },

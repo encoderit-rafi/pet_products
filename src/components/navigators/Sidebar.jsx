@@ -11,6 +11,11 @@ import HubIcon from "@/assets/icons/HubIcon";
 const routes = [
   { path: "/", name: "hub", icon: <HubIcon className="w-4" /> },
   {
+    path: "/brands",
+    name: "brands",
+    icon: <ProductsIcon className="w-4" />,
+  },
+  {
     path: "/products",
     name: "products",
     icon: <ProductsIcon className="w-4" />,
