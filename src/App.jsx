@@ -21,6 +21,7 @@ import Login from "./features/auth/login";
 import DefaultLayout from "./layouts/DefaultLayout";
 import MediaKit from "./features/media_kit";
 import Brands from "./features/brands";
+import Stores from "./features/stores";
 // import DefaultLayout from "./layouts/DefaultLayout";
 // import Home from "./features/home";
 // Router Configuration
@@ -41,6 +42,7 @@ const router = createBrowserRouter([
         element: <CriteriaAndSegment />,
       },
       { path: "brands", element: <Brands /> },
+      { path: "stores", element: <Stores /> },
       { path: "products", element: <Products /> },
       { path: "media-kit", element: <MediaKit /> },
       { path: "roles", element: <Roles /> },

@@ -16,6 +16,11 @@ const routes = [
     icon: <ProductsIcon className="w-4" />,
   },
   {
+    path: "/stores",
+    name: "stores",
+    icon: <ProductsIcon className="w-4" />,
+  },
+  {
     path: "/products",
     name: "products",
     icon: <ProductsIcon className="w-4" />,
