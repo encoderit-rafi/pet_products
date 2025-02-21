@@ -58,24 +58,12 @@ import PlayIcon from "@/assets/icons/PlayIcon";
 
 export default function Sidebar({ className, children }) {
   const location = useLocation();
-  const [isOpenDrawerApplicationSupport, setIsOpenDrawerApplicationSupport] =
-    useState(false);
-  const [
-    isOpenDrawerSingleApplicationSupport,
-    setIsOpenDrawerSingleApplicationSupport,
-  ] = useState(false);
-  // const [isOpenContact, setIsOpenContact] = useState(false);
-
   return (
     <aside className={cn("flex flex-col justify-between flex-1", className)}>
       <nav className="pb-6 overflow-y-auto">
         <ul className="space-y-6">
           <div className="hidden lg:block">
-            <ButtonContact
-              setIsOpenDrawerApplicationSupport={
-                setIsOpenDrawerApplicationSupport
-              }
-            />
+            <ButtonContact />
           </div>
 
           {routes?.map((route) => (
@@ -98,21 +86,6 @@ export default function Sidebar({ className, children }) {
         </ul>
       </nav>
       {children}
-      {/* Application Support Drawer */}
-      <DrawerApplicationSupport
-        isOpen={isOpenDrawerApplicationSupport}
-        setIsOpen={() => setIsOpenDrawerApplicationSupport(false)}
-      >
-        <CardApplicationSupport
-          onClick={() => setIsOpenDrawerSingleApplicationSupport(true)}
-        />
-      </DrawerApplicationSupport>
-
-      {/* Single Application Support Drawer */}
-      <DrawerSingleApplicationSupport
-        isOpen={isOpenDrawerSingleApplicationSupport}
-        setIsOpen={() => setIsOpenDrawerSingleApplicationSupport(false)}
-      />
     </aside>
   );
 }

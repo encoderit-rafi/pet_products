@@ -43,7 +43,7 @@ export const useGetAllStores = ({ setToUrl, isEnabled }) => {
         await Axios.get("/clients", {
           params,
         })
-      ).data;
+      ).data.data;
     },
   });
   return {

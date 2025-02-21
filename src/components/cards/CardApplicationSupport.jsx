@@ -5,14 +5,15 @@ import FacebookIcon from "@/assets/icons/FacebookIcon";
 import WhatsappIcon from "@/assets/icons/WhatsappIcon";
 import MessageIcon from "@/assets/icons/MessageIcon";
 import PhoneIcon from "@/assets/icons/PhoneIcon";
+import ChatIcon from "@/assets/icons/ChatIcon";
 
-export default function CardApplicationSupport({ ...props }) {
+export default function CardApplicationSupport({
+  user,
+  onClickOpenSingleApplicationSupport,
+  onClickOpenChat,
+}) {
   return (
-    <BorderBox
-      className="cursor-pointer lg:p-3 h-fit"
-      {...props}
-      // onClick={() => setIsOpenDrawerSingleApplicationSupport(true)}
-    >
+    <BorderBox className="lg:p-3 h-fit">
       <div className="flex items-center gap-4">
         <img
           src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -21,8 +22,11 @@ export default function CardApplicationSupport({ ...props }) {
         />
 
         <div className="flex flex-col justify-between flex-1 h-16 capitalize">
-          <p className="text-sm font-medium text-custom_text_four">
-            m. khalid saied
+          <p
+            className="text-sm font-medium text-custom_text_four cursor-pointer"
+            onClick={onClickOpenSingleApplicationSupport}
+          >
+            {user?.name}
           </p>
           <p className="text-xs text-gray-400">role here</p>
           <div className="flex items-center gap-3 text-custom_yellow">
@@ -31,6 +35,12 @@ export default function CardApplicationSupport({ ...props }) {
             <WhatsappIcon className="size-4" />
             <MessageIcon className="size-4" />
             <PhoneIcon className="size-4" />
+            <div
+              className="flex items-center justify-center cursor-pointer"
+              onClick={onClickOpenChat}
+            >
+              <ChatIcon className="size-5" />
+            </div>
           </div>
         </div>
       </div>

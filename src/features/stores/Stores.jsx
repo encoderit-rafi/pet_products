@@ -42,15 +42,29 @@ export default function Stores() {
           cellValue: (row) => {
             return (
               <div className="flex items-center gap-3">
-                <div className="size-5">
+                {/* <div className="size-5">
                   <ImageDialog
                     src={getImageUrl(row.series, "logo", "jpg")}
                     name={row?.product_name_en}
                   />
-                </div>
-                <span>{row?.name || "-"}</span>
+                </div> */}
+                <span>{row?.name_en || "-"}</span>
               </div>
             );
+          },
+        },
+        {
+          name: "owner name",
+          value: "owner_name",
+          cellValue: (row) => {
+            return row?.owner_name || "-";
+          },
+        },
+        {
+          name: "owner phone",
+          value: "owner_phone",
+          cellValue: (row) => {
+            return row?.owner_phone || "-";
           },
         },
         {
@@ -61,17 +75,24 @@ export default function Stores() {
           },
         },
         {
-          name: "SAP number",
-          value: "sap_number",
+          name: "location",
+          value: "location",
           cellValue: (row) => {
-            return row?.sap_number || "-";
+            return row?.location || "-";
           },
         },
         {
-          name: "series",
-          value: "series",
+          name: "SAP Code",
+          value: "sap_client_code",
           cellValue: (row) => {
-            return row?.series || "-";
+            return row?.sap_client_code || "-";
+          },
+        },
+        {
+          name: "status",
+          value: "status",
+          cellValue: (row) => {
+            return row?.status || "-";
           },
         },
       ],

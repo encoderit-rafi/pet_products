@@ -84,10 +84,14 @@ export default function Roles() {
       </div>
       <div className="flex-1 overflow-auto">
         <div className="grid grid-cols-1 gap-6 mt-2 md:grid-cols-2 xl:grid-cols-3">
-          {!isLoadingAllUsers &&
-            !isFetchingAllUsers &&
-            allUsers?.data?.length > 0
-            ? allUsers.data?.map((user) => (
+          {isLoadingAllUsers || isFetchingAllUsers ? (
+            // Show skeleton loaders when data is loading or fetching
+            Array.from({ length: PAGINATION.per_page }, (_, i) => (
+              <UserCardSkeleton key={i} />
+            ))
+          ) : allUsers?.data?.length > 0 ? (
+            // Show user cards if data is available
+            allUsers.data.map((user) => (
               <UserCard
                 key={user.id}
                 data={user}
@@ -101,9 +105,10 @@ export default function Roles() {
                 }}
               />
             ))
-            : Array.from({ length: PAGINATION.per_page }, (_, i) => (
-              <UserCardSkeleton key={i} />
-            ))}
+          ) : (
+            // Show "No data found" when data is empty
+            <p className="text-center text-red-500">No data found</p>
+          )}
         </div>
       </div>
 
