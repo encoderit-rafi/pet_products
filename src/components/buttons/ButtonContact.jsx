@@ -9,6 +9,10 @@ import DrawerSingleApplicationSupport from "../drawers/DrawerSingleApplicationSu
 import { useGetAllRoles } from "@/api/roles/queries/useGetAllRoles";
 import UserCardSkeleton from "@/features/roles/components/UserCardSkeleton";
 import BorderBox from "../box/BorderBox";
+import CloseIcon from "@/assets/icons/CloseIcon";
+import BaseInput from "../inputs/BaseInput";
+import ImagePickerIcon from "../file_pickers/ImagePickerIcon";
+import SendIcon from "@/assets/icons/SendIcon";
 
 const data = [
   {
@@ -66,7 +70,31 @@ export default function ButtonContact() {
     setParamsAllUsers((data) => ({ ...data, connect_role: item.value }));
     setIsOpenDrawerApplicationSupport(true);
   };
+  const [messages, setMessages] = useState([
+    { text: "Hello! How can I assist you today?", sender: "bot" },
+  ]);
+  const [input, setInput] = useState("");
 
+  const sendMessage = () => {
+    if (!input.trim()) return;
+
+    const newMessage = { text: input, sender: "user" };
+    setMessages([...messages, newMessage]);
+    setInput("");
+
+    setTimeout(() => {
+      setMessages((prev) => [
+        ...prev,
+        { text: "I'm just a bot!", sender: "bot" },
+      ]);
+    }, 1000);
+  };
+  const [images, setImages] = useState([]);
+
+  function onHandleFileChange(e) {
+    const selectedFiles = Array.from(e.target.files);
+    selectedFiles?.length > 0 && setImages(selectedFiles);
+  }
   return (
     <>
       <div className="relative">
@@ -154,22 +182,78 @@ export default function ButtonContact() {
             <div
               className="h-full relative"
               onClick={(e) => {
-                e.stopPropagation();
-                setIsOpenChat(false);
+                // e.stopPropagation();
+                // setIsOpenChat(false);
               }}
             >
               <div
-                className={`absolute bottom-0 duration-500 h-52 bg-red-200 w-full ${
-                  isOpenChat ? "translate-y-0" : "translate-y-52"
+                className={`absolute bottom-0 duration-500 h-96 bg-custom_bg_one rounded-t-xl  w-full flex flex-col gap-2 ${
+                  isOpenChat ? "translate-y-0" : "translate-y-96"
                 }`}
               >
-                <div
-                  className="size-5 bg-red-500 rounded-full"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsOpenChat(false);
-                  }}
-                ></div>
+                <div className="flex shrink-0 items-center  justify-between p-2 pb-0">
+                  <div className="flex items-center gap-1">
+                    <img
+                      src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                      alt=""
+                      className="object-cover object-center size-8 rounded-full"
+                    />
+                    <span>User Name</span>
+                  </div>
+                  <div
+                    className="size-5 flex items-center justify-center bg-red-500 rounded-full"
+                    onClick={(e) => {
+                      // e.stopPropagation();
+                      setIsOpenChat(false);
+                    }}
+                  >
+                    <CloseIcon className={"size-2"} />
+                  </div>
+                </div>
+                <div className="flex-1 overflow-y-auto space-y-2 p-2">
+                  {messages.map((msg, index) => (
+                    <div
+                      key={index}
+                      className={`flex items-center ${
+                        msg.sender === "user" ? "justify-end" : ""
+                      }`}
+                    >
+                      <div
+                        className={`px-4 py-2 rounded-full max-w-xs ${
+                          msg.sender === "user"
+                            ? "bg-blue-500 text-white"
+                            : "bg-gray-200 text-black"
+                        }`}
+                      >
+                        {msg.text}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex items-center p-2 shrink-0 gap-2">
+                  {/* <input
+                    type="text"
+                    className="flex-1 p-2 border rounded-lg outline-none"
+                    placeholder="Type a message..."
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+                  /> */}
+                  <ImagePickerIcon
+                    handleFileChange={onHandleFileChange}
+                    className="p-0 border-none"
+                  />
+
+                  <BaseInput
+                    palceholder={"enter text..."}
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+                  />
+                  <div className="text-custom_yellow " onClick={sendMessage}>
+                    <SendIcon className={"size-6"} />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
