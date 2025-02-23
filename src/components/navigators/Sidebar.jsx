@@ -13,12 +13,12 @@ const routes = [
   {
     path: "/brands",
     name: "brands",
-    icon: <ProductsIcon className="w-4" />,
+    icon: <BrandIcon className="w-4" />,
   },
   {
     path: "/stores",
     name: "stores",
-    icon: <ProductsIcon className="w-4" />,
+    icon: <StoreIcon className="w-4" />,
   },
   {
     path: "/products",
@@ -55,6 +55,8 @@ import DrawerApplicationSupport from "../drawers/DrawerApplicationSupport";
 import CardApplicationSupport from "../cards/CardApplicationSupport";
 import DrawerSingleApplicationSupport from "../drawers/DrawerSingleApplicationSupport";
 import PlayIcon from "@/assets/icons/PlayIcon";
+import BrandIcon from "@/assets/icons/BrandIcon";
+import StoreIcon from "@/assets/icons/StoreIcon";
 
 export default function Sidebar({ className, children }) {
   const location = useLocation();

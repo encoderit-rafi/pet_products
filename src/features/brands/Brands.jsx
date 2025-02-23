@@ -8,6 +8,7 @@ import { useSearchParams } from "react-router-dom";
 import ImageDialog from "@/components/dialogs/ImageDialog";
 import getImageUrl from "@/lib/utils/getImageUrl";
 import { useGetAllBrands } from "./api/queries/useGetAllBrands";
+import Page from "@/components/ui/Page";
 
 export default function Brands() {
   const {
@@ -83,44 +84,41 @@ export default function Brands() {
   );
 
   return (
-    <div className="flex flex-col h-full gap-4 overflow-hidden">
-      <div className="flex flex-col gap-3">
-        <div className="flex items-center justify-between">
-          <Title onClick={() => setIsOpenDrawer(true)}>brands </Title>
-          <div className="flex items-start gap-3 lg:items-center">
-            <div className="w-[150px] lg:w-[111px]">
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  handelSearch();
-                }}
-              >
-                <InputSearch
-                  className="pr-1 py-1.5"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
-              </form>
-            </div>
-          </div>
+    <Page
+      title="brands"
+      actions={
+        <div className="w-[150px] lg:w-[111px]">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handelSearch();
+            }}
+          >
+            <InputSearch
+              className="pr-1 py-1.5"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </form>
         </div>
-      </div>
-      <div className="flex-1 overflow-auto">
-        <BorderBox>
-          <Table query={queryBrands} />
-        </BorderBox>
-      </div>
-      {allBrands?.total > 0 && (
-        <Pagination
-          to={allBrands?.to}
-          total={allBrands?.total}
-          current_page={allBrands?.current_page}
-          last_page={allBrands?.last_page}
-          per_page={allBrands?.per_page}
-          onPageChange={handlePageChange}
-          onPerPageChange={handlePerPageChange}
-        />
-      )}
-    </div>
+      }
+      footer={
+        allBrands?.total > 0 && (
+          <Pagination
+            to={allBrands?.to}
+            total={allBrands?.total}
+            current_page={allBrands?.current_page}
+            last_page={allBrands?.last_page}
+            per_page={allBrands?.per_page}
+            onPageChange={handlePageChange}
+            onPerPageChange={handlePerPageChange}
+          />
+        )
+      }
+    >
+      <BorderBox>
+        <Table query={queryBrands} />
+      </BorderBox>
+    </Page>
   );
 }
