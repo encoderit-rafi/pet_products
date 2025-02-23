@@ -311,16 +311,6 @@ export default function TotalInventory() {
                   brand?.id ? "No Category Found" : "Select a Brand First"
                 }
               />
-              {/* <BaseMenu
-                text={isLoadingAllCategories ? "Loading..." : "select category"}
-                data={allCategories || []}
-                value={category}
-                setValue={(item) => setCategory(item)}
-                isLoading={isLoadingAllCategories}
-                errorText={
-                  brand?.id ? "No Category Found" : "Select a Brand First"
-                }
-              /> */}
             </div>
           </div>
         </div>
@@ -340,7 +330,7 @@ export default function TotalInventory() {
           </div>
         </div>
       </div>
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-auto my-4">
         {/* <BorderBox> */}
         {isLoadingAllProducts || isFetchingAllProducts ? (
           <Table query={queryProductsLoading} />

@@ -80,34 +80,43 @@ export default function LowestStock() {
   const { data: allBrands, isLoading: isLoadingAllBrands } = useGetAllBrands();
   const [brands, setBrands] = useState([]);
   const [range, setRange] = useState(() => ranges[0]);
-  const query = useMemo(() => ({
-    headers: [
-      {
-        name: "Brand",
-        value: "name",
-        cellValue: (row) => {
-          return row.name;
+  const query = useMemo(
+    () => ({
+      headers: [
+        {
+          name: "Brand",
+          value: "name",
+          cellValue: (row) => {
+            return row.name;
+          },
+        },
+        {
+          name: "Products",
+          value: "products_count",
+          cellValue: (row) => {
+            return row.products_count;
+          },
+        },
+        {
+          name: "Stocks",
+          value: "total_remaining_stock",
+          cellValue: (row) => {
+            return row?.total_remaining_stock;
+          },
+        },
+      ],
+      isLoading: statusAllLowestStocks == "loading",
+      data: allLowestStocks?.data || [],
+      className: {
+        table: {
+          tbody: {
+            tbody: "max-h-72",
+          },
         },
       },
-      {
-        name: "Products",
-        value: "products_count",
-        cellValue: (row) => {
-          return row.products_count;
-        },
-      },
-      {
-        name: "Stocks",
-        value: "total_remaining_stock",
-        cellValue: (row) => {
-          return row?.total_remaining_stock;
-        },
-      },
-
-    ],
-    isLoading: statusAllLowestStocks == "loading",
-    data: allLowestStocks?.data || [],
-  }), [allLowestStocks]);
+    }),
+    [allLowestStocks]
+  );
   const queryLoading = {
     headers: [
       {
@@ -121,7 +130,6 @@ export default function LowestStock() {
             </div>
           );
         },
-
       },
       {
         name: "Stocks",
@@ -134,29 +142,29 @@ export default function LowestStock() {
             </div>
           );
         },
-
       },
     ],
     isLoading: statusAllLowestStocks == "loading",
     data: Array.from({ length: 10 }, (_, i) => i),
-
-  }
+  };
   useEffect(() => {
-    setParamsAllLowestStocks(omitEmpty({
-      brand_ids: brands?.map((item) => item.id).join(","),
-      range: range.value,
-    }));
+    setParamsAllLowestStocks(
+      omitEmpty({
+        brand_ids: brands?.map((item) => item.id).join(","),
+        range: range.value,
+      })
+    );
   }, [brands, range]);
 
   useEffect(() => {
-    ranges.lenght > 0 && setRange(ranges[0])
+    ranges.lenght > 0 && setRange(ranges[0]);
   }, [ranges]);
   useEffect(() => {
     fetchAllLowestStocks();
   }, [paramsAllLowestStocks]);
   return (
     <BorderBox>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between ">
         <SubTitle>Lowest Stock</SubTitle>
         <div className="flex items-center gap-1">
           <BaseDropdown
@@ -184,8 +192,10 @@ export default function LowestStock() {
           />
         </div>
       </div>
-      <div className="h-72">
-        <Table query={statusAllLowestStocks == "loading" ? queryLoading : query} />
+      <div className="overflow-hidden">
+        <Table
+          query={statusAllLowestStocks == "loading" ? queryLoading : query}
+        />
       </div>
     </BorderBox>
   );

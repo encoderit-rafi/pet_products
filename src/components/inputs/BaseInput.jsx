@@ -15,7 +15,7 @@ export default function BaseInput({
 }) {
   return (
     <InputBox className="flex flex-col w-full">
-      {/* {!hideLabel && <Label id={id} palceholder={palceholder} label={label} />} */}
+      {!hideLabel && <Label id={id} palceholder={palceholder} label={label} />}
       <input
         id={id}
         name={id}

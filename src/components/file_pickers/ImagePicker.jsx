@@ -35,7 +35,7 @@ export default function ImagePicker({
         <>
           <div
             className={cn(
-              "flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-lg cursor-pointer border-custom_line_one hover:bg-custom_bg_one",
+              "flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer border-custom_line_one hover:bg-custom_bg_one",
               {
                 "border-red-500": isError,
               }

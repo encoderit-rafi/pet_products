@@ -198,7 +198,7 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
       )}
 
       {/* <ImagePicker /> */}
-      <div className="space-y-3 overflow-auto max-h-32 lg:max-h-72">
+      <div className="space-y-3 overflow-auto">
         <BaseInput
           id="name"
           type="text"

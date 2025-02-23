@@ -136,44 +136,12 @@ export default function ButtonContact() {
         <DrawerApplicationSupport
           isOpen={isOpenDrawerApplicationSupport}
           setIsOpen={() => setIsOpenDrawerApplicationSupport(false)}
+          query={{
+            isLoading: isLoadingAllUsers,
+            isFetching: isFetchingAllUsers,
+            data: allUsers?.data,
+          }}
         >
-          {isLoadingAllUsers || isFetchingAllUsers ? (
-            // Show skeleton loaders when data is loading or fetching
-            Array.from({ length: 5 }, (_, i) => (
-              <BorderBox
-                key={i}
-                className="p-2 lg:p-2 !border-custom_bg_one animate-pulse h-fit"
-              >
-                <div className="flex items-center gap-2">
-                  {/* Skeleton for image */}
-                  <div className="size-14 bg-custom_bg_one rounded-2xl">
-                    <div className="rounded-lg bg-custom_bg_one w-14 h-14"></div>
-                  </div>
-                  {/* Skeleton for text */}
-                  <div className="flex flex-col justify-center flex-1 space-y-1">
-                    <div className="w-3/4 h-3 rounded bg-custom_bg_one"></div>
-                    <div className="w-1/2 h-2 rounded bg-custom_bg_one"></div>
-                  </div>
-                </div>
-              </BorderBox>
-            ))
-          ) : allUsers?.data?.length > 0 ? (
-            // Show user cards if data is available
-            allUsers.data.map((user) => (
-              <CardApplicationSupport
-                key={user.id}
-                user={user}
-                onClickOpenSingleApplicationSupport={() =>
-                  setIsOpenDrawerSingleApplicationSupport(true)
-                }
-                onClickOpenChat={() => setIsOpenChat(true)}
-              />
-            ))
-          ) : (
-            // Show "No data found" when data is empty
-            <p className="text-center text-red-500">No data found</p>
-          )}
-
           <div
             className={` bg-transparent absolute inset-0 !mt-0 ${
               isOpenChat ? "visible " : "invisible"
@@ -231,14 +199,6 @@ export default function ButtonContact() {
                   ))}
                 </div>
                 <div className="flex items-center p-2 shrink-0 gap-2">
-                  {/* <input
-                    type="text"
-                    className="flex-1 p-2 border rounded-lg outline-none"
-                    placeholder="Type a message..."
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-                  /> */}
                   <ImagePickerIcon
                     handleFileChange={onHandleFileChange}
                     className="p-0 border-none"
