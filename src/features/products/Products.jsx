@@ -54,12 +54,12 @@ export default function Products() {
     setParams: setParamsAllProducts,
   } = useGetAllProducts({
     setToUrl: true,
-    isEnabled: false,
+    isEnabled: true,
   });
   const [search, setSearch] = useState(paramsAllProducts.search || "");
-  useEffect(() => {
-    fetchAllProducts();
-  }, [paramsAllProducts]);
+  // useEffect(() => {
+  //   fetchAllProducts();
+  // }, [paramsAllProducts]);
 
   useEffect(() => {
     if (allBrands?.length > 0 || paramsAllProducts.brand_id) {

@@ -19,6 +19,7 @@ import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
 import { useSearchParams } from "react-router-dom";
 import { useGetAllProducts } from "@/features/products/api/queries/useGetAllProducts";
 import BaseDropdown from "@/components/dropdowns/BaseDropdown";
+import ImageDialog from "@/components/dialogs/ImageDialog";
 
 export default function TotalInventory() {
   const [searchParams] = useSearchParams();
@@ -120,24 +121,14 @@ export default function TotalInventory() {
           cellValue: (row) => {
             return (
               <div className="flex items-center gap-3">
-                <div className="size-5">
-                  {row?.image_url ? (
-                    <img
-                      src={row?.image_url}
-                      alt={row?.product_name_en}
-                      onError={(e) =>
-                        (e.target.src = "/placeholder-image.webp")
-                      }
-                      aria-label="An illustrative image"
-                      className="object-cover object-center rounded-full size-full"
-                    />
-                  ) : (
-                    <PlaceholderImage />
-                  )}
+                <div className="size-5 shrink-0">
+                  <ImageDialog
+                    src={row?.image_url || "/placeholder-image.webp"}
+                    name={row?.product_name_en}
+                    className="size-full"
+                  />
                 </div>
-                <span className="w-32 truncate">
-                  {row?.product_name_en || "-"}
-                </span>
+                <span className="truncate">{row?.product_name_en || "-"}</span>
               </div>
             );
           },
@@ -146,62 +137,42 @@ export default function TotalInventory() {
           name: "sku",
           value: "product_sku",
           cellValue: (row) => {
-            return (
-              <span className="w-32 truncate">{row?.product_sku || "-"}</span>
-            );
+            return row?.product_sku || "-";
           },
         },
         {
           name: "brand",
           value: "brand",
           cellValue: (row) => {
-            return (
-              <span className="w-32 truncate">{row?.brand?.name || "-"}</span>
-            );
+            return row?.brand?.name || "-";
           },
         },
         {
           name: "category",
           value: "category",
           cellValue: (row) => {
-            return (
-              <span className="w-32 truncate">
-                {row?.category?.name || "-"}
-              </span>
-            );
-
-            // return row?.category?.name || "-";
+            return row?.category?.name || "-";
           },
         },
         {
           name: "total unit sold",
           value: "total_unit_sold",
           cellValue: (row) => {
-            return (
-              <p className="text-right w-32 truncate">{row?.total_unit_sold}</p>
-            );
+            return row?.total_unit_sold || "-";
           },
         },
         {
           name: "total sales value ",
           value: "total_revenue",
           cellValue: (row) => {
-            return (
-              <p className="text-right w-32 truncate">
-                {row?.total_revenue ? `SR ${row?.total_revenue}` : "-"}
-              </p>
-            );
+            return row?.total_revenue ? `SR ${row?.total_revenue}` : "-";
           },
         },
         {
           name: "criteria category",
           value: "criteria_category",
           cellValue: (row) => {
-            return (
-              <span className="w-32 truncate">
-                {row?.criteria_category?.name || "-"}
-              </span>
-            );
+            return row?.criteria_category?.name || "-";
           },
         },
       ],

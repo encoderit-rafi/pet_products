@@ -7,6 +7,7 @@ import InputSearch from "@/components/inputs/InputSearch";
 import ImageDialog from "@/components/dialogs/ImageDialog";
 import getImageUrl from "@/lib/utils/getImageUrl";
 import { useGetAllStores } from "./api/queries/useGetAllStores";
+import Page from "@/components/ui/Page";
 
 export default function Stores() {
   const {
@@ -40,59 +41,52 @@ export default function Stores() {
           name: "name",
           value: "name",
           cellValue: (row) => {
-            return (
-              <div className="flex items-center gap-3">
-                {/* <div className="size-5">
-                  <ImageDialog
-                    src={getImageUrl(row.series, "logo", "jpg")}
-                    name={row?.product_name_en}
-                  />
-                </div> */}
-                <span>{row?.name_en || "-"}</span>
-              </div>
-            );
+            return <span className="w-32 truncate">{row?.name_en || "-"}</span>;
           },
         },
         {
           name: "owner name",
           value: "owner_name",
           cellValue: (row) => {
-            return row?.owner_name || "-";
+            return (
+              <span className="w-32 truncate">{row?.owner_name || "-"}</span>
+            );
           },
         },
         {
           name: "owner phone",
           value: "owner_phone",
           cellValue: (row) => {
-            return row?.owner_phone || "-";
+            return (
+              <span className="w-32 truncate">{row?.owner_phone || "-"}</span>
+            );
           },
         },
         {
           name: "location",
           value: "location",
           cellValue: (row) => {
-            return row?.location || "-";
-          },
-        },
-        {
-          name: "location",
-          value: "location",
-          cellValue: (row) => {
-            return row?.location || "-";
+            return (
+              <span className="w-32 truncate">{row?.location || "-"}</span>
+            );
           },
         },
         {
           name: "SAP Code",
           value: "sap_client_code",
           cellValue: (row) => {
-            return row?.sap_client_code || "-";
+            return (
+              <span className="w-32 truncate">
+                {row?.sap_client_code || "-"}
+              </span>
+            );
           },
         },
         {
           name: "status",
           value: "status",
           cellValue: (row) => {
-            return row?.status || "-";
+            return <span className="w-32 truncate">{row?.status || "-"}</span>;
           },
         },
       ],
@@ -103,44 +97,41 @@ export default function Stores() {
   );
 
   return (
-    <div className="flex flex-col h-full gap-4 overflow-hidden">
-      <div className="flex flex-col gap-3">
-        <div className="flex items-center justify-between">
-          <Title onClick={() => setIsOpenDrawer(true)}>Stores </Title>
-          <div className="flex items-start gap-3 lg:items-center">
-            <div className="w-[150px] lg:w-[111px]">
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  handelSearch();
-                }}
-              >
-                <InputSearch
-                  className="pr-1 py-1.5"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
-              </form>
-            </div>
-          </div>
+    <Page
+      title="stores"
+      actions={
+        <div className="w-[150px] lg:w-[111px]">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handelSearch();
+            }}
+          >
+            <InputSearch
+              className="pr-1 py-1.5"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </form>
         </div>
-      </div>
-      <div className="flex-1 overflow-auto">
-        <BorderBox>
-          <Table query={queryStores} />
-        </BorderBox>
-      </div>
-      {allStores?.total > 0 && (
-        <Pagination
-          to={allStores?.to}
-          total={allStores?.total}
-          current_page={allStores?.current_page}
-          last_page={allStores?.last_page}
-          per_page={allStores?.per_page}
-          onPageChange={handlePageChange}
-          onPerPageChange={handlePerPageChange}
-        />
-      )}
-    </div>
+      }
+      footer={
+        allStores?.total > 0 && (
+          <Pagination
+            to={allStores?.to}
+            total={allStores?.total}
+            current_page={allStores?.current_page}
+            last_page={allStores?.last_page}
+            per_page={allStores?.per_page}
+            onPageChange={handlePageChange}
+            onPerPageChange={handlePerPageChange}
+          />
+        )
+      }
+    >
+      <BorderBox>
+        <Table query={queryStores} />
+      </BorderBox>
+    </Page>
   );
 }
