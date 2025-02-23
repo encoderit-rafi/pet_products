@@ -150,6 +150,7 @@
 @layer utilities {
   ::-webkit-scrollbar {
     /* margin-left: 10px; */
+
     width: 6px;
     height: 6px;
   }

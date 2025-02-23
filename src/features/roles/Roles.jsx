@@ -11,6 +11,7 @@ import DialogConfirmDelete from "@/components/dialogs/DialogConfirmDelete";
 import Pagination from "@/components/pagination";
 import { Axios } from "@/axios";
 import { useCallback } from "react";
+import Page from "@/components/ui/Page";
 
 export default function Roles() {
   const {
@@ -29,14 +30,6 @@ export default function Roles() {
   const [formValues, setFormValues] = useState({ type: "create", user: null });
 
   async function confirmDeleteUser() {
-    // deleteUser(formValues?.user, {
-    //   onSuccess: () => {
-    //     setParamsAllUsers(paramsAllUsers)
-    //     fetchAllUsers();
-    //     setFormValues({ type: "create", user: null });
-    //     setIsOpenDeleteUser(false);
-    //   },
-    // });
     setIsLoadingDeleteUser(true);
     const res = await Axios.get(`/users/delete/${formValues?.user?.id}`);
     if (res.status === 200) {
@@ -67,59 +60,55 @@ export default function Roles() {
   }, [allUsers]);
 
   return (
-    <div className="flex flex-col h-full gap-4 overflow-hidden">
-      <div className="flex items-center justify-between">
-        <Title> Assigned Roles</Title>
-
-        <div className="flex items-center gap-4">
-          <BaseButton
-            variant="orange"
-            icon="plus"
-            className="px-3 text-xs max-w-fit lg:px-5"
-            onClick={() => setIsOpenCreateUser(true)}
-          >
-            <span className="hidden lg:block">add new</span>
-          </BaseButton>
-        </div>
+    <Page
+      title="Assigned Roles"
+      actions={
+        <BaseButton
+          variant="orange"
+          icon="plus"
+          className="px-3 text-xs max-w-fit lg:px-5"
+          onClick={() => setIsOpenCreateUser(true)}
+        >
+          <span className="hidden lg:block">add new</span>
+        </BaseButton>
+      }
+      footer={
+        allUsers?.total > 0 && (
+          <Pagination
+            {...paginationProps}
+            onPageChange={handlePageChange}
+            onPerPageChange={handlePerPageChange}
+          />
+        )
+      }
+    >
+      <div className="grid grid-cols-1 gap-6 mt-2 md:grid-cols-2 xl:grid-cols-3 pr-2">
+        {isLoadingAllUsers || isFetchingAllUsers ? (
+          // Show skeleton loaders when data is loading or fetching
+          Array.from({ length: PAGINATION.per_page }, (_, i) => (
+            <UserCardSkeleton key={i} />
+          ))
+        ) : allUsers?.data?.length > 0 ? (
+          // Show user cards if data is available
+          allUsers.data.map((user) => (
+            <UserCard
+              key={user.id}
+              data={user}
+              onClickEdit={() => {
+                setFormValues({ type: "update", user });
+                setIsOpenUpdateUser(true);
+              }}
+              onClickDelete={() => {
+                setFormValues({ type: "delete", user });
+                setIsOpenDeleteUser(true);
+              }}
+            />
+          ))
+        ) : (
+          // Show "No data found" when data is empty
+          <p className="text-center text-red-500">No data found</p>
+        )}
       </div>
-      <div className="flex-1 overflow-auto">
-        <div className="grid grid-cols-1 gap-6 mt-2 md:grid-cols-2 xl:grid-cols-3">
-          {isLoadingAllUsers || isFetchingAllUsers ? (
-            // Show skeleton loaders when data is loading or fetching
-            Array.from({ length: PAGINATION.per_page }, (_, i) => (
-              <UserCardSkeleton key={i} />
-            ))
-          ) : allUsers?.data?.length > 0 ? (
-            // Show user cards if data is available
-            allUsers.data.map((user) => (
-              <UserCard
-                key={user.id}
-                data={user}
-                onClickEdit={() => {
-                  setFormValues({ type: "update", user });
-                  setIsOpenUpdateUser(true);
-                }}
-                onClickDelete={() => {
-                  setFormValues({ type: "delete", user });
-                  setIsOpenDeleteUser(true);
-                }}
-              />
-            ))
-          ) : (
-            // Show "No data found" when data is empty
-            <p className="text-center text-red-500">No data found</p>
-          )}
-        </div>
-      </div>
-
-      {allUsers?.total > 0 && (
-        <Pagination
-          {...paginationProps}
-          onPageChange={handlePageChange}
-          onPerPageChange={handlePerPageChange}
-        />
-      )}
-
       <Dialog
         isOpen={isOpenCreateUser}
         title="add new user"
@@ -154,6 +143,6 @@ export default function Roles() {
         onClickDelete={confirmDeleteUser}
         isLoading={isLoadingDeleteUser}
       />
-    </div>
+    </Page>
   );
 }

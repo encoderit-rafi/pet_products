@@ -22,7 +22,7 @@ export default function ImageDialog({ src, name, className }) {
         <ImagePreview
           src={src}
           onClickClose={() => setIsOpen(false)}
-          className={"w-80"}
+          // className={"w-80"}
         />
       </Dialog>
     </>

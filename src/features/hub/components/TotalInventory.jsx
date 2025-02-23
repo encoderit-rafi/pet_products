@@ -135,7 +135,9 @@ export default function TotalInventory() {
                     <PlaceholderImage />
                   )}
                 </div>
-                <span>{row?.product_name_en || "-"}</span>
+                <span className="w-32 truncate">
+                  {row?.product_name_en || "-"}
+                </span>
               </div>
             );
           },
@@ -144,28 +146,40 @@ export default function TotalInventory() {
           name: "sku",
           value: "product_sku",
           cellValue: (row) => {
-            return row?.product_sku || "-";
+            return (
+              <span className="w-32 truncate">{row?.product_sku || "-"}</span>
+            );
           },
         },
         {
           name: "brand",
           value: "brand",
           cellValue: (row) => {
-            return row?.brand?.name || "-";
+            return (
+              <span className="w-32 truncate">{row?.brand?.name || "-"}</span>
+            );
           },
         },
         {
           name: "category",
           value: "category",
           cellValue: (row) => {
-            return row?.category?.name || "-";
+            return (
+              <span className="w-32 truncate">
+                {row?.category?.name || "-"}
+              </span>
+            );
+
+            // return row?.category?.name || "-";
           },
         },
         {
           name: "total unit sold",
           value: "total_unit_sold",
           cellValue: (row) => {
-            return <p className="text-right">{row?.total_unit_sold}</p>;
+            return (
+              <p className="text-right w-32 truncate">{row?.total_unit_sold}</p>
+            );
           },
         },
         {
@@ -173,7 +187,7 @@ export default function TotalInventory() {
           value: "total_revenue",
           cellValue: (row) => {
             return (
-              <p className="text-right">
+              <p className="text-right w-32 truncate">
                 {row?.total_revenue ? `SR ${row?.total_revenue}` : "-"}
               </p>
             );
@@ -183,94 +197,24 @@ export default function TotalInventory() {
           name: "criteria category",
           value: "criteria_category",
           cellValue: (row) => {
-            return row?.criteria_category?.name || "-";
+            return (
+              <span className="w-32 truncate">
+                {row?.criteria_category?.name || "-"}
+              </span>
+            );
           },
         },
-        // {
-        //   name: <p className="text-right">actions</p>,
-        //   value: "actions",
-        //   cellValue: (row) => {
-        //     return (
-        //       <div className="flex flex-row-reverse gap-3 text-custom_yellow">
-        //         <DeleteIcon className={"h-4"} />
-        //         <EditIcon className={"h-4"} />
-        //       </div>
-        //     );
-        //   },
-        // },
       ],
-      isLoading: false,
+      isLoading: isLoadingAllProducts || isFetchingAllProducts,
       data: allProducts?.data || [],
     }),
     [allProducts]
   );
-  const queryProductsLoading = {
-    headers: [
-      {
-        name: "name",
-        value: "name",
-        cellValue: (row) => {
-          return (
-            <div className="flex items-center gap-3">
-              <div className="rounded-full size-5 bg-custom_bg_one animate-pulse" />
-              <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-            </div>
-          );
-        },
-      },
-      {
-        name: "sku",
-        value: "product_sku",
-        cellValue: () => (
-          <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-        ),
-      },
-      {
-        name: "brand",
-        value: "brand",
-        cellValue: () => (
-          <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-        ),
-      },
-      {
-        name: "category",
-        value: "category",
-        cellValue: () => (
-          <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-        ),
-      },
-
-      {
-        name: "total unit sold",
-        value: "total_unit_sold",
-        cellValue: () => (
-          <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-        ),
-      },
-      {
-        name: "total sales value ",
-        value: "total_revenue",
-        cellValue: () => (
-          <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-        ),
-      },
-      {
-        name: "criteria category",
-        value: "criteria_category",
-        cellValue: () => (
-          <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-        ),
-      },
-    ],
-    isLoading: false,
-    data: Array.from({ length: PAGINATION.per_page }, (_, i) => i),
-  };
-
   return (
     // <div className="flex flex-col h-full gap-4 overflow-hidden">
     <BorderBox>
       <div className="flex flex-col gap-3">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between pr-[14px]">
           <Title onClick={() => setIsOpenDrawer(true)}>Total Inventory </Title>
           <div className="flex items-start gap-3 lg:items-center">
             <div className="w-[150px] lg:w-[111px]">
@@ -331,15 +275,7 @@ export default function TotalInventory() {
         </div>
       </div>
       <div className="flex-1 overflow-auto my-4">
-        {/* <BorderBox> */}
-        {isLoadingAllProducts || isFetchingAllProducts ? (
-          <Table query={queryProductsLoading} />
-        ) : allProducts?.total > 0 ? (
-          <Table query={{ ...queryProducts, data: allProducts?.data || [] }} />
-        ) : (
-          <h5 className="text-xl text-center text-red-500">No data found</h5>
-        )}
-        {/* </BorderBox> */}
+        <Table query={queryProducts} />
       </div>
       {allProducts?.total > 0 && (
         <Pagination

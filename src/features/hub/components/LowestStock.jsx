@@ -91,7 +91,7 @@ export default function LowestStock() {
           },
         },
         {
-          name: "Products",
+          name: "Products (Qn)",
           value: "products_count",
           cellValue: (row) => {
             return row.products_count;
@@ -163,10 +163,10 @@ export default function LowestStock() {
     fetchAllLowestStocks();
   }, [paramsAllLowestStocks]);
   return (
-    <BorderBox>
+    <BorderBox className={"lg:pr-[14px]"}>
       <div className="flex items-center justify-between ">
         <SubTitle>Lowest Stock</SubTitle>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 pr-[14px]">
           <BaseDropdown
             multiple
             variant="rounded"

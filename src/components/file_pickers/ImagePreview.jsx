@@ -9,12 +9,12 @@ export default function ImagePreview({
   className,
 }) {
   return (
-    <div className={cn("relative group shrink-0 mx-auto size-40", className)}>
+    <div className={cn("relative group shrink-0 mx-auto size-96", className)}>
       {/* {src} */}
       <img
         src={src}
         alt="preview"
-        className="object-cover rounded-lg size-full"
+        className="object-contain rounded-lg size-full"
         onError={(e) => (e.target.src = "/placeholder-image.webp")}
       />
       {!hideCloseButton && (

@@ -119,14 +119,14 @@ export default function Products() {
           value: "name",
           cellValue: (row) => {
             return (
-              <div className="flex items-center gap-3">
-                <div className="size-5">
+              <div className="flex items-center gap-3 w-32 truncate">
+                <div className="size-5 shrink-0">
                   <ImageDialog
                     src={getImageUrl(row.brand_series, row.sap_product_code)}
                     name={row?.product_name_en}
                   />
                 </div>
-                <span>{row?.product_name_en || "-"}</span>
+                <span className="shrink-0">{row?.product_name_en || "-"}</span>
               </div>
             );
           },
@@ -135,28 +135,40 @@ export default function Products() {
           name: "sku",
           value: "product_sku",
           cellValue: (row) => {
-            return row?.product_sku || "-";
+            return (
+              <span className="w-32 truncate">{row?.product_sku || "-"}</span>
+            );
           },
         },
         {
           name: "brand",
           value: "brand",
           cellValue: (row) => {
-            return row?.brand?.name || "-";
+            return (
+              <span className="w-32 truncate">{row?.brand?.name || "-"}</span>
+            );
           },
         },
         {
           name: "category",
           value: "category",
           cellValue: (row) => {
-            return row?.category?.name || "-";
+            return (
+              <span className="w-32 truncate">
+                {row?.category?.name || "-"}
+              </span>
+            );
           },
         },
         {
           name: "total unit sold",
           value: "total_unit_sold",
           cellValue: (row) => {
-            return <p className="text-right">{row?.total_unit_sold}</p>;
+            return (
+              <span className="w-32 truncate">
+                {row?.total_unit_sold || "-"}
+              </span>
+            );
           },
         },
         {
@@ -164,7 +176,7 @@ export default function Products() {
           value: "total_revenue",
           cellValue: (row) => {
             return (
-              <p className="text-right">
+              <p className="text-right w-32 truncate">
                 {row?.total_revenue ? `SR ${row?.total_revenue}` : "-"}
               </p>
             );

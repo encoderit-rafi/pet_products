@@ -3,16 +3,22 @@ import DeleteIcon from "@/assets/icons/DeleteIcon";
 import EditIcon from "@/assets/icons/EditIcon";
 import BorderBox from "@/components/box/BorderBox";
 import IconButton from "@/components/buttons/IconButton";
+import ImageDialog from "@/components/dialogs/ImageDialog";
 
 export default function UserCard({ data, onClickEdit, onClickDelete }) {
   return (
     <BorderBox className="p-2 lg:p-2 !border-custom_line_eight">
       <div className="flex items-center gap-2">
         <div className="p-1 size-14 bg-custom_bg_two rounded-2xl shrink-0">
-          <img
+          {/* <img
             src={data.image?.url || "/placeholder-image.webp"}
             alt=""
             className="object-cover rounded-lg size-full"
+          /> */}
+          <ImageDialog
+            className="object-cover rounded-lg size-full"
+            src={data.image?.url || "/placeholder-image.webp"}
+            name={data.name}
           />
         </div>
         <div className="flex flex-col justify-center flex-1 capitalize">
