@@ -36,6 +36,7 @@ export const validationRules = {
     },
   },
 };
+
 export function toFormData(data) {
   const formData = new FormData();
 
