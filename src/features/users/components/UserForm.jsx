@@ -1,25 +1,23 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import ImagePicker from "@/components/file_pickers/ImagePicker";
-import Label from "@/components/texts/Label";
-// import BaseSelectDropdown from "@/components/dropdowns/BaseSelectDropdown";
-// import InputText from "@/components/inputs/InputText";
-import InputPhoneNumber from "@/components/inputs/InputPhoneNumber";
-import BaseInput from "@/components/inputs/BaseInput";
 import { useForm } from "react-hook-form";
-import MultiSelectListbox from "@/components/dropdowns/MultiSelectListbox";
-import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
-import { useGetAllRoles } from "@/api/roles/queries/useGetAllRoles";
 import { omitEmpty, validationRules } from "@/consts";
-import { useCreateUser } from "../api/mutations/useCreateUser";
-import BaseButton from "@/components/buttons/BaseButton";
+
+import Label from "@/components/texts/Label";
 import InputBox from "@/components/box/InputBox";
-import { useGetAllUsers } from "../api/queries/useGetAllUsers";
-import ImagePreview from "@/components/file_pickers/ImagePreview";
-import { useUpdateUser } from "../api/mutations/useUpdateUser";
-import toast from "react-hot-toast";
-import BaseDropdown from "@/components/dropdowns/BaseDropdown";
+import BaseInput from "@/components/inputs/BaseInput";
 import SelectionBox from "@/components/ui/SelectionBox";
+import BaseButton from "@/components/buttons/BaseButton";
+import BaseDropdown from "@/components/dropdowns/BaseDropdown";
+import ImagePicker from "@/components/file_pickers/ImagePicker";
+import ImagePreview from "@/components/file_pickers/ImagePreview";
+import InputPhoneNumber from "@/components/inputs/InputPhoneNumber";
+
+import { useCreateUser } from "@/api/users/useCreateUser";
+import { useUpdateUser } from "@/api/users/useUpdateUser";
+import { useGetAllUsers } from "@/api/users/useGetAllUsers";
+import { useGetAllRoles } from "@/api/roles/useGetAllRoles";
+import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
 
 export default function UserForm({ handelOnClickCancel, formValues }) {
   const {
@@ -48,7 +46,7 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
     params: paramsAllRoles,
     setParams: setParamsAllRoles,
   } = useGetAllRoles();
-  console.log("🚀 ~ UserForm ~ allRoles:", allRoles);
+
   const {
     register,
     formState,
@@ -270,7 +268,7 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
             defaultText="select roles"
             isLoading={isLoadingAllBrands}
             className={"w-full"}
-            options={allRoles || []}
+            options={allRoles.data || []}
             selected={selectedRoles}
             setSelected={(data) => {
               setSelectedRoles((old) => {

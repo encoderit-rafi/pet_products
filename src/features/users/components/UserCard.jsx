@@ -10,11 +10,6 @@ export default function UserCard({ data, onClickEdit, onClickDelete }) {
     <BorderBox className="p-2 lg:p-2 !border-custom_line_eight">
       <div className="flex items-center gap-2">
         <div className="p-1 size-14 bg-custom_bg_two rounded-2xl shrink-0">
-          {/* <img
-            src={data.image?.url || "/placeholder-image.webp"}
-            alt=""
-            className="object-cover rounded-lg size-full"
-          /> */}
           <ImageDialog
             className="object-cover rounded-lg size-full"
             src={data.image?.url || "/placeholder-image.webp"}
@@ -25,7 +20,7 @@ export default function UserCard({ data, onClickEdit, onClickDelete }) {
           <p className="text-sm font-normal text-custom_text_four">
             {data.name}
           </p>
-          <div className="flex max-w-52 overflow-x-auto divide-x divide-custom_line_two">
+          <div className="flex overflow-x-auto divide-x max-w-52 divide-custom_line_two">
             {data?.roles?.map((role) => (
               <p
                 key={role.id}

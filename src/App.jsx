@@ -13,7 +13,7 @@ import Faqs from "./features/faqs";
 import Hub from "./features/hub";
 import Marketing, { CriteriaAndSegment, Task } from "./features/marketing";
 import Products from "./features/products";
-import Roles from "./features/roles";
+import Users from "./features/users";
 import Shelves from "./features/shelves";
 import Terms from "./features/terms";
 import NotFound from "./features/not_found";
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
       { path: "stores", element: <Stores /> },
       { path: "products", element: <Products /> },
       { path: "media-kit", element: <MediaKit /> },
-      { path: "roles", element: <Roles /> },
+      { path: "roles", element: <Users /> },
       { path: "shelves", element: <Shelves /> },
       { path: "terms", element: <Terms /> },
     ],
