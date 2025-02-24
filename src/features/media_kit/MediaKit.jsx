@@ -1,15 +1,7 @@
 import Title from "@/components/texts/Title";
-import BorderBox from "@/components/box/BorderBox";
-import Table from "@/components/tables/Table";
 import BaseButton from "@/components/buttons/BaseButton";
 import Dialog from "@/components/dialogs/Dialog";
 import BaseTabList from "@/components/tabs/BaseTabList";
-import Pagination from "@/components/pagination";
-import { useWindowSize } from "react-use";
-import { useSearchParams } from "react-router-dom";
-// import { useGetAllStands } from "./api/queries/useGetAllStands";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { TabGroup, TabPanel, TabPanels } from "@headlessui/react";
 import BrandGuidelinesIcon from "@/assets/icons/BrandGuidelinesIcon";
 import BrandLogoIcon from "@/assets/icons/BrandLogoIcon";
 import ProductImagesIcon from "@/assets/icons/ProductImagesIcon";
@@ -17,17 +9,19 @@ import ProductDescriptionIcon from "@/assets/icons/ProductDescriptionIcon";
 import MarketingMaterialsIcon from "@/assets/icons/MarketingMaterialsIcon";
 import MediaCommercialsIcon from "@/assets/icons/MediaCommercialsIcon";
 import BrandsDropdown from "@/components/dropdowns/BrandsDropdown";
-import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
-import { useGetAllMediaKits } from "./api/queries/useGetAllMediaKits";
 import MediaKitCardSkeleton from "./components/MediaKitCardSkeleton";
 import MediaKitCard from "./components/MediaKitCard";
-import { useMediaKitDownload } from "./api/queries/useMediaKitDownload";
 import DialogConfirmDelete from "@/components/dialogs/DialogConfirmDelete";
-import { useDeleteMediaKit } from "./api/mutations/useDeleteMediaKit";
 import FileUploadForm from "./components/FileUploadForm";
-import { useShowMediaKitFile } from "./api/queries/useShowMediaKitFile";
-// import { useGetAllStandTypes } from "./api/queries/useGetAllStandTypes";
-// import { useGetAllPosMaterials } from "./api/queries/useGetAllPosMaterials";
+import { useWindowSize } from "react-use";
+import { useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { TabGroup } from "@headlessui/react";
+import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
+import { useGetAllMediaKits } from "./api/queries/useGetAllMediaKits";
+import { useMediaKitDownload } from "./api/queries/useMediaKitDownload";
+import { useDeleteMediaKit } from "./api/mutations/useDeleteMediaKit";
+import Page from "@/components/ui/Page";
 
 export default function MediaKit() {
   const { data } = useGetAllBrands();
@@ -167,58 +161,45 @@ export default function MediaKit() {
 
   return (
     <div className="flex flex-col h-full gap-4 text-custom_bg_three">
-      <TabGroup
-        selectedIndex={activeTabIndex}
-        onChange={setActiveTabIndex}
-        className={"flex-1 flex flex-col "}
-      >
-        <div className="flex flex-col gap-2">
-          <div className="flex items-center justify-between flex-1">
-            <Title>Media kit</Title>
-            <div className="flex flex-row items-center gap-4">
-              <BrandsDropdown
-                variant="rounded"
-                hideLabel
-                className="w-36"
-                selected={selectedBrand}
-                setSelected={(data) => {
-                  data?.id != selectedBrand?.[0]?.id &&
-                    setSelectedBrand([data]);
-                }}
-              />
-              {width > 1024 && (
-                <BaseTabList
-                  list={tabs}
-                  activeTab={activeTab}
-                  className={{ tabList: "ml-auto" }}
-                  handelOnChangeTab={(item) => {
-                    setSearchParams({ type: item.value });
-                  }}
-                />
-              )}
-              <div className="flex flex-row items-center flex-1 gap-4">
-                <BaseButton
-                  variant="orange"
-                  icon="plus"
-                  className="px-3 ml-auto text-xs max-w-fit lg:px-5 lg:ml-0"
-                  onClick={() => setIsOpenFileUpload(true)}
-                >
-                  <span className="hidden lg:block">Upload FIle</span>
-                </BaseButton>
-              </div>
-            </div>
+      <Page
+        title="Media kit"
+        actions={
+          <div className="flex flex-row items-center gap-4">
+            <BrandsDropdown
+              hideLabel
+              className="lg:rounded-xl w-36"
+              selected={selectedBrand}
+              setSelected={(data) => {
+                data?.id != selectedBrand?.[0]?.id && setSelectedBrand([data]);
+              }}
+            />
+            <BaseButton
+              variant="orange"
+              icon="plus"
+              className="px-3 ml-auto text-xs max-w-fit lg:px-5 lg:ml-0"
+              onClick={() => setIsOpenFileUpload(true)}
+            >
+              <span className="hidden lg:block">Upload FIle</span>
+            </BaseButton>
           </div>
-          {width < 1024 && (
+        }
+        header={
+          <TabGroup
+            selectedIndex={activeTabIndex}
+            onChange={setActiveTabIndex}
+            className={"flex justify-center flex-nowrap overscroll-x-auto"}
+          >
             <BaseTabList
               list={tabs}
               activeTab={activeTab}
-              className={{ tabList: "mx-auto" }}
+              className={{ tabList: "flex flex-nowrap overflow-auto" }}
               handelOnChangeTab={(item) => {
                 setSearchParams({ type: item.value });
               }}
             />
-          )}
-        </div>
+          </TabGroup>
+        }
+      >
         <div className="flex flex-col flex-1">
           <div className="grid grid-cols-1 gap-6 mt-2 md:grid-cols-2 xl:grid-cols-3">
             {!isFetching && !isLoading && !Array.isArray(allMediaKits) ? (
@@ -260,31 +241,31 @@ export default function MediaKit() {
             )}
           </div>
         </div>
-      </TabGroup>
-      <Dialog
-        isOpen={isOpenFileUpload}
-        title="Upload your File"
-        className="max-w-lg"
-      >
-        <FileUploadForm
-          onClose={() => setIsOpenFileUpload(false)}
-          item={{
-            brandId: selectedBrand[0]?.id,
-            category: searchParams.get("type") || "brand_guidelines",
+        <Dialog
+          isOpen={isOpenFileUpload}
+          title="Upload your File"
+          className="max-w-lg"
+        >
+          <FileUploadForm
+            onClose={() => setIsOpenFileUpload(false)}
+            item={{
+              brandId: selectedBrand[0]?.id,
+              category: searchParams.get("type") || "brand_guidelines",
+            }}
+          />
+        </Dialog>
+        <DialogConfirmDelete
+          text={selectedFile.name || ""}
+          isOpen={isOpenDeleteFile}
+          onClickClose={() => {
+            // setTempData(null)
+            setSelectedFile({ type: "", name: "" });
+            setIsOpenDeleteFile(false);
           }}
+          onClickDelete={confirmDeleteMediaKit}
+          isLoading={isLoadingDeleteMediaKit}
         />
-      </Dialog>
-      <DialogConfirmDelete
-        text={selectedFile.name || ""}
-        isOpen={isOpenDeleteFile}
-        onClickClose={() => {
-          // setTempData(null)
-          setSelectedFile({ type: "", name: "" });
-          setIsOpenDeleteFile(false);
-        }}
-        onClickDelete={confirmDeleteMediaKit}
-        isLoading={isLoadingDeleteMediaKit}
-      />
+      </Page>
     </div>
   );
 }

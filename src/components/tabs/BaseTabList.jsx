@@ -22,7 +22,7 @@ export default function BaseTabList({
           )}
           onClick={() => handelOnChangeTab(item)}
         >
-          <div className="flex items-center">
+          <div className="flex items-center whitespace-nowrap">
             {item?.icon && <span className="mr-1">{item?.icon}</span>}
             {item.name}
           </div>
