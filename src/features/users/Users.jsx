@@ -1,14 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
-import Title from "@/components/texts/Title";
+import { useMemo, useState } from "react";
 import BaseButton from "@/components/buttons/BaseButton";
 import Dialog from "@/components/dialogs/Dialog";
 import UserForm from "./components/userForm";
 import UserCard from "./components/UserCard";
 import UserCardSkeleton from "./components/UserCardSkeleton";
-// import {
-//   useGetAllUsers,
-//   useGetAllUsersNew,
-// } from "./api/queries/useGetAllUsers";
+
 import { PAGINATION } from "@/consts";
 import DialogConfirmDelete from "@/components/dialogs/DialogConfirmDelete";
 import Pagination from "@/components/pagination";
@@ -37,6 +33,7 @@ export default function Users() {
     setIsLoadingDeleteUser(true);
     const res = await Axios.get(`/users/delete/${formValues?.user?.id}`);
     if (res.status === 200) {
+      console.log("🚀 ~ confirmDeleteUser ~ res.status:", res.status);
       setParamsAllUsers(paramsAllUsers);
       fetchAllUsers();
       setFormValues({ type: "create", user: null });
