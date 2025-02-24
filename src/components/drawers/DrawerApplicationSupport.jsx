@@ -4,6 +4,7 @@ import Title from "../texts/Title";
 import BaseButton from "../buttons/BaseButton";
 import CardApplicationSupport from "../cards/CardApplicationSupport";
 import BorderBox from "../box/BorderBox";
+import Pagination from "../pagination";
 
 export default function DrawerApplicationSupport({
   isOpen,
@@ -11,10 +12,11 @@ export default function DrawerApplicationSupport({
   children,
   query,
 }) {
+  console.log("✅ ~ query:", query?.data);
   return (
-    <Drawer isOpen={isOpen} className="flex flex-col max-w-md relative">
+    <Drawer isOpen={isOpen} className="relative flex flex-col max-w-md">
       <Title>Application Support</Title>
-      <div className="space-y-2 mt-4">
+      <div className="flex-1 mt-5 space-y-3 overflow-y-auto">
         {query?.isLoading || query?.isFetching ? (
           // Show skeleton loaders when data is loading or fetching
           Array.from({ length: 5 }, (_, i) => (
@@ -35,9 +37,9 @@ export default function DrawerApplicationSupport({
               </div>
             </BorderBox>
           ))
-        ) : query?.data?.length > 0 ? (
+        ) : query?.data?.data?.length > 0 ? (
           // Show user cards if data is available
-          query?.data.map((user) => (
+          query?.data?.data.map((user) => (
             <CardApplicationSupport
               key={user.id}
               user={user}
@@ -52,7 +54,21 @@ export default function DrawerApplicationSupport({
           <p className="text-center text-red-500">No data found</p>
         )}
       </div>
-      <div className="flex-1 mt-5 space-y-3 overflow-y-auto">{children}</div>
+      {query?.data?.total > 0 && (
+        <Pagination
+          from={query?.data?.from}
+          to={query?.data?.to}
+          total={query?.data?.total}
+          current_page={query?.data?.current_page}
+          last_page={query?.data?.last_page}
+          per_page={query?.data?.per_page}
+          onPageChange={() => {}}
+          onPerPageChange={() => {}}
+          // onPageChange={handlePageChange}
+          // onPerPageChange={handlePerPageChange}
+        />
+      )}
+      {/* <div className="flex-1 mt-5 space-y-3 overflow-y-auto">{children}</div> */}
       <BaseButton onClick={setIsOpen} className="mt-10">
         done
       </BaseButton>

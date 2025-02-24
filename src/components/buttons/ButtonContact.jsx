@@ -13,6 +13,7 @@ import CloseIcon from "@/assets/icons/CloseIcon";
 import BaseInput from "../inputs/BaseInput";
 import ImagePickerIcon from "../file_pickers/ImagePickerIcon";
 import SendIcon from "@/assets/icons/SendIcon";
+import { useGetAllUsers } from "@/api/users/useGetAllUsers";
 
 const data = [
   {
@@ -55,10 +56,8 @@ export default function ButtonContact() {
     isFetching: isFetchingAllUsers,
     params: paramsAllUsers,
     setParams: setParamsAllUsers,
-  } = useGetAllRoles();
+  } = useGetAllUsers({ setToUrl: false });
   const { isDark } = useTheme();
-  // const [isOpenContact, setIsOpenContact] = useState(false);
-  // const [selectedRole, setSelectedRole] = useState("");
   const [isOpenDrawerApplicationSupport, setIsOpenDrawerApplicationSupport] =
     useState(false);
   const [
@@ -139,7 +138,7 @@ export default function ButtonContact() {
           query={{
             isLoading: isLoadingAllUsers,
             isFetching: isFetchingAllUsers,
-            data: allUsers?.data,
+            data: allUsers,
           }}
         >
           <div
@@ -148,7 +147,7 @@ export default function ButtonContact() {
             }`}
           >
             <div
-              className="h-full relative"
+              className="relative h-full"
               onClick={(e) => {
                 // e.stopPropagation();
                 // setIsOpenChat(false);
@@ -159,17 +158,17 @@ export default function ButtonContact() {
                   isOpenChat ? "translate-y-0" : "translate-y-96"
                 }`}
               >
-                <div className="flex shrink-0 items-center  justify-between p-2 pb-0">
+                <div className="flex items-center justify-between p-2 pb-0 shrink-0">
                   <div className="flex items-center gap-1">
                     <img
                       src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                       alt=""
-                      className="object-cover object-center size-8 rounded-full"
+                      className="object-cover object-center rounded-full size-8"
                     />
                     <span>User Name</span>
                   </div>
                   <div
-                    className="size-5 flex items-center justify-center bg-red-500 rounded-full"
+                    className="flex items-center justify-center bg-red-500 rounded-full size-5"
                     onClick={(e) => {
                       // e.stopPropagation();
                       setIsOpenChat(false);
@@ -178,7 +177,7 @@ export default function ButtonContact() {
                     <CloseIcon className={"size-2"} />
                   </div>
                 </div>
-                <div className="flex-1 overflow-y-auto space-y-2 p-2">
+                <div className="flex-1 p-2 space-y-2 overflow-y-auto">
                   {messages.map((msg, index) => (
                     <div
                       key={index}
@@ -198,7 +197,7 @@ export default function ButtonContact() {
                     </div>
                   ))}
                 </div>
-                <div className="flex items-center p-2 shrink-0 gap-2">
+                <div className="flex items-center gap-2 p-2 shrink-0">
                   <ImagePickerIcon
                     handleFileChange={onHandleFileChange}
                     className="p-0 border-none"
