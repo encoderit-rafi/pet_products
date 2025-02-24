@@ -30,11 +30,7 @@ const routes = [
     name: "media kit",
     icon: <PlayIcon className="w-3" />,
   },
-  {
-    path: "/marketing",
-    name: "marketing",
-    icon: <MarketingIcon className="w-[18px]" />,
-  },
+
   {
     path: "/shelves",
     name: "shelves",
@@ -47,13 +43,14 @@ const routes = [
     name: "terms",
     icon: <TermsIcon className="w-4" />,
   },
+  {
+    path: "/marketing",
+    name: "marketing",
+    icon: <MarketingIcon className="w-[18px]" />,
+  },
 ];
 import cn from "@/lib/utils/cn";
-import { useState } from "react";
 import ButtonContact from "../buttons/ButtonContact";
-import DrawerApplicationSupport from "../drawers/DrawerApplicationSupport";
-import CardApplicationSupport from "../cards/CardApplicationSupport";
-import DrawerSingleApplicationSupport from "../drawers/DrawerSingleApplicationSupport";
 import PlayIcon from "@/assets/icons/PlayIcon";
 import BrandIcon from "@/assets/icons/BrandIcon";
 import StoreIcon from "@/assets/icons/StoreIcon";

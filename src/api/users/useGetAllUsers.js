@@ -1,5 +1,5 @@
 import { Axios } from "@/axios";
-import { PAGINATION } from "@/consts";
+import { omitEmpty, PAGINATION } from "@/consts";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useSearchParams } from "react-router-dom";
@@ -16,14 +16,16 @@ export const useGetAllUsers = ({ setToUrl, isEnabled }) => {
     }
   }, [params]);
   const { data, isLoading, isFetching, refetch } = useQuery({
-    queryKey: [`get-all-users-page-${params.page}-per_page-${params.per_page}`],
+    queryKey: [
+      `get-all-users-page-${params.page}-per_page-${params.per_page}-connect_role=${params.connect_role}`,
+    ],
     enabled: isEnabled,
     retry: false,
     keepPreviousData: false,
     queryFn: async () => {
       return (
         await Axios.get("/users", {
-          params,
+          params: omitEmpty(params),
         })
       ).data.data;
     },

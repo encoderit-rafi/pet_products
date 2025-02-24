@@ -49,14 +49,19 @@ const data = [
 ];
 export default function ButtonContact() {
   // { setIsOpenDrawerApplicationSupport }
-  const {
-    data: allUsers,
-    refetch: fetchAllUsers,
-    isLoadingAllUsers: isLoadingAllUsers,
-    isFetching: isFetchingAllUsers,
-    params: paramsAllUsers,
-    setParams: setParamsAllUsers,
-  } = useGetAllUsers({ setToUrl: false });
+  const [connectRole, setConnectRole] = useState(null);
+  // const {
+  //   data: allUsers,
+  //   refetch: fetchAllUsers,
+  //   isLoadingAllUsers: isLoadingAllUsers,
+  //   isFetching: isFetchingAllUsers,
+  //   params: paramsAllUsers,
+  //   setParams: setParamsAllUsers,
+  // } = useGetAllUsers({ setToUrl: false });
+  // useEffect(() => {
+  //   // console.log("🚀 ~ ButtonContact ~ paramsAllUsers:", paramsAllUsers);
+  //   fetchAllUsers();
+  // }, [paramsAllUsers]);
   const { isDark } = useTheme();
   const [isOpenDrawerApplicationSupport, setIsOpenDrawerApplicationSupport] =
     useState(false);
@@ -66,7 +71,9 @@ export default function ButtonContact() {
   ] = useState(false);
   const [isOpenChat, setIsOpenChat] = useState(false);
   const handleMenuItemClick = (item) => {
-    setParamsAllUsers((data) => ({ ...data, connect_role: item.value }));
+    console.log("🚀 ~ handleMenuItemClick ~ item:", item);
+    setConnectRole(item.value);
+    // setParamsAllUsers((data) => ({ ...data, connect_role: item.value }));
     setIsOpenDrawerApplicationSupport(true);
   };
   const [messages, setMessages] = useState([
@@ -132,16 +139,26 @@ export default function ButtonContact() {
           </MenuItems>
         </Menu>
         {/* Application Support Drawer */}
-        <DrawerApplicationSupport
+        {/* <DrawerApplicationSupport
           isOpen={isOpenDrawerApplicationSupport}
+          setIsOpen={() => setIsOpenDrawerApplicationSupport(false)}
           setIsOpen={() => setIsOpenDrawerApplicationSupport(false)}
           query={{
             isLoading: isLoadingAllUsers,
             isFetching: isFetchingAllUsers,
             data: allUsers,
           }}
+        > */}
+        <DrawerApplicationSupport
+          isOpen={isOpenDrawerApplicationSupport}
+          setIsOpen={() => {
+            setConnectRole(null);
+            setIsOpenDrawerApplicationSupport(false);
+          }}
+          connect={connectRole}
+          setConnect={setConnectRole}
         >
-          <div
+          {/* <div
             className={` bg-transparent absolute inset-0 !mt-0 ${
               isOpenChat ? "visible " : "invisible"
             }`}
@@ -215,7 +232,7 @@ export default function ButtonContact() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </DrawerApplicationSupport>
         {/* Single Application Support Drawer */}
         <DrawerSingleApplicationSupport
