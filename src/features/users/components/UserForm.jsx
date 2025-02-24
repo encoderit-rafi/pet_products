@@ -18,6 +18,7 @@ import { useUpdateUser } from "@/api/users/useUpdateUser";
 import { useGetAllUsers } from "@/api/users/useGetAllUsers";
 import { useGetAllRoles } from "@/api/roles/useGetAllRoles";
 import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
+import RolesDropdown from "@/components/dropdowns/RolesDropdown";
 
 export default function UserForm({ handelOnClickCancel, formValues }) {
   const {
@@ -262,13 +263,28 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
         )}
         <InputBox>
           <Label id="roles" label="roles" palceholder="roles " />
-          <BaseDropdown
+          {/* <BaseDropdown
             multiple
             variant="base"
             defaultText="select roles"
             isLoading={isLoadingAllBrands}
             className={"w-full"}
-            options={allRoles.data || []}
+            options={allRoles?.data || []}
+            selected={selectedRoles}
+            setSelected={(data) => {
+              setSelectedRoles((old) => {
+                return old?.some((val) => val?.id == data?.id)
+                  ? old.filter((val) => val.id != data.id)
+                  : [...old, data];
+              });
+            }}
+          /> */}
+          <RolesDropdown
+            // isDisable={selectedBrand?.length == 0 ? true : false}
+            // params={{ brand_id: selectedBrand?.[0]?.id }}
+            params={{
+              brand_ids: selectedBrands?.map((item) => item.id).join(","),
+            }}
             selected={selectedRoles}
             setSelected={(data) => {
               setSelectedRoles((old) => {

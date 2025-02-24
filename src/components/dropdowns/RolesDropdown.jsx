@@ -1,10 +1,10 @@
+import { useGetAllRoles } from "@/api/roles/useGetAllRoles";
 import React, { useEffect } from "react";
 import BaseDropdown from "./BaseDropdown";
-import { useGetAllProducts } from "@/features/products/api/queries/useGetAllProducts";
 
-export default function ProductsDropdown({
+export default function RolesDropdown({
   variant = "base",
-  defaultText = "Select Products",
+  defaultText = "Select Role",
   className,
   isDisable,
   selected,
@@ -14,13 +14,13 @@ export default function ProductsDropdown({
     isEnabled: true,
   },
 }) {
-  const { data, isLoading, isFetching, setParams } = useGetAllProducts({
-    setToUrl: params.setToUrl,
-    isEnabled: params.isEnabled,
-  });
+  const { data, isLoading, isFetching, setParams } = useGetAllRoles();
   useEffect(() => {
-    setParams({ brand_id: params.brand_id });
-  }, [params.brand_id]);
+    setParams({
+      brand_ids: params.brand_ids,
+      connect_role: params.connect_role,
+    });
+  }, [params.brand_ids, params.connect_role]);
   return (
     <BaseDropdown
       variant={variant}
@@ -31,7 +31,7 @@ export default function ProductsDropdown({
       selected={selected}
       setSelected={(data) => setSelected(data)}
       isDisable={isDisable}
-      field="product_name_en"
+      field="name"
     />
   );
 }
