@@ -285,6 +285,7 @@ export default function Shelves() {
               </BorderBox>
               {allShelves?.total > 0 && (
                 <Pagination
+                  from={allShelves?.from}
                   to={allShelves?.to}
                   total={allShelves?.total}
                   current_page={allShelves?.current_page}
@@ -302,6 +303,7 @@ export default function Shelves() {
               </BorderBox>
               {allStandTypes?.total > 0 && (
                 <Pagination
+                  from={allStandTypes?.from}
                   to={allStandTypes?.to}
                   total={allStandTypes?.total}
                   current_page={allStandTypes?.current_page}
@@ -318,6 +320,7 @@ export default function Shelves() {
               </BorderBox>
               {allPosMaterials?.total > 0 && (
                 <Pagination
+                  from={allPosMaterials?.from}
                   to={allPosMaterials?.to}
                   total={allPosMaterials?.total}
                   current_page={allPosMaterials?.current_page}

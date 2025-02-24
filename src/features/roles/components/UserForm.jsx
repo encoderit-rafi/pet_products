@@ -48,6 +48,7 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
     params: paramsAllRoles,
     setParams: setParamsAllRoles,
   } = useGetAllRoles();
+  console.log("🚀 ~ UserForm ~ allRoles:", allRoles);
   const {
     register,
     formState,

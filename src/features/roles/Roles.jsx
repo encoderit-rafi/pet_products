@@ -51,6 +51,7 @@ export default function Roles() {
 
   const paginationProps = useMemo(() => {
     return {
+      from: allUsers?.from,
       to: allUsers?.to,
       total: allUsers?.total,
       current_page: allUsers?.current_page,

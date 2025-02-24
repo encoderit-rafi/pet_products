@@ -105,6 +105,7 @@ export default function Brands() {
       footer={
         allBrands?.total > 0 && (
           <Pagination
+            from={allBrands?.from}
             to={allBrands?.to}
             total={allBrands?.total}
             current_page={allBrands?.current_page}

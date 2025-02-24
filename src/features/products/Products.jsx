@@ -57,9 +57,6 @@ export default function Products() {
     isEnabled: true,
   });
   const [search, setSearch] = useState(paramsAllProducts.search || "");
-  // useEffect(() => {
-  //   fetchAllProducts();
-  // }, [paramsAllProducts]);
 
   useEffect(() => {
     if (allBrands?.length > 0 || paramsAllProducts.brand_id) {
@@ -208,68 +205,6 @@ export default function Products() {
     }),
     [allProducts]
   );
-  // const queryProductsLoading = {
-  //   headers: [
-  //     {
-  //       name: "name",
-  //       value: "name",
-  //       cellValue: (row) => {
-  //         return (
-  //           <div className="flex items-center gap-3">
-  //             <div className="rounded-full size-5 bg-custom_bg_one animate-pulse" />
-  //             <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-  //           </div>
-  //         );
-  //       },
-  //     },
-  //     {
-  //       name: "sku",
-  //       value: "product_sku",
-  //       cellValue: () => (
-  //         <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-  //       ),
-  //     },
-  //     {
-  //       name: "brand",
-  //       value: "brand",
-  //       cellValue: () => (
-  //         <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-  //       ),
-  //     },
-  //     {
-  //       name: "category",
-  //       value: "category",
-  //       cellValue: () => (
-  //         <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-  //       ),
-  //     },
-
-  //     {
-  //       name: "total unit sold",
-  //       value: "total_unit_sold",
-  //       cellValue: () => (
-  //         <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-  //       ),
-  //     },
-  //     {
-  //       name: "total sales value ",
-  //       value: "total_revenue",
-  //       cellValue: () => (
-  //         <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-  //       ),
-  //     },
-  //     {
-  //       name: "criteria category",
-  //       value: "criteria_category",
-  //       cellValue: () => (
-  //         <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-  //       ),
-  //     },
-  //   ],
-  //   isLoading: false,
-  //   data: Array.from({ length: 5 }, (_, i) => i),
-  // };
-
   return (
     <div className="flex flex-col h-full gap-4 overflow-hidden">
       <div className="flex flex-col gap-3">
@@ -364,6 +299,7 @@ export default function Products() {
       </div>
       {allProducts?.total > 0 && (
         <Pagination
+          from={allProducts?.from}
           to={allProducts?.to}
           total={allProducts?.total}
           current_page={allProducts?.current_page}

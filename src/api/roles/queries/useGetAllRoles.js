@@ -3,9 +3,13 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 
 export const useGetAllRoles = () => {
+  // const [params, setParams] = useState({
+  //   brand_ids: "",
+  //   connect_role: "",
+  // });
   const [params, setParams] = useState({
-    brand_ids: "",
-    connect_role: "",
+    // brand_ids: "",
+    // connect_role: "",
   });
   const { data, isLoading, isFetching, refetch } = useQuery({
     queryKey: [

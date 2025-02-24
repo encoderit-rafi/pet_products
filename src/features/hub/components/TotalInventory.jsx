@@ -250,6 +250,7 @@ export default function TotalInventory() {
       </div>
       {allProducts?.total > 0 && (
         <Pagination
+          from={allProducts?.from}
           to={allProducts?.to}
           total={allProducts?.total}
           current_page={allProducts?.current_page}

@@ -118,6 +118,7 @@ export default function Stores() {
       footer={
         allStores?.total > 0 && (
           <Pagination
+            from={allStores?.from}
             to={allStores?.to}
             total={allStores?.total}
             current_page={allStores?.current_page}
