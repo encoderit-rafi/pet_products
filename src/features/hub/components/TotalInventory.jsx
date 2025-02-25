@@ -20,6 +20,7 @@ import { useSearchParams } from "react-router-dom";
 import { useGetAllProducts } from "@/features/products/api/queries/useGetAllProducts";
 import BaseDropdown from "@/components/dropdowns/BaseDropdown";
 import ImageDialog from "@/components/dialogs/ImageDialog";
+import Tooltip from "@/components/ui/Tooltip";
 
 export default function TotalInventory() {
   const [searchParams] = useSearchParams();
@@ -128,7 +129,13 @@ export default function TotalInventory() {
                     className="size-full"
                   />
                 </div>
-                <span className="truncate">{row?.product_name_en || "-"}</span>
+                {/* <span className="truncate">
+                </span> */}
+                <Tooltip text={row?.product_name_en || "-"}>
+                  <span className="block w-full truncate max-w-32">
+                    {row?.product_name_en || "-"}
+                  </span>
+                </Tooltip>
               </div>
             );
           },
@@ -245,7 +252,7 @@ export default function TotalInventory() {
           </div>
         </div>
       </div>
-      <div className="flex-1 overflow-auto my-4">
+      <div className="flex-1 my-4 overflow-x-auto">
         <Table query={queryProducts} />
       </div>
       {allProducts?.total > 0 && (

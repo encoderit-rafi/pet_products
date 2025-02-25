@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState, useCallback } from "react";
 
-import { PAGINATION } from "@/consts";
+// import { PAGINATION } from "@/consts";
 
 import Title from "@/components/texts/Title";
 import Table from "@/components/tables/Table";
@@ -8,7 +8,7 @@ import Pagination from "@/components/pagination";
 import BaseMenu from "@/components/menus/BaseMenu";
 import BorderBox from "@/components/box/BorderBox";
 import InputSearch from "@/components/inputs/InputSearch";
-import PlaceholderImage from "@/components/placeholders/PlaceholderImage";
+// import PlaceholderImage from "@/components/placeholders/PlaceholderImage";
 
 import { useGetAllProducts } from "./api/queries/useGetAllProducts";
 // import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
@@ -19,14 +19,15 @@ import { useSearchParams } from "react-router-dom";
 import BaseDropdown from "@/components/dropdowns/BaseDropdown";
 import ImageDialog from "@/components/dialogs/ImageDialog";
 import getImageUrl from "@/lib/utils/getImageUrl";
+import Tooltip from "@/components/ui/Tooltip";
 
 export default function Products() {
   const [searchParams] = useSearchParams();
   const {
     data: allBrands,
     isLoading: isLoadingAllBrands,
-    params: paramsAllBrands,
-    setParams: setParamsAllBrands,
+    // params: paramsAllBrands,
+    // setParams: setParamsAllBrands,
   } = useGetAllBrands();
 
   const {
@@ -116,14 +117,19 @@ export default function Products() {
           value: "name",
           cellValue: (row) => {
             return (
-              <div className="flex items-center gap-3 w-32 truncate">
+              <div className="flex items-center w-32 gap-3 truncate">
                 <div className="size-5 shrink-0">
                   <ImageDialog
                     src={getImageUrl(row.brand_series, row.sap_product_code)}
                     name={row?.product_name_en}
                   />
                 </div>
-                <span className="shrink-0">{row?.product_name_en || "-"}</span>
+                <Tooltip text={row?.product_name_en}>
+                  {row?.product_name_en || "-"}
+                </Tooltip>
+                {/* <span className="truncate shrink-0">
+                  {row?.product_name_en || "-"}
+                </span> */}
               </div>
             );
           },
@@ -173,7 +179,7 @@ export default function Products() {
           value: "total_revenue",
           cellValue: (row) => {
             return (
-              <p className="text-right w-32 truncate">
+              <p className="w-32 text-right truncate">
                 {row?.total_revenue ? `SR ${row?.total_revenue}` : "-"}
               </p>
             );
@@ -209,7 +215,7 @@ export default function Products() {
     <div className="flex flex-col h-full gap-4 overflow-hidden">
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
-          <Title onClick={() => setIsOpenDrawer(true)}>products </Title>
+          <Title>products </Title>
           <div className="flex items-start gap-3 lg:items-center">
             <div className="w-[150px] lg:w-[111px]">
               <form

@@ -12,6 +12,7 @@ import SalesVsCities from "./components/SalesVsCities";
 import TotalInventory from "./components/TotalInventory";
 import BrandsInventory from "./components/BrandsInventory";
 import getImageUrl from "@/lib/utils/getImageUrl";
+// import ScrollableTable from "@/components/tables/ScrollableTable";
 
 export default function Hub() {
   useEffect(() => {
@@ -69,6 +70,7 @@ export default function Hub() {
         </div>
         <div className="col-span-12">
           <TotalInventory />
+          {/* <ScrollableTable /> */}
         </div>
       </div>
     </div>

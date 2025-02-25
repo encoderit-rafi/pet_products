@@ -70,7 +70,7 @@ export default function BrandsChart() {
           />
         </div>
       </div>
-      <div className="overflow-x-auto overflow-y-auto h-72">
+      <div className="overflow-x-auto overflow-y-auto h-96">
         <BaseBarChart
           showIcon
           xAxisDataKey="name"
@@ -80,9 +80,7 @@ export default function BrandsChart() {
           tooltipPrefix="SAR"
           data={brandsBarChart?.bar_chart_data || []}
           max={brandsBarChart?.max_value}
-
         />
-
       </div>
     </BorderBox>
   );

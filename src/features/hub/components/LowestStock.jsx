@@ -192,7 +192,7 @@ export default function LowestStock() {
           />
         </div>
       </div>
-      <div className="overflow-hidden">
+      <div className="h-72">
         <Table
           query={statusAllLowestStocks == "loading" ? queryLoading : query}
         />

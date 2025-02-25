@@ -65,7 +65,7 @@ export default function BrandsInventory() {
           />
         </div>
       </div>
-      <div className="overflow-x-auto overflow-y-auto h-72">
+      <div className="overflow-x-auto overflow-y-auto h-96">
         <BaseBarChart
           xAxisDataKey="name"
           barDataKey="total_remaining_stock"

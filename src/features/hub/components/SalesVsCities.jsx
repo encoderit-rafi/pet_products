@@ -67,7 +67,7 @@ export default function SalesVsCities() {
           />
         </div>
       </div>
-      <div className="overflow-x-auto overflow-y-auto h-72">
+      <div className="overflow-x-auto overflow-y-auto h-96">
         <BaseBarChart
           xAxisDataKey="city"
           barDataKey="total_revenue"
