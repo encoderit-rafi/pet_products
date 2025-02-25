@@ -21,6 +21,7 @@ import { useGetAllProducts } from "@/features/products/api/queries/useGetAllProd
 import BaseDropdown from "@/components/dropdowns/BaseDropdown";
 import ImageDialog from "@/components/dialogs/ImageDialog";
 import Tooltip from "@/components/ui/Tooltip";
+import getImageUrl from "@/lib/utils/getImageUrl";
 
 export default function TotalInventory() {
   const [searchParams] = useSearchParams();
@@ -124,18 +125,11 @@ export default function TotalInventory() {
               <div className="flex items-center gap-3">
                 <div className="size-5 shrink-0">
                   <ImageDialog
-                    src={row?.image_url || "/placeholder-image.webp"}
+                    src={getImageUrl(row.brand_series, row.sap_product_code)}
                     name={row?.product_name_en}
-                    className="size-full"
                   />
                 </div>
-                {/* <span className="truncate">
-                </span> */}
-                <Tooltip text={row?.product_name_en || "-"}>
-                  <span className="block w-full truncate max-w-32">
-                    {row?.product_name_en || "-"}
-                  </span>
-                </Tooltip>
+                <span>{row?.product_name_en || "-"}</span>
               </div>
             );
           },
@@ -192,7 +186,7 @@ export default function TotalInventory() {
     // <div className="flex flex-col h-full gap-4 overflow-hidden">
     <BorderBox>
       <div className="flex flex-col gap-3">
-        <div className="flex items-center justify-between pr-[14px]">
+        <div className="flex items-center justify-between pr-[14px] overflow-auto">
           <Title onClick={() => setIsOpenDrawer(true)}>Total Inventory </Title>
           <div className="flex items-start gap-3 lg:items-center">
             <div className="w-[150px] lg:w-[111px]">
@@ -252,7 +246,7 @@ export default function TotalInventory() {
           </div>
         </div>
       </div>
-      <div className="flex-1 my-4 overflow-x-auto">
+      <div className="flex-1 my-4">
         <Table query={queryProducts} />
       </div>
       {allProducts?.total > 0 && (

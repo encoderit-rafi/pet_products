@@ -48,20 +48,8 @@ const data = [
   },
 ];
 export default function ButtonContact() {
-  // { setIsOpenDrawerApplicationSupport }
   const [connectRole, setConnectRole] = useState(null);
-  // const {
-  //   data: allUsers,
-  //   refetch: fetchAllUsers,
-  //   isLoadingAllUsers: isLoadingAllUsers,
-  //   isFetching: isFetchingAllUsers,
-  //   params: paramsAllUsers,
-  //   setParams: setParamsAllUsers,
-  // } = useGetAllUsers({ setToUrl: false });
-  // useEffect(() => {
-  //   // console.log("🚀 ~ ButtonContact ~ paramsAllUsers:", paramsAllUsers);
-  //   fetchAllUsers();
-  // }, [paramsAllUsers]);
+
   const { isDark } = useTheme();
   const [isOpenDrawerApplicationSupport, setIsOpenDrawerApplicationSupport] =
     useState(false);

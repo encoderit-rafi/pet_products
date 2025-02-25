@@ -117,19 +117,14 @@ export default function Products() {
           value: "name",
           cellValue: (row) => {
             return (
-              <div className="flex items-center w-32 gap-3 truncate">
+              <div className="flex items-center gap-3">
                 <div className="size-5 shrink-0">
                   <ImageDialog
                     src={getImageUrl(row.brand_series, row.sap_product_code)}
                     name={row?.product_name_en}
                   />
                 </div>
-                <Tooltip text={row?.product_name_en}>
-                  {row?.product_name_en || "-"}
-                </Tooltip>
-                {/* <span className="truncate shrink-0">
-                  {row?.product_name_en || "-"}
-                </span> */}
+                <span>{row?.product_name_en || "-"}</span>
               </div>
             );
           },
@@ -138,40 +133,28 @@ export default function Products() {
           name: "sku",
           value: "product_sku",
           cellValue: (row) => {
-            return (
-              <span className="w-32 truncate">{row?.product_sku || "-"}</span>
-            );
+            return <span className="">{row?.product_sku || "-"}</span>;
           },
         },
         {
           name: "brand",
           value: "brand",
           cellValue: (row) => {
-            return (
-              <span className="w-32 truncate">{row?.brand?.name || "-"}</span>
-            );
+            return <span className="">{row?.brand?.name || "-"}</span>;
           },
         },
         {
           name: "category",
           value: "category",
           cellValue: (row) => {
-            return (
-              <span className="w-32 truncate">
-                {row?.category?.name || "-"}
-              </span>
-            );
+            return <span className="">{row?.category?.name || "-"}</span>;
           },
         },
         {
           name: "total unit sold",
           value: "total_unit_sold",
           cellValue: (row) => {
-            return (
-              <span className="w-32 truncate">
-                {row?.total_unit_sold || "-"}
-              </span>
-            );
+            return <span className="">{row?.total_unit_sold || "-"}</span>;
           },
         },
         {

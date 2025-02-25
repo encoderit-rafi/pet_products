@@ -192,7 +192,7 @@ export default function LowestStock() {
           />
         </div>
       </div>
-      <div className="h-72">
+      <div className="h-96 mt-2">
         <Table
           query={statusAllLowestStocks == "loading" ? queryLoading : query}
         />

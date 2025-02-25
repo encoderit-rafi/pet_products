@@ -7,31 +7,20 @@ import MessageIcon from "@/assets/icons/MessageIcon";
 import PhoneIcon from "@/assets/icons/PhoneIcon";
 import ChatIcon from "@/assets/icons/ChatIcon";
 import ImageDialog from "../dialogs/ImageDialog";
+import { Link } from "react-router-dom";
 
-export default function CardApplicationSupport({
-  user,
-  // onClickOpenSingleApplicationSupport,
-  // onClickOpenChat,
-}) {
+export default function CardApplicationSupport({ user }) {
   console.log("🚀 ~ user:", user);
   return (
     <BorderBox className="lg:p-3 h-fit">
       <div className="flex items-center gap-4">
-        {/* <img
-          src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt=""
-          className="object-cover object-center w-12 h-16 rounded-lg"
-        /> */}
         <ImageDialog
           src={user?.image?.url || "/placeholder-image.webp"}
           name={user?.name}
           className="object-cover object-center w-12 h-16 rounded-lg"
         />
-        <div className="flex flex-col justify-between flex-1 h-16 capitalize">
-          <p
-            className="text-sm font-medium text-custom_text_four cursor-pointer"
-            // onClick={onClickOpenSingleApplicationSupport}
-          >
+        <div className="flex flex-col gap-1 flex-1 h-16 capitalize">
+          <p className="text-sm font-medium text-custom_text_four cursor-pointer">
             {user?.name}
           </p>
           <div className="flex overflow-x-auto divide-x max-w-52 divide-custom_line_two">
@@ -45,17 +34,45 @@ export default function CardApplicationSupport({
             ))}
           </div>
           <div className="flex items-center gap-3 text-custom_yellow">
-            <LinkedinIcon className="size-4" />
-            <FacebookIcon className="size-4" />
-            <WhatsappIcon className="size-4" />
+            {/* {user?.contacts?.length > 0 &&
+              user.contacts.map((contact, i) => {
+                contact.type == "whatsapp" ? (
+                  <WhatsappIcon className="size-4" />
+                ) : contact.type == "linkedin" ? (
+                  <LinkedinIcon className="size-4" />
+                ) : null;
+              })} */}
+            {user?.contacts?.length > 0 &&
+              user.contacts.map((contact, i) => {
+                return contact.type == "whatsapp" ? (
+                  <Link
+                    to={contact.details}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <WhatsappIcon className="size-4" />
+                  </Link>
+                ) : contact.type == "linkedin" ? (
+                  <Link
+                    to={contact.details}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <LinkedinIcon className="size-4" />
+                  </Link>
+                ) : null;
+              })}
+            {/* <LinkedinIcon className="size-4" />
+            <WhatsappIcon className="size-4" /> */}
+            {/* <FacebookIcon className="size-4" />
             <MessageIcon className="size-4" />
             <PhoneIcon className="size-4" />
             <div
               className="flex items-center justify-center cursor-pointer"
-              // onClick={onClickOpenChat}
+              
             >
               <ChatIcon className="size-5" />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

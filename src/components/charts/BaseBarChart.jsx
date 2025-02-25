@@ -316,7 +316,7 @@ export default function BaseBarChart({
 }) {
   const { width } = useWindowSize();
   return (
-    <ResponsiveContainer width="100%" height={350}>
+    <ResponsiveContainer width="100%">
       <div style={{ overflowX: "auto", paddingBottom: "10px" }}>
         <BarChart
           width={data.length * 100} // Controls total width, adjust as needed

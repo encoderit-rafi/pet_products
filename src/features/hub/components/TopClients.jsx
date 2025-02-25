@@ -22,109 +22,48 @@ export default function TopClients() {
   const handelSearch = () => {
     setParamsAllTopClients((old) => ({ ...old, search: search }));
   };
-  const query = useMemo(() => ({
-    headers: [
-      {
-        name: "SAP Code",
-        value: "sap_client_code",
-        cellValue: (row) => {
-          return row.sap_client_code;
-        },
-      },
-      {
-        name: "name",
-        value: "name_en",
-        cellValue: (row) => {
-          return row.name_en;
-        },
-      },
-      // {
-      //   name: "Quantity",
-      //   value: "invoice_quantity",
-      //   cellValue: (row) => {
-      //     return row?.invoice_quantity;
-      //   },
-      // },
-      {
-        name: "Sales Amount",
-        value: "invoice_value",
-        cellValue: (row) => {
-          return row?.invoice_value;
-        },
-      },
-    ],
-    isLoading: statusAllTopClients == "loading",
-    data: allTopClients?.data || [],
-  }), [allTopClients]);
-  const queryLoading = {
-    headers: [
-      // {
-      //   name: "SAP Code",
-      //   value: "sap_client_code",
-      //   cellValue: (row) => {
-      //     return (
-      //       <div className="flex items-center gap-3">
-      //         <div className="rounded-full size-5 bg-custom_bg_one animate-pulse" />
-      //         <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-      //       </div>
-      //     );
-      //   },
-
-      // },
-      {
-        name: "name",
-        value: "name_en",
-        cellValue: (row) => {
-          return (
-            <div className="flex items-center gap-3">
-              <div className="rounded-full size-5 bg-custom_bg_one animate-pulse" />
-              <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-            </div>
-          );
+  const query = useMemo(
+    () => ({
+      headers: [
+        // {
+        //   name: "SAP Code",
+        //   value: "sap_client_code",
+        //   cellValue: (row) => {
+        //     return row.sap_client_code;
+        //   },
+        // },
+        {
+          name: "name",
+          value: "name_en",
+          cellValue: (row) => {
+            return row.name_en;
+          },
         },
 
-      },
-      // {
-      //   name: "Quantity",
-      //   value: "invoice_quantity",
-      //   cellValue: (row) => {
-      //     return (
-      //       <div className="flex items-center gap-3">
-      //         <div className="rounded-full size-5 bg-custom_bg_one animate-pulse" />
-      //         <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-      //       </div>
-      //     );
-      //   },
-
-      // },
-      {
-        name: "Sales Amount",
-        value: "invoice_value",
-        cellValue: (row) => {
-          return (
-            <div className="flex items-center gap-3">
-              <div className="rounded-full size-5 bg-custom_bg_one animate-pulse" />
-              <div className="w-32 h-3 rounded-full bg-custom_bg_one animate-pulse" />
-            </div>
-          );
+        {
+          name: "Sales Amount",
+          value: "invoice_value",
+          cellValue: (row) => {
+            return row?.invoice_value;
+          },
         },
-
-      },
-    ],
-    isLoading: statusAllTopClients == "loading",
-    data: Array.from({ length: 10 }, (_, i) => i),
-
-  }
-
+      ],
+      isLoading: statusAllTopClients == "loading",
+      data: allTopClients?.data || [],
+    }),
+    [allTopClients]
+  );
 
   useEffect(() => {
-    setParamsAllTopClients(omitEmpty({
-      range: range.value,
-    }));
+    setParamsAllTopClients(
+      omitEmpty({
+        range: range.value,
+      })
+    );
   }, [range]);
 
   useEffect(() => {
-    ranges.lenght > 0 && setRange(ranges[0])
+    ranges.lenght > 0 && setRange(ranges[0]);
   }, [ranges]);
   useEffect(() => {
     fetchAllTopClients();
@@ -157,8 +96,8 @@ export default function TopClients() {
           />
         </div>
       </div>
-      <div className="h-72">
-        <Table query={statusAllTopClients == "loading" ? queryLoading : query} />
+      <div className="mt-2 h-96">
+        <Table query={query} />
       </div>
     </BorderBox>
   );
