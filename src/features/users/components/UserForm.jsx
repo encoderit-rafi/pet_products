@@ -19,6 +19,7 @@ import { useGetAllUsers } from "@/api/users/useGetAllUsers";
 import { useGetAllRoles } from "@/api/roles/useGetAllRoles";
 import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
 import RolesDropdown from "@/components/dropdowns/RolesDropdown";
+import toast from "react-hot-toast";
 
 export default function UserForm({ handelOnClickCancel, formValues }) {
   const {
@@ -135,6 +136,7 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
     for (const { key, condition, message } of validations) {
       if (condition(data[key])) {
         setError(key, { type: "manual", message });
+        toast.error(message);
         return;
       }
     }
@@ -150,6 +152,7 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
           },
           {
             onSuccess: () => {
+              console.log("update");
               setParams({ page: params.page, per_page: params.per_page });
               fetchAllUsers();
               resetFields();
