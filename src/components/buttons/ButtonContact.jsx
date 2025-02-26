@@ -19,32 +19,32 @@ const data = [
   {
     id: 1,
     name: "Marketing",
-    value: "marketing",
+    value: "Marketing",
   },
   {
     id: 2,
     name: "Sales",
-    value: "sales",
+    value: "Sales",
   },
   {
     id: 3,
     name: "Finance",
-    value: "finance",
+    value: "Finance",
   },
   {
     id: 4,
     name: "Supply Chain",
-    value: "supply_chain",
+    value: "Supply Chain",
   },
   {
     id: 5,
     name: "Support",
-    value: "support",
+    value: "Support",
   },
   {
     id: 6,
-    name: "Plan a Visit",
-    value: "plan_a_visit",
+    name: "Operation",
+    value: "Operation",
   },
 ];
 export default function ButtonContact() {

@@ -9,7 +9,7 @@ export default function ImagePreview({
   className,
 }) {
   return (
-    <div className={cn("relative group shrink-0 mx-auto size-96", className)}>
+    <div className={cn("relative group shrink-0 mx-auto size-96 ", className)}>
       {/* {src} */}
       <img
         src={src}
@@ -21,7 +21,7 @@ export default function ImagePreview({
         <button
           type="button"
           onClick={onClickClose}
-          className="absolute flex items-center justify-center text-white bg-red-500 rounded-full opacity-85 top-2 right-2 size-6 hover:opacity-100"
+          className="absolute flex items-center justify-center text-white bg-red-500 rounded-full opacity-85 size-6 top-0 right-0 hover:opacity-100"
         >
           {/* &times; */}
           <CloseIcon className="size-3" />

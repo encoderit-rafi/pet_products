@@ -67,6 +67,7 @@ export default function ImagePicker({
         <div className="flex items-center w-full gap-2 overflow-x-auto">
           {images?.map((file, index) => (
             <ImagePreview
+              className={"size-48"}
               key={index}
               src={URL.createObjectURL(file)}
               onClickClose={() => handleRemoveImage(index)}

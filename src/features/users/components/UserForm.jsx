@@ -70,10 +70,13 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
       const { name, email, phone_number, brands, roles } = formValues.user;
       setValue("name", name);
       setValue("email", email);
+      setValue("password", password);
       setSelectedBrands(brands);
       setSelectedRoles(roles);
       setNumber(phone_number);
       // setImages([profile_image]);
+    } else {
+      resetFields();
     }
   }, [formValues]);
   useEffect(() => {
@@ -99,6 +102,7 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
   }, [images, number, selectedBrands, selectedRoles]);
 
   function resetFields() {
+    console.log("🚀 ~ resetFields ~ resetFields");
     reset();
     setImages([]);
     setNumber("");
@@ -108,25 +112,25 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
   }
   function onSubmit(data) {
     const validations = [
-      (formValues.type == "create" ||
-        (formValues.type == "update" && formValues.user.image == null) ||
-        (formValues.type == "update" &&
-          formValues.user.image != null &&
-          selectNewImages)) && {
-        key: "profile_image",
-        condition: (value) => value?.length === 0,
-        message: "Select an image",
-      },
+      // (formValues.type == "create" ||
+      //   (formValues.type == "update" && formValues.user.image == null) ||
+      //   (formValues.type == "update" &&
+      //     formValues.user.image != null &&
+      //     selectNewImages)) && {
+      //   key: "profile_image",
+      //   condition: (value) => value?.length === 0,
+      //   message: "Select an image",
+      // },
       {
         key: "phone_number",
         condition: (value) => value?.length <= 3,
         message: "Phone number is required",
       },
-      {
-        key: "brand_ids",
-        condition: (value) => value.length === 0,
-        message: "Select a brand",
-      },
+      // {
+      //   key: "brand_ids",
+      //   condition: (value) => value.length === 0,
+      //   message: "Select a brand",
+      // },
       {
         key: "role_ids",
         condition: (value) => value.length === 0,
@@ -152,10 +156,10 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
           },
           {
             onSuccess: () => {
+              resetFields();
               console.log("update");
               setParams({ page: params.page, per_page: params.per_page });
               fetchAllUsers();
-              resetFields();
               handelOnClickCancel();
             },
           }
@@ -168,10 +172,10 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
           },
           {
             onSuccess: () => {
+              resetFields();
               // fetchAllUsers();
               setParams({ page: params.page, per_page: params.per_page });
               fetchAllUsers();
-              resetFields();
               handelOnClickCancel();
             },
           }
@@ -179,13 +183,14 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
   }
   return (
     <form
-      className="flex flex-col mt-4 space-y-4"
+      className="flex flex-col mt-4 space-y-4 overflow-y-auto max-h-[680px]"
       onSubmit={handleSubmit(onSubmit)}
     >
       {formValues.type === "update" &&
         formValues?.user.image != null &&
         !selectNewImages && (
           <ImagePreview
+            className={"size-32"}
             src={formValues.user.image.url}
             onClickClose={() => setSelectNewImages(true)}
           />
@@ -194,6 +199,7 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
         selectNewImages ||
         (formValues.type === "update" && formValues?.user.image == null)) && (
         <ImagePicker
+          className={"size-32"}
           images={images}
           setImages={setImages}
           isError={errors?.profile_image?.message}
@@ -220,7 +226,6 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
           }`}
           register={register("email", validationRules.email)}
         />
-
         <InputBox>
           <Label
             id="phone_number"
@@ -233,6 +238,16 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
             isError={errors.phone_number}
           />
         </InputBox>
+        <BaseInput
+          id="password"
+          type="password"
+          label="password"
+          palceholder="password"
+          className={`py-3 rounded-lg ${
+            errors?.password ? "!border-red-500" : ""
+          }`}
+          register={register("password", validationRules.password)}
+        />
         <InputBox>
           <Label id="brands" label="brands" palceholder="brands " />
           <BaseDropdown
@@ -266,25 +281,8 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
         )}
         <InputBox>
           <Label id="roles" label="roles" palceholder="roles " />
-          {/* <BaseDropdown
-            multiple
-            variant="base"
-            defaultText="select roles"
-            isLoading={isLoadingAllBrands}
-            className={"w-full"}
-            options={allRoles?.data || []}
-            selected={selectedRoles}
-            setSelected={(data) => {
-              setSelectedRoles((old) => {
-                return old?.some((val) => val?.id == data?.id)
-                  ? old.filter((val) => val.id != data.id)
-                  : [...old, data];
-              });
-            }}
-          /> */}
+
           <RolesDropdown
-            // isDisable={selectedBrand?.length == 0 ? true : false}
-            // params={{ brand_id: selectedBrand?.[0]?.id }}
             params={{
               brand_ids: selectedBrands?.map((item) => item.id).join(","),
             }}
