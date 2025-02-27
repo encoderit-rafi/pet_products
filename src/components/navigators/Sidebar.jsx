@@ -3,7 +3,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import ProductsIcon from "@/assets/icons/ProductsIcon";
 import MarketingIcon from "@/assets/icons/MarketingIcon";
 import FaqsIcon from "@/assets/icons/FaqsIcon";
-import RolesIcon from "@/assets/icons/RolesIcon";
+import UsersIcon from "@/assets/icons/UsersIcon";
 import TermsIcon from "@/assets/icons/TermsIcon";
 import ShelvesIcon from "@/assets/icons/ShelvesIcon";
 import HubIcon from "@/assets/icons/HubIcon";
@@ -37,7 +37,7 @@ const routes = [
     icon: <ShelvesIcon className="w-4" />,
   },
   { path: "/faqs", name: "FAQs", icon: <FaqsIcon className="w-2" /> },
-  { path: "/roles", name: "roles", icon: <RolesIcon className="w-4" /> },
+  { path: "/users", name: "users", icon: <UsersIcon className="w-4" /> },
   {
     path: "/terms",
     name: "terms",

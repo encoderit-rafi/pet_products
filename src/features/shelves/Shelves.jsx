@@ -48,15 +48,11 @@ export default function Shelves() {
     data: allStandTypes,
     isLoading: isLoadingAllStandTypes,
     isFetching: isFetchingAllStandTypes,
-    params: paramsAllStandTypes,
-    setParams: setParamsAllStandTypes,
   } = useGetAllStandTypes({ isEnabled: true });
   const {
     data: allPosMaterials,
     isLoading: isLoadingAllPosMaterials,
     isFetching: isFetchingAllPosMaterials,
-    params: paramsAllPosMaterials,
-    setParams: setParamsAllPosMaterials,
   } = useGetAllPosMaterials({ isEnabled: true });
 
   const queryShelves = useMemo(

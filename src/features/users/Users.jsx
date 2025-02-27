@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import BaseButton from "@/components/buttons/BaseButton";
 import Dialog from "@/components/dialogs/Dialog";
 import UserForm from "./components/userForm";
@@ -12,7 +12,26 @@ import { Axios } from "@/axios";
 import { useCallback } from "react";
 import Page from "@/components/ui/Page";
 import { useGetAllUsers } from "@/api/users/useGetAllUsers";
-
+import { useSearchParams } from "react-router-dom";
+import BaseTabList from "@/components/tabs/BaseTabList";
+import { TabGroup, TabPanel, TabPanels } from "@headlessui/react";
+import RoleForm from "./components/RoleForm";
+import { useGetAllRoles } from "@/api/roles/useGetAllRoles";
+import Table from "@/components/tables/Table";
+import RoleCardSkeleton from "./components/RoleCardSkeleton";
+import RoleCard from "./components/RoleCard";
+const tabs = [
+  {
+    id: 0,
+    name: "Users",
+    value: "users",
+  },
+  {
+    id: 1,
+    name: "Roles",
+    value: "roles",
+  },
+];
 export default function Users() {
   const {
     data: allUsers,
@@ -22,21 +41,80 @@ export default function Users() {
     params: paramsAllUsers,
     setParams: setParamsAllUsers,
   } = useGetAllUsers({ setToUrl: true, isEnabled: true });
-
-  const [isOpenCreateUser, setIsOpenCreateUser] = useState(false);
-  const [isOpenUpdateUser, setIsOpenUpdateUser] = useState(false);
+  const {
+    data: allRoles,
+    refetch: fetchAllRoles,
+    isLoading: isLoadingAllRoles,
+    isFetching: isFetchingAllRoles,
+    params: paramsAllRoles,
+    setParams: setParamsAllRoles,
+  } = useGetAllRoles();
+  useEffect(() => {
+    console.log("🚀 ~ Users ~ allRoles:", allRoles);
+  }, [allRoles]);
+  const [isOpenUser, setIsOpenUser] = useState(false);
   const [isOpenDeleteUser, setIsOpenDeleteUser] = useState(false);
   const [isLoadingDeleteUser, setIsLoadingDeleteUser] = useState(false);
-  const [formValues, setFormValues] = useState({ type: "create", user: null });
-
+  const [isOpenRole, setIsOpenRole] = useState(false);
+  const [isOpenDeleteRole, setIsOpenDeleteRole] = useState(false);
+  const [isLoadingDeleteRole, setIsLoadingDeleteRole] = useState(false);
+  const [userFormValues, setUserFormValues] = useState({
+    type: "create",
+    user: null,
+  });
+  const [roleFormValues, setRoleFormValues] = useState({
+    type: "create",
+    role: null,
+  });
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const [activeTab, setActiveTab] = useState(() =>
+    searchParams.get("type") == null
+      ? tabs[0]
+      : tabs.find((tab) => tab.value == searchParams.get("type"))
+  );
+  useEffect(() => {
+    setActiveTabIndex(activeTab.id);
+  }, [activeTab]);
+  useEffect(() => {
+    setActiveTab(
+      searchParams.get("type") == null
+        ? tabs[0]
+        : tabs.find((tab) => tab.value == searchParams.get("type"))
+    );
+  }, [searchParams.get("type")]);
+  function handelOpenModal() {
+    switch (activeTabIndex) {
+      case 0:
+        setIsOpenUser(true);
+        return;
+      case 1:
+        setisOpenRole(true);
+        return;
+      default:
+        return;
+    }
+  }
   async function confirmDeleteUser() {
     setIsLoadingDeleteUser(true);
-    const res = await Axios.get(`/users/delete/${formValues?.user?.id}`);
+    const res = await Axios.get(`/users/delete/${userFormValues?.user?.id}`);
     if (res.status === 200) {
       console.log("🚀 ~ confirmDeleteUser ~ res.status:", res.status);
       setParamsAllUsers(paramsAllUsers);
       fetchAllUsers();
-      setFormValues({ type: "create", user: null });
+      setUserFormValues({ type: "create", user: null });
+      setIsOpenDeleteUser(false);
+    }
+    setIsLoadingDeleteUser(false);
+  }
+  async function confirmDeleteRole() {
+    setIsLoadingDeleteUser(true);
+    const res = await Axios.get(`/users/delete/${userFormValues?.user?.id}`);
+    if (res.status === 200) {
+      console.log("🚀 ~ confirmDeleteUser ~ res.status:", res.status);
+      setParamsAllUsers(paramsAllUsers);
+      fetchAllUsers();
+      setUserFormValues({ type: "create", user: null });
       setIsOpenDeleteUser(false);
     }
     setIsLoadingDeleteUser(false);
@@ -60,86 +138,181 @@ export default function Users() {
       per_page: allUsers?.per_page,
     };
   }, [allUsers]);
-
+  const queryRoles = useMemo(
+    () => ({
+      headers: [
+        {
+          name: "name",
+          value: "name",
+          cellValue: (row) => {
+            return <span className="">{row?.name || "-"}</span>;
+          },
+        },
+        {
+          name: "permissions",
+          value: "permissions",
+          cellValue: (row) => {
+            return (
+              <div className="ml-auto max-w-xl h-12 flex items-center overflow-x-auto space-x-2 ">
+                {row?.permissions?.length > 0
+                  ? row?.permissions.map((permission) => (
+                      <span className="rounded-full px-6 py-2 bg-custom_bg_one">
+                        {permission.name.split("_").join(" ")}
+                      </span>
+                    ))
+                  : "-"}
+              </div>
+            );
+          },
+        },
+      ],
+      isLoading: isLoadingAllRoles || isFetchingAllRoles,
+      data: allRoles?.data || [],
+    }),
+    [allRoles]
+  );
   return (
-    <Page
-      title="Assigned Users"
-      actions={
-        <BaseButton
-          variant="orange"
-          icon="plus"
-          className="px-3 text-xs max-w-fit lg:px-5"
-          onClick={() => setIsOpenCreateUser(true)}
-        >
-          <span className="hidden lg:block">add new</span>
-        </BaseButton>
-      }
-      footer={
-        allUsers?.total > 0 && (
-          <Pagination
-            {...paginationProps}
-            onPageChange={handlePageChange}
-            onPerPageChange={handlePerPageChange}
-          />
-        )
-      }
+    <TabGroup
+      selectedIndex={activeTabIndex}
+      onChange={setActiveTabIndex}
+      className={"h-full"}
     >
-      <div className="grid grid-cols-1 gap-6 pr-2 mt-2 md:grid-cols-2 xl:grid-cols-3">
-        {isLoadingAllUsers || isFetchingAllUsers ? (
-          Array.from({ length: 5 }, (_, i) => <UserCardSkeleton key={i} />)
-        ) : allUsers?.data?.length > 0 ? (
-          allUsers.data.map((user) => (
-            <UserCard
-              key={user.id}
-              data={user}
-              onClickEdit={() => {
-                setFormValues({ type: "update", user });
-                setIsOpenUpdateUser(true);
-              }}
-              onClickDelete={() => {
-                setFormValues({ type: "delete", user });
-                setIsOpenDeleteUser(true);
+      <Page
+        // title="Assigned Users"
+        title={`Assigned ${activeTab.name}`}
+        actions={
+          <div className="flex flex-row items-center flex-1 gap-4">
+            <BaseTabList
+              list={tabs}
+              activeTab={activeTab}
+              className={{ tabList: "ml-auto" }}
+              handelOnChangeTab={(item) => {
+                setSearchParams({ type: item.value });
               }}
             />
-          ))
-        ) : (
-          <p className="text-center text-red-500">No data found</p>
-        )}
-      </div>
-      <Dialog
-        isOpen={isOpenCreateUser}
-        title="add new user"
-        className="max-w-lg"
+            <BaseButton
+              variant="orange"
+              icon="plus"
+              className="px-3 text-xs max-w-fit lg:px-5"
+              onClick={handelOpenModal}
+            >
+              <span className="hidden lg:block">add new</span>
+            </BaseButton>
+          </div>
+        }
       >
-        <UserForm
-          formValues={formValues}
-          handelOnClickCancel={() => setIsOpenCreateUser(false)}
-        />
-      </Dialog>
-      <Dialog
-        isOpen={isOpenUpdateUser}
-        title="update user"
-        className="max-w-lg "
-      >
-        <UserForm
-          formValues={formValues}
-          handelOnClickCancel={() => {
-            setFormValues({ type: "create", user: null });
-            setIsOpenUpdateUser(false);
+        <div className="flex flex-col flex-1">
+          <TabPanels className="flex flex-col flex-1">
+            <TabPanel className={"flex flex-col flex-1"}>
+              <div className="grid grid-cols-1 gap-6 pr-2 mt-2 md:grid-cols-2 xl:grid-cols-3">
+                {isLoadingAllUsers || isFetchingAllUsers ? (
+                  Array.from({ length: 5 }, (_, i) => (
+                    <UserCardSkeleton key={i} />
+                  ))
+                ) : allUsers?.data?.length > 0 ? (
+                  allUsers.data.map((user) => (
+                    <UserCard
+                      key={user.id}
+                      data={user}
+                      onClickEdit={() => {
+                        setUserFormValues({ type: "update", user });
+                        setIsOpenUser(true);
+                      }}
+                      onClickDelete={() => {
+                        setUserFormValues({ type: "delete", user });
+                        setIsOpenDeleteUser(true);
+                      }}
+                    />
+                  ))
+                ) : (
+                  <p className="text-center text-red-500">No data found</p>
+                )}
+              </div>
+              {allUsers?.total > 0 && (
+                <Pagination
+                  {...paginationProps}
+                  onPageChange={handlePageChange}
+                  onPerPageChange={handlePerPageChange}
+                />
+              )}
+            </TabPanel>
+            <TabPanel className={"flex flex-col flex-1"}>
+              <div className="grid grid-cols-1 gap-6 pr-2 mt-2 md:grid-cols-2 xl:grid-cols-3">
+                {isLoadingAllRoles || isFetchingAllRoles ? (
+                  Array.from({ length: 5 }, (_, i) => (
+                    <RoleCardSkeleton key={i} />
+                  ))
+                ) : allRoles?.data?.length > 0 ? (
+                  allRoles.data.map((role) => (
+                    <RoleCard
+                      key={role.id}
+                      data={role}
+                      onClickEdit={() => {
+                        setRoleFormValues({ type: "update", role });
+                        setIsOpenRole(true);
+                      }}
+                      onClickDelete={() => {
+                        setRoleFormValues({ type: "delete", role });
+                        setIsOpenDeleteRole(true);
+                      }}
+                    />
+                  ))
+                ) : (
+                  <p className="text-center text-red-500">No data found</p>
+                )}
+              </div>
+            </TabPanel>
+          </TabPanels>
+        </div>
+
+        <Dialog
+          isOpen={isOpenUser}
+          title={`${
+            userFormValues.type == "create" ? "add new" : "update"
+          }  user`}
+          className="max-w-lg"
+        >
+          <UserForm
+            formValues={userFormValues}
+            // handelOnClickCancel={() => setIsOpenUser(false)}
+            handelOnClickCancel={() => {
+              setUserFormValues({ type: "create", user: null });
+              setIsOpenUser(false);
+            }}
+          />
+        </Dialog>
+        <DialogConfirmDelete
+          text={userFormValues?.user?.name}
+          isOpen={isOpenDeleteUser}
+          onClickClose={() => {
+            // setTempData(null)
+            setUserFormValues({ type: "create", user: null });
+            setIsOpenDeleteUser(false);
           }}
+          onClickDelete={confirmDeleteUser}
+          isLoading={isLoadingDeleteUser}
         />
-      </Dialog>
-      <DialogConfirmDelete
-        text={formValues?.user?.name}
-        isOpen={isOpenDeleteUser}
-        onClickClose={() => {
-          // setTempData(null)
-          setFormValues({ type: "create", user: null });
-          setIsOpenDeleteUser(false);
-        }}
-        onClickDelete={confirmDeleteUser}
-        isLoading={isLoadingDeleteUser}
-      />
-    </Page>
+        <Dialog isOpen={isOpenRole} title="add new role" className="max-w-lg">
+          <RoleForm
+            formValues={roleFormValues}
+            handelOnClickCancel={() => {
+              setRoleFormValues({ type: "create", role: null });
+              setIsOpenRole(false);
+            }}
+          />
+        </Dialog>
+        <DialogConfirmDelete
+          text={roleFormValues?.role?.name}
+          isOpen={isOpenDeleteRole}
+          onClickClose={() => {
+            // setTempData(null)
+            setRoleFormValues({ type: "create", role: null });
+            setIsOpenDeleteRole(false);
+          }}
+          onClickDelete={confirmDeleteRole}
+          isLoading={isLoadingDeleteRole}
+        />
+      </Page>
+    </TabGroup>
   );
 }

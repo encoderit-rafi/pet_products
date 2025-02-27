@@ -45,7 +45,7 @@ const router = createBrowserRouter([
       { path: "stores", element: <Stores /> },
       { path: "products", element: <Products /> },
       { path: "media-kit", element: <MediaKit /> },
-      { path: "roles", element: <Users /> },
+      { path: "users", element: <Users /> },
       { path: "shelves", element: <Shelves /> },
       { path: "terms", element: <Terms /> },
     ],
