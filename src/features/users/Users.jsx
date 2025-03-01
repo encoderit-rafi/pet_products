@@ -265,7 +265,17 @@ export default function Users() {
           onClickDelete={confirmDeleteUser}
           isLoading={isLoadingDeleteUser}
         />
-        <Dialog isOpen={isOpenRole} title="add new role" className="max-w-lg">
+        <Dialog
+          isOpen={isOpenRole}
+          title={`${
+            roleFormValues.type == "view"
+              ? "view"
+              : roleFormValues.type == "create"
+              ? "add new"
+              : "update"
+          }  role`}
+          className="max-w-lg"
+        >
           <RoleForm
             formValues={roleFormValues}
             handelOnClickCancel={() => {
