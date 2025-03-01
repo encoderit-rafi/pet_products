@@ -39,7 +39,7 @@ export default function RoleForm({ handelOnClickCancel, formValues }) {
     reset,
     clearErrors,
   } = useForm();
-  const { refetch: fetchAllRoles } = useGetAllRoles();
+  const { refetch: fetchAllRoles } = useGetAllRoles({ isEnabled: true });
   const { errors } = formState;
   useEffect(() => {
     if (formValues.type != "create") {

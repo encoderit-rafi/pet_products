@@ -6,14 +6,6 @@ import { useTheme } from "@/context/ThemeProvider";
 import DrawerApplicationSupport from "../drawers/DrawerApplicationSupport";
 import CardApplicationSupport from "../cards/CardApplicationSupport";
 import DrawerSingleApplicationSupport from "../drawers/DrawerSingleApplicationSupport";
-import { useGetAllRoles } from "@/api/roles/useGetAllRoles";
-import UserCardSkeleton from "@/features/users/components/UserCardSkeleton";
-import BorderBox from "../box/BorderBox";
-import CloseIcon from "@/assets/icons/CloseIcon";
-import BaseInput from "../inputs/BaseInput";
-import ImagePickerIcon from "../file_pickers/ImagePickerIcon";
-import SendIcon from "@/assets/icons/SendIcon";
-import { useGetAllUsers } from "@/api/users/useGetAllUsers";
 
 const data = [
   {

@@ -14,7 +14,9 @@ export default function RolesDropdown({
     isEnabled: true,
   },
 }) {
-  const { data, isLoading, isFetching, setParams } = useGetAllRoles();
+  const { data, isLoading, isFetching, setParams } = useGetAllRoles({
+    isEnabled: true,
+  });
   useEffect(() => {
     setParams({
       brand_ids: params.brand_ids,

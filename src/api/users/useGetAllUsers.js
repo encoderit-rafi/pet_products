@@ -7,6 +7,7 @@ import { useSearchParams } from "react-router-dom";
 export const useGetAllUsers = ({ setToUrl, isEnabled }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [params, setParams] = useState({
+    // type: searchParams.get("type") || "user",
     page: searchParams.get("page") || PAGINATION.page,
     per_page: searchParams.get("per_page") || PAGINATION.per_page,
   });
@@ -21,7 +22,8 @@ export const useGetAllUsers = ({ setToUrl, isEnabled }) => {
     ],
     enabled: isEnabled,
     retry: false,
-    keepPreviousData: false,
+    staleTime: 1000 * 60 * 60,
+    cacheTime: 1000 * 60 * 60,
     queryFn: async () => {
       return (
         await Axios.get("/users", {

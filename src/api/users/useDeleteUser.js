@@ -8,8 +8,7 @@ export const useDeleteUser = () => {
   return useMutation({
     mutationKey: "delete-user",
     mutationFn: async (user) => {
-      return await Axios.delete(`/users/${user.id}`);
+      return await Axios.delete(`/users/${user.id}`, { _method: "DELETE" });
     },
-
   });
 };

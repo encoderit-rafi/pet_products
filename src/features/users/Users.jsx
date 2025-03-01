@@ -34,33 +34,12 @@ const tabs = [
   },
 ];
 export default function Users() {
-  const {
-    data: allUsers,
-    refetch: fetchAllUsers,
-    isLoading: isLoadingAllUsers,
-    isFetching: isFetchingAllUsers,
-    params: paramsAllUsers,
-    setParams: setParamsAllUsers,
-  } = useGetAllUsers({ setToUrl: true, isEnabled: true });
-  const {
-    data: allRoles,
-    refetch: fetchAllRoles,
-    isLoading: isLoadingAllRoles,
-    isFetching: isFetchingAllRoles,
-    params: paramsAllRoles,
-    setParams: setParamsAllRoles,
-  } = useGetAllRoles();
-  const { mutate: deleteRole, isLoading: isLoadingDeleteRole } =
-    useDeleteRole();
-  useEffect(() => {
-    console.log("🚀 ~ Users ~ allRoles:", allRoles);
-  }, [allRoles]);
+  const [searchParams, setSearchParams] = useSearchParams();
   const [isOpenRole, setIsOpenRole] = useState(false);
   const [isOpenUser, setIsOpenUser] = useState(false);
   const [isOpenDeleteUser, setIsOpenDeleteUser] = useState(false);
   const [isLoadingDeleteUser, setIsLoadingDeleteUser] = useState(false);
   const [isOpenDeleteRole, setIsOpenDeleteRole] = useState(false);
-  // const [isLoadingDeleteRole, setIsLoadingDeleteRole] = useState(false);
   const [userFormValues, setUserFormValues] = useState({
     type: "create",
     user: null,
@@ -69,13 +48,38 @@ export default function Users() {
     type: "create",
     role: null,
   });
-  const [searchParams, setSearchParams] = useSearchParams();
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [activeTab, setActiveTab] = useState(() =>
     searchParams.get("type") == null
       ? tabs[0]
       : tabs.find((tab) => tab.value == searchParams.get("type"))
   );
+  const {
+    data: allUsers,
+    refetch: fetchAllUsers,
+    isLoading: isLoadingAllUsers,
+    isFetching: isFetchingAllUsers,
+    params: paramsAllUsers,
+    setParams: setParamsAllUsers,
+  } = useGetAllUsers({
+    setToUrl: true,
+    isEnabled: activeTabIndex == 0 ? true : false,
+  });
+  const {
+    data: allRoles,
+    refetch: fetchAllRoles,
+    isLoading: isLoadingAllRoles,
+    isFetching: isFetchingAllRoles,
+    // params: paramsAllRoles,
+    // setParams: setParamsAllRoles,
+  } = useGetAllRoles({ isEnabled: activeTabIndex == 1 ? true : false });
+
+  const { mutate: deleteRole, isLoading: isLoadingDeleteRole } =
+    useDeleteRole();
+  useEffect(() => {
+    console.log("🚀 ~ Users ~ allRoles:", allRoles);
+  }, [allRoles]);
+
   useEffect(() => {
     setActiveTabIndex(activeTab.id);
   }, [activeTab]);

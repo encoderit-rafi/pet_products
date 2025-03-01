@@ -47,7 +47,7 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
     refetch: fetchAllRoles,
     params: paramsAllRoles,
     setParams: setParamsAllRoles,
-  } = useGetAllRoles();
+  } = useGetAllRoles({ isEnabled: false });
 
   const {
     register,
