@@ -14,6 +14,7 @@ export default function RoleCardSkeleton() {
         <div className="flex items-center justify-center gap-2">
           <div className="rounded-lg bg-custom_bg_one size-10"></div>
           <div className="rounded-lg bg-custom_bg_one size-10"></div>
+          <div className="rounded-lg bg-custom_bg_one size-10"></div>
         </div>
       </div>
     </BorderBox>

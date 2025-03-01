@@ -3,9 +3,10 @@ import { useMutation } from "react-query";
 
 export const useDeleteRole = () => {
   return useMutation({
-    mutationKey: "delete-role",
-    mutationFn: async (user) => {
-      return await Axios.delete(`/roles/${user.id}`);
+    mutationKey: "update-role",
+    mutationFn: async ({ id, data }) => {
+      const body = { ...data, _method: "DELETE" };
+      return await Axios.post(`/roles/${id}`, body);
     },
   });
 };

@@ -20,6 +20,7 @@ import { useGetAllRoles } from "@/api/roles/useGetAllRoles";
 import Table from "@/components/tables/Table";
 import RoleCardSkeleton from "./components/RoleCardSkeleton";
 import RoleCard from "./components/RoleCard";
+import { useDeleteRole } from "@/api/roles/useDeleteRole";
 const tabs = [
   {
     id: 0,
@@ -49,15 +50,17 @@ export default function Users() {
     params: paramsAllRoles,
     setParams: setParamsAllRoles,
   } = useGetAllRoles();
+  const { mutate: deleteRole, isLoading: isLoadingDeleteRole } =
+    useDeleteRole();
   useEffect(() => {
     console.log("🚀 ~ Users ~ allRoles:", allRoles);
   }, [allRoles]);
+  const [isOpenRole, setIsOpenRole] = useState(false);
   const [isOpenUser, setIsOpenUser] = useState(false);
   const [isOpenDeleteUser, setIsOpenDeleteUser] = useState(false);
   const [isLoadingDeleteUser, setIsLoadingDeleteUser] = useState(false);
-  const [isOpenRole, setIsOpenRole] = useState(false);
   const [isOpenDeleteRole, setIsOpenDeleteRole] = useState(false);
-  const [isLoadingDeleteRole, setIsLoadingDeleteRole] = useState(false);
+  // const [isLoadingDeleteRole, setIsLoadingDeleteRole] = useState(false);
   const [userFormValues, setUserFormValues] = useState({
     type: "create",
     user: null,
@@ -89,7 +92,7 @@ export default function Users() {
         setIsOpenUser(true);
         return;
       case 1:
-        setisOpenRole(true);
+        setIsOpenRole(true);
         return;
       default:
         return;
@@ -108,16 +111,13 @@ export default function Users() {
     setIsLoadingDeleteUser(false);
   }
   async function confirmDeleteRole() {
-    setIsLoadingDeleteUser(true);
-    const res = await Axios.get(`/users/delete/${userFormValues?.user?.id}`);
-    if (res.status === 200) {
-      console.log("🚀 ~ confirmDeleteUser ~ res.status:", res.status);
-      setParamsAllUsers(paramsAllUsers);
-      fetchAllUsers();
-      setUserFormValues({ type: "create", user: null });
-      setIsOpenDeleteUser(false);
-    }
-    setIsLoadingDeleteUser(false);
+    deleteRole(roleFormValues.role, {
+      onSuccess() {
+        fetchAllRoles();
+        setUserFormValues({ type: "create", role: null });
+        setIsOpenDeleteRole(false);
+      },
+    });
   }
   const handlePageChange = useCallback(
     (val) => setParamsAllUsers((old) => ({ ...old, page: val })),
@@ -138,39 +138,7 @@ export default function Users() {
       per_page: allUsers?.per_page,
     };
   }, [allUsers]);
-  const queryRoles = useMemo(
-    () => ({
-      headers: [
-        {
-          name: "name",
-          value: "name",
-          cellValue: (row) => {
-            return <span className="">{row?.name || "-"}</span>;
-          },
-        },
-        {
-          name: "permissions",
-          value: "permissions",
-          cellValue: (row) => {
-            return (
-              <div className="ml-auto max-w-xl h-12 flex items-center overflow-x-auto space-x-2 ">
-                {row?.permissions?.length > 0
-                  ? row?.permissions.map((permission) => (
-                      <span className="rounded-full px-6 py-2 bg-custom_bg_one">
-                        {permission.name.split("_").join(" ")}
-                      </span>
-                    ))
-                  : "-"}
-              </div>
-            );
-          },
-        },
-      ],
-      isLoading: isLoadingAllRoles || isFetchingAllRoles,
-      data: allRoles?.data || [],
-    }),
-    [allRoles]
-  );
+
   return (
     <TabGroup
       selectedIndex={activeTabIndex}
@@ -247,6 +215,11 @@ export default function Users() {
                     <RoleCard
                       key={role.id}
                       data={role}
+                      onCLickView={() => {
+                        console.log("🚀 ~ Users ~ onCLickView:");
+                        setRoleFormValues({ type: "view", role });
+                        setIsOpenRole(true);
+                      }}
                       onClickEdit={() => {
                         setRoleFormValues({ type: "update", role });
                         setIsOpenRole(true);

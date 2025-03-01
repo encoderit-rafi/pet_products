@@ -7,20 +7,18 @@ import Label from "@/components/texts/Label";
 import BaseInput from "@/components/inputs/BaseInput";
 import BaseButton from "@/components/buttons/BaseButton";
 
-import toast from "react-hot-toast";
 import { useGetAllPermissions } from "@/api/permissions/useGetAllPermissions";
 import { useCreateRole } from "@/api/roles/useCreateRole";
 import { useUpdateRole } from "@/api/roles/useUpdateRole";
+import { useGetAllRoles } from "@/api/roles/useGetAllRoles";
 
 export default function RoleForm({ handelOnClickCancel, formValues }) {
   const [selectedPermissionsID, setSelectedPermissionsID] = useState([]);
   useEffect(() => {
     setValue("permissions", selectedPermissionsID);
   }, [selectedPermissionsID]);
-  const { data: permissions, status } = useGetAllPermissions();
-  useEffect(() => {
-    console.log("🚀 ~ RoleForm ~ permissions:", permissions.data);
-  }, [permissions]);
+  const { data: permissions } = useGetAllPermissions();
+
   const {
     mutate: createRole,
     isLoading: isLoadingCreateRole,
@@ -41,14 +39,10 @@ export default function RoleForm({ handelOnClickCancel, formValues }) {
     reset,
     clearErrors,
   } = useForm();
-
-  // const [images, setImages] = useState([]);
-  // const [selectNewImages, setSelectNewImages] = useState(false);
-  // const [number, setNumber] = useState("");
-  // const [selectedPermissionsID, setSelectedPermissionsID] = useState([]);
+  const { refetch: fetchAllRoles } = useGetAllRoles();
   const { errors } = formState;
   useEffect(() => {
-    if (formValues.type === "update") {
+    if (formValues.type != "create") {
       const { name, permissions } = formValues.role;
       console.log("🚀 ~ useEffect ~ permissions:", permissions);
       setValue("name", name);
@@ -57,31 +51,8 @@ export default function RoleForm({ handelOnClickCancel, formValues }) {
       resetFields();
     }
   }, [formValues]);
-  // useEffect(() => {
-  //  setSelectedPermissionsID({
-  //   permissions: selectedPermissionsID?.map((item) => item.id).join(","),
-  //   });
-  // }, [selectedPermissionsID]);
-  // useEffect(() => {
-  //   fetchAllRoles();
-  // }, [paramsAllRoles]);
-  // useEffect(() => {
-  //   const fieldsToUpdate = [
-  //     {
-  //       key: "permissions",
-  //       value: selectedPermissionsID?.map((item) => item.id),
-  //     },
-  //     // { key: "role_ids", value: selectedRoles?.map((item) => item.id) },
-  //   ];
-
-  //   fieldsToUpdate.forEach(({ key, value }) => {
-  //     setValue(key, value);
-  //     clearErrors(key);
-  //   });
-  // }, [selectedPermissionsID]);
 
   function resetFields() {
-    // console.log("🚀 ~ resetFields ~ resetFields");
     reset();
     setSelectedPermissionsID([]);
   }
@@ -95,7 +66,7 @@ export default function RoleForm({ handelOnClickCancel, formValues }) {
           {
             onSuccess: () => {
               resetFields();
-
+              fetchAllRoles();
               handelOnClickCancel();
             },
             onError: () => {},
@@ -104,6 +75,7 @@ export default function RoleForm({ handelOnClickCancel, formValues }) {
       : createRole(data, {
           onSuccess: () => {
             resetFields();
+            fetchAllRoles();
             handelOnClickCancel();
           },
         });
@@ -130,11 +102,13 @@ export default function RoleForm({ handelOnClickCancel, formValues }) {
         palceholder="Enter Value"
         className={`py-3 rounded-lg ${errors?.name ? "!border-red-500" : ""}`}
         register={register("name", validationRules.name)}
+        disabled={formValues.type == "view"}
       />
       <Label label="Permissions" />
 
       <div className="grid grid-cols-2 gap-1 h-52 overflow-x-hidden overflow-y-auto">
-        {permissions?.data?.length > 0 &&
+        {formValues.type != "view" &&
+          permissions?.data?.length > 0 &&
           permissions?.data.map((permission) => (
             <label key={permission.id} className="flex items-center space-x-2">
               <input
@@ -150,6 +124,28 @@ export default function RoleForm({ handelOnClickCancel, formValues }) {
               </span>
             </label>
           ))}
+        {formValues.type == "view" &&
+          permissions?.data?.length > 0 &&
+          permissions?.data
+            ?.filter((permission) =>
+              selectedPermissionsID.some((item) => item == permission.id)
+            )
+            .map((permission) => (
+              <label
+                key={permission.id}
+                className="flex items-center space-x-2"
+              >
+                <input
+                  type="checkbox"
+                  className="accent-lime-500 disabled:accent-lime-500  size-4 bg-gray-600"
+                  checked
+                  disabled
+                />
+                <span className="text-custom_text_one capitalize">
+                  {permission.name.split("_").join(" ")}
+                </span>
+              </label>
+            ))}
       </div>
       <div className="flex items-center gap-4">
         <BaseButton
@@ -165,22 +161,24 @@ export default function RoleForm({ handelOnClickCancel, formValues }) {
         >
           cancel
         </BaseButton>
-        <BaseButton
-          variant="gradient"
-          type="submit"
-          isLoading={
-            formValues.type == "create"
-              ? isLoadingCreateRole && !isErrorCreateRole
-              : isLoadingUpdateRole && !isErrorUpdateRole
-          }
-          isDisabled={
-            formValues.type == "create"
-              ? isLoadingCreateRole && !isErrorCreateRole
-              : isErrorUpdateRole && !isErrorUpdateRole
-          }
-        >
-          confirm
-        </BaseButton>
+        {formValues.type != "view" && (
+          <BaseButton
+            variant="gradient"
+            type="submit"
+            isLoading={
+              formValues.type == "create"
+                ? isLoadingCreateRole && !isErrorCreateRole
+                : isLoadingUpdateRole && !isErrorUpdateRole
+            }
+            isDisabled={
+              formValues.type == "create"
+                ? isLoadingCreateRole && !isErrorCreateRole
+                : isErrorUpdateRole && !isErrorUpdateRole
+            }
+          >
+            confirm
+          </BaseButton>
+        )}
       </div>
     </form>
   );
