@@ -18,10 +18,10 @@ import Shelves from "./features/shelves";
 import Terms from "./features/terms";
 import NotFound from "./features/not_found";
 import Login from "./features/auth/login";
-import DefaultLayout from "./layouts/DefaultLayout";
 import MediaKit from "./features/media_kit";
 import Brands from "./features/brands";
 import Stores from "./features/stores";
+import ProtectedRoute from "./components/ui/ProtectedRoute";
 // import DefaultLayout from "./layouts/DefaultLayout";
 // import Home from "./features/home";
 // Router Configuration
@@ -32,7 +32,14 @@ const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       // { path: "/", element: <Home /> },
-      { path: "/", element: <Hub /> },
+      {
+        path: "/",
+        element: (
+          <ProtectedRoute>
+            <Hub />
+          </ProtectedRoute>
+        ),
+      },
       { path: "connect", element: <Connect /> },
       { path: "faqs", element: <Faqs /> },
       { path: "marketing", element: <Marketing /> },
@@ -45,7 +52,14 @@ const router = createBrowserRouter([
       { path: "stores", element: <Stores /> },
       { path: "products", element: <Products /> },
       { path: "media-kit", element: <MediaKit /> },
-      { path: "users", element: <Users /> },
+      {
+        path: "users",
+        element: (
+          <ProtectedRoute>
+            <Users />
+          </ProtectedRoute>
+        ),
+      },
       { path: "shelves", element: <Shelves /> },
       { path: "terms", element: <Terms /> },
     ],

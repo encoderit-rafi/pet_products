@@ -14,6 +14,7 @@ export default function AppLayout() {
 
   const [isOpenConfirmLogoutDialog, setIsOpenConfirmLogoutDialog] =
     useState(false);
+
   if (!user) return <Navigate replace to="/login" />;
 
   return (
