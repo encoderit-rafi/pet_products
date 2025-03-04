@@ -15,17 +15,19 @@ import BrandIcon from "@/assets/icons/BrandIcon";
 import StoreIcon from "@/assets/icons/StoreIcon";
 import { useEffect, useMemo, useState } from "react";
 import { useAuthUserQuery } from "@/api/auth/queries/useAuthUserQuery";
+import { useAuth } from "@/context/AuthProvider";
 
 export default function Sidebar({ className, children }) {
   const location = useLocation();
-  const { data: user } = useAuthUserQuery();
-  const [userPermissions, setUserPermissions] = useState([]);
+  const { user_permissions } = useAuth();
+  // const { data: user } = useAuthUserQuery();
+  // const [userPermissions, setUserPermissions] = useState([]);
 
-  useEffect(() => {
-    setUserPermissions(
-      user.user_roles.flatMap((role) => role.permissions.map((p) => p.name))
-    );
-  }, [user]);
+  // useEffect(() => {
+  //   setUserPermissions(
+  //     user.user_roles.flatMap((role) => role.permissions.map((p) => p.name))
+  //   );
+  // }, [user]);
   const routes = useMemo(
     () =>
       [
@@ -86,12 +88,10 @@ export default function Sidebar({ className, children }) {
           permissions: ["read_marketing"],
           icon: <MarketingIcon className="w-[18px]" />,
         },
-      ].filter(
-        (item) =>
-          item.permissions?.some((item) => userPermissions?.includes(item)) ||
-          item.permissions?.some((item) => item == "all")
+      ].filter((item) =>
+        item.permissions?.some((item) => user_permissions?.includes(item))
       ),
-    [user]
+    [user_permissions]
   );
   return (
     <aside className={cn("flex flex-col justify-between flex-1", className)}>

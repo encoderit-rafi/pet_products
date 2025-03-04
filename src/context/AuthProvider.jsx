@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
@@ -6,8 +6,17 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() =>
     JSON.parse(localStorage.getItem("user"))
   );
-  const user_permissions = user.user_roles.flatMap((role) =>
-    role.permissions.map((p) => p.name)
+
+  const user_permissions = useMemo(() =>
+    user?.user_roles?.length > 0
+      ? user?.user_roles.flatMap(
+          (role) =>
+            role?.permissions?.length > 0
+              ? role?.permissions.map((p) => p.name)
+              : [],
+          [user]
+        )
+      : []
   );
   return (
     <AuthContext.Provider
