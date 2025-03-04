@@ -11,9 +11,7 @@ export default function StoresDropdown({
   setSelected,
 }) {
   const { data, isLoading, isFetching } = useGetAllStores();
-  useEffect(() => {
-    console.log("✅ ~ Stores:", data);
-  }, [data]);
+
   return (
     <div className="">
       <Label label="stores" />

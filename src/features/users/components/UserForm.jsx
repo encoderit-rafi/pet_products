@@ -102,7 +102,6 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
   }, [images, number, selectedBrands, selectedRoles]);
 
   function resetFields() {
-    console.log("🚀 ~ resetFields ~ resetFields");
     reset();
     setImages([]);
     setNumber("");
@@ -157,7 +156,7 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
           {
             onSuccess: () => {
               resetFields();
-              console.log("update");
+              ("update");
               setParams({ page: params.page, per_page: params.per_page });
               fetchAllUsers();
               handelOnClickCancel();

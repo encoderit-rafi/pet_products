@@ -29,8 +29,8 @@ export default function ProductDescriptionIcon({ className }) {
           transform="translate(-3 -2)"
           fill="#313639"
           stroke="#313639"
-          stroke-width="1"
-          fill-rule="evenodd"
+          strokeWidth="1"
+          fillRule="evenodd"
         />
         <path
           id="Path_50069"
@@ -39,9 +39,9 @@ export default function ProductDescriptionIcon({ className }) {
           transform="translate(-3.941 -6.471)"
           fill="none"
           stroke="#313639"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="3"
         />
       </g>
     </svg>

@@ -14,7 +14,7 @@ export const useMediaKitDownload = ({ brandId, category, fileName }) => {
         `/media-kit/download/${brandId}/${category}/${fileName}`,
         { responseType: "blob" }
       );
-      console.log("✅ ~ queryFn: ~ data:", response);
+      "✅ ~ queryFn: ~ data:", response;
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;

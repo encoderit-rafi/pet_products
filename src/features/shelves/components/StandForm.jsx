@@ -80,7 +80,6 @@ export default function StandForm({ onClose }) {
         return;
       }
     }
-    // console.log("🚀 ~ onSubmit ~ data:", item);
     createStand(item, {
       onSuccess() {
         fetchAllShelves();

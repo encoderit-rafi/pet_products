@@ -94,7 +94,6 @@ export default function FileUploadForm({ onClose, item }) {
     //     return;
     //   }
     // }
-    // console.log("🚀 ~ onSubmit ~ data:", item);
     if (files.length === 0) {
       return;
     }

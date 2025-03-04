@@ -16,7 +16,6 @@ export default function ImagePicker({
   const inputRef = useRef(null);
   const handleFileChange = (e) => {
     const selectedFiles = Array.from(e.target.files);
-    console.log("🚀 ~ handleFileChange ~ Selected Files:", selectedFiles);
     if (selectedFiles?.length > 0) {
       multiple
         ? setImages((prev) => [...prev, ...selectedFiles])

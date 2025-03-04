@@ -7,7 +7,6 @@ import { AuthProvider } from "./context/AuthProvider";
 import AppLayout from "./layouts/AppLayout";
 
 // pages
-// import Login from "./features/login";
 import Connect from "./features/connect";
 import Faqs from "./features/faqs";
 import Hub from "./features/hub";
@@ -22,9 +21,7 @@ import MediaKit from "./features/media_kit";
 import Brands from "./features/brands";
 import Stores from "./features/stores";
 import ProtectedRoute from "./components/ui/ProtectedRoute";
-// import DefaultLayout from "./layouts/DefaultLayout";
-// import Home from "./features/home";
-// Router Configuration
+
 const router = createBrowserRouter([
   // private routes📌
   {
@@ -35,33 +32,89 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: (
-          <ProtectedRoute>
-            <Hub />
-          </ProtectedRoute>
+          // <ProtectedRoute>
+          <Hub />
+          // </ProtectedRoute>
         ),
       },
       { path: "connect", element: <Connect /> },
-      { path: "faqs", element: <Faqs /> },
-      { path: "marketing", element: <Marketing /> },
+      {
+        path: "faqs",
+        element: (
+          <ProtectedRoute permissions={["read_faq"]}>
+            <Faqs />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "marketing",
+        element: (
+          <ProtectedRoute permissions={["read_marketing"]}>
+            <Marketing />
+          </ProtectedRoute>
+        ),
+      },
       { path: "marketing/task", element: <Task /> },
       {
         path: "marketing/criteria_and_segment",
         element: <CriteriaAndSegment />,
       },
-      { path: "brands", element: <Brands /> },
-      { path: "stores", element: <Stores /> },
-      { path: "products", element: <Products /> },
-      { path: "media-kit", element: <MediaKit /> },
+      {
+        path: "brands",
+        element: (
+          <ProtectedRoute permissions={["read_brand"]}>
+            <Brands />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "stores",
+        element: (
+          <ProtectedRoute permissions={["read_client"]}>
+            <Stores />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "products",
+        element: (
+          <ProtectedRoute permissions={["read_product"]}>
+            <Products />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "media-kit",
+        element: (
+          <ProtectedRoute permissions={["read_media_kit"]}>
+            <MediaKit />
+          </ProtectedRoute>
+        ),
+      },
       {
         path: "users",
         element: (
-          <ProtectedRoute>
+          <ProtectedRoute permissions={["read_user"]}>
             <Users />
           </ProtectedRoute>
         ),
       },
-      { path: "shelves", element: <Shelves /> },
-      { path: "terms", element: <Terms /> },
+      {
+        path: "shelves",
+        element: (
+          <ProtectedRoute permissions={["read_shelf"]}>
+            <Shelves />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "terms",
+        element: (
+          <ProtectedRoute permissions={["read_privacy_term"]}>
+            <Terms />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
   // public routes📌

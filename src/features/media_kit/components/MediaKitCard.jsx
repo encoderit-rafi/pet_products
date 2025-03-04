@@ -33,7 +33,6 @@ export default function MediaKitCard({
   }, []);
   useEffect(() => {
     // showMediaKit();
-    console.log("🚀 ~ url:", url);
     url?.data && setCreateObj(window.URL.createObjectURL(url.data));
   }, [url]);
   const isImage = (ext) => ["png", "jpg", "jpeg", "gif", "webp"].includes(ext);

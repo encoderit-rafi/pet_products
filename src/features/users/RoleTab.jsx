@@ -42,7 +42,6 @@ export default function RoleTab({ isOpenRole, setIsOpenRole }) {
             key={role.id}
             data={role}
             onCLickView={() => {
-              console.log("🚀 ~ Users ~ onCLickView:");
               setRoleFormValues({ type: "view", role });
               setIsOpenRole(true);
             }}

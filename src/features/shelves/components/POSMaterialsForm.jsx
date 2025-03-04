@@ -36,7 +36,6 @@ export default function POSMaterialsForm({ onClose }) {
       name: item.name,
       cost: item.cost,
     };
-    console.log("🚀 ~ onSubmit ~ data:", data);
     createPOSMaterials(data, {
       onSuccess() {
         fetchAllPosMaterials();

@@ -10,7 +10,6 @@ import ImageDialog from "../dialogs/ImageDialog";
 import { Link } from "react-router-dom";
 
 export default function CardApplicationSupport({ user }) {
-  console.log("🚀 ~ user:", user);
   return (
     <BorderBox className="lg:p-3 h-fit">
       <div className="flex items-center gap-4">

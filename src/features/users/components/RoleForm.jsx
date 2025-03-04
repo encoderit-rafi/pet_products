@@ -44,7 +44,6 @@ export default function RoleForm({ handelOnClickCancel, formValues }) {
   useEffect(() => {
     if (formValues.type != "create") {
       const { name, permissions } = formValues.role;
-      console.log("🚀 ~ useEffect ~ permissions:", permissions);
       setValue("name", name);
       setSelectedPermissionsID(permissions.map((permission) => permission.id));
     } else {

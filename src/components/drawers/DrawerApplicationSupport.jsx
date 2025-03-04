@@ -23,14 +23,11 @@ export default function DrawerApplicationSupport({
     params,
     setParams,
   } = useGetAllUsers({ setToUrl: false, isEnabled: false });
-  // useEffect(() => {
-  //   console.log("🚀 ~ data:", data);
-  // }, [data]);
+
   useEffect(() => {
     fetch();
   }, [params]);
   useEffect(() => {
-    // console.log("🚀 ~ data:", data);
     connect && setParams((data) => ({ ...data, connect_role: connect }));
   }, [connect]);
   const handlePageChange = useCallback(
@@ -42,7 +39,7 @@ export default function DrawerApplicationSupport({
     (val) => setParams((old) => ({ ...old, page: 1, per_page: val })),
     [setParams]
   );
-  // console.log("✅ ~ query:", data);
+  "✅ ~ query:", data;
   return (
     <Drawer
       isOpen={isOpen}

@@ -22,7 +22,7 @@ import base64ToFile from "@/lib/utils/base64ToFile";
 const videoConstraints = {
   width: 1280,
   height: 720,
-  facingMode: "user"
+  facingMode: "user",
 };
 export default function AuthUserForm({ setIsOpen }) {
   const { data: authUserData, refetch: fetchAuthUser } = useAuthUserQuery();
@@ -38,14 +38,11 @@ export default function AuthUserForm({ setIsOpen }) {
   const [images, setImages] = useState([]);
   const [isOpenCapImageDrawer, setIsOpenCapImageDrawer] = useState();
   const webcamRef = useRef(null);
-  const capture = useCallback(
-    () => {
-      // const imageSrc = webcamRef.current.getScreenshot();
-      setImages([base64ToFile(webcamRef.current.getScreenshot())])
-      setIsOpenCapImageDrawer(false)
-    },
-    [webcamRef]
-  );
+  const capture = useCallback(() => {
+    // const imageSrc = webcamRef.current.getScreenshot();
+    setImages([base64ToFile(webcamRef.current.getScreenshot())]);
+    setIsOpenCapImageDrawer(false);
+  }, [webcamRef]);
   const {
     register,
     formState,
@@ -76,7 +73,7 @@ export default function AuthUserForm({ setIsOpen }) {
     setUser(authUserData);
   }, [authUserData]);
   function onSubmit(data) {
-    console.log("✅ ~ file: AuthUserForm.jsx:38 ~ onSubmit ~ data:", data);
+    "✅ ~ file: AuthUserForm.jsx:38 ~ onSubmit ~ data:", data;
     const validations = [
       {
         key: "phone_number",
@@ -131,7 +128,6 @@ export default function AuthUserForm({ setIsOpen }) {
           >
             <CameraIcon className="size-5" />
           </div>
-
         </div>
 
         <BaseInput
@@ -176,39 +172,34 @@ export default function AuthUserForm({ setIsOpen }) {
           className="text-xs font-light lg:text-sm"
           isLoading={isLoadingUpdateAuthUser}
           isDisabled={isLoadingUpdateAuthUser}
-        // onClick={setIsOpen}
+          // onClick={setIsOpen}
         >
           save change
         </BaseButton>
       </div>
-      <Drawer
-        isOpen={isOpenCapImageDrawer}
-      >
+      <Drawer isOpen={isOpenCapImageDrawer}>
         <div className="h-full flex flex-col">
           <div className="flex-1">
-
-            {isOpenCapImageDrawer && <Webcam
-              audio={false}
-              height={720}
-              ref={webcamRef}
-              screenshotFormat="image/jpeg"
-              width={1280}
-              videoConstraints={videoConstraints}
-              className="rounded-lg"
-            />}
+            {isOpenCapImageDrawer && (
+              <Webcam
+                audio={false}
+                height={720}
+                ref={webcamRef}
+                screenshotFormat="image/jpeg"
+                width={1280}
+                videoConstraints={videoConstraints}
+                className="rounded-lg"
+              />
+            )}
           </div>
 
           <div className="flex items-center gap-4">
-
-            <BaseButton
-              onClick={() => setIsOpenCapImageDrawer(false)}
-
-            >close</BaseButton>
-            <BaseButton
-              variant="gradient"
-              onClick={capture}
-
-            >capture</BaseButton>
+            <BaseButton onClick={() => setIsOpenCapImageDrawer(false)}>
+              close
+            </BaseButton>
+            <BaseButton variant="gradient" onClick={capture}>
+              capture
+            </BaseButton>
           </div>
         </div>
       </Drawer>

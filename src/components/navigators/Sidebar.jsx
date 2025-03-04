@@ -7,56 +7,92 @@ import UsersIcon from "@/assets/icons/UsersIcon";
 import TermsIcon from "@/assets/icons/TermsIcon";
 import ShelvesIcon from "@/assets/icons/ShelvesIcon";
 import HubIcon from "@/assets/icons/HubIcon";
-//* data📂
-const routes = [
-  { path: "/", name: "hub", icon: <HubIcon className="w-4" /> },
-  {
-    path: "/brands",
-    name: "brands",
-    icon: <BrandIcon className="w-4" />,
-  },
-  {
-    path: "/stores",
-    name: "stores",
-    icon: <StoreIcon className="w-4" />,
-  },
-  {
-    path: "/products",
-    name: "products",
-    icon: <ProductsIcon className="w-4" />,
-  },
-  {
-    path: "/media-kit",
-    name: "media kit",
-    icon: <PlayIcon className="w-3" />,
-  },
 
-  {
-    path: "/shelves",
-    name: "shelves",
-    icon: <ShelvesIcon className="w-4" />,
-  },
-  { path: "/faqs", name: "FAQs", icon: <FaqsIcon className="w-2" /> },
-  { path: "/users", name: "users", icon: <UsersIcon className="w-4" /> },
-  {
-    path: "/terms",
-    name: "terms",
-    icon: <TermsIcon className="w-4" />,
-  },
-  {
-    path: "/marketing",
-    name: "marketing",
-    icon: <MarketingIcon className="w-[18px]" />,
-  },
-];
 import cn from "@/lib/utils/cn";
 import ButtonContact from "../buttons/ButtonContact";
 import PlayIcon from "@/assets/icons/PlayIcon";
 import BrandIcon from "@/assets/icons/BrandIcon";
 import StoreIcon from "@/assets/icons/StoreIcon";
+import { useEffect, useMemo, useState } from "react";
+import { useAuthUserQuery } from "@/api/auth/queries/useAuthUserQuery";
 
 export default function Sidebar({ className, children }) {
   const location = useLocation();
+  const { data: user } = useAuthUserQuery();
+  const [userPermissions, setUserPermissions] = useState([]);
+
+  useEffect(() => {
+    setUserPermissions(
+      user.user_roles.flatMap((role) => role.permissions.map((p) => p.name))
+    );
+  }, [user]);
+  const routes = useMemo(
+    () =>
+      [
+        { path: "/", name: "hub", icon: <HubIcon className="w-4" /> },
+        {
+          path: "/brands",
+          name: "brands",
+          permissions: ["read_brand"],
+          icon: <BrandIcon className="w-4" />,
+        },
+        {
+          path: "/stores",
+          name: "stores",
+          permissions: ["read_client"],
+          icon: <StoreIcon className="w-4" />,
+        },
+        {
+          path: "/products",
+          name: "products",
+          permissions: ["read_product"],
+          icon: <ProductsIcon className="w-4" />,
+        },
+        {
+          path: "/media-kit",
+          name: "media kit",
+          permissions: ["read_media_kit"],
+          icon: <PlayIcon className="w-3" />,
+        },
+
+        {
+          path: "/shelves",
+          name: "shelves",
+          permissions: ["read_shelf"],
+          icon: <ShelvesIcon className="w-4" />,
+        },
+        {
+          path: "/faqs",
+          name: "FAQs",
+          permissions: ["read_faq"],
+          icon: <FaqsIcon className="w-2" />,
+        },
+        {
+          path: "/users",
+          name: "users",
+          permissions: ["read_user"],
+          icon: <UsersIcon className="w-4" />,
+        },
+        {
+          path: "/terms",
+          name: "terms",
+          permissions: ["all"],
+
+          icon: <TermsIcon className="w-4" />,
+        },
+        {
+          path: "/marketing",
+          name: "marketing",
+          permissions: ["read_marketing"],
+          icon: <MarketingIcon className="w-[18px]" />,
+        },
+      ].filter(
+        (item) =>
+          item.permissions?.some((item) => userPermissions?.includes(item)) ||
+          item.permissions?.some((item) => item == "all")
+      ),
+    [user]
+  );
   return (
     <aside className={cn("flex flex-col justify-between flex-1", className)}>
       <nav className="pb-6 overflow-y-auto">
@@ -77,8 +113,8 @@ export default function Sidebar({ className, children }) {
                   }
                 )}
               >
-                <span className="">{route.icon}</span>
-                <span className="">{route.name}</span>
+                <span>{route.icon}</span>
+                <span>{route.name}</span>
               </NavLink>
             </li>
           ))}

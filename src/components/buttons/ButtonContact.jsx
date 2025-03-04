@@ -51,7 +51,6 @@ export default function ButtonContact() {
   ] = useState(false);
   const [isOpenChat, setIsOpenChat] = useState(false);
   const handleMenuItemClick = (item) => {
-    console.log("🚀 ~ handleMenuItemClick ~ item:", item);
     setConnectRole(item.value);
     // setParamsAllUsers((data) => ({ ...data, connect_role: item.value }));
     setIsOpenDrawerApplicationSupport(true);

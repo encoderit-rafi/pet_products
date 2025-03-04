@@ -36,7 +36,7 @@
 // }) => {
 //   const { isDark } = useTheme();
 //   if (active && payload && payload.length) {
-//     // console.log({ payload });
+//     ({ payload });
 //     return (
 //       <div
 //         className={`bg-custom_bg_three capitalize text-sm text-custom_text_three py-2 px-6 rounded-md ${
@@ -235,7 +235,7 @@ const CustomTooltip = ({
 }) => {
   const { isDark } = useTheme();
   if (active && payload && payload.length) {
-    // console.log({ payload });
+    ({ payload });
     return (
       <div
         className={`bg-custom_bg_three capitalize text-sm text-custom_text_three py-2 px-6 rounded-md ${
@@ -251,11 +251,9 @@ const CustomTooltip = ({
   }
 };
 const CustomTick = ({ x, y, payload, data, showIcon }) => {
-  console.log("🚀 ~ CustomTick ~ data:", data[payload.index]);
   const iconSize = 30; // Set the size of the icon
   // const iconURL = data[payload.index].logo || "/placeholder-image.webp"; // Set the size of the icon
   const iconURL = data[payload.index].series; // Set the size of the icon
-  console.log("🚀 ~ CustomTick ~ iconURL:", iconURL);
 
   return (
     <g transform={`translate(${x}, ${y})`}>

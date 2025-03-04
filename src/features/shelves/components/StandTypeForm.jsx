@@ -117,7 +117,6 @@ export default function StandTypeForm({ onClose }) {
         })),
       })),
     };
-    console.log("🚀 ~ onSubmit ~ data:", data);
     createStandType(data, {
       onSuccess() {
         fetchAllStandTypes();
@@ -127,7 +126,6 @@ export default function StandTypeForm({ onClose }) {
   }
   const [editItemID, setEditItemID] = useState(null);
   function handelEdit(item) {
-    console.log("🚀 ~ handelEdit ~ item:", item);
     setEditItemID(item.level);
     setValue("shelf_name", item.name);
     setValue("level", item.level);

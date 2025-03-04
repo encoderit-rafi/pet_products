@@ -156,7 +156,7 @@ export default function MediaKit() {
   // }, [selectedShowFile]);
   useEffect(() => {
     fetchAllMediaKits();
-    console.log(selectedBrand[0]?.id);
+    selectedBrand[0]?.id;
   }, [selectedBrand, activeTab]);
 
   return (

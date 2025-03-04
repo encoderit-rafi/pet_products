@@ -20,7 +20,6 @@ export default function ProfileCard({ ...props }) {
   const [isOpenViewUser, setIsOpenViewUser] = useState(false);
   const [isOpenUpdateUser, setIsOpenUpdateUser] = useState(false);
 
-
   const [isOpenConfirmLogoutDialog, setIsOpenConfirmLogoutDialog] =
     useState(false);
   const options = [
@@ -38,7 +37,6 @@ export default function ProfileCard({ ...props }) {
       },
     },
   ];
-  console.log({ user });
   return (
     <>
       <Menu>
@@ -118,7 +116,6 @@ export default function ProfileCard({ ...props }) {
         isOpenConfirmLogoutDialog={isOpenConfirmLogoutDialog}
         setIsOpenConfirmLogoutDialog={setIsOpenConfirmLogoutDialog}
       />
-
     </>
   );
 }
