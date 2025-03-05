@@ -13,13 +13,15 @@ import ImagePicker from "@/components/file_pickers/ImagePicker";
 import ImagePreview from "@/components/file_pickers/ImagePreview";
 import InputPhoneNumber from "@/components/inputs/InputPhoneNumber";
 
-import { useCreateUser } from "@/api/users/useCreateUser";
-import { useUpdateUser } from "@/api/users/useUpdateUser";
+// import { useCreateUser } from "@/api/faqs/useCreateFAQs";
+// import { useUpdateUser } from "@/api/faqs/useUpdateFAQs";
 import { useGetAllUsers } from "@/api/users/useGetAllUsers";
 import { useGetAllRoles } from "@/api/roles/useGetAllRoles";
 import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
 import RolesDropdown from "@/components/dropdowns/RolesDropdown";
 import toast from "react-hot-toast";
+import { useCreateUsers } from "@/api/users/useCreateUsers";
+import { useUpdateUsers } from "@/api/users/useUpdateUsers";
 
 export default function UserForm({ handelOnClickCancel, formValues }) {
   const {
@@ -34,12 +36,12 @@ export default function UserForm({ handelOnClickCancel, formValues }) {
     mutate: createUser,
     isLoading: isLoadingCreateUser,
     isError: isErrorCreateUser,
-  } = useCreateUser();
+  } = useCreateUsers();
   const {
     mutate: updateUser,
     isLoading: isLoadingUpdateUser,
     isError: isErrorUpdateUser,
-  } = useUpdateUser();
+  } = useUpdateUsers();
 
   const { data: allBrands, isLoading: isLoadingAllBrands } = useGetAllBrands();
   const {

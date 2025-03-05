@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { omitEmpty, validationRules } from "@/consts";
+import { validationRules } from "@/consts";
 
 import Label from "@/components/texts/Label";
 import BaseInput from "@/components/inputs/BaseInput";

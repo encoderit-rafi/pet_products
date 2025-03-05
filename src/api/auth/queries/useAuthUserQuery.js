@@ -17,6 +17,7 @@ export const useAuthUserQuery = () => {
     },
     queryFn: async () => {
       const user = (await Axios.get("/auth/user")).data.data;
+      // localStorage.removeItem("user");
       localStorage.setItem("user", JSON.stringify(user));
       return user;
     },
