@@ -1,7 +1,8 @@
+import { useGetTermsAndPolicies } from "@/api/terms_and_policies/useGetTermsAndPolicies";
+import Editor from "@/components/editor/Editor";
 import BaseTabList from "@/components/tabs/BaseTabList";
 import Title from "@/components/texts/Title";
 import { TabGroup, TabPanel, TabPanels } from "@headlessui/react";
-import { useGetTermsAndPolicies } from "./api/queries/useGetTermsAndPolicies";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 const tabs = [
@@ -61,6 +62,7 @@ export default function Terms() {
           ))}
         </TabPanels>
       </TabGroup>
+      {/* <Editor /> */}
     </div>
   );
 }

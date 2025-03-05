@@ -89,7 +89,9 @@ export default function Sidebar({ className, children }) {
           icon: <MarketingIcon className="w-[18px]" />,
         },
       ].filter((item) =>
-        item.permissions?.some((item) => user_permissions?.includes(item))
+        item.permissions?.some((item) =>
+          [...user_permissions, "all"]?.includes(item)
+        )
       ),
     [user_permissions]
   );
