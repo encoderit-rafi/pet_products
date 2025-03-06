@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import BaseDropdown from "./BaseDropdown";
 import Label from "../texts/Label";
-import { useGetAllStores } from "@/api/stores/queries/useGetAllStores";
+import { useGetAllStores } from "@/api/stores/useGetAllStores";
 
 export default function StoresDropdown({
   variant = "base",

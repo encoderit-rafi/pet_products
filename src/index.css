@@ -169,7 +169,30 @@
     background-color: #555;
   }
 }
+/* Make all toolbar icons white */
+.ql-toolbar .ql-formats button svg {
+  fill: white !important;
+}
 
+.ql-stroke,
+.ql-picker-label {
+  color: var(--custom_bg_three) !important;
+  stroke: var(--custom_bg_three) !important;
+}
+.ql-fill {
+  fill: var(--custom_bg_three) !important;
+}
+.ql-toolbar {
+  background-color: var(--custom_bg_one);
+  border-radius: 12px;
+  border: none !important;
+}
+
+.ql-container {
+  border: none !important;
+  max-height: 500px;
+  overflow-y: auto;
+}
 .select-dropdown-rounded {
   @apply inline-flex whitespace-nowrap text-xs border text-custom_text_two font-light capitalize items-center justify-between gap-2 bg-custom_bg_two border-custom_line_two rounded-full py-1.5 px-3;
 }

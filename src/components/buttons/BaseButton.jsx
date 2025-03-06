@@ -1,3 +1,4 @@
+import EditIcon from "@/assets/icons/EditIcon";
 import LoadingIcon from "@/assets/icons/LoadingIcon";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import cn from "@/lib/utils/cn";
@@ -35,6 +36,11 @@ export default function BaseButton({
         {icon == "plus" && (
           <span className={`size-3 ${iconColor}`}>
             <PlusIcon />
+          </span>
+        )}
+        {icon == "edit" && (
+          <span className={`size-3 ${iconColor}`}>
+            <EditIcon />
           </span>
         )}
         {isLoading && (

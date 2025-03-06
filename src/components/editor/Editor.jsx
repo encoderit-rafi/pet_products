@@ -1,81 +1,66 @@
-import React from "react";
-import {
-  useEditor,
-  EditorContent,
-  BubbleMenu,
-  FloatingMenu,
-} from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
+import React, { useState } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; // Import styles
 
-const Editor = () => {
-  const editor = useEditor({
-    extensions: [StarterKit],
-    content: "<p>Type something here...</p>",
-  });
+const Editor = ({ mood, value, setValue }) => {
+  // const [value, setValue] = useState(() => initialValue);
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, 4, 5, 6, false] }], // Headers
+      [{ font: [] }], // Fonts
+      [{ size: [] }], // Font sizes
+      ["bold", "italic", "underline", "strike"], // Basic formatting
+      [{ color: [] }, { background: [] }], // Text and background color
+      [{ script: "sub" }, { script: "super" }], // Subscript / superscript
+      [{ list: "ordered" }, { list: "bullet" }], // Lists
+      [{ indent: "-1" }, { indent: "+1" }], // Indentation
+      [{ direction: "rtl" }], // Text direction
+      [{ align: [] }], // Alignments
+      ["blockquote", "code-block"], // Blockquote & Code block
+      ["link", "image", "video"], // Media
+      ["clean"], // Remove formatting
+    ],
+  };
 
-  if (!editor) return null;
+  const formats = [
+    "header",
+    "font",
+    "size",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "color",
+    "background",
+    "script",
+    "list",
+    "bullet",
+    "indent",
+    "direction",
+    "align",
+    "blockquote",
+    "code-block",
+    "link",
+    "image",
+    "video",
+  ];
 
   return (
-    <div className="relative p-4 rounded-md">
-      {/* Bubble Menu (appears when selecting text) */}
-      <BubbleMenu
-        editor={editor}
-        className="flex gap-2 p-2 bg-gray-900/80 backdrop-blur-md border border-gray-700 rounded"
-      >
-        <button
-          onClick={() => editor.chain().focus().toggleBold().run()}
-          className="px-2 py-1 text-white hover:bg-gray-700 rounded"
-        >
-          Bold
-        </button>
-        <button
-          onClick={() => editor.chain().focus().toggleItalic().run()}
-          className="px-2 py-1 text-white hover:bg-gray-700 rounded"
-        >
-          Italic
-        </button>
-        <button
-          onClick={() => editor.chain().focus().toggleStrike().run()}
-          className="px-2 py-1 text-white hover:bg-gray-700 rounded"
-        >
-          Strike
-        </button>
-      </BubbleMenu>
-
-      {/* Floating Menu (appears when clicking inside the editor) */}
-      <FloatingMenu
-        editor={editor}
-        className="flex gap-2 p-2 bg-gray-900/80 backdrop-blur-md border border-gray-700 rounded"
-      >
-        <button
-          onClick={() => editor.chain().focus().setParagraph().run()}
-          className="px-2 py-1 text-white hover:bg-gray-700 rounded"
-        >
-          Paragraph
-        </button>
-        <button
-          onClick={() =>
-            editor.chain().focus().toggleHeading({ level: 1 }).run()
-          }
-          className="px-2 py-1 text-white hover:bg-gray-700 rounded"
-        >
-          H1
-        </button>
-        <button
-          onClick={() =>
-            editor.chain().focus().toggleHeading({ level: 2 }).run()
-          }
-          className="px-2 py-1 text-white hover:bg-gray-700 rounded"
-        >
-          H2
-        </button>
-      </FloatingMenu>
-
-      {/* Editor Content */}
-      <EditorContent
-        editor={editor}
-        className="p-2 min-h-[200px] bg-transparent text-white focus:outline-none"
-      />
+    <div>
+      {mood == "view" ? (
+        <div dangerouslySetInnerHTML={{ __html: value }} />
+      ) : (
+        <ReactQuill
+          value={value}
+          onChange={setValue}
+          modules={modules}
+          formats={formats}
+          theme="snow"
+          placeholder="Start typing..."
+          // className="!placeholder:text-white"
+        />
+      )}
+      {/* <p>Editor Output:</p> */}
     </div>
   );
 };
