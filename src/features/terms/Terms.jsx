@@ -122,7 +122,7 @@ export default function Terms() {
               {isLoading ? (
                 "Loading..."
               ) : (
-                <div className="mt-2 space-y-5 overflow-y-auto text-sm text-white leading-relaxed lg:text-base font-extralight md:text-justify ">
+                <div className="mt-4 space-y-5 overflow-y-auto text-sm text-white leading-relaxed lg:text-base font-extralight md:text-justify ">
                   {/* {data?.length > 0 &&
                   data.find(
                     (data) => data.type == (searchParams.get("type") || "terms")
