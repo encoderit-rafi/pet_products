@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { validationRules } from "@/consts";
+import { omitEmpty, validationRules } from "@/consts";
 
 import Label from "@/components/texts/Label";
 import BaseInput from "@/components/inputs/BaseInput";
@@ -44,11 +44,19 @@ export default function FAQForm({ handelOnClickCancel, formValues }) {
   console.log("🚀 ~ FAQForm ~ errors:", errors);
   useEffect(() => {
     if (formValues.type != "create") {
-      const { question_en, answer_en, hierarchy_order } = formValues.faq;
+      const {
+        question_en,
+        question_ar,
+        answer_en,
+        answer_ar,
+        hierarchy_order,
+      } = formValues.faq;
       // console.log("🚀 ~ useEffect ~ formValues:", formValues);
       setValue("question_en", question_en);
+      setValue("question_ar", question_ar);
       setValue("hierarchy_order", hierarchy_order);
       setValue("answer_en", answer_en);
+      setValue("answer_ar", answer_ar);
       // setSelectedPermissionsID(permissions.map((permission) => permission.id));
     } else {
       resetFields();
@@ -62,10 +70,10 @@ export default function FAQForm({ handelOnClickCancel, formValues }) {
   function onSubmit(data) {
     formValues.type === "update"
       ? updateFAQ(
-          {
+          omitEmpty({
             id: formValues.faq.id,
             data,
-          },
+          }),
           {
             onSuccess: () => {
               fetchFAQs();
@@ -75,7 +83,7 @@ export default function FAQForm({ handelOnClickCancel, formValues }) {
             onError: () => {},
           }
         )
-      : createFAQ(data, {
+      : createFAQ(omitEmpty(data), {
           onSuccess: () => {
             fetchFAQs();
             handelOnClickCancel();
@@ -118,7 +126,19 @@ export default function FAQForm({ handelOnClickCancel, formValues }) {
           />
         </div>
       </div>
-
+      <BaseInput
+        id="question_ar"
+        type="text"
+        label="question arabic"
+        palceholder="Enter Question"
+        className={`py-3 rounded-lg  ${
+          errors?.question_ar ? "!border-red-500" : ""
+        }`}
+        register={register("question_ar")}
+        disabled={formValues.type == "view"}
+        dir="rtl"
+        lang="ar"
+      />
       <InputBox className="flex flex-col w-full">
         <Label id="answer_en" palceholder="answer_en" label="answer" />
         <textarea
@@ -132,6 +152,23 @@ export default function FAQForm({ handelOnClickCancel, formValues }) {
           rows={5}
           disabled={formValues.type == "view"}
           {...register("answer_en", validationRules.required)}
+        />
+      </InputBox>
+      <InputBox className="flex flex-col w-full">
+        <Label id="answer_ar" palceholder="answer" label="answer" />
+        <textarea
+          id="answer_ar"
+          name="answer_ar"
+          aria-required="true"
+          placeholder="Enter Answer"
+          className={cn("base-input resize-none flex-1", {
+            "!border-red-500": !!errors?.answer_ar,
+          })}
+          rows={5}
+          disabled={formValues.type == "view"}
+          dir="rtl"
+          lang="ar"
+          {...register("answer_ar")}
         />
       </InputBox>
       <div className="flex items-center gap-4">
