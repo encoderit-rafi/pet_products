@@ -21,7 +21,7 @@ const tabs = [
   },
 ];
 export default function Terms() {
-  const { data, isLoading } = useGetTermsAndPolicies();
+  const { data, isLoading, refetch } = useGetTermsAndPolicies();
   const [mood, setMood] = useState("view");
   const [value, setValue] = useState("");
 
@@ -50,7 +50,10 @@ export default function Terms() {
       },
       {
         onSuccess() {
+          refetch();
           toast.success("Update Successfully");
+          handleValue();
+          setMood("view");
         },
         onError() {
           toast.error("Update Failed");

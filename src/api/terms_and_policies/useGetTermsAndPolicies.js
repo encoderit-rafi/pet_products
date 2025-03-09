@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { Axios } from "@/axios";
 export const useGetTermsAndPolicies = () => {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: [`get-terms-and-policies`],
     retry: false,
     keepPreviousData: false,
@@ -13,5 +13,6 @@ export const useGetTermsAndPolicies = () => {
   return {
     data,
     isLoading,
+    refetch,
   };
 };

@@ -9,15 +9,16 @@ const Editor = ({ mood, value, setValue }) => {
       [{ header: [1, 2, 3, 4, 5, 6, false] }], // Headers
       [{ font: [] }], // Fonts
       [{ size: [] }], // Font sizes
-      ["bold", "italic", "underline", "strike"], // Basic formatting
-      [{ color: [] }, { background: [] }], // Text and background color
-      [{ script: "sub" }, { script: "super" }], // Subscript / superscript
+      ["bold", "italic", "underline"], // Basic formatting
+      // [{ color: [] }, { background: [] }], // Text and background color
+      // [{ script: "sub" }, { script: "super" }], // Subscript / superscript
       [{ list: "ordered" }, { list: "bullet" }], // Lists
       [{ indent: "-1" }, { indent: "+1" }], // Indentation
       [{ direction: "rtl" }], // Text direction
       [{ align: [] }], // Alignments
       ["blockquote", "code-block"], // Blockquote & Code block
-      ["link", "image", "video"], // Media
+      // ["link", "image", "video"], // Media
+      ["link"], // Media
       ["clean"], // Remove formatting
     ],
   };
@@ -29,9 +30,9 @@ const Editor = ({ mood, value, setValue }) => {
     "bold",
     "italic",
     "underline",
-    "strike",
-    "color",
-    "background",
+    // "strike",
+    // "color",
+    // "background",
     "script",
     "list",
     "bullet",
@@ -41,8 +42,8 @@ const Editor = ({ mood, value, setValue }) => {
     "blockquote",
     "code-block",
     "link",
-    "image",
-    "video",
+    // "image",
+    // "video",
   ];
 
   return (
