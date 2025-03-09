@@ -130,7 +130,7 @@ export default function FAQForm({ handelOnClickCancel, formValues }) {
         id="question_ar"
         type="text"
         label="question arabic"
-        palceholder="Enter Question"
+        palceholder="أدخل السؤال"
         className={`py-3 rounded-lg  ${
           errors?.question_ar ? "!border-red-500" : ""
         }`}
@@ -160,7 +160,7 @@ export default function FAQForm({ handelOnClickCancel, formValues }) {
           id="answer_ar"
           name="answer_ar"
           aria-required="true"
-          placeholder="Enter Answer"
+          placeholder="أدخل الإجابة"
           className={cn("base-input resize-none flex-1", {
             "!border-red-500": !!errors?.answer_ar,
           })}

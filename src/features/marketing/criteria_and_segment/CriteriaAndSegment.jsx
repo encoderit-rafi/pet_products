@@ -19,6 +19,7 @@ import Label from "@/components/texts/Label";
 import BaseSelectDropdown from "@/components/dropdowns/BaseSelectDropdown";
 import MultiSelectListbox from "@/components/dropdowns/MultiSelectListbox";
 import BaseInput from "@/components/inputs/BaseInput";
+import Page from "@/components/ui/Page";
 const query = {
   headers: [
     {
@@ -124,16 +125,14 @@ const categories = [
   },
 ];
 export default function CriteriaAndSegment() {
-  const [department, setDepartment] = useState(null);
-  const [brand, setBrand] = useState(null);
   const [category, setCategory] = useState(null);
   const [isOpenAddNewCriteria, setIsOpenAddNewCriteria] = useState(false);
   const [isOpenAddNewSegment, setIsOpenAddNewSegment] = useState(false);
 
   return (
-    <div className="flex flex-col h-full gap-4">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2 lg:gap-6">
+    <Page
+      title={
+        <div className="flex items-center gap-4">
           <NavLink to="/marketing">
             <div className="size-8 lg:size-10">
               <BackButton />
@@ -142,24 +141,19 @@ export default function CriteriaAndSegment() {
 
           <Title>Criteria and Segment</Title>
         </div>
-        <div className="flex items-center gap-4">
-          <BaseButton variant="gradient" className="px-4 text-xs font-medium">
-            save settings
-          </BaseButton>
-        </div>
-      </div>
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2 ">
-        <BorderBox>
+      }
+      actions={
+        <BaseButton variant="gradient" className="px-4 text-xs font-medium">
+          save settings
+        </BaseButton>
+      }
+    >
+      <div className="flex-1 grid grid-cols-1 gap-4 xl:grid-cols-2 overflow-hidden">
+        <BorderBox className={"overflow-hidden"}>
           <div className="flex flex-col gap-4 mb-2">
             <div className="flex items-center justify-between ">
               <SubTitle>Criteria</SubTitle>
               <div className="flex items-center gap-3">
-                {/* <BaseMenu
-                  text="select brand"
-                  data={brands}
-                  value={brand}
-                  setValue={(item) => setBrand(item)}
-                /> */}
                 <BaseMenu
                   text="select category"
                   data={categories}
@@ -191,18 +185,12 @@ export default function CriteriaAndSegment() {
           </div>
           <Table query={query} />
         </BorderBox>
-        <BorderBox>
+        <BorderBox className={"overflow-hidden"}>
           <div className="flex flex-col gap-4 mb-2">
             <div className="flex items-center justify-between ">
               <SubTitle>Segment </SubTitle>
 
               <div className="flex items-center gap-3">
-                {/* <BaseMenu
-                  text="select brand"
-                  data={brands}
-                  value={brand}
-                  setValue={(item) => setBrand(item)}
-                /> */}
                 <BaseMenu
                   text="select category"
                   data={categories}
@@ -235,6 +223,7 @@ export default function CriteriaAndSegment() {
           <Table query={query} />
         </BorderBox>
       </div>
+
       <Dialog
         isOpen={isOpenAddNewCriteria}
         title="Add New Criteria"
@@ -320,6 +309,6 @@ export default function CriteriaAndSegment() {
           </div>
         </div>
       </Dialog>
-    </div>
+    </Page>
   );
 }

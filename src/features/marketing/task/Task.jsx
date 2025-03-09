@@ -12,6 +12,7 @@ import InputText from "@/components/inputs/InputText";
 import InputTextArea from "@/components/inputs/InputTextArea";
 import { NavLink } from "react-router-dom";
 import BaseInput from "@/components/inputs/BaseInput";
+import Page from "@/components/ui/Page";
 const query = {
   headers: [
     {
@@ -70,9 +71,9 @@ export default function Task() {
   const [isOpenAddNewTask, setIsOpenAddNewTask] = useState(false);
 
   return (
-    <div className="flex flex-col h-full gap-4">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2 lg:gap-6">
+    <Page
+      title={
+        <div className="flex items-center gap-4">
           <NavLink to="/marketing">
             <div className="size-8 lg:size-10">
               <BackButton />
@@ -81,31 +82,13 @@ export default function Task() {
 
           <Title>tasks</Title>
         </div>
-        <div className="flex items-center gap-1 lg:gap-4">
-          <div className="hidden lg:block">
-            <BaseButton
-              variant="orange"
-              icon="plus"
-              className="px-4 text-xs font-medium"
-              onClick={() => setIsOpenAddNewTask(true)}
-            >
-              add new
-            </BaseButton>
-          </div>
-          <div className="block lg:hidden">
-            <BaseButton
-              variant="orange"
-              icon="plus"
-              className="px-4 text-xs font-medium"
-              onClick={() => setIsOpenAddNewTask(true)}
-            ></BaseButton>
-          </div>
-
-          <BaseButton variant="gradient" className="px-4 text-xs font-medium">
-            save settings
-          </BaseButton>
-        </div>
-      </div>
+      }
+      actions={
+        <BaseButton variant="gradient" className="px-4 text-xs font-medium">
+          save settings
+        </BaseButton>
+      }
+    >
       <BorderBox>
         <Table query={query} />
       </BorderBox>
@@ -134,6 +117,6 @@ export default function Task() {
           </div>
         </div>
       </Dialog>
-    </div>
+    </Page>
   );
 }

@@ -178,9 +178,7 @@ export default function Faqs() {
         text={faqForm?.faq?.name}
         isOpen={faqForm.type == "delete" && faqForm.isOpen}
         onClickClose={() => {
-          // setTempData(null)
-          // setUserFormValues({ type: "create", user: null });
-          // setIsOpenDeleteUser(false);
+          setFAQForm({ type: "create", faq: null, isOpen: false });
         }}
         onClickDelete={confirmDelete}
         isLoading={isLoadingDelete}
