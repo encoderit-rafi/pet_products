@@ -1,6 +1,6 @@
 import React from "react";
 import BaseDropdown from "./BaseDropdown";
-import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
+import { useGetAllBrands } from "@/api/brands/useGetAllBrands";
 import Label from "../texts/Label";
 
 export default function BrandsDropdown({

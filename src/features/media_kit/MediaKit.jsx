@@ -17,7 +17,7 @@ import { useWindowSize } from "react-use";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { TabGroup } from "@headlessui/react";
-import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
+import { useGetAllBrands } from "@/api/brands/useGetAllBrands";
 import { useGetAllMediaKits } from "./api/queries/useGetAllMediaKits";
 import { useMediaKitDownload } from "./api/queries/useMediaKitDownload";
 import { useDeleteMediaKit } from "./api/mutations/useDeleteMediaKit";

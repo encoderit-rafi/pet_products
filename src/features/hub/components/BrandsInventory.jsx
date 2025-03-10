@@ -5,7 +5,7 @@ import BorderBox from "@/components/box/BorderBox";
 import SubTitle from "@/components/texts/SubTitle";
 import BaseBarChart from "@/components/charts/BaseBarChart";
 import BaseDropdown from "@/components/dropdowns/BaseDropdown";
-import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
+import { useGetAllBrands } from "@/api/brands/useGetAllBrands";
 import { useInventoriesBarChart } from "../api/queries/inventories/useInventoriesBarChart";
 export default function BrandsInventory() {
   const {

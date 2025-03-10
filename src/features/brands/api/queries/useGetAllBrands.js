@@ -12,16 +12,9 @@ export const useGetAllBrands = ({ setToUrl, isEnabled }) => {
       per_page: searchParams.get("per_page") || PAGINATION.per_page,
     };
     const search = searchParams.get("search");
-    // const brand_id = searchParams.get("brand_id");
-    // const category_id = searchParams.get("category_id");
-
     if (search) {
       queryParams.search = search;
     }
-    // if (category_id) {
-    //   queryParams.category_id = category_id;
-    // }
-
     return queryParams;
   });
 

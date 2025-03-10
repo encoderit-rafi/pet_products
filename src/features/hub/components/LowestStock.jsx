@@ -1,4 +1,4 @@
-import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
+import { useGetAllBrands } from "@/api/brands/useGetAllBrands";
 import BorderBox from "@/components/box/BorderBox";
 import BaseDropdown from "@/components/dropdowns/BaseDropdown";
 import Table from "@/components/tables/Table";

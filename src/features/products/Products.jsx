@@ -13,7 +13,7 @@ import InputSearch from "@/components/inputs/InputSearch";
 import { useGetAllProducts } from "./api/queries/useGetAllProducts";
 // import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
 import { useGetAllCategories } from "@/api/categories/queries/useGetAllCategories";
-import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
+import { useGetAllBrands } from "@/api/brands/useGetAllBrands";
 // import { useSearchParam } from "react-use";
 import { useSearchParams } from "react-router-dom";
 import BaseDropdown from "@/components/dropdowns/BaseDropdown";

@@ -17,7 +17,7 @@ import InputPhoneNumber from "@/components/inputs/InputPhoneNumber";
 // import { useUpdateUser } from "@/api/faqs/useUpdateFAQs";
 import { useGetAllUsers } from "@/api/users/useGetAllUsers";
 import { useGetAllRoles } from "@/api/roles/useGetAllRoles";
-import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
+import { useGetAllBrands } from "@/api/brands/useGetAllBrands";
 import RolesDropdown from "@/components/dropdowns/RolesDropdown";
 import toast from "react-hot-toast";
 import { useCreateUsers } from "@/api/users/useCreateUsers";

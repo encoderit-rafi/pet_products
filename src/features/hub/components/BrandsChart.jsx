@@ -5,8 +5,9 @@ import BorderBox from "@/components/box/BorderBox";
 import SubTitle from "@/components/texts/SubTitle";
 import BaseBarChart from "@/components/charts/BaseBarChart";
 import BaseDropdown from "@/components/dropdowns/BaseDropdown";
-import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
+import { useGetAllBrands } from "@/api/brands/useGetAllBrands";
 import { useBrandsBarChart } from "../api/queries/brands/useBrandsBarChart";
+import BrandSelect from "@/components/BrandSelect";
 
 export default function BrandsChart() {
   const {
@@ -45,7 +46,8 @@ export default function BrandsChart() {
       <div className="flex items-center justify-between mb-3">
         <SubTitle>Brands Chart</SubTitle>
         <div className="flex items-center gap-3">
-          <BaseDropdown
+          <BrandSelect />
+          {/* <BaseDropdown
             multiple
             variant="rounded"
             defaultText="select brands"
@@ -59,7 +61,7 @@ export default function BrandsChart() {
                   : [...old, data];
               });
             }}
-          />
+          /> */}
           <BaseDropdown
             variant="rounded"
             options={ranges}

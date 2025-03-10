@@ -1,4 +1,4 @@
-import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
+import { useGetAllBrands } from "@/api/brands/useGetAllBrands";
 import CloseIcon from "@/assets/icons/CloseIcon";
 import BaseButton from "@/components/buttons/BaseButton";
 import BaseDropdown from "@/components/dropdowns/BaseDropdown";

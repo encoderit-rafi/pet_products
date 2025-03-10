@@ -6,7 +6,7 @@ import SubTitle from "@/components/texts/SubTitle";
 import BaseBarChart from "@/components/charts/BaseBarChart";
 import BaseDropdown from "@/components/dropdowns/BaseDropdown";
 
-import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
+import { useGetAllBrands } from "@/api/brands/useGetAllBrands";
 import { useGetSalesAndCitiesBarChart } from "../api/queries/sales_and_cities/useGetSalesAndCitiesBarChart";
 
 export default function SalesVsCities() {

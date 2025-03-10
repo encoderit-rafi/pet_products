@@ -14,7 +14,7 @@ import PlaceholderImage from "@/components/placeholders/PlaceholderImage";
 // import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
 import { useGetAllCategories } from "@/api/categories/queries/useGetAllCategories";
 import BaseMenuInfiniteQuery from "@/components/menus/BaseMenuInfiniteQuery";
-import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
+import { useGetAllBrands } from "@/api/brands/useGetAllBrands";
 // import { useSearchParam } from "react-use";
 import { useSearchParams } from "react-router-dom";
 import { useGetAllProducts } from "@/features/products/api/queries/useGetAllProducts";
