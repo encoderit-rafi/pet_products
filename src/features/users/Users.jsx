@@ -82,7 +82,7 @@ export default function Users() {
           </div>
         }
       >
-        <div className="flex flex-col flex-1">
+        <div className="flex flex-col flex-1 overflow-auto">
           <TabPanels className="flex flex-col flex-1">
             <TabPanel className={"flex flex-col flex-1"}>
               <UserTab isOpenUser={isOpenUser} setIsOpenUser={setIsOpenUser} />

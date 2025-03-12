@@ -2,12 +2,17 @@ import { useState } from "react";
 import demoData from "@/lib/data/demo";
 import Table from "@/components/tables/Table";
 import BorderBox from "@/components/box/BorderBox";
+import BackButton from "@/components/buttons/BackButton";
 import EditIcon from "@/assets/icons/EditIcon";
 import DeleteIcon from "@/assets/icons/DeleteIcon";
+import Title from "@/components/texts/Title";
 import BaseButton from "@/components/buttons/BaseButton";
 import Dialog from "@/components/dialogs/Dialog";
+import InputText from "@/components/inputs/InputText";
 import InputTextArea from "@/components/inputs/InputTextArea";
+import { NavLink } from "react-router-dom";
 import BaseInput from "@/components/inputs/BaseInput";
+import Page from "@/components/ui/Page";
 const query = {
   headers: [
     {
@@ -66,31 +71,29 @@ export default function Task() {
   const [isOpenAddNewTask, setIsOpenAddNewTask] = useState(false);
 
   return (
-    <>
-      {/* // <Page
-    //   className={"bg-red-400"}
-    //   title={
-    //     <div className="flex items-center gap-4 ">
-    //       <NavLink to="/marketing">
-    //         <div className="size-8 lg:size-10">
-    //           <BackButton />
-    //         </div>
-    //       </NavLink>
+    <Page
+      className={"bg-red-400"}
+      title={
+        <div className="flex items-center gap-4 ">
+          <NavLink to="/marketing">
+            <div className="size-8 lg:size-10">
+              <BackButton />
+            </div>
+          </NavLink>
 
-    //       <Title>tasks</Title>
-    //     </div>
-    //   }
-    //   actions={
-    //     <BaseButton variant="gradient" className="px-4 text-xs font-medium">
-    //       save settings
-    //     </BaseButton>
-    //   }
-    // > */}
-      <BorderBox className={"overflow-hidden"}>
-        {/* className={"flex flex-col flex-1 overflow-hidden "} */}
+          <Title>tasks</Title>
+        </div>
+      }
+      actions={
+        <BaseButton variant="gradient" className="px-4 text-xs font-medium">
+          save settings
+        </BaseButton>
+      }
+    >
+      <BorderBox>
         <Table query={query} />
       </BorderBox>
-      {/* <Dialog
+      <Dialog
         isOpen={isOpenAddNewTask}
         title="add new task"
         className="max-w-lg"
@@ -114,8 +117,7 @@ export default function Task() {
             <BaseButton variant="gradient">confirm</BaseButton>
           </div>
         </div>
-      </Dialog> */}
-      {/* // </Page> */}
-    </>
+      </Dialog>
+    </Page>
   );
 }

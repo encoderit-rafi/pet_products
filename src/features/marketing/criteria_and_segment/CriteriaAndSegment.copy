@@ -130,7 +130,24 @@ export default function CriteriaAndSegment() {
   const [isOpenAddNewSegment, setIsOpenAddNewSegment] = useState(false);
 
   return (
-    <>
+    <Page
+      title={
+        <div className="flex items-center gap-4">
+          <NavLink to="/marketing">
+            <div className="size-8 lg:size-10">
+              <BackButton />
+            </div>
+          </NavLink>
+
+          <Title>Criteria and Segment</Title>
+        </div>
+      }
+      actions={
+        <BaseButton variant="gradient" className="px-4 text-xs font-medium">
+          save settings
+        </BaseButton>
+      }
+    >
       <div className="flex-1 grid grid-cols-1 gap-4 xl:grid-cols-2 overflow-hidden">
         <BorderBox className={"overflow-hidden"}>
           <div className="flex flex-col gap-4 mb-2">
@@ -292,6 +309,6 @@ export default function CriteriaAndSegment() {
           </div>
         </div>
       </Dialog>
-    </>
+    </Page>
   );
 }

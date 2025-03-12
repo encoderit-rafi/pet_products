@@ -54,11 +54,11 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-      { path: "marketing/task", element: <Task /> },
-      {
-        path: "marketing/criteria_and_segment",
-        element: <CriteriaAndSegment />,
-      },
+      // { path: "marketing/task", element: <Task /> },
+      // {
+      //   path: "marketing/criteria_and_segment",
+      //   element: <CriteriaAndSegment />,
+      // },
       {
         path: "brands",
         element: (

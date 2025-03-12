@@ -46,8 +46,8 @@ export default function BrandsChart() {
       <div className="flex items-center justify-between mb-3">
         <SubTitle>Brands Chart</SubTitle>
         <div className="flex items-center gap-3">
-          <BrandSelect />
-          {/* <BaseDropdown
+          {/* <BrandSelect /> */}
+          <BaseDropdown
             multiple
             variant="rounded"
             defaultText="select brands"
@@ -61,7 +61,7 @@ export default function BrandsChart() {
                   : [...old, data];
               });
             }}
-          /> */}
+          />
           <BaseDropdown
             variant="rounded"
             options={ranges}
