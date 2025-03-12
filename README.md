@@ -8,3 +8,4 @@
 - - products
 - - shelves
 - API call to formData or not
+- Input box design fix

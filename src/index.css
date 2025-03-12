@@ -202,7 +202,7 @@
 }
 
 .base-input {
-  @apply border h-10 bg-transparent text-sm font-light !text-custom_text_two border-custom_line_seven rounded-md px-3 py-2 outline-none placeholder:text-custom_text_two focus:border-custom_line_seven;
+  @apply border w-full h-10 bg-transparent text-sm font-light !text-custom_text_two border-custom_line_seven rounded-md px-3 py-2 outline-none placeholder:text-custom_text_two focus:border-custom_line_seven;
 }
 
 .recharts-text,
@@ -221,7 +221,9 @@ text {
 .react-datepicker__header {
   @apply !bg-custom_bg_one !font-poppins !pt-0;
 }
-
+.react-datepicker-wrapper {
+  @apply w-full;
+}
 .react-datepicker__current-month,
 .react-datepicker__day-name,
 .react-datepicker__day {

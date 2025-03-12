@@ -5,10 +5,10 @@ import BaseMenu from "@/components/menus/BaseMenu";
 import Table from "@/components/tables/Table";
 import SubTitle from "@/components/texts/SubTitle";
 import React, { useState } from "react";
-import MarketingActivitiesForm from "./MarketingActivitiesForm";
+import MarketingCategoriesForm from "./MarketingCategoriesForm";
 import Dialog from "@/components/dialogs/Dialog";
 
-export default function MarketingActivities() {
+export default function MarketingCategories() {
   const [formValues, setFormValues] = useState({
     isOpen: false,
   });
@@ -16,7 +16,7 @@ export default function MarketingActivities() {
     <BorderBox className={"overflow-hidden"}>
       <div className="flex flex-col gap-4 mb-2">
         <div className="flex items-center justify-between ">
-          <SubTitle>Marketing Activities</SubTitle>
+          <SubTitle>Marketing Categories</SubTitle>
           <div className="flex items-center gap-3">
             <BaseButton
               variant="orange"
@@ -35,10 +35,10 @@ export default function MarketingActivities() {
       {/* <Table query={query} /> */}
       <Dialog
         isOpen={formValues.isOpen}
-        title="add new marketing activities"
+        title="add new marketing categories"
         className="max-w-lg"
       >
-        <MarketingActivitiesForm
+        <MarketingCategoriesForm
           onClose={() =>
             setFormValues({
               isOpen: false,

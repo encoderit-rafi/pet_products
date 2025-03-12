@@ -5,6 +5,8 @@ import BaseTabList from "@/components/tabs/BaseTabList";
 import { TabGroup, TabPanel, TabPanels } from "@headlessui/react";
 import Page from "@/components/ui/Page";
 import { CriteriaAndSegment, Task } from ".";
+import MarketingActivities from "./marketing_activities/MarketingActivities";
+import MarketingCategories from "./marketing_categories/MarketingCategories";
 const tabs = [
   {
     id: 0,
@@ -98,6 +100,9 @@ export default function Marketing() {
             </TabPanel>
             <TabPanel className={"flex-1 flex flex-col overflow-hidden"}>
               <MarketingActivities />
+            </TabPanel>
+            <TabPanel className={"flex-1 flex flex-col overflow-hidden"}>
+              <MarketingCategories />
             </TabPanel>
           </TabPanels>
         </div>
