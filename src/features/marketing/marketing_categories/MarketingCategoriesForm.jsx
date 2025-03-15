@@ -1,10 +1,21 @@
+import { useCreateCategories } from "@/api/marketing/categories/useCreateCategories";
+import { useGetAllCategories } from "@/api/marketing/categories/useGetAllCategories";
+import { useUpdateCategories } from "@/api/marketing/categories/useUpdateCategories";
 import BaseButton from "@/components/buttons/BaseButton";
 import BaseInput from "@/components/inputs/BaseInput";
 
 import { validationRules } from "@/consts";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-export default function MarketingCategoriesForm({ onClose }) {
+export default function MarketingCategoriesForm({ formValues, onClose }) {
+  const { refetch: fetchCategories } = useGetAllCategories({
+    setToUrl: false,
+    isEnabled: false,
+  });
+  const { mutate: createCategories, isLoading } = useCreateCategories();
+  const { mutate: updateCategories, isLoading: isLoadingUpdate } =
+    useUpdateCategories();
   const {
     register,
     formState,
@@ -14,63 +25,38 @@ export default function MarketingCategoriesForm({ onClose }) {
     setValue,
     clearErrors,
   } = useForm();
-  // const { mutate: createStand, isLoading } = useCreateStand();
-  // const { refetch: fetchAllShelves } = useGetAllShelves({
-  //   setToUrl: false,
-  //   isEnabled: false,
-  // });
+
   const { errors } = formState;
   function resetFields() {
     reset();
   }
   function handelClose() {
-    // resetFields();
+    resetFields();
     onClose();
   }
-  // useEffect(() => {
-  //   const fieldsToUpdate = [
-  //     { key: "images", value: images?.[0] },
-  //     { key: "brand_id", value: selectedBrand?.[0]?.id },
-  //     { key: "stand_type_id", value: selectedStandType?.[0]?.id },
-  //     { key: "client_id", value: selectedStore?.[0]?.id },
-  //   ];
-
-  //   fieldsToUpdate.forEach(({ key, value }) => {
-  //     setValue(key, value);
-  //     clearErrors(key);
-  //   });
-  // }, [images, selectedBrand, selectedStandType, selectedStore]);
+  useEffect(() => {
+    if (formValues.type == "update") {
+      setValue("name", formValues.data.name);
+    }
+  }, [formValues]);
   function onSubmit(item) {
     console.log("🚀 ~ onSubmit ~ item:", item);
-    // const validations = [
-    //   {
-    //     key: "brand_id",
-    //     condition: (value) => value.length === 0,
-    //     message: "Brand is required",
-    //   },
-    //   {
-    //     key: "stand_type_id",
-    //     condition: (value) => value.length === 0,
-    //     message: "Stand type is required",
-    //   },
-    //   {
-    //     key: "client_id",
-    //     condition: (value) => value.length === 0,
-    //     message: "Store is required",
-    //   },
-    // ].filter(Boolean);
-    // for (const { key, condition, message } of validations) {
-    //   if (condition(item[key])) {
-    //     setError(key, { type: "manual", message });
-    //     return;
-    //   }
-    // }
-    // createStand(item, {
-    //   onSuccess() {
-    //     fetchAllShelves();
-    //     handelClose();
-    //   },
-    // });
+    formValues.type == "create"
+      ? createCategories(item, {
+          onSuccess() {
+            fetchCategories();
+            handelClose();
+          },
+        })
+      : updateCategories(
+          { id: formValues.data.id, data: item },
+          {
+            onSuccess() {
+              fetchCategories();
+              handelClose();
+            },
+          }
+        );
   }
 
   return (
@@ -88,13 +74,13 @@ export default function MarketingCategoriesForm({ onClose }) {
       <div className="flex items-center gap-4">
         <BaseButton
           onClick={handelClose}
-          // isDisabled={isLoading}
+          isDisabled={isLoading || isLoadingUpdate}
         >
           cancel
         </BaseButton>
         <BaseButton
-          // isDisabled={isLoading}
-          // isLoading={isLoading}
+          isDisabled={isLoading || isLoadingUpdate}
+          isLoading={isLoading || isLoadingUpdate}
           variant="gradient"
           type="submit"
         >

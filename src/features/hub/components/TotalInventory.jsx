@@ -12,7 +12,7 @@ import PlaceholderImage from "@/components/placeholders/PlaceholderImage";
 
 // import { useGetAllProducts } from "./api/queries/useGetAllProducts";
 // import { useGetAllBrands } from "@/api/brands/queries/useGetAllBrands";
-import { useGetAllCategories } from "@/api/categories/queries/useGetAllCategories";
+import { useGetAllCategories } from "@/api/categories/useGetAllCategories";
 import BaseMenuInfiniteQuery from "@/components/menus/BaseMenuInfiniteQuery";
 import { useGetAllBrands } from "@/api/brands/useGetAllBrands";
 // import { useSearchParam } from "react-use";

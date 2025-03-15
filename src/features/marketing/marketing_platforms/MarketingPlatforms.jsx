@@ -5,19 +5,22 @@ import BaseMenu from "@/components/menus/BaseMenu";
 import Table from "@/components/tables/Table";
 import SubTitle from "@/components/texts/SubTitle";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import MarketingCategoriesForm from "./MarketingCategoriesForm";
+import MarketingCategoriesForm from "./MarketingPlatformsForm";
 import Dialog from "@/components/dialogs/Dialog";
 import DeleteIcon from "@/assets/icons/DeleteIcon";
 import EditIcon from "@/assets/icons/EditIcon";
 import { useGetAllCategories } from "@/api/marketing/categories/useGetAllCategories";
 import DialogConfirmDelete from "@/components/dialogs/DialogConfirmDelete";
-import { useDeleteCategories } from "@/api/marketing/categories/useDeleteCategories";
+// import { useDeleteCategories } from "@/api/marketing/categories/useDeleteCategories";
 import Pagination from "@/components/pagination";
 import Page from "@/components/ui/Page";
+import MarketingPlatformsForm from "./MarketingPlatformsForm";
+import { useDeletePlatform } from "@/api/marketing/platforms/useDeletePlatform";
+import { useGetAllPlatform } from "@/api/marketing/platforms/useGetAllPlatform";
 
-export default function MarketingCategories() {
-  const { mutate: deleteCategories, isLoading: isLoadingDelete } =
-    useDeleteCategories();
+export default function MarketingPlatforms() {
+  const { mutate: deletePlatform, isLoading: isLoadingDelete } =
+    useDeletePlatform();
   const [formValues, setFormValues] = useState({
     type: "create",
     isOpen: false,
@@ -29,14 +32,11 @@ export default function MarketingCategories() {
     isFetching,
     refetch: fetchCategories,
     setParams,
-  } = useGetAllCategories({
+  } = useGetAllPlatform({
     setToUrl: false,
     isEnabled: true,
-    all: false,
   });
-  useEffect(() => {
-    console.log("🚀 ~ MarketingCategories ~ data:", data);
-  }, [data]);
+
   const paginationProps = useMemo(() => {
     return {
       from: data?.from,
@@ -47,6 +47,9 @@ export default function MarketingCategories() {
       per_page: data?.per_page,
     };
   }, [data]);
+  useEffect(() => {
+    console.log("🚀 ~ MarketingPlatforms ~ data:", data);
+  }, [data]);
   // TABLE HEADERS
   const query = useMemo(
     () => ({
@@ -54,7 +57,7 @@ export default function MarketingCategories() {
         {
           name: "name",
           value: "name",
-          cellValue: (row) => <span>{row?.name || "-"}</span>,
+          cellValue: (row) => <span>{row?.platform || "-"}</span>,
         },
 
         {
@@ -99,7 +102,7 @@ export default function MarketingCategories() {
     [data]
   );
   function confirmDelete() {
-    deleteCategories(formValues.data, {
+    deletePlatform(formValues.data, {
       onSuccess() {
         fetchCategories();
         setFormValues({
@@ -123,7 +126,7 @@ export default function MarketingCategories() {
       header={
         <div className="flex flex-col gap-4 mb-2">
           <div className="flex items-center justify-between ">
-            <SubTitle>Marketing Categories</SubTitle>
+            <SubTitle>Marketing Platforms</SubTitle>
             <div className="flex items-center gap-3">
               <BaseButton
                 variant="orange"
@@ -157,10 +160,10 @@ export default function MarketingCategories() {
           isOpen={formValues.isOpen && formValues.type != "delete"}
           title={`${
             formValues.type == "create" ? "add new" : "update"
-          } marketing categories`}
+          } marketing platform`}
           className="max-w-lg"
         >
-          <MarketingCategoriesForm
+          <MarketingPlatformsForm
             formValues={formValues}
             onClose={() =>
               setFormValues({

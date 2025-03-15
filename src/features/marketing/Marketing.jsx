@@ -7,6 +7,7 @@ import Page from "@/components/ui/Page";
 import { CriteriaAndSegment, Task } from ".";
 import MarketingActivities from "./marketing_activities/MarketingActivities";
 import MarketingCategories from "./marketing_categories/MarketingCategories";
+import MarketingPlatforms from "./marketing_platforms/MarketingPlatforms";
 const tabs = [
   {
     id: 0,
@@ -27,6 +28,11 @@ const tabs = [
     id: 3,
     name: "Marketing Categories",
     value: "marketing_categories",
+  },
+  {
+    id: 4,
+    name: "Marketing Platforms",
+    value: "marketing_platforms",
   },
 ];
 
@@ -103,6 +109,9 @@ export default function Marketing() {
             </TabPanel>
             <TabPanel className={"flex-1 flex flex-col overflow-hidden"}>
               <MarketingCategories />
+            </TabPanel>
+            <TabPanel className={"flex-1 flex flex-col overflow-hidden"}>
+              <MarketingPlatforms />
             </TabPanel>
           </TabPanels>
         </div>
