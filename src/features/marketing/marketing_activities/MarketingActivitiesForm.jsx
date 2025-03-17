@@ -273,8 +273,9 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
             data?.id != selectedPlatform?.[0]?.id &&
               setSelectedPlatform([data]);
           }}
+          className={"col-span-2 bg-slate-500 w-full"}
         />
-        <InputBox className="flex flex-col w-full">
+        <InputBox className="flex flex-col w-full col-span-2">
           <Label
             id="description"
             palceholder="description"
