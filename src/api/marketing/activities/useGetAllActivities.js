@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useSearchParams } from "react-router-dom";
 
-export const useGetAllPlatform = ({ setToUrl, isEnabled, all }) => {
+export const useGetAllActivities = ({ setToUrl, isEnabled, all }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   // const [params, setParams] = useState(() => {
   //   const queryParams = {
@@ -29,6 +29,7 @@ export const useGetAllPlatform = ({ setToUrl, isEnabled, all }) => {
   // });
   const [params, setParams] = useState({
     page: searchParams.get("page") || PAGINATION.page,
+    // per_page: all && 1000|| searchParams.get("per_page") || PAGINATION.per_page,
     per_page: all ? 1000 : searchParams.get("per_page") || PAGINATION.per_page,
   });
 
@@ -39,7 +40,7 @@ export const useGetAllPlatform = ({ setToUrl, isEnabled, all }) => {
   // }, [params]);
   const { data, isLoading, isFetching, refetch } = useQuery({
     queryKey: [
-      `get-all-marketing-platform-page_${params.page}-per_page_${params.per_page}`,
+      `get-all-marketing-activities-page_${params.page}-per_page_${params.per_page}`,
     ],
     enabled: isEnabled,
     retry: false,
@@ -47,10 +48,10 @@ export const useGetAllPlatform = ({ setToUrl, isEnabled, all }) => {
     staleTime: 1000 * 60 * 10,
     queryFn: async () => {
       return (
-        await Axios.get("/marketing-platforms", {
+        await Axios.get("/marketing-activities", {
           params,
         })
-      ).data.platforms;
+      ).data.marketing_activities;
     },
   });
   return {

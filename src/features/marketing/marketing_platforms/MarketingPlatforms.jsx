@@ -35,6 +35,7 @@ export default function MarketingPlatforms() {
   } = useGetAllPlatform({
     setToUrl: false,
     isEnabled: true,
+    all: false,
   });
 
   const paginationProps = useMemo(() => {
