@@ -37,22 +37,53 @@ export const validationRules = {
   },
 };
 
+// export function toFormData(data) {
+//   const formData = new FormData();
+
+//   for (const [key, value] of Object.entries(data)) {
+//     if (Array.isArray(value)) {
+//       value.forEach((file, index) => {
+//         file.file
+//           ? formData.append(`${key}[${index}]`, file.file)
+//           : formData.append(`${key}[${index}]`, file);
+//       });
+//     } else {
+//       value.file
+//         ? formData.append(`${key}`, value.file)
+//         : formData.append(`${key}`, value);
+//     }
+//   }
+//   return formData;
+// }
 export function toFormData(data) {
   const formData = new FormData();
 
   for (const [key, value] of Object.entries(data)) {
     if (Array.isArray(value)) {
-      value.forEach((file, index) => {
-        file.file
-          ? formData.append(`${key}[${index}]`, file.file)
-          : formData.append(`${key}[${index}]`, file);
+      value.forEach((item, index) => {
+        if (item instanceof File) {
+          // Directly append if it's a File object
+          formData.append(`${key}[${index}]`, item);
+        } else if (item?.file instanceof File) {
+          // Append the file inside an object
+          formData.append(`${key}[${index}]`, item.file);
+        } else {
+          // Append as a normal value
+          formData.append(`${key}[${index}]`, String(item));
+        }
       });
+    } else if (value instanceof File) {
+      // If the value is a File object, append it directly
+      formData.append(key, value);
+    } else if (value?.file instanceof File) {
+      // If it's an object with a `.file` key that is a File object
+      formData.append(key, value.file);
     } else {
-      value.file
-        ? formData.append(`${key}`, value.file)
-        : formData.append(`${key}`, value);
+      // Convert non-string values (numbers, booleans) to strings
+      formData.append(key, String(value));
     }
   }
+
   return formData;
 }
 

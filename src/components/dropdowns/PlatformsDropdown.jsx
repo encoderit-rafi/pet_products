@@ -10,15 +10,21 @@ export default function PlatformsDropdown({
   selected,
   setSelected,
   hideLabel = false,
+  isDisable,
+  params = {
+    setToUrl: false,
+    isEnabled: false,
+    all: true,
+  },
 }) {
-  const { data, isLoading, isFetching } = useGetAllPlatform({
+  const { data, isLoading, isFetching, setParams } = useGetAllPlatform({
     setToUrl: false,
     isEnabled: true,
     all: true,
   });
   useEffect(() => {
-    console.log("🚀 ~ PlatformsDropdown data:", data);
-  }, [data]);
+    setParams({ category_id: params.category_id });
+  }, [params.category_id]);
   return (
     <div className="">
       {!hideLabel && <Label label="select Platform" />}
@@ -26,6 +32,7 @@ export default function PlatformsDropdown({
       <BaseDropdown
         variant={variant}
         defaultText={defaultText}
+        isDisable={isDisable}
         className={`w-full ${className}`}
         isLoading={isLoading || isFetching}
         options={data?.data || []}

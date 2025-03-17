@@ -54,7 +54,7 @@ const BaseDropdown = ({
           disabled={isLoading || isDisable}
           onClick={() => setIsOpen((prev) => !prev)}
         >
-          <span className="leading-none truncate">
+          <span className="leading-none truncate capitalize">
             {isLoading
               ? defaultText
               : multiple && selected?.length > 0
@@ -111,7 +111,7 @@ const BaseDropdown = ({
                   onClick={() => onClickHandler(option)}
                 >
                   {/* <span>{option.name}</span> */}
-                  <span>{option[field]}</span>
+                  <span className="capitalize">{option[field]}</span>
                   <CheckIcon
                     className={cn(
                       "invisible transition-all duration-500 scale-90 opacity-0 size-3 text-[#74b222]",

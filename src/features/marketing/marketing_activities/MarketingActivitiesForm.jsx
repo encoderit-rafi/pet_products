@@ -19,10 +19,12 @@ import toast from "react-hot-toast";
 import { useCreateActivities } from "@/api/marketing/activities/useCreateActivities";
 import { useGetAllActivities } from "@/api/marketing/activities/useGetAllActivities";
 import { useUpdateActivities } from "@/api/marketing/activities/useUpdateActivities";
+import ImagePreview from "@/components/file_pickers/ImagePreview";
 // import { useCreateStand } from "../api/mutations/useCreateStand";
 // import { useGetAllShelves } from "../api/queries/useGetAllShelves";
 
 export default function MarketingActivitiesForm({ formValues, onClose }) {
+  // console.log("🚀 ~ MarketingActivitiesForm ~ formValues:", formValues);
   const {
     register,
     formState,
@@ -48,7 +50,9 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
   //   data: null,
   // });
   const [date, setDate] = useState(new Date());
-  const [images, setImages] = useState([]);
+  // const [images, setImages] = useState([]);
+  // const [selectNewImages, setSelectNewImages] = useState(false);
+
   const [selectedBrand, setSelectedBrand] = useState([]);
   const [selectedStandType, setSelectedStandType] = useState([]);
   // const [selectedStore, setSelectedStore] = useState([]);
@@ -56,7 +60,7 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
   const [selectedPlatform, setSelectedPlatform] = useState([]);
   useEffect(() => {
     const fieldsToUpdate = [
-      // { key: "images", value: images },
+      // { key: "attachments", value: images },
       { key: "date", value: date },
       { key: "brand_id", value: selectedBrand[0]?.id },
       { key: "platform_id", value: selectedPlatform[0]?.id },
@@ -69,7 +73,7 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
       clearErrors(key);
     });
   }, [
-    images,
+    // images,
     date,
     selectedBrand,
     selectedPlatform,
@@ -78,39 +82,20 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
   ]);
   function resetFields() {
     reset();
-    setImages([]);
+    // setImages([]);
     setSelectedBrand([]);
     setSelectedPlatform([]);
     setSelectedCategory([]);
     setSelectedStandType([]);
+    // setSelectNewImages(false);
   }
   useEffect(() => {
     if (formValues.type === "update") {
-      console.log(
-        "🚀 ~ useEffect ~ MarketingActivitiesForm ~ formValues:",
-        formValues
-      );
-      //   {
-      //     "id": 1,
-      //     "brand_id": 1,
-      //     "category_id": 2,
-      //     "platform_id": 1,
-      //     "stand_id": null,
-      //     "date": "2025-02-25",
-      //     "total": "5000.00",
-      //     "cost": "4500.00",
-      //     "channel": null,
-      //     "reach": null,
-      //     "status": "",
-      //     "description": "Instore Marketing",
-      //     "created_at": "2025-03-17T04:38:29.000000Z",
-      //     "updated_at": "2025-03-17T04:38:29.000000Z"
-      // }
       const {
-        brand_id,
-        category_id,
-        platform_id,
-        stand_id,
+        brand,
+        marketing_category,
+        platform,
+        stand,
         date,
         total,
         cost,
@@ -124,10 +109,10 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
       setValue("channel", channel);
       setValue("reach", reach);
       setValue("description", description);
-      setSelectedBrand([{ id: brand_id }]);
-      setSelectedCategory([{ id: category_id }]);
-      setSelectedPlatform([{ id: platform_id }]);
-      setSelectedStandType([{ id: stand_id }]);
+      setSelectedBrand([brand]);
+      setSelectedCategory([marketing_category]);
+      setSelectedPlatform([platform]);
+      setSelectedStandType([stand]);
     } else {
       resetFields();
     }
@@ -170,11 +155,14 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
     }
     formValues.type == "create"
       ? createActivity(
-          { ...item, date: item.date },
+          { ...item },
           {
             onSuccess() {
               fetchAllActivities();
               handelClose();
+            },
+            onError(error) {
+              toast.error(error.response.data.message);
             },
           }
         )
@@ -197,11 +185,26 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
       className="flex flex-col mt-4 space-y-2"
       onSubmit={handleSubmit(onSubmit)}
     >
-      {/* <ImagePicker
-        images={images}
-        setImages={setImages}
-        // isError={errors?.profile_image?.message}
-      /> */}
+      {/* {formValues.type === "update" &&
+        formValues?.data.image != null &&
+        !selectNewImages && (
+          <ImagePreview
+            className={"size-32"}
+            src={formValues.data.attachments.url}
+            onClickClose={() => setSelectNewImages(true)}
+          />
+        )}
+      {(formValues.type === "create" ||
+        selectNewImages ||
+        (formValues.type === "update" && formValues?.data.image == null)) && (
+        <ImagePicker
+          className={"size-32"}
+          images={images}
+          setImages={setImages}
+          isError={errors?.attachments?.message}
+          // multiple
+        />
+      )} */}
       <div className="grid grid-cols-2 gap-2">
         <BrandsDropdown
           selected={selectedBrand}
@@ -218,14 +221,41 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
               setSelectedStandType([data]);
           }}
         />
+        <CategoriesDropdown
+          isDisable={selectedBrand?.length == 0 ? true : false}
+          params={{ brand_id: selectedBrand?.[0]?.id }}
+          selected={selectedCategory}
+          setSelected={(data) => {
+            data?.id != selectedCategory?.[0]?.id &&
+              setSelectedCategory([data]);
+          }}
+        />
+        <PlatformsDropdown
+          isDisable={selectedCategory?.length == 0 ? true : false}
+          params={{ category_id: selectedCategory?.[0]?.id }}
+          selected={selectedPlatform}
+          setSelected={(data) => {
+            data?.id != selectedPlatform?.[0]?.id &&
+              setSelectedPlatform([data]);
+          }}
+          className={"col-span-2 bg-slate-500 w-full"}
+        />
         <InputBox className="">
           <Label label={"date"} />
           <BaseDatePicker date={date} setDate={(date) => setDate(date)} />
         </InputBox>
+        {/* <BaseInput
+          id="cost"
+          label="cost"
+          palceholder="Enter Value"
+          type="number"
+          className={`py-3 rounded-lg ${errors?.cost ? "!border-red-500" : ""}`}
+          register={register("cost", validationRules.required)}
+        /> */}
         <BaseInput
           id="total"
           label="total"
-          palceholder="total"
+          palceholder="Enter Value"
           type="number"
           className={`py-3 rounded-lg ${
             errors?.total ? "!border-red-500" : ""
@@ -235,46 +265,24 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
         <BaseInput
           id="channel"
           label="channel"
-          palceholder="channel"
+          palceholder="Enter Value"
           className={`py-3 rounded-lg ${
             errors?.channel ? "!border-red-500" : ""
           }`}
           register={register("channel", validationRules.required)}
         />
-        <BaseInput
-          id="platform"
-          label="platform"
-          palceholder="platform"
-          className={`py-3 rounded-lg ${
-            errors?.platform ? "!border-red-500" : ""
-          }`}
-          register={register("platform", validationRules.required)}
-        />
+
         <BaseInput
           id="reach"
           label="reach"
-          palceholder="reach"
-          type="number"
+          palceholder="Enter Value"
+          // type="number"
           className={`py-3 rounded-lg ${
             errors?.reach ? "!border-red-500" : ""
           }`}
           register={register("reach", validationRules.required)}
         />
-        <CategoriesDropdown
-          selected={selectedCategory}
-          setSelected={(data) => {
-            data?.id != selectedCategory?.[0]?.id &&
-              setSelectedCategory([data]);
-          }}
-        />
-        <PlatformsDropdown
-          selected={selectedPlatform}
-          setSelected={(data) => {
-            data?.id != selectedPlatform?.[0]?.id &&
-              setSelectedPlatform([data]);
-          }}
-          className={"col-span-2 bg-slate-500 w-full"}
-        />
+
         <InputBox className="flex flex-col w-full col-span-2">
           <Label
             id="description"
@@ -296,12 +304,15 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
         </InputBox>
       </div>
       <div className="flex items-center gap-4">
-        <BaseButton onClick={handelClose} isDisabled={isLoading}>
+        <BaseButton
+          onClick={handelClose}
+          isDisabled={isLoading || isLoadingUpdate}
+        >
           cancel
         </BaseButton>
         <BaseButton
-          isDisabled={isLoading}
-          isLoading={isLoading}
+          isDisabled={isLoading || isLoadingUpdate}
+          isLoading={isLoading || isLoadingUpdate}
           variant="gradient"
           type="submit"
         >

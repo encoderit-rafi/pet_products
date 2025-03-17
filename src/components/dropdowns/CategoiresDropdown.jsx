@@ -10,15 +10,24 @@ export default function CategoriesDropdown({
   selected,
   setSelected,
   hideLabel = false,
-}) {
-  const { data, isLoading, isFetching } = useGetAllCategories({
+  isDisable,
+  params = {
     setToUrl: false,
-    isEnabled: true,
+    isEnabled: false,
     all: true,
+  },
+}) {
+  const { data, isLoading, isFetching, setParams } = useGetAllCategories({
+    setToUrl: params.setToUrl,
+    isEnabled: params.isEnabled,
+    all: params.all,
   });
   useEffect(() => {
     console.log("🚀 ~ data:", data);
   }, [data]);
+  useEffect(() => {
+    setParams({ brand_id: params.brand_id });
+  }, [params.brand_id]);
   return (
     <div className="">
       {!hideLabel && <Label label="select Category" />}
@@ -26,6 +35,7 @@ export default function CategoriesDropdown({
       <BaseDropdown
         variant={variant}
         defaultText={defaultText}
+        isDisable={isDisable}
         className={`w-full ${className}`}
         isLoading={isLoading || isFetching}
         options={data?.data || []}

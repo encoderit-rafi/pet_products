@@ -21,17 +21,17 @@ const tabs = [
   },
   {
     id: 2,
-    name: "Marketing Activities",
+    name: "Activities",
     value: "marketing_activities",
   },
   {
     id: 3,
-    name: "Marketing Categories",
+    name: " Categories",
     value: "marketing_categories",
   },
   {
     id: 4,
-    name: "Marketing Platforms",
+    name: "Platforms",
     value: "marketing_platforms",
   },
 ];

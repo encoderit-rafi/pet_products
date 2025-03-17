@@ -15,10 +15,17 @@ export default function StandTypeDropdown({
     isEnabled: false,
   },
 }) {
+  console.log("🚀 ~ selected:", selected);
   const { data, isLoading, isFetching, setParams } = useGetAllStandTypes({
     setToUrl: params.setToUrl,
     isEnabled: params.isEnabled,
   });
+  useEffect(
+    (data) => {
+      console.log("🚀 ~ useEffect ~ data:", data);
+    },
+    [data]
+  );
   useEffect(() => {
     setParams({ brand_id: params.brand_id });
   }, [params.brand_id]);

@@ -233,6 +233,10 @@ text {
 .react-datepicker__day--selected {
   @apply !bg-[#f0f0f0] !text-[#21272b];
 }
+.react-datepicker__day--disabled,
+.react-datepicker__day .react-datepicker__day--disabled:hover {
+  @apply !text-[#979797];
+}
 
 .react-datepicker__day:hover {
   @apply !text-[#21272b];

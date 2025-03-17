@@ -213,7 +213,9 @@ export default function MarketingActivities() {
             formValues={formValues}
             onClose={() =>
               setFormValues({
+                type: "create",
                 isOpen: false,
+                data: null,
               })
             }
           />

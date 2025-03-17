@@ -40,7 +40,7 @@ export const useGetAllCategories = ({ setToUrl, isEnabled, all }) => {
   // }, [params]);
   const { data, isLoading, isFetching, refetch } = useQuery({
     queryKey: [
-      `get-all-marketing-categories-page_${params.page}-per_page_${params.per_page}`,
+      `get-all-marketing-categories-page_${params.page}-per_page_${params.per_page}-brand_id_${params?.brand_id}`,
     ],
     enabled: isEnabled,
     retry: false,

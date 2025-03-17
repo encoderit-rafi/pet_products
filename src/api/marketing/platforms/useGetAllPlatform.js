@@ -39,7 +39,7 @@ export const useGetAllPlatform = ({ setToUrl, isEnabled, all }) => {
   // }, [params]);
   const { data, isLoading, isFetching, refetch } = useQuery({
     queryKey: [
-      `get-all-marketing-platform-page_${params.page}-per_page_${params.per_page}`,
+      `get-all-marketing-platform-page_${params.page}-per_page_${params.per_page}-category_id-${params.category_id}`,
     ],
     enabled: isEnabled,
     retry: false,
