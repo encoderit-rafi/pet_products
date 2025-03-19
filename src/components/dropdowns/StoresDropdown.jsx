@@ -9,6 +9,7 @@ export default function StoresDropdown({
   className,
   selected,
   setSelected,
+  required,
 }) {
   const { data, isLoading, isFetching } = useGetAllStores();
   useEffect(
@@ -18,8 +19,8 @@ export default function StoresDropdown({
     [data]
   );
   return (
-    <div className="">
-      <Label label={"Client"} />
+    <div>
+      <Label label={"Client"} required={required} />
 
       <BaseDropdown
         variant={variant}

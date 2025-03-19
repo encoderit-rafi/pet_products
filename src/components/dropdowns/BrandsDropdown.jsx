@@ -7,6 +7,7 @@ export default function BrandsDropdown({
   variant = "base",
   defaultText = "Select Brand",
   className,
+  required,
   selected,
   setSelected,
   hideLabel = false,
@@ -14,7 +15,7 @@ export default function BrandsDropdown({
   const { data, isLoading, isFetching } = useGetAllBrands();
   return (
     <div className="">
-      {!hideLabel && <Label label="Brand" />}
+      {!hideLabel && <Label label="Brand" required={required} />}
 
       <BaseDropdown
         variant={variant}

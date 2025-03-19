@@ -5,7 +5,7 @@ import BrandsDropdown from "@/components/dropdowns/BrandsDropdown";
 import ImagePicker from "@/components/file_pickers/ImagePicker";
 import BaseInput from "@/components/inputs/BaseInput";
 
-import { validationRules } from "@/consts";
+import { omitEmpty, validationRules } from "@/consts";
 import { useForm } from "react-hook-form";
 import StandTypeDropdown from "@/components/dropdowns/StandTypeDropdown";
 import StoresDropdown from "@/components/dropdowns/StoresDropdown";
@@ -112,6 +112,7 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
         description,
         client,
         products,
+        // attachments
       } = formValues.data;
       setValue("date", date);
       setValue("total", total);
@@ -119,6 +120,7 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
       setValue("channel", channel);
       setValue("reach", reach);
       setValue("description", description);
+      // setImages(attachments);
       setSelectedBrand([brand]);
       setSelectedStore([client]);
       setSelectedCategory([marketing_category]);
@@ -137,6 +139,15 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
   function onSubmit(item) {
     console.log("🚀 ~ onSubmit ~ item:", item);
     const validations = [
+      (formValues.type == "create" ||
+        (formValues.type == "update" && formValues.user.image == null) ||
+        (formValues.type == "update" &&
+          formValues.user.image != null &&
+          selectNewImages)) && {
+        key: "attachments",
+        condition: (value) => value?.length === 0,
+        message: "Select an image",
+      },
       {
         key: "brand_id",
         condition: (value) => value === undefined,
@@ -151,18 +162,18 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
       {
         key: "client_id",
         condition: (value) => value === undefined,
-        message: "Store  is required",
+        message: "Client  is required",
       },
       {
         key: "category_id",
         condition: (value) => value === undefined,
         message: "Category is required",
       },
-      {
-        key: "stand_id",
-        condition: (value) => value === undefined,
-        message: "Stand is required",
-      },
+      // {
+      //   key: "stand_id",
+      //   condition: (value) => value === undefined,
+      //   message: "Stand is required",
+      // },
     ].filter(Boolean);
     for (const { key, condition, message } of validations) {
       if (condition(item[key])) {
@@ -174,13 +185,16 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
     console.log("🚀 ~ onSubmit ~ selectedProducts:", selectedProducts);
     formValues.type == "create"
       ? createActivity(
-          {
+          omitEmpty({
             ...item,
-            product_ids: selectedProducts
-              .filter((item) => !!item.id)
-              .map((item) => item.id)
-              .join(","),
-          },
+            product_ids:
+              selectedProducts.length > 0
+                ? selectedProducts
+                    .filter((item) => !!item.id)
+                    .map((item) => item.id)
+                    .join(",")
+                : [],
+          }),
           {
             onSuccess() {
               fetchAllActivities();
@@ -194,13 +208,16 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
       : updateActivity(
           {
             id: formValues.data.id,
-            data: {
+            data: omitEmpty({
               ...item,
-              product_ids: selectedProducts
-                .filter((item) => !!item?.id)
-                .map((item) => item.id)
-                .join(","),
-            },
+              product_ids:
+                selectedProducts.length > 0
+                  ? selectedProducts
+                      .filter((item) => !!item.id)
+                      .map((item) => item.id)
+                      .join(",")
+                  : [],
+            }),
           },
           {
             onSuccess() {
@@ -217,33 +234,42 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
       onSubmit={handleSubmit(onSubmit)}
     >
       {formValues.type === "update" &&
-        formValues?.data.image != null &&
-        !selectNewImages && (
+        // formValues?.data.image != null &&
+        !selectNewImages &&
+        formValues.data.attachments.length > 0 &&
+        formValues.data.attachments.map((attachment) => (
           <ImagePreview
             className={"size-32"}
-            src={formValues.data.attachments.url}
+            // attachments={formValues.data.attachments}
+            src={attachment.url}
             onClickClose={() => setSelectNewImages(true)}
           />
-        )}
+        ))}
       {(formValues.type === "create" ||
         selectNewImages ||
-        (formValues.type === "update" && formValues?.data.image == null)) && (
+        (formValues.type === "update" &&
+          formValues.data.attachments.length == 0)) && (
         <ImagePicker
           className={"size-32"}
           images={images}
           setImages={setImages}
           isError={errors?.attachments?.message}
-          // multiple
+          title="Upload Files"
+          // subTitle="JPG, JPEG, PNG, PDF, EXCEL"
+          // accept=".xlsx, .xls, application/pdf, image/jpeg, image/png"
+          multiple
         />
       )}
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-2 gap-2 items-start">
         <BrandsDropdown
+          required
           selected={selectedBrand}
           setSelected={(data) => {
             data?.id != selectedBrand?.[0]?.id && setSelectedBrand([data]);
           }}
         />
         <StoresDropdown
+          required
           defaultText="Select"
           selected={selectedStore}
           setSelected={(data) => {
@@ -251,6 +277,8 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
           }}
         />
         <ProductsDropdown
+          isDisable={selectedBrand?.length == 0 ? true : false}
+          params={{ brand_id: selectedBrand?.[0]?.id }}
           selected={selectedProducts}
           setSelected={(data) => {
             selectedProducts?.some((item) => item.id == data.id)
@@ -271,6 +299,7 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
           }}
         />
         <CategoriesDropdown
+          required
           isDisable={selectedBrand?.length == 0 ? true : false}
           params={{ brand_id: selectedBrand?.[0]?.id }}
           selected={selectedCategory}
@@ -290,28 +319,6 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
           className={"col-span-2 bg-slate-500 w-full"}
         />
 
-        <div className="">
-          <Label label={"date"} />
-          <BaseDatePicker date={date} setDate={(date) => setDate(date)} />
-        </div>
-        <BaseInput
-          id="cost"
-          label="cost"
-          palceholder="Value"
-          type="number"
-          className={`py-3 rounded-lg ${errors?.cost ? "!border-red-500" : ""}`}
-          register={register("cost", validationRules.required)}
-        />
-        {/* <BaseInput
-          id="total"
-          label="total"
-          palceholder="Enter Value"
-          type="number"
-          className={`py-3 rounded-lg ${
-            errors?.total ? "!border-red-500" : ""
-          }`}
-          register={register("total", validationRules.required)}
-        /> */}
         <BaseInput
           id="channel"
           label="channel"
@@ -319,7 +326,8 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
           className={`py-3 rounded-lg ${
             errors?.channel ? "!border-red-500" : ""
           }`}
-          register={register("channel", validationRules.required)}
+          // register={register("channel", validationRules.required)}
+          register={register("channel")}
         />
 
         <BaseInput
@@ -330,9 +338,24 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
           className={`py-3 rounded-lg ${
             errors?.reach ? "!border-red-500" : ""
           }`}
-          register={register("reach", validationRules.required)}
+          // register={register("reach", validationRules.required)}
+          register={register("reach")}
+        />
+        <BaseDatePicker
+          date={date}
+          setDate={(date) => setDate(date)}
+          required
         />
 
+        <BaseInput
+          required
+          id="cost"
+          label="cost"
+          palceholder="Value"
+          type="number"
+          className={`py-3 rounded-lg ${errors?.cost ? "!border-red-500" : ""}`}
+          register={register("cost", validationRules.required)}
+        />
         <InputBox className="flex flex-col w-full col-span-2">
           <Label
             id="description"
@@ -349,7 +372,7 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
             })}
             rows={5}
             disabled={formValues.type == "view"}
-            {...register("description", validationRules.required)}
+            {...register("description")}
           />
         </InputBox>
       </div>

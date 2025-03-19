@@ -16,6 +16,7 @@ export default function CategoriesDropdown({
     isEnabled: false,
     all: true,
   },
+  required,
 }) {
   const { data, isLoading, isFetching, setParams } = useGetAllCategories({
     setToUrl: params.setToUrl,
@@ -30,7 +31,7 @@ export default function CategoriesDropdown({
   }, [params.brand_id]);
   return (
     <div className="">
-      {!hideLabel && <Label label="Category" />}
+      {!hideLabel && <Label label="Category" required={required} />}
 
       <BaseDropdown
         variant={variant}

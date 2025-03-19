@@ -5,9 +5,24 @@ import React from "react";
 export default function ImagePreview({
   src,
   onClickClose,
+  // attachments,
   hideCloseButton = false,
   className,
 }) {
+  // console.log("🚀 ~ attachments:", attachments);
+  // const isImage = (ext) => ["png", "jpg", "jpeg", "gif", "webp"].includes(ext);
+  // const handelIcon = (ext) => {
+  //   switch (ext) {
+  //     case "pdf":
+  //       return <PdfIcon className={"size-4"} />;
+
+  //     case "doc":
+  //       return <DocIcon className={"size-4"} />;
+
+  //     default:
+  //       return <FileIcon className={"size-4"} />;
+  //   }
+  // };
   return (
     <div className={cn("relative group shrink-0 mx-auto size-96 ", className)}>
       {/* {src} */}

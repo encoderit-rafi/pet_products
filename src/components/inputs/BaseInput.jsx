@@ -11,11 +11,19 @@ export default function BaseInput({
   register,
   type = "text",
   hideLabel = false,
+  required,
   ...props
 }) {
   return (
     <InputBox className="flex flex-col w-full">
-      {!hideLabel && <Label id={id} palceholder={palceholder} label={label} />}
+      {!hideLabel && (
+        <Label
+          id={id}
+          palceholder={palceholder}
+          label={label}
+          required={required}
+        />
+      )}
       <input
         id={id}
         name={id}

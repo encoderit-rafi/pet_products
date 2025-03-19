@@ -1,7 +1,13 @@
 import cn from "@/lib/utils/cn";
 import React from "react";
 
-export default function Label({ id, label, palceholder, className }) {
+export default function Label({
+  id,
+  label,
+  palceholder,
+  className,
+  required = false,
+}) {
   return (
     <label
       htmlFor={id}
@@ -12,6 +18,7 @@ export default function Label({ id, label, palceholder, className }) {
       aria-label={palceholder}
     >
       {label}
+      {required && <span className="text-red-500">*</span>}
     </label>
   );
 }
