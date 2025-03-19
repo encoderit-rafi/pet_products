@@ -5,7 +5,7 @@ import { useGetAllCategories } from "@/api/marketing/categories/useGetAllCategor
 
 export default function CategoriesDropdown({
   variant = "base",
-  defaultText = "Select Category",
+  defaultText = "Select",
   className,
   selected,
   setSelected,
@@ -30,7 +30,7 @@ export default function CategoriesDropdown({
   }, [params.brand_id]);
   return (
     <div className="">
-      {!hideLabel && <Label label="select Category" />}
+      {!hideLabel && <Label label="Category" />}
 
       <BaseDropdown
         variant={variant}

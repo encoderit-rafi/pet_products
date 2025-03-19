@@ -14,8 +14,8 @@ export const useCreateActivities = () => {
         date: format(item.date, "yyyy-MM-dd"),
       });
       console.log("🚀 ~ mutationFn: ~ data:", data);
-      // const body = toFormData(data);
-      return await Axios.post(`/marketing-activities`, data);
+      const body = toFormData(data);
+      return await Axios.post(`/marketing-activities`, body);
     },
   });
 };

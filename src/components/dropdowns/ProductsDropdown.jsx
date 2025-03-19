@@ -5,7 +5,7 @@ import Label from "../texts/Label";
 
 export default function ProductsDropdown({
   variant = "base",
-  defaultText = "Select Products",
+  defaultText = "Select",
   className,
   multiple,
   isDisable,
@@ -25,7 +25,7 @@ export default function ProductsDropdown({
   }, [params.brand_id]);
   return (
     <div className="">
-      <Label label={defaultText} />
+      <Label label={" Products"} />
 
       <BaseDropdown
         variant={variant}

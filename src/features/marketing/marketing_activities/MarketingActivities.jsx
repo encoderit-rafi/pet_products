@@ -184,7 +184,7 @@ export default function MarketingActivities() {
                   }))
                 }
               >
-                add new
+                create
               </BaseButton>
             </div>
           </div>
@@ -205,7 +205,7 @@ export default function MarketingActivities() {
         <Dialog
           isOpen={formValues.isOpen && formValues.type != "delete"}
           title={`${
-            formValues.type == "create" ? "add new" : "update"
+            formValues.type == "create" ? "create" : "update"
           } marketing activity`}
           className="max-w-lg"
         >

@@ -5,7 +5,7 @@ import { useGetAllPlatform } from "@/api/marketing/platforms/useGetAllPlatform";
 
 export default function PlatformsDropdown({
   variant = "base",
-  defaultText = "Select Platform",
+  defaultText = "Select",
   className,
   selected,
   setSelected,
@@ -27,7 +27,7 @@ export default function PlatformsDropdown({
   }, [params.category_id]);
   return (
     <div className="">
-      {!hideLabel && <Label label="select Platform" />}
+      {!hideLabel && <Label label="Platform" />}
 
       <BaseDropdown
         variant={variant}

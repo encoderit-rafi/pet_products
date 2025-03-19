@@ -19,7 +19,7 @@ export default function StoresDropdown({
   );
   return (
     <div className="">
-      <Label label={defaultText} />
+      <Label label={"Client"} />
 
       <BaseDropdown
         variant={variant}

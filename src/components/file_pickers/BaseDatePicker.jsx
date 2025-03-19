@@ -13,7 +13,7 @@ export default function BaseDatePicker({
       <DatePicker
         selected={date}
         onChange={(date) => setDate(date)}
-        dateFormat="MMM, yyyy"
+        dateFormat="mm-dd-yyyy"
         maxDate={new Date()}
         // className=" w-full inline-flex text-xs text-custom_text_two font-light capitalize items-center gap-2 bg-custom_bg_two cursor-pointer border border-custom_line_two rounded-full py-1.5 px-3  focus:outline-none  data-[focus]:outline-1 data-[focus]:outline-white"
         className="base-input"

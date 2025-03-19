@@ -114,7 +114,7 @@ const BaseDropdown = ({
                   <span className="capitalize">{option[field]}</span>
                   <CheckIcon
                     className={cn(
-                      "invisible transition-all duration-500 scale-90 opacity-0 size-3 text-[#74b222]",
+                      "invisible transition-all duration-500 scale-90 opacity-0 shrink-0 size-3 text-[#74b222]",
                       {
                         "opacity-100 visible scale-100 ": selected?.some(
                           (select) => select?.id == option?.id
