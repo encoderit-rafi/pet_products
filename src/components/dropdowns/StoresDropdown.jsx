@@ -11,10 +11,15 @@ export default function StoresDropdown({
   setSelected,
 }) {
   const { data, isLoading, isFetching } = useGetAllStores();
-
+  useEffect(
+    (data) => {
+      console.log("🚀 ~ StoresDropdown ~ data:", data);
+    },
+    [data]
+  );
   return (
     <div className="">
-      <Label label="stores" />
+      <Label label={defaultText} />
 
       <BaseDropdown
         variant={variant}

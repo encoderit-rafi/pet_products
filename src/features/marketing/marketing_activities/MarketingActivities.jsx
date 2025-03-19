@@ -57,16 +57,16 @@ export default function MarketingActivities() {
           value: "date",
           cellValue: (row) => <span>{row?.date || "-"}</span>,
         },
-        // {
-        //   name: "cost",
-        //   value: "cost",
-        //   cellValue: (row) => <span>{row?.cost || "-"}</span>,
-        // },
         {
-          name: "total",
-          value: "total",
-          cellValue: (row) => <span>{row?.total || "-"}</span>,
+          name: "cost",
+          value: "cost",
+          cellValue: (row) => <span>{row?.cost || "-"}</span>,
         },
+        // {
+        //   name: "total",
+        //   value: "total",
+        //   cellValue: (row) => <span>{row?.total || "-"}</span>,
+        // },
         {
           name: "description",
           value: "description",

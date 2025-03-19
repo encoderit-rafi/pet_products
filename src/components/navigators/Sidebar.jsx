@@ -56,7 +56,12 @@ export default function Sidebar({ className, children }) {
           permissions: ["read_media_kit"],
           icon: <PlayIcon className="w-3" />,
         },
-
+        {
+          path: "/marketing",
+          name: "marketing",
+          permissions: ["read_marketing"],
+          icon: <MarketingIcon className="w-[18px]" />,
+        },
         {
           path: "/shelves",
           name: "shelves",
@@ -81,12 +86,6 @@ export default function Sidebar({ className, children }) {
           permissions: ["all"],
 
           icon: <TermsIcon className="w-4" />,
-        },
-        {
-          path: "/marketing",
-          name: "marketing",
-          permissions: ["read_marketing"],
-          icon: <MarketingIcon className="w-[18px]" />,
         },
       ].filter((item) =>
         item.permissions?.some((item) =>

@@ -20,6 +20,7 @@ import { useCreateActivities } from "@/api/marketing/activities/useCreateActivit
 import { useGetAllActivities } from "@/api/marketing/activities/useGetAllActivities";
 import { useUpdateActivities } from "@/api/marketing/activities/useUpdateActivities";
 import ImagePreview from "@/components/file_pickers/ImagePreview";
+import ProductsDropdown from "@/components/dropdowns/ProductsDropdown";
 // import { useCreateStand } from "../api/mutations/useCreateStand";
 // import { useGetAllShelves } from "../api/queries/useGetAllShelves";
 
@@ -54,8 +55,9 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
   // const [selectNewImages, setSelectNewImages] = useState(false);
 
   const [selectedBrand, setSelectedBrand] = useState([]);
+  const [selectedStore, setSelectedStore] = useState([]);
+  const [selectedProducts, setSelectedProducts] = useState([]);
   const [selectedStandType, setSelectedStandType] = useState([]);
-  // const [selectedStore, setSelectedStore] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [selectedPlatform, setSelectedPlatform] = useState([]);
   useEffect(() => {
@@ -63,9 +65,11 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
       // { key: "attachments", value: images },
       { key: "date", value: date },
       { key: "brand_id", value: selectedBrand[0]?.id },
+      { key: "store_id", value: selectedStore[0]?.id },
       { key: "platform_id", value: selectedPlatform[0]?.id },
       { key: "category_id", value: selectedCategory[0]?.id },
       { key: "stand_id", value: selectedStandType[0]?.id },
+      { key: "product_ids", value: selectedProducts },
     ];
 
     fieldsToUpdate.forEach(({ key, value }) => {
@@ -76,6 +80,8 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
     // images,
     date,
     selectedBrand,
+    selectedStore,
+    selectedProducts,
     selectedPlatform,
     selectedCategory,
     selectedStandType,
@@ -83,10 +89,12 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
   function resetFields() {
     reset();
     // setImages([]);
+    setSelectedStore([]);
     setSelectedBrand([]);
     setSelectedPlatform([]);
     setSelectedCategory([]);
     setSelectedStandType([]);
+    setSelectedProducts([]);
     // setSelectNewImages(false);
   }
   useEffect(() => {
@@ -102,6 +110,8 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
         channel,
         reach,
         description,
+        store,
+        products,
       } = formValues.data;
       setValue("date", date);
       setValue("total", total);
@@ -110,9 +120,11 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
       setValue("reach", reach);
       setValue("description", description);
       setSelectedBrand([brand]);
+      setSelectedStore([store]);
       setSelectedCategory([marketing_category]);
       setSelectedPlatform([platform]);
       setSelectedStandType([stand]);
+      setSelectedProducts([products]);
     } else {
       resetFields();
     }
@@ -130,10 +142,16 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
         condition: (value) => value === undefined,
         message: "Brand is required",
       },
+      // {
+      //   key: "platform_id",
+      //   condition: (value) => value === undefined,
+      //   message: "Platform  is required",
+      // },
+
       {
-        key: "platform_id",
+        key: "store_id",
         condition: (value) => value === undefined,
-        message: "Platform  is required",
+        message: "Store  is required",
       },
       {
         key: "category_id",
@@ -153,9 +171,16 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
         return;
       }
     }
+    console.log("🚀 ~ onSubmit ~ selectedProducts:", selectedProducts);
     formValues.type == "create"
       ? createActivity(
-          { ...item },
+          {
+            ...item,
+            product_ids: selectedProducts
+              .filter((item) => !!item.id)
+              .map((item) => item.id)
+              .join(","),
+          },
           {
             onSuccess() {
               fetchAllActivities();
@@ -169,7 +194,13 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
       : updateActivity(
           {
             id: formValues.data.id,
-            data: item,
+            data: {
+              ...item,
+              product_ids: selectedProducts
+                .filter((item) => !!item?.id)
+                .map((item) => item.id)
+                .join(","),
+            },
           },
           {
             onSuccess() {
@@ -212,6 +243,21 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
             data?.id != selectedBrand?.[0]?.id && setSelectedBrand([data]);
           }}
         />
+        <StoresDropdown
+          defaultText="Select Store"
+          selected={selectedStore}
+          setSelected={(data) => {
+            data?.id != selectedStore?.[0]?.id && setSelectedStore([data]);
+          }}
+        />
+        <ProductsDropdown
+          selected={selectedProducts}
+          setSelected={(data) => {
+            data?.id != selectedProducts?.[0]?.id &&
+              setSelectedProducts((old) => [...old, data]);
+          }}
+          multiple
+        />
         <StandTypeDropdown
           isDisable={selectedBrand?.length == 0 ? true : false}
           params={{ brand_id: selectedBrand?.[0]?.id }}
@@ -229,6 +275,7 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
             data?.id != selectedCategory?.[0]?.id &&
               setSelectedCategory([data]);
           }}
+          className={"cursor-pointer"}
         />
         <PlatformsDropdown
           isDisable={selectedCategory?.length == 0 ? true : false}
@@ -240,19 +287,23 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
           }}
           className={"col-span-2 bg-slate-500 w-full"}
         />
-        <InputBox className="">
+        {/* <InputBox className="">
           <Label label={"date"} />
           <BaseDatePicker date={date} setDate={(date) => setDate(date)} />
-        </InputBox>
-        {/* <BaseInput
+        </InputBox> */}
+        <div className="">
+          <Label label={"date"} />
+          <BaseDatePicker date={date} setDate={(date) => setDate(date)} />
+        </div>
+        <BaseInput
           id="cost"
           label="cost"
           palceholder="Enter Value"
           type="number"
           className={`py-3 rounded-lg ${errors?.cost ? "!border-red-500" : ""}`}
           register={register("cost", validationRules.required)}
-        /> */}
-        <BaseInput
+        />
+        {/* <BaseInput
           id="total"
           label="total"
           palceholder="Enter Value"
@@ -261,7 +312,7 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
             errors?.total ? "!border-red-500" : ""
           }`}
           register={register("total", validationRules.required)}
-        />
+        /> */}
         <BaseInput
           id="channel"
           label="channel"

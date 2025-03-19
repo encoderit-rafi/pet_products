@@ -15,7 +15,7 @@ export const useGetAllStores = () => {
         await Axios.get("/clients", {
           params,
         })
-      ).data;
+      ).data.data;
     },
   });
   return {
