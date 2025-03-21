@@ -1,4 +1,4 @@
-import { useInfiniteGetAllProducts } from "@/api/products/useInfiniteGetAllProducts";
+// import { useInfiniteGetAllProducts } from "@/api/brands/useInfiniteGetAllProducts";
 import { Fragment, useState, useEffect } from "react";
 import {
   Listbox,
@@ -14,8 +14,9 @@ import CheckIcon from "@/assets/icons/CheckIcon";
 import Label from "../texts/Label";
 import LoadingIcon from "@/assets/icons/LoadingIcon";
 import DownIcon from "@/assets/icons/DownIcon";
+import { useInfiniteGetAllBrands } from "@/api/brands/useInfiniteGetAllBrands";
 
-export default function ProductCombobox({
+export default function BrandCombobox({
   disabled,
   required,
   selected,
@@ -24,26 +25,26 @@ export default function ProductCombobox({
   variant = "base",
   searchable = false,
   multiple = false,
-  defaultText = "Select an product",
+  defaultText = "Select an brand",
   errorText = "No data found",
-  field = "product_name_en",
+  field = "name",
   params,
 }) {
   console.log("✅ ~ selected:", selected);
   // console.log("🚀 ~ disabled:", disabled);
   const {
-    data: products,
+    data: brands,
     isLoading,
     isFetching,
     isFetchingNextPage,
     fetchNextPage,
     hasNextPage,
     handleSearch,
-  } = useInfiniteGetAllProducts();
+  } = useInfiniteGetAllBrands();
 
   const { ref, inView } = useInView();
   const { isDark } = useTheme();
-  const [query, setQuery] = useState(selected?.[0]?.[field]);
+  const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   function onClickHandler(data) {
     console.log("🚀 ~ onClickHandler ~ data:", data);
@@ -60,20 +61,16 @@ export default function ProductCombobox({
     }
   }, [inView, hasNextPage]);
 
-  // const products = data?.pages?.flatMap((page) => page.products) ?? [];
-  useEffect(() => {
-    handleSearch({ brand_id: params.brand_id, search: query });
-  }, [params.brand_id]);
   const handleSearchSubmit = (e) => {
     e.preventDefault(); // ✅ Prevent page reload
-    handleSearch({ brand_id: params.brand_id, search: query });
+    handleSearch({ search: query });
     setIsOpen(true); // ✅ Keep dropdown open after search
   };
 
   return (
     <div className="w-full">
       <Label
-        label={` Products ${
+        label={` Brand ${
           selected.length > 0 && searchable && multiple
             ? `(${selected.length})`
             : ""
@@ -99,7 +96,7 @@ export default function ProductCombobox({
                   { "cursor-wait": isLoading },
                   className
                 )}
-                placeholder="Search products..."
+                placeholder="Search brands..."
                 value={query}
                 disabled={disabled}
                 onChange={(e) => setQuery(e.target.value)}
@@ -170,12 +167,12 @@ export default function ProductCombobox({
             >
               {isLoading ? (
                 <p className="p-2 text-lime-300 text-sm">Loading...</p>
-              ) : products.length === 0 ? (
+              ) : brands.length === 0 ? (
                 <p className="p-2 text-gray-500">{errorText}</p>
               ) : (
-                products.map((product) => (
+                brands.map((brand) => (
                   <ListboxOption
-                    key={product.id}
+                    key={brand.id}
                     // className={({ active }) =>
                     //   cn("cursor-pointer select-none p-2", {
                     //     "bg-gray-200": active,
@@ -190,40 +187,30 @@ export default function ProductCombobox({
                         "hover:bg-[#ffffff]": !isDark,
                         "bg-[#ffffff]":
                           !isDark &&
-                          selected?.some((select) => select?.id == product?.id),
+                          selected?.some((select) => select?.id == brand?.id),
                         "bg-[#313639]":
                           isDark &&
-                          selected?.some((select) => select?.id == product?.id),
+                          selected?.some((select) => select?.id == brand?.id),
                       }
                     )}
-                    value={product}
-                    onClick={() => onClickHandler(product)}
+                    value={brand}
+                    onClick={() => onClickHandler(brand)}
                   >
-                    <div className="flex items-center justify-between">
-                      <span className="">
-                        ({product.sap_product_code}) {product.product_name_en}
+                    <div className="flex items-center justify-between w-full">
+                      <span className="">{brand.name}</span>
+                      <span>
+                        <CheckIcon
+                          className={cn(
+                            "invisible transition-all duration-500 scale-90 opacity-0 shrink-0 size-3 text-[#74b222]",
+                            {
+                              "opacity-100 visible scale-100 ": selected?.some(
+                                (select) => select?.id == brand?.id
+                              ),
+                            }
+                          )}
+                        />
                       </span>
-                      <CheckIcon
-                        className={cn(
-                          "invisible transition-all duration-500 scale-90 opacity-0 shrink-0 size-3 text-[#74b222]",
-                          {
-                            "opacity-100 visible scale-100 ": selected?.some(
-                              (select) => select?.id == product?.id
-                            ),
-                          }
-                        )}
-                      />
                     </div>
-                    {/* {({ selected }) => (
-                      <div className="flex items-center justify-between">
-                        <span className="">
-                          ({product.sap_product_code}) {product.product_name_en}
-                        </span>
-                        {selected && (
-                          <CheckIcon className="w-4 h-4 text-green-500 shrink-0" />
-                        )}
-                      </div>
-                    )} */}
                   </ListboxOption>
                 ))
               )}

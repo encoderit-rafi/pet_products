@@ -1,4 +1,3 @@
-import { useInfiniteGetAllProducts } from "@/api/products/useInfiniteGetAllProducts";
 import { Fragment, useState, useEffect } from "react";
 import {
   Listbox,
@@ -14,8 +13,9 @@ import CheckIcon from "@/assets/icons/CheckIcon";
 import Label from "../texts/Label";
 import LoadingIcon from "@/assets/icons/LoadingIcon";
 import DownIcon from "@/assets/icons/DownIcon";
+import { useInfiniteGetAllCategories } from "@/api/marketing/categories/useInfiniteGetAllCategories";
 
-export default function ProductCombobox({
+export default function CategoryCombobox({
   disabled,
   required,
   selected,
@@ -24,26 +24,29 @@ export default function ProductCombobox({
   variant = "base",
   searchable = false,
   multiple = false,
-  defaultText = "Select an product",
+  defaultText = "Select ",
   errorText = "No data found",
-  field = "product_name_en",
+  field = "name",
   params,
 }) {
   console.log("✅ ~ selected:", selected);
   // console.log("🚀 ~ disabled:", disabled);
   const {
-    data: products,
+    data: category,
     isLoading,
     isFetching,
     isFetchingNextPage,
     fetchNextPage,
     hasNextPage,
     handleSearch,
-  } = useInfiniteGetAllProducts();
+  } = useInfiniteGetAllCategories();
 
   const { ref, inView } = useInView();
   const { isDark } = useTheme();
-  const [query, setQuery] = useState(selected?.[0]?.[field]);
+  const [query, setQuery] = useState(() => selected?.[0]?.[field]);
+  useEffect(() => {
+    setQuery(selected?.[0]?.[field]);
+  }, [selected]);
   const [isOpen, setIsOpen] = useState(false);
   function onClickHandler(data) {
     console.log("🚀 ~ onClickHandler ~ data:", data);
@@ -59,21 +62,19 @@ export default function ProductCombobox({
       fetchNextPage();
     }
   }, [inView, hasNextPage]);
-
-  // const products = data?.pages?.flatMap((page) => page.products) ?? [];
   useEffect(() => {
-    handleSearch({ brand_id: params.brand_id, search: query });
+    handleSearch({ ...params, search: query });
   }, [params.brand_id]);
   const handleSearchSubmit = (e) => {
     e.preventDefault(); // ✅ Prevent page reload
-    handleSearch({ brand_id: params.brand_id, search: query });
+    handleSearch({ ...params, search: query });
     setIsOpen(true); // ✅ Keep dropdown open after search
   };
 
   return (
     <div className="w-full">
       <Label
-        label={` Products ${
+        label={`category ${
           selected.length > 0 && searchable && multiple
             ? `(${selected.length})`
             : ""
@@ -99,7 +100,7 @@ export default function ProductCombobox({
                   { "cursor-wait": isLoading },
                   className
                 )}
-                placeholder="Search products..."
+                placeholder="Search category..."
                 value={query}
                 disabled={disabled}
                 onChange={(e) => setQuery(e.target.value)}
@@ -157,25 +158,15 @@ export default function ProductCombobox({
                   "bg-white text-black": !isDark,
                 }
               )}
-
-              // className={cn(
-              //   "z-[60] mt-1 space-y-1 rounded-xl p-1 [--anchor-gap:var(--spacing-1)] focus:outline-none transition duration-200 ease-in data-[leave]:data-[closed]:opacity-0 shadow-lg",
-              //   {
-              //     "w-[var(--button-width)]": variant == "base",
-              //     "w-56": variant == "rounded",
-              //     "bg-[#21272b]": isDark,
-              //     "bg-[#f8f8f8]": !isDark,
-              //   }
-              // )}
             >
               {isLoading ? (
                 <p className="p-2 text-lime-300 text-sm">Loading...</p>
-              ) : products.length === 0 ? (
+              ) : category.length === 0 ? (
                 <p className="p-2 text-gray-500">{errorText}</p>
               ) : (
-                products.map((product) => (
+                category.map((category) => (
                   <ListboxOption
-                    key={product.id}
+                    key={category.id}
                     // className={({ active }) =>
                     //   cn("cursor-pointer select-none p-2", {
                     //     "bg-gray-200": active,
@@ -190,40 +181,32 @@ export default function ProductCombobox({
                         "hover:bg-[#ffffff]": !isDark,
                         "bg-[#ffffff]":
                           !isDark &&
-                          selected?.some((select) => select?.id == product?.id),
+                          selected?.some(
+                            (select) => select?.id == category?.id
+                          ),
                         "bg-[#313639]":
                           isDark &&
-                          selected?.some((select) => select?.id == product?.id),
+                          selected?.some(
+                            (select) => select?.id == category?.id
+                          ),
                       }
                     )}
-                    value={product}
-                    onClick={() => onClickHandler(product)}
+                    value={category}
+                    onClick={() => onClickHandler(category)}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="">
-                        ({product.sap_product_code}) {product.product_name_en}
-                      </span>
+                      <span className="">{category[field]}</span>
                       <CheckIcon
                         className={cn(
                           "invisible transition-all duration-500 scale-90 opacity-0 shrink-0 size-3 text-[#74b222]",
                           {
                             "opacity-100 visible scale-100 ": selected?.some(
-                              (select) => select?.id == product?.id
+                              (select) => select?.id == category?.id
                             ),
                           }
                         )}
                       />
                     </div>
-                    {/* {({ selected }) => (
-                      <div className="flex items-center justify-between">
-                        <span className="">
-                          ({product.sap_product_code}) {product.product_name_en}
-                        </span>
-                        {selected && (
-                          <CheckIcon className="w-4 h-4 text-green-500 shrink-0" />
-                        )}
-                      </div>
-                    )} */}
                   </ListboxOption>
                 ))
               )}

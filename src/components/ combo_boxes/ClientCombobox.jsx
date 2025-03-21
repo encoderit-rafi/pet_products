@@ -26,6 +26,7 @@ export default function ClientCombobox({
   multiple = false,
   defaultText = "Select an client",
   errorText = "No data found",
+  field = "name_en",
   params,
 }) {
   console.log("✅ ~ selected:", selected);
@@ -42,7 +43,10 @@ export default function ClientCombobox({
 
   const { ref, inView } = useInView();
   const { isDark } = useTheme();
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(() => selected?.[0]?.[field]);
+  useEffect(() => {
+    setQuery(selected?.[0]?.[field]);
+  }, [selected]);
   const [isOpen, setIsOpen] = useState(false);
   function onClickHandler(data) {
     console.log("🚀 ~ onClickHandler ~ data:", data);
@@ -73,7 +77,9 @@ export default function ClientCombobox({
     <div className="w-full">
       <Label
         label={`client ${
-          selected.length > 0 && searchable ? `(${selected.length})` : ""
+          selected.length > 0 && searchable && multiple
+            ? `(${selected.length})`
+            : ""
         }`}
         required={required}
       />

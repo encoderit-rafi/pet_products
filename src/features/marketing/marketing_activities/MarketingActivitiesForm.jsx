@@ -20,10 +20,13 @@ import { useCreateActivities } from "@/api/marketing/activities/useCreateActivit
 import { useGetAllActivities } from "@/api/marketing/activities/useGetAllActivities";
 import { useUpdateActivities } from "@/api/marketing/activities/useUpdateActivities";
 import ImagePreview from "@/components/file_pickers/ImagePreview";
-import ProductsDropdown from "@/components/dropdowns/ProductsDropdown";
-import BrandList from "@/components/BrandList";
+
 import ProductCombobox from "@/components/ combo_boxes/ProductCombobox";
 import ClientCombobox from "@/components/ combo_boxes/ClientCombobox";
+import BrandCombobox from "@/components/ combo_boxes/BrandCombobox";
+import StandCombobox from "@/components/ combo_boxes/StandCombobox";
+import CategoryCombobox from "@/components/ combo_boxes/CategoryCombobox";
+import PlatformCombobox from "@/components/ combo_boxes/PlatformCombobox";
 // import { useCreateStand } from "../api/mutations/useCreateStand";
 // import { useGetAllShelves } from "../api/queries/useGetAllShelves";
 
@@ -264,22 +267,14 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
         />
       )}
       <div className="grid grid-cols-2 gap-2 items-start">
-        <BrandsDropdown
+        <BrandCombobox
           required
+          // searchable
           selected={selectedBrand}
           setSelected={(data) => {
             data?.id != selectedBrand?.[0]?.id && setSelectedBrand([data]);
           }}
         />
-        {/* <BrandList /> */}
-        {/* <StoresDropdown
-          required
-          defaultText="Select"
-          selected={selectedStore}
-          setSelected={(data) => {
-            data?.id != selectedStore?.[0]?.id && setSelectedStore([data]);
-          }}
-        /> */}
         <ClientCombobox
           required
           searchable
@@ -304,9 +299,9 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
             );
           }}
         />
-
-        <StandTypeDropdown
-          isDisable={selectedBrand?.length == 0 ? true : false}
+        <StandCombobox
+          searchable
+          disabled={selectedBrand?.length == 0 ? true : false}
           params={{ brand_id: selectedBrand?.[0]?.id }}
           selected={selectedStandType}
           setSelected={(data) => {
@@ -314,7 +309,7 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
               setSelectedStandType([data]);
           }}
         />
-        <CategoriesDropdown
+        {/* <CategoriesDropdown
           required
           isDisable={selectedBrand?.length == 0 ? true : false}
           params={{ brand_id: selectedBrand?.[0]?.id }}
@@ -323,8 +318,19 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
             data?.id != selectedCategory?.[0]?.id &&
               setSelectedCategory([data]);
           }}
+        /> */}
+        <CategoryCombobox
+          searchable
+          required
+          disabled={selectedBrand?.length == 0 ? true : false}
+          params={{ brand_id: selectedBrand?.[0]?.id }}
+          selected={selectedCategory}
+          setSelected={(data) => {
+            data?.id != selectedCategory?.[0]?.id &&
+              setSelectedCategory([data]);
+          }}
         />
-        <PlatformsDropdown
+        {/* <PlatformsDropdown
           isDisable={selectedCategory?.length == 0 ? true : false}
           params={{ category_id: selectedCategory?.[0]?.id }}
           selected={selectedPlatform}
@@ -333,6 +339,15 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
               setSelectedPlatform([data]);
           }}
           className={"col-span-2 bg-slate-500 w-full"}
+        /> */}
+        <PlatformCombobox
+          disabled={selectedCategory?.length == 0 ? true : false}
+          params={{ category_id: selectedCategory?.[0]?.id }}
+          selected={selectedPlatform}
+          setSelected={(data) => {
+            data?.id != selectedPlatform?.[0]?.id &&
+              setSelectedPlatform([data]);
+          }}
         />
 
         <BaseInput

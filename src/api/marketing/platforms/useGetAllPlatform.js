@@ -6,27 +6,6 @@ import { useSearchParams } from "react-router-dom";
 
 export const useGetAllPlatform = ({ setToUrl, isEnabled, all }) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  // const [params, setParams] = useState(() => {
-  //   const queryParams = {
-  // page: searchParams.get("page") || PAGINATION.page,
-  // per_page: searchParams.get("per_page") || PAGINATION.per_page,
-  //   };
-  //   const search = searchParams.get("search");
-  //   const brand_id = searchParams.get("brand_id");
-  //   const category_id = searchParams.get("category_id");
-
-  //   if (search) {
-  //     queryParams.search = search;
-  //   }
-  //   if (brand_id) {
-  //     queryParams.brand_id = brand_id;
-  //   }
-  //   if (category_id) {
-  //     queryParams.category_id = category_id;
-  //   }
-
-  //   return queryParams;
-  // });
   const [params, setParams] = useState({
     page: searchParams.get("page") || PAGINATION.page,
     per_page: all ? 1000 : searchParams.get("per_page") || PAGINATION.per_page,
