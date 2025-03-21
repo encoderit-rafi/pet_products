@@ -30,7 +30,7 @@ export default function ImagePicker({
 
   return (
     <div className="flex flex-col items-center space-y-4">
-      {images?.length === 0 && (
+      {(images?.length === 0 || multiple) && (
         <>
           <div
             className={cn(
@@ -63,10 +63,11 @@ export default function ImagePicker({
       )}
 
       {!hidePreview && images?.length > 0 && (
-        <div className="flex items-center w-full gap-2 overflow-x-auto">
+        <div className="flex w-full gap-2 overflow-x-auto">
           {images?.map((file, index) => (
             <ImagePreview
-              className={"size-48"}
+              className={"size-36"}
+              attachments={file}
               key={index}
               src={URL.createObjectURL(file)}
               onClickClose={() => handleRemoveImage(index)}

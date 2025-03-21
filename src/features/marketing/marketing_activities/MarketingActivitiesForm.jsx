@@ -236,7 +236,7 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
 
   return (
     <form
-      className="flex flex-col mt-4 space-y-2"
+      className="flex flex-col mt-4 space-y-2  max-h-svh overflow-y-auto"
       onSubmit={handleSubmit(onSubmit)}
     >
       {formValues.type === "update" &&
@@ -246,7 +246,7 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
         formValues.data.attachments.map((attachment) => (
           <ImagePreview
             className={"size-32"}
-            // attachments={formValues.data.attachments}
+            attachments={formValues.data}
             src={attachment.url}
             onClickClose={() => setSelectNewImages(true)}
           />
@@ -261,12 +261,12 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
           setImages={setImages}
           isError={errors?.attachments?.message}
           title="Upload Files"
-          // subTitle="JPG, JPEG, PNG, PDF, EXCEL"
-          // accept=".xlsx, .xls, application/pdf, image/jpeg, image/png"
+          subTitle="JPG, JPEG, PNG, PDF, EXCEL"
+          accept=".xlsx, .xls, application/pdf, image/jpeg, image/png"
           multiple
         />
       )}
-      <div className="grid grid-cols-2 gap-2 items-start">
+      <div className="grid grid-cols-2 gap-2 items-start max-h-96 overflow-auto">
         <BrandCombobox
           required
           // searchable
