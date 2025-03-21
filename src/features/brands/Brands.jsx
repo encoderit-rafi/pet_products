@@ -9,7 +9,6 @@ import ImageDialog from "@/components/dialogs/ImageDialog";
 import getImageUrl from "@/lib/utils/getImageUrl";
 import { useGetAllBrands } from "./api/queries/useGetAllBrands";
 import Page from "@/components/ui/Page";
-import UserComboBox from "@/components/UserComboBox";
 
 export default function Brands() {
   const {
@@ -101,7 +100,6 @@ export default function Brands() {
               onChange={(e) => setSearch(e.target.value)}
             />
           </form>
-          {/* <UserComboBox /> */}
         </div>
       }
       footer={

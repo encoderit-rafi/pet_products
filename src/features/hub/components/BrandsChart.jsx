@@ -7,7 +7,6 @@ import BaseBarChart from "@/components/charts/BaseBarChart";
 import BaseDropdown from "@/components/dropdowns/BaseDropdown";
 import { useGetAllBrands } from "@/api/brands/useGetAllBrands";
 import { useBrandsBarChart } from "../api/queries/brands/useBrandsBarChart";
-import BrandSelect from "@/components/BrandSelect";
 
 export default function BrandsChart() {
   const {
@@ -46,7 +45,6 @@ export default function BrandsChart() {
       <div className="flex items-center justify-between mb-3">
         <SubTitle>Brands Chart</SubTitle>
         <div className="flex items-center gap-3">
-          {/* <BrandSelect /> */}
           <BaseDropdown
             multiple
             variant="rounded"

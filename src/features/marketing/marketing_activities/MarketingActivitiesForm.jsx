@@ -21,6 +21,9 @@ import { useGetAllActivities } from "@/api/marketing/activities/useGetAllActivit
 import { useUpdateActivities } from "@/api/marketing/activities/useUpdateActivities";
 import ImagePreview from "@/components/file_pickers/ImagePreview";
 import ProductsDropdown from "@/components/dropdowns/ProductsDropdown";
+import BrandList from "@/components/BrandList";
+import ProductCombobox from "@/components/ combo_boxes/ProductCombobox";
+import ClientCombobox from "@/components/ combo_boxes/ClientCombobox";
 // import { useCreateStand } from "../api/mutations/useCreateStand";
 // import { useGetAllShelves } from "../api/queries/useGetAllShelves";
 
@@ -268,27 +271,40 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
             data?.id != selectedBrand?.[0]?.id && setSelectedBrand([data]);
           }}
         />
-        <StoresDropdown
+        {/* <BrandList /> */}
+        {/* <StoresDropdown
           required
           defaultText="Select"
           selected={selectedStore}
           setSelected={(data) => {
             data?.id != selectedStore?.[0]?.id && setSelectedStore([data]);
           }}
+        /> */}
+        <ClientCombobox
+          required
+          searchable
+          defaultText="Select"
+          selected={selectedStore}
+          setSelected={(data) => {
+            data?.id != selectedStore?.[0]?.id && setSelectedStore([data]);
+          }}
         />
-        <ProductsDropdown
-          isDisable={selectedBrand?.length == 0 ? true : false}
+        <ProductCombobox
+          // required
+          multiple
+          searchable
+          disabled={selectedBrand?.length == 0 ? true : false}
           params={{ brand_id: selectedBrand?.[0]?.id }}
           selected={selectedProducts}
           setSelected={(data) => {
-            selectedProducts?.some((item) => item.id == data.id)
-              ? setSelectedProducts((old) =>
-                  old.filter((item) => item.id != data.id)
-                )
-              : setSelectedProducts((old) => [...old, data]);
+            setSelectedProducts((old) =>
+              selectedProducts?.some((item) => item.id == data.id)
+                ? old.filter((item) => item.id != data.id)
+                : [...selectedProducts, data]
+            );
           }}
-          multiple
         />
+
         <StandTypeDropdown
           isDisable={selectedBrand?.length == 0 ? true : false}
           params={{ brand_id: selectedBrand?.[0]?.id }}
