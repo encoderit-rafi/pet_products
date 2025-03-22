@@ -202,7 +202,7 @@ export default function ClientCombobox({
                     value={client}
                     onClick={() => onClickHandler(client)}
                   >
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between w-full">
                       <span className="">
                         ({client.sap_client_code}) {client.name_en}
                       </span>

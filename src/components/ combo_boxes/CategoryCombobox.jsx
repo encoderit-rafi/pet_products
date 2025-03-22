@@ -194,7 +194,7 @@ export default function CategoryCombobox({
                     value={category}
                     onClick={() => onClickHandler(category)}
                   >
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between w-full">
                       <span className="">{category[field]}</span>
                       <CheckIcon
                         className={cn(

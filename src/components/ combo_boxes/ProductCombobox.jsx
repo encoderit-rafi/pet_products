@@ -199,7 +199,7 @@ export default function ProductCombobox({
                     value={product}
                     onClick={() => onClickHandler(product)}
                   >
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between w-full">
                       <span className="">
                         ({product.sap_product_code}) {product.product_name_en}
                       </span>

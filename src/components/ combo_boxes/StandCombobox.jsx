@@ -191,7 +191,7 @@ export default function StandCombobox({
                     value={stand}
                     onClick={() => onClickHandler(stand)}
                   >
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between w-full">
                       <span className="">{stand[field]}</span>
                       <CheckIcon
                         className={cn(

@@ -59,11 +59,10 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
   const [date, setDate] = useState(new Date());
   const [images, setImages] = useState([]);
   const [selectNewImages, setSelectNewImages] = useState(false);
-
   const [selectedBrand, setSelectedBrand] = useState([]);
   const [selectedStore, setSelectedStore] = useState([]);
   const [selectedProducts, setSelectedProducts] = useState([]);
-  const [selectedStandType, setSelectedStandType] = useState([]);
+  const [selectedStand, setSelectedStand] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [selectedPlatform, setSelectedPlatform] = useState([]);
   useEffect(() => {
@@ -74,7 +73,7 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
       { key: "client_id", value: selectedStore[0]?.id },
       { key: "platform_id", value: selectedPlatform[0]?.id },
       { key: "category_id", value: selectedCategory[0]?.id },
-      { key: "stand_id", value: selectedStandType[0]?.id },
+      { key: "stand_id", value: selectedStand[0]?.id },
       { key: "product_ids", value: selectedProducts },
     ];
 
@@ -90,17 +89,18 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
     selectedProducts,
     selectedPlatform,
     selectedCategory,
-    selectedStandType,
+    selectedStand,
   ]);
   function resetFields() {
+    console.log("🚀 ~ resetFields ~ resetFields:");
     reset();
     setImages([]);
-    setSelectedStore([]);
     setSelectedBrand([]);
-    setSelectedPlatform([]);
-    setSelectedCategory([]);
-    setSelectedStandType([]);
+    setSelectedStore([]);
     setSelectedProducts([]);
+    setSelectedStand([]);
+    setSelectedCategory([]);
+    setSelectedPlatform([]);
     setSelectNewImages(false);
   }
   useEffect(() => {
@@ -131,12 +131,13 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
       setSelectedStore([client]);
       setSelectedCategory([marketing_category]);
       setSelectedPlatform([platform]);
-      setSelectedStandType([stand]);
+      setSelectedStand([stand]);
       setSelectedProducts(products.length > 0 ? products : []);
     } else {
       resetFields();
     }
   }, [formValues]);
+
   function handelClose() {
     resetFields();
     onClose();
@@ -303,10 +304,9 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
           searchable
           disabled={selectedBrand?.length == 0 ? true : false}
           params={{ brand_id: selectedBrand?.[0]?.id }}
-          selected={selectedStandType}
+          selected={selectedStand}
           setSelected={(data) => {
-            data?.id != selectedStandType?.[0]?.id &&
-              setSelectedStandType([data]);
+            data?.id != selectedStand?.[0]?.id && setSelectedStand([data]);
           }}
         />
         {/* <CategoriesDropdown

@@ -30,7 +30,7 @@ export default function PlatformCombobox({
   field = "platform",
   params,
 }) {
-  // console.log("✅ ~ selected:", selected);
+  console.log("✅ ~ selected:", selected);
   // console.log("🚀 ~ disabled:", disabled);
   const {
     data: platforms,
@@ -197,9 +197,9 @@ export default function PlatformCombobox({
                     value={platform}
                     onClick={() => onClickHandler(platform)}
                   >
-                    <div className="flex items-center justify-between">
-                      {/* <span className="">{platform[field]}</span> */}
-                      {console.log({ platform })}
+                    <div className="flex items-center justify-between w-full">
+                      <span className="">{platform[field]}</span>
+                      {/* {console.log({ platform })} */}
                       <CheckIcon
                         className={cn(
                           "invisible transition-all duration-500 scale-90 opacity-0 shrink-0 size-3 text-[#74b222]",
