@@ -44,6 +44,9 @@ export default function ProductCombobox({
   const { ref, inView } = useInView();
   const { isDark } = useTheme();
   const [query, setQuery] = useState(selected?.[0]?.[field]);
+  useEffect(() => {
+    setQuery(selected?.[0]?.[field] || "");
+  }, [selected]);
   const [isOpen, setIsOpen] = useState(false);
   function onClickHandler(data) {
     console.log("🚀 ~ onClickHandler ~ data:", data);

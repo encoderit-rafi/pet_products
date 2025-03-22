@@ -92,7 +92,6 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
     selectedStand,
   ]);
   function resetFields() {
-    console.log("🚀 ~ resetFields ~ resetFields:");
     reset();
     setImages([]);
     setSelectedBrand([]);
@@ -330,16 +329,6 @@ export default function MarketingActivitiesForm({ formValues, onClose }) {
               setSelectedCategory([data]);
           }}
         />
-        {/* <PlatformsDropdown
-          isDisable={selectedCategory?.length == 0 ? true : false}
-          params={{ category_id: selectedCategory?.[0]?.id }}
-          selected={selectedPlatform}
-          setSelected={(data) => {
-            data?.id != selectedPlatform?.[0]?.id &&
-              setSelectedPlatform([data]);
-          }}
-          className={"col-span-2 bg-slate-500 w-full"}
-        /> */}
         <PlatformCombobox
           disabled={selectedCategory?.length == 0 ? true : false}
           params={{ category_id: selectedCategory?.[0]?.id }}

@@ -48,7 +48,7 @@ export default function PlatformCombobox({
   const { isDark } = useTheme();
   const [query, setQuery] = useState(() => selected?.[0]?.[field]);
   useEffect(() => {
-    setQuery(selected?.[0]?.[field]);
+    setQuery(selected?.[0]?.[field] || "");
   }, [selected]);
   const [isOpen, setIsOpen] = useState(false);
   function onClickHandler(data) {

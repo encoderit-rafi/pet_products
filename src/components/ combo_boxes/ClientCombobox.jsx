@@ -45,7 +45,7 @@ export default function ClientCombobox({
   const { isDark } = useTheme();
   const [query, setQuery] = useState(() => selected?.[0]?.[field]);
   useEffect(() => {
-    setQuery(selected?.[0]?.[field]);
+    setQuery(selected?.[0]?.[field] || "");
   }, [selected]);
   const [isOpen, setIsOpen] = useState(false);
   function onClickHandler(data) {
@@ -63,10 +63,6 @@ export default function ClientCombobox({
     }
   }, [inView, hasNextPage]);
 
-  // const clients = data?.pages?.flatMap((page) => page.clients) ?? [];
-  // useEffect(() => {
-  //   handleSearch({  search: query });
-  // }, [params.brand_id]);
   const handleSearchSubmit = (e) => {
     e.preventDefault(); // ✅ Prevent page reload
     handleSearch({ search: query });
